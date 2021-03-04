@@ -30,5 +30,7 @@ public class HelloWorld extends HttpServlet {
 		out.println("<BODY>");
 		out.println("<BIG>Hello World , 世界你好 !</BIG>=" + getServletContext().getAttribute(ServletContext.TEMPDIR));
 		out.println("</BODY></HTML>");
+		out.println("1235測試");
+		out.println("");
 	}
 }
