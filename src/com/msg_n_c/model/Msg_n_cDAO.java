@@ -38,7 +38,7 @@ public class Msg_n_cDAO implements Msg_n_cDAO_interface{
 	private static final String GET_ALL_STMT = 
 			"SELECT msg_n_c_id,msg_n_c_time,msg_n_c_time_last,msg_n_c_status,msg_n_c_ip,msg_n_c_text,users_id,msg_n_id FROM msg_n_c order by msg_n_c_id";
 		
-
+	
 	@Override
 	public void insert(Msg_n_cVO msg_n_cVO) {//新增
 		Connection con = null;
