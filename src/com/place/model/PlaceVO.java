@@ -16,7 +16,7 @@ public class PlaceVO {
 	private String place_type;
 	private String place_index;
 	private InputStream place_pic1;   //  用這個型別ok嗎?
-	private InputStream place_pic2;
+	private InputStream place_pic2;	  //  應該OK啦~~	
 	private InputStream place_pic3;
 	private Integer place_state;
 	private Integer users_id;
