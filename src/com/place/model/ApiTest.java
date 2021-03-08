@@ -15,7 +15,7 @@ import org.json.JSONObject;
 public class ApiTest {
 	
 	// 取得https://www.travel.taipei/open-api/swagger/ui/index#/Attractions/Attractions_All  的資料
-	public static final String API_URL = "https://www.travel.taipei/open-api/zh-tw/Attractions/All?page=1";
+	public static final String API_URL = "https://www.travel.taipei/open-api/zh-tw/Attractions/All?page=2";
 	
 	
 	
@@ -59,6 +59,16 @@ public class ApiTest {
 		BigDecimal nlat = null;
 		BigDecimal elong = null;
 		String official_site = null;
+		JSONArray images = null;
+		String src = null;
+		String facebook = null ;
+		String url1 = null;
+		JSONArray service = null;
+		StringBuilder service_name = new StringBuilder();
+		JSONArray category = null;
+		
+		
+		
 		
 		
 		
@@ -66,9 +76,46 @@ public class ApiTest {
 			
 			place = dataArray.getJSONObject(i);
 			name = place.getString("name");
-			open_status = place.getInt("open_status");
+			System.out.println("地點名稱為:" + name);
+//			distric = place.getString("distric");
+//			System.out.println("地區為:" + distric);
+//			nlat = BigDecimal.valueOf(place.getDouble("nlat"));
+//			System.out.println("北緯為:" + nlat);
+//			open_time = place.getString("open_time");   // 營業時間
+//			System.out.println(open_time);
+//			open_status = place.getInt("open_status");
+//			System.out.println("營業狀態為:" + open_status);
+//			introduction = place.getString("introduction");
+//			introduction.replaceAll("\\r\\n", "");    // 換行元素如何消除??
+//			System.out.println("簡介:" + introduction);
+//			images = place.getJSONArray("images");
+//			for(int j = 0 ; j < images.length() ; j++) {
+//				src = images.getJSONObject(j).getString("src");
+//				System.out.println(src);
+//			}
+//			address = place.getString("address");
+//			System.out.println("地址:" + address);
+//			elong = BigDecimal.valueOf(place.getDouble("elong"));
+//			facebook = place.getString("facebook");
+//			System.out.println(facebook);
+//			url1 = place.getString("url");
+//			service = place.getJSONArray("service");
+//			for(int j = 0 ; j < service.length() ; j++) {
+//				name = service.getJSONObject(j).getString("name");
+//				service_name.append(name + ",");
+//			}
+//			System.out.println("提供服務:" + service_name);
+//			service_name.delete(0, service_name.length());
+//			official_site = place.getString("official_site");
+//			System.out.println("官方網站為:" + official_site);
+			category = place.getJSONArray("category");
+			for(int j = 0 ; j < category.length() ; j++) {
+				name = category.getJSONObject(j).getString("name");
+				System.out.print(name + " ");
+			}
+			System.out.println("");
+			System.out.println("-------------------");
 			
-			System.out.println(name + open_status);
 		}
 		
 //		System.out.println(dataArray);
