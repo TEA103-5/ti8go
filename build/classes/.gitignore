@@ -9,3 +9,6 @@ target/
 .settings/
 .classpath
 .project
+/com/
+/資料庫表格建立/
+/util/
