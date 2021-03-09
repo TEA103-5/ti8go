@@ -151,6 +151,7 @@
             <ul>
   <li><a href='<%=request.getContextPath()%>/emp/addEmp.jsp'>Add</a> a new Emp.</li>
 </ul>
+<img src="DBGifReader4_1?id=5">
           </div>
           <div class="row align-items-center">
             <div class="col-md-6">
@@ -186,7 +187,7 @@
               <div class="card text-center clean-card">
                 <img
                   class="card-img-top w-100 d-block"
-                  src="assets/img/avatars/avatar1.jpg"
+                  src="assets/img/avatars/avatar3.jpg"
                 />
                 <div class="card-body info">
                   <h4 class="card-title">John Smith</h4>
@@ -205,7 +206,7 @@
               <div class="card text-center clean-card">
                 <img
                   class="card-img-top w-100 d-block"
-                  src="assets/img/avatars/avatar2.jpg"
+                  src="DBGifReader4_1?id=2"
                 />
                 <div class="card-body info">
                   <h4 class="card-title">Robert Downturn</h4>
@@ -224,7 +225,7 @@
               <div class="card text-center clean-card">
                 <img
                   class="card-img-top w-100 d-block"
-                  src="assets/img/avatars/avatar3.jpg"
+                  src="DBGifReader4_1?id=6"
                 />
                 <div class="card-body info">
                   <h4 class="card-title">Ally Sanders</h4>

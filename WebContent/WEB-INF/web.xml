@@ -23,4 +23,14 @@
     <servlet-name>EmpServlet</servlet-name>
     <url-pattern>/emp/emp.do</url-pattern>
   </servlet-mapping>
+  
+  		<servlet>
+		<servlet-name>DBGifReader4_1</servlet-name>
+		<servlet-class>index.DBGifReader4_1</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DBGifReader4_1</servlet-name>
+		<url-pattern>/DBGifReader4_1</url-pattern>
+	</servlet-mapping>
+	
 </web-app>

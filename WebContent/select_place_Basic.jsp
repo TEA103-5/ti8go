@@ -14,8 +14,8 @@
           	Connection con =  ds.getConnection();
           //	Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/jdbcsample?serverTimezone=Asia/Taipei", "David", "123456");
             Statement stmt = con.createStatement();
-           ResultSet rs = stmt.executeQuery("SELECT * from place");
-            
+           ResultSet rs = stmt.executeQuery("SELECT * from sale");
+            //面對圖片就頭痛了
            ResultSetMetaData rsmd = rs.getMetaData();
 	        int numberOfColumns = rsmd.getColumnCount();
 %>
