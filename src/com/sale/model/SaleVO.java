@@ -9,7 +9,7 @@ public class SaleVO {
 	private String  sale_pwd;
 	private String  sale_name;
 	private Integer  sale_audit_status;
-	private Byte[] sale_audit_pic;//似乎比想像麻煩@@ 暫時先不新增
+	private byte[] sale_audit_pic;//似乎比想像麻煩@@ 暫時先不新增
 	private Integer sale_status;
 	private String  sale_phone;
 	private String  sale_nickname;
@@ -29,7 +29,7 @@ public class SaleVO {
 		
 	}
 	public SaleVO(Integer sale_id, String sale_email, String sale_pwd, String sale_name, Integer sale_audit_status,
-			Byte[] sale_audit_pic, Integer sale_status, String sale_phone, String sale_nickname, Float sale_rate,
+			byte[] sale_audit_pic, Integer sale_status, String sale_phone, String sale_nickname, Float sale_rate,
 			Timestamp sale_time_create) {
 		super();
 		this.sale_id = sale_id;
@@ -85,11 +85,11 @@ public class SaleVO {
 		this.sale_audit_status = sale_audit_status;
 	}
 
-	public Byte[] getSale_audit_pic() {
+	public byte[] getSale_audit_pic() {
 		return sale_audit_pic;
 	}
 
-	public void setSale_audit_pic(Byte[] sale_audit_pic) {
+	public void setSale_audit_pic(byte[] sale_audit_pic) {
 		this.sale_audit_pic = sale_audit_pic;
 	}
 

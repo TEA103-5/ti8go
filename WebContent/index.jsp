@@ -146,9 +146,11 @@
           <div class="block-heading">
             <h2 class="text-info">Info</h2>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam
-              urna, dignissim nec auctor in, mattis vitae leo.
+         <%=request.getContextPath()%>
             </p>
+            <ul>
+  <li><a href='<%=request.getContextPath()%>/emp/addEmp.jsp'>Add</a> a new Emp.</li>
+</ul>
           </div>
           <div class="row align-items-center">
             <div class="col-md-6">
