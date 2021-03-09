@@ -1,1 +1,19 @@
+
+# Maven #
+target/
+
+# IDEA #
+.idea/
+*.iml
+
+# Eclipse #
+.settings/
+.classpath
+.project
 /com/
+/資料庫表格建立/
+/util/
+/a1.jpg
+/com/
+/a2.jpg
+
