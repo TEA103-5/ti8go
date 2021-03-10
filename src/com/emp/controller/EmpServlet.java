@@ -20,7 +20,7 @@ public class EmpServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		
+		//req會有 action 和 empno 跟 他們對應的value
 		
 		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
 
@@ -28,29 +28,39 @@ public class EmpServlet extends HttpServlet {
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
-
+				//req再多放一個 叫 errorMsgs 的 string的LinkedList  叫 errorMsgs  
 			try {
 				/***************************1.接收請求參數- 輸入格式的錯誤處理**********************/
 				String str = req.getParameter("empno");
-				if (str == null || (str.trim()).length() == 0) {
+				if (str == null || (str.trim()).length() == 0) {//如果是null或空字串
 					errorMsgs.add("請輸入員工編號");
 				}
 				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
+				if (!errorMsgs.isEmpty()) { //如果這裡成立 代表前面的if成立
+					RequestDispatcher failureView = req 
 							.getRequestDispatcher("/select_page.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
-				}
-				
+				}/*所以   如果empno是null或空值 就放一個"請輸入員工編號" 在錯誤訊息
+				*  這裡它沒有再req.setAttribute("errorMsgs", errorMsgs);
+				* 代表 放進req之後 再更動錯誤訊息是OK的
+				* RequestDispatcher
+				* Defines an object that receives requests from the clientand sends them to any 
+				* resource (such as a servlet,HTML file, or JSP file) on the server. 
+				* The servletcontainer creates the RequestDispatcher object,which is used as a wrapper 
+				* around a server resource locatedat a particular path or given by a particular name. 
+				* This interface is intended to wrap servlets,but a servlet container can create 
+				* RequestDispatcherobjects to wrap any type of resource. 
+
+				*/
 				Integer empno = null;
 				try {
 					empno = new Integer(str);
-				} catch (Exception e) {
+				} catch (Exception e) {//不是空值 但不是Integer的話
 					errorMsgs.add("員工編號格式不正確");
 				}
 				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
+				if (!errorMsgs.isEmpty()) {//如果前者成立
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/select_page.jsp");
 					failureView.forward(req, res);

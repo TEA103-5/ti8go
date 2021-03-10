@@ -225,7 +225,7 @@
               <div class="card text-center clean-card">
                 <img
                   class="card-img-top w-100 d-block"
-                  src="DBGifReader4_1?id=6"
+                  src="DBGifReader4_1?id=18"
                 />
                 <div class="card-body info">
                   <h4 class="card-title">Ally Sanders</h4>

@@ -91,14 +91,14 @@ public class SaleDAO implements SaleDAO_interface{
 
 			pstmt.setString(1, saleVO.getSale_pwd());
 			pstmt.setInt(2, saleVO.getSale_audit_status());
-//			pstmt.setBytes(3, saleVO.getSale_audit_pic());
+			pstmt.setBytes(3, saleVO.getSale_audit_pic());
 			pstmt.setString(4, saleVO.getSale_name());
 			pstmt.setInt(5, saleVO.getSale_status());
 			pstmt.setString(6, saleVO.getSale_phone());
 			pstmt.setString(7, saleVO.getSale_nickname());
 			pstmt.setFloat(8, saleVO.getSale_rate());
 //			pstmt.setTimestamp(9, saleVO.getSale_time_create());
-			pstmt.setInt(10, saleVO.getSale_id());
+			pstmt.setInt(9, saleVO.getSale_id());
 			
 			pstmt.executeUpdate();
 		}catch (SQLException se) {
@@ -179,7 +179,7 @@ public class SaleDAO implements SaleDAO_interface{
 				saleVO.setSale_pwd(rs.getString("sale_pwd"));
 				saleVO.setSale_name(rs.getString("sale_name"));
 				saleVO.setSale_audit_status(rs.getInt("sale_audit_status"));
-//				saleVO.setSale_audit_pic(rs.getBytes("sale_audit_pic"));				
+				saleVO.setSale_audit_pic(rs.getBytes("sale_audit_pic"));				
 				saleVO.setSale_status(rs.getInt("sale_status"));
 				saleVO.setSale_phone(rs.getString("sale_phone"));
 				saleVO.setSale_nickname(rs.getString("sale_nickname"));
@@ -241,7 +241,7 @@ public class SaleDAO implements SaleDAO_interface{
 				saleVO.setSale_pwd(rs.getString("sale_pwd"));
 				saleVO.setSale_name(rs.getString("sale_name"));
 				saleVO.setSale_audit_status(rs.getInt("sale_audit_status"));
-//				saleVO.setSale_audit_pic(rs.getBytes("sale_audit_pic"));				
+				saleVO.setSale_audit_pic(rs.getBytes("sale_audit_pic"));				
 				saleVO.setSale_status(rs.getInt("sale_status"));
 				saleVO.setSale_phone(rs.getString("sale_phone"));
 				saleVO.setSale_nickname(rs.getString("sale_nickname"));

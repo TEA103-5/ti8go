@@ -2,7 +2,7 @@
 <%@ page import="java.sql.*"%>
 <%@ page import="javax.sql.*"%>
 <%@ page import="javax.naming.*"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01" "http://www.w3.org/TR/html4/loose.dtd">
+
 <HTML>
 <HEAD>
 <TITLE> 查詢資料 </TITLE>
@@ -14,7 +14,7 @@
           	Connection con =  ds.getConnection();
           //	Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/jdbcsample?serverTimezone=Asia/Taipei", "David", "123456");
             Statement stmt = con.createStatement();
-           ResultSet rs = stmt.executeQuery("SELECT * from sale");
+           ResultSet rs = stmt.executeQuery("SELECT * from place");
             //面對圖片就頭痛了
            ResultSetMetaData rsmd = rs.getMetaData();
 	        int numberOfColumns = rsmd.getColumnCount();

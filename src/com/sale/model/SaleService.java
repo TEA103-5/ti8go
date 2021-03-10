@@ -1,5 +1,7 @@
 package com.sale.model;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -9,16 +11,16 @@ public class SaleService {
 	public SaleService(){
 		dao=new SaleDAO();
 	}
-	
+
 	//新增,Byte[] sale_audit_pic
-	public SaleVO addSale(String sale_email,String sale_pwd,String sale_name,String sale_phone,String sale_nickname,Float sale_rate) {
+	public SaleVO addSale(String sale_email,String sale_pwd,String sale_name,String sale_phone,String sale_nickname,Float sale_rate,byte[] sale_audit_pic) {
 		SaleVO saleVO=new SaleVO();
 		
 
 		saleVO.setSale_email(sale_email);
 		saleVO.setSale_pwd(sale_pwd);
 		saleVO.setSale_name(sale_name);
-//		saleVO.setSale_audit_pic(sale_audit_pic);
+		saleVO.setSale_audit_pic(sale_audit_pic);
 		saleVO.setSale_phone(sale_phone);
 		saleVO.setSale_nickname(sale_nickname);
 		saleVO.setSale_rate(sale_rate);

@@ -1,4 +1,4 @@
-package index;
+package com.sale.controller;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;

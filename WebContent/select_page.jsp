@@ -53,6 +53,9 @@
   
   <li>
     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do" >
+    <%/*這個在web.xml裡可以看到emp/emp.do 指的是com.emp.controller.EmpServlet
+    下面有個hidden叫action 以此字串來決定後面EmpServlet的行為
+    */%>
         <b>輸入員工編號 (如7001):</b>
         <input type="text" name="empno">
         <input type="hidden" name="action" value="getOne_For_Display">

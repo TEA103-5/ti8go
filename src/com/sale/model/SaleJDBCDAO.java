@@ -52,8 +52,8 @@ public class SaleJDBCDAO implements SaleDAO_interface{
 			pstmt.setString(3, saleVO.getSale_name());
 			pstmt.setString(4, saleVO.getSale_phone());
 			pstmt.setString(5, saleVO.getSale_nickname());
-			pstmt.setFloat(6, saleVO.getSale_rate());		
-			pstmt.setBytes(7,saleVO.getSale_audit_pic());
+			pstmt.setFloat(6,  saleVO.getSale_rate());		
+			pstmt.setBytes(7,  saleVO.getSale_audit_pic());
 //			pstmt.setBytes(7,pic);
 			
 			pstmt.executeUpdate();
@@ -326,12 +326,12 @@ public class SaleJDBCDAO implements SaleDAO_interface{
 		SaleVO empVO1 = new SaleVO();
 		empVO1.setSale_email("123@YYYY.com");
 		empVO1.setSale_pwd("123456");
-		empVO1.setSale_name("中老師");
-		empVO1.setSale_nickname("大中大");
+		empVO1.setSale_name("中11老師");
+		empVO1.setSale_nickname("1大中大");
 		empVO1.setSale_phone("0999987541");
 		empVO1.setSale_rate(5.0f);
 		try {
-			byte[] pic = getPictureByteArray("items/a1.jpg");
+			byte[] pic = getPictureByteArray();
 			empVO1.setSale_audit_pic(pic);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -391,6 +391,13 @@ public class SaleJDBCDAO implements SaleDAO_interface{
 	// 使用byte[]方式
 	public static byte[] getPictureByteArray(String path) throws IOException {
 		FileInputStream fis = new FileInputStream(path);
+		byte[] buffer = new byte[fis.available()];
+		fis.read(buffer);
+		fis.close();
+		return buffer;
+	}
+	public static byte[] getPictureByteArray() throws IOException {
+		FileInputStream fis = new FileInputStream("items/a1.jpg");
 		byte[] buffer = new byte[fis.available()];
 		fis.read(buffer);
 		fis.close();
