@@ -10,8 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.msg_n_c.model.Msg_n_cJDBCDAO;
-import com.msg_n_c.model.Msg_n_cVO;
+
 
 public class SaleJDBCDAO implements SaleDAO_interface{
 	String driver = "com.mysql.cj.jdbc.Driver";

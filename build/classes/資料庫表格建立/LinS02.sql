@@ -124,7 +124,7 @@ sale_audit_pic longblob,
 sale_status tinyint default 0,
 sale_phone char(20),
 sale_nickname varchar(30),
-sale_rate float,
+sale_rate float default 0,
 sale_time_create timestamp default current_timestamp,
 primary key(sale_id)
 );

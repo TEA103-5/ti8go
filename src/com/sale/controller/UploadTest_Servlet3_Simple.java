@@ -24,6 +24,6 @@ public class UploadTest_Servlet3_Simple extends HttpServlet {
 		in.close();
 		SaleService saleSvc = new SaleService();
 		
-		saleSvc.addSale("sale_email354", "sal54e_pwd", "sale_n5435ame", "sale_ph45one", "sale545_nickname", 5f,buf);
+		saleSvc.updateSale("sale_email354",1, "sal54e_pwd",1,"sale_n5435ame", "sale545_nickname", 5f,1,buf);
 	}
 }

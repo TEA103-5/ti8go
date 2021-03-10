@@ -27,7 +27,7 @@ public class SaleDAO implements SaleDAO_interface{
 
 	//,sale_audit_pic
 	private static final String INSERT_STMT = 
-			"insert into sale(sale_email,sale_pwd,sale_name,sale_phone,sale_nickname,sale_rate,sale_audit_pic) values (?,?,?,?,?,?,?)";
+			"insert into sale(sale_email,sale_pwd,sale_name,sale_phone,sale_nickname) values (?,?,?,?,?)";
 	//7個問號
 	private static final String DELETE = 
 			"DELETE FROM sale where sale_id = ?";
@@ -55,8 +55,8 @@ public class SaleDAO implements SaleDAO_interface{
 			pstmt.setString(3, saleVO.getSale_name());
 			pstmt.setString(4, saleVO.getSale_phone());
 			pstmt.setString(5, saleVO.getSale_nickname());
-			pstmt.setFloat(6, saleVO.getSale_rate());		
-			pstmt.setBytes(7,saleVO.getSale_audit_pic());
+//			pstmt.setFloat(6, saleVO.getSale_rate());		
+//			pstmt.setBytes(6,saleVO.getSale_audit_pic());
 			
 			pstmt.executeUpdate();
 		}catch (SQLException se) {
