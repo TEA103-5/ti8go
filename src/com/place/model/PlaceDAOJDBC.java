@@ -23,9 +23,9 @@ public class PlaceDAOJDBC implements PlaceDAO_interface {
 	private static final String INSERT_STMT = "INSERT INTO place (place_name, place_address, place_longitude, place_latitude, "
 			+ "place_tel,place_region,place_type,place_index,place_pic1,place_pic2,place_pic3,place_state,users_id,business_time) VALUES(? , ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = "SELECT place_id,place_name,place_address,place_longitude,place_latitude,place_tel,place_region,place_type,"
-			+ "place_index,place_pic1,place_pic2,place_pic3,place_state,users_id,business_time FROM place order by place_id";
+			+ "place_index,place_pic1,place_pic2,place_pic3,place_state,users_id,business_time,place_like FROM place order by place_id";
 	private static final String GET_ONE_STMT = "SELECT place_id,place_name,place_address,place_longitude,place_latitude,place_tel,place_region,place_type,"
-			+ "place_index,place_pic1,place_pic2,place_pic3,place_state,users_id,business_time FROM place where place_id = ? ";
+			+ "place_index,place_pic1,place_pic2,place_pic3,place_state,users_id,business_time,place_like FROM place where place_id = ? ";
 	private static final String DELETE = "DELETE FROM place where place_id = ?";
 	private static final String UPDATE = "UPDATE place set place_name=?, place_address=?, place_longitude=?, place_latitude=?, "
 			+ "place_tel=?,place_region=?,place_type=?,place_index=?,place_pic1=?,place_pic2=?,place_pic3=?,place_state=?,users_id=?,business_time=? where place_id=?";
@@ -48,15 +48,15 @@ public class PlaceDAOJDBC implements PlaceDAO_interface {
 			pstmt.setString(6, placeVO.getPlace_region());
 			pstmt.setString(7, placeVO.getPlace_type());
 			pstmt.setString(8, placeVO.getPlace_index());
-			pstmt.setBinaryStream(9, placeVO.getPlace_pic1());
-			pstmt.setBinaryStream(10, placeVO.getPlace_pic2());
-			pstmt.setBinaryStream(11, placeVO.getPlace_pic3());
+			pstmt.setBytes(9, placeVO.getPlace_pic1());
+			pstmt.setBytes(10, placeVO.getPlace_pic2());
+			pstmt.setBytes(11, placeVO.getPlace_pic3());
 			pstmt.setInt(12, placeVO.getPlace_state());
 //			pstmt.setInt(13, placeVO.getUsers_id());   // 因setInt 會將傳入的Integer物件轉換成int,當傳入物件為null時會出現空指針例外
 			pstmt.setObject(13, placeVO.getUsers_id(), Types.INTEGER);
 //			pstmt.setInt(14, placeVO.getBusiness_time());
 			pstmt.setObject(14, placeVO.getBusiness_time(), Types.INTEGER);
-
+			
 			pstmt.executeUpdate();
 
 		} catch (ClassNotFoundException e) {
@@ -102,9 +102,10 @@ public class PlaceDAOJDBC implements PlaceDAO_interface {
 			pstmt.setString(6, placeVO.getPlace_region());
 			pstmt.setString(7, placeVO.getPlace_type());
 			pstmt.setString(8, placeVO.getPlace_index());
-			pstmt.setBinaryStream(9, placeVO.getPlace_pic1());
-			pstmt.setBinaryStream(10, placeVO.getPlace_pic2());
-			pstmt.setBinaryStream(11, placeVO.getPlace_pic3());
+			
+			pstmt.setBytes(9, placeVO.getPlace_pic1());
+			pstmt.setBytes(10, placeVO.getPlace_pic2());
+			pstmt.setBytes(11, placeVO.getPlace_pic3());
 			pstmt.setInt(12, placeVO.getPlace_state());
 //			pstmt.setInt(13, placeVO.getUsers_id());   // 因setInt 會將傳入的Integer物件轉換成int,當傳入物件為null時會出現空指針例外
 			pstmt.setObject(13, placeVO.getUsers_id(), Types.INTEGER);
@@ -188,12 +189,14 @@ public class PlaceDAOJDBC implements PlaceDAO_interface {
 				placeVO.setPlace_region(rs.getString("place_region"));
 				placeVO.setPlace_type(rs.getString("place_type"));
 				placeVO.setPlace_index(rs.getString("place_index"));
-				placeVO.setPlace_pic1(rs.getBinaryStream("place_pic1"));
-				placeVO.setPlace_pic2(rs.getBinaryStream("place_pic2"));
-				placeVO.setPlace_pic3(rs.getBinaryStream("place_pic3"));
+				placeVO.setPlace_pic1(rs.getBytes("place_pic1"));
+//				placeVO.setPlace_pic1(rs.getBinaryStream("place_pic1"));
+				placeVO.setPlace_pic2(rs.getBytes("place_pic2"));
+				placeVO.setPlace_pic3(rs.getBytes("place_pic3"));
 				placeVO.setPlace_state(rs.getInt("place_state"));
 				placeVO.setUsers_id(rs.getInt("users_id"));
 				placeVO.setBusiness_time(rs.getInt("business_time"));
+				placeVO.setPlace_like(rs.getInt("place_like"));
 
 			}
 		} catch (ClassNotFoundException e) {
@@ -254,12 +257,14 @@ public class PlaceDAOJDBC implements PlaceDAO_interface {
 				placeVO.setPlace_region(rs.getString("place_region"));
 				placeVO.setPlace_type(rs.getString("place_type"));
 				placeVO.setPlace_index(rs.getString("place_index"));
-				placeVO.setPlace_pic1(rs.getBinaryStream("place_pic1"));
-				placeVO.setPlace_pic2(rs.getBinaryStream("place_pic2"));
-				placeVO.setPlace_pic3(rs.getBinaryStream("place_pic3"));
+				placeVO.setPlace_pic1(rs.getBytes("place_pic1"));
+//				placeVO.setPlace_pic1(rs.getBinaryStream("place_pic1"));
+				placeVO.setPlace_pic2(rs.getBytes("place_pic2"));
+				placeVO.setPlace_pic3(rs.getBytes("place_pic3"));
 				placeVO.setPlace_state(rs.getInt("place_state"));
 				placeVO.setUsers_id(rs.getInt("users_id"));
 				placeVO.setBusiness_time(rs.getInt("business_time"));
+				placeVO.setPlace_like(rs.getInt("place_like"));
 				list.add(placeVO);
 
 			}
@@ -275,83 +280,77 @@ public class PlaceDAOJDBC implements PlaceDAO_interface {
 	public static void main(String[] args) throws IOException {
 		PlaceDAOJDBC dao = new PlaceDAOJDBC();
 		Picture picture = new Picture();
-		InputStream fis1 = null;
-		InputStream fis2 = null;
-		InputStream fis3 = null;
 
-		// 新增
-		PlaceVO placeVO1 = new PlaceVO();
-		placeVO1.setPlace_name("南京復興捷運站");
-		placeVO1.setPlace_address("南京東路一段一號");
-		placeVO1.setPlace_longitude(new BigDecimal(121.297187));
-		placeVO1.setPlace_latitude(new BigDecimal(24.943325));
-		placeVO1.setPlace_tel("886-123456789");
-		placeVO1.setPlace_region("台北市");
-		placeVO1.setPlace_type("景點");
-		placeVO1.setPlace_index("這裡是南京復興捷運站");
 
-		placeVO1.setPlace_pic1(fis1 = picture.getStreamFromLocal("items/FC_Barcelona.png"));
-		placeVO1.setPlace_pic2(fis2 = picture.getStreamFromLocal("items/FC_Barcelona.png"));
-		placeVO1.setPlace_pic3(fis3 = picture.getStreamFromLocal("items/FC_Barcelona.png"));
-		placeVO1.setPlace_state(0);
-		placeVO1.setUsers_id(1);
-		placeVO1.setBusiness_time(1);
-		
-		dao.insert(placeVO1);
-		
-		fis1.close();
-		fis2.close();
-		fis3.close();
+//		// 新增
+//		PlaceVO placeVO1 = new PlaceVO();
+//		placeVO1.setPlace_name("南京復興捷運站");
+//		placeVO1.setPlace_address("南京東路一段一號");
+//		placeVO1.setPlace_longitude(new BigDecimal(121.297187));
+//		placeVO1.setPlace_latitude(new BigDecimal(24.943325));
+//		placeVO1.setPlace_tel("886-123456789");
+//		placeVO1.setPlace_region("台北市");
+//		placeVO1.setPlace_type("景點");
+//		placeVO1.setPlace_index("這裡是南京復興捷運站");
+//
+//		placeVO1.setPlace_pic1( picture.getPictureByteArray("WebContent/images/1.jpg"));
+//		placeVO1.setPlace_pic2( picture.getPictureByteArray("WebContent/images/1.jpg"));
+//		placeVO1.setPlace_pic3( picture.getPictureByteArray("WebContent/images/1.jpg"));
+//		placeVO1.setPlace_state(0);
+//		placeVO1.setUsers_id(1);
+//		placeVO1.setBusiness_time(1);
+//		
+//		dao.insert(placeVO1);
 
-		// 修改
-		PlaceVO placeVO2 = new PlaceVO();
-		placeVO2.setPlace_name("南京復興捷運站EXEX");
-		placeVO2.setPlace_address("南京東路一段一號EXEX");
-		placeVO2.setPlace_longitude(new BigDecimal(121.297187));
-		placeVO2.setPlace_latitude(new BigDecimal(24.943325));
-		placeVO2.setPlace_tel("886-123456789");
-		placeVO2.setPlace_region("台北市");
-		placeVO2.setPlace_type("景點");
-		placeVO2.setPlace_index("這裡是南京復興捷運站");
+		
+		
 
-		placeVO2.setPlace_pic1(fis1 = picture.getStreamFromLocal("items/FC_Real_Madrid.png"));
-		placeVO2.setPlace_pic2(fis2 = picture.getStreamFromLocal("items/FC_Real_Madrid.png"));
-		placeVO2.setPlace_pic3(fis3 = picture.getStreamFromLocal("items/FC_Real_Madrid.png"));
-		placeVO2.setPlace_state(0);
-//		placeVO2.setUsers_id(1);
-//		placeVO2.setBusiness_time(1);
-		placeVO2.setPlace_id(11);
-		
-		dao.update(placeVO2);
-		
-		fis1.close();
-		fis2.close();
-		fis3.close();
+//		// 修改
+//		PlaceVO placeVO2 = new PlaceVO();
+//		placeVO2.setPlace_name("南京復興捷運站EXEX");
+//		placeVO2.setPlace_address("南京東路一段一號EXEX");
+//		placeVO2.setPlace_longitude(new BigDecimal(121.297187));
+//		placeVO2.setPlace_latitude(new BigDecimal(24.943325));
+//		placeVO2.setPlace_tel("886-123456789");
+//		placeVO2.setPlace_region("台北市");
+//		placeVO2.setPlace_type("景點");
+//		placeVO2.setPlace_index("這裡是南京復興捷運站");
+//
+//		placeVO2.setPlace_pic1( picture.getPictureByteArray("WebContent/images/5.jpg"));
+//		placeVO2.setPlace_pic2( picture.getPictureByteArray("WebContent/images/5.jpg"));
+//		placeVO2.setPlace_pic3( picture.getPictureByteArray("WebContent/images/5.jpg"));
+//		placeVO2.setPlace_state(0);
+////		placeVO2.setUsers_id(1);
+////		placeVO2.setBusiness_time(1);
+//		placeVO2.setPlace_id(11);
+//		
+//		dao.update(placeVO2);
 
-		// 刪除
-		dao.delete(11);
 
-		// 查詢單筆
-		PlaceVO placeVo3 = dao.findByPrimaryKey(12);
-		
-		System.out.print(placeVo3.getPlace_id() + ",");
-		System.out.print(placeVo3.getPlace_address() + ",");
-		System.out.print(placeVo3.getPlace_longitude() + ",");
-		System.out.print(placeVo3.getPlace_latitude() + ",");
-		System.out.print(placeVo3.getPlace_tel() + ",");
-		System.out.print(placeVo3.getPlace_region() + ",");
-		System.out.print(placeVo3.getPlace_type() + ",");
-		System.out.print(placeVo3.getPlace_index() + ",");
-//		System.out.print(placeVo3.getPlace_pic1() + ",");
-		picture.readPicture(placeVo3.getPlace_pic1());
-		System.out.print(placeVo3.getPlace_pic2() + ",");
-		System.out.print(placeVo3.getPlace_pic3() + ",");
-		System.out.print(placeVo3.getPlace_state() + ",");
-		System.out.print(placeVo3.getUsers_id() + ",");
-		System.out.println(placeVo3.getBusiness_time() + ",");
-		System.out.println("---------------------");
-		
-		// 查詢全部
+//		// 刪除
+//		dao.delete(12);
+//
+//		// 查詢單筆
+//		PlaceVO placeVO3 = dao.findByPrimaryKey(11);
+//		
+//		System.out.print(placeVO3.getPlace_id() + ",");
+//		System.out.print(placeVO3.getPlace_address() + ",");
+//		System.out.print(placeVO3.getPlace_longitude() + ",");
+//		System.out.print(placeVO3.getPlace_latitude() + ",");
+//		System.out.print(placeVO3.getPlace_tel() + ",");
+//		System.out.print(placeVO3.getPlace_region() + ",");
+//		System.out.print(placeVO3.getPlace_type() + ",");
+//		System.out.print(placeVO3.getPlace_index() + ",");
+//		picture.readPicture(placeVO3.getPlace_pic1());
+//		System.out.print(placeVO3.getPlace_pic2() + ",");
+//		System.out.print(placeVO3.getPlace_pic3() + ",");
+//		System.out.print(placeVO3.getPlace_state() + ",");
+//		System.out.print(placeVO3.getUsers_id() + ",");
+//		System.out.println(placeVO3.getBusiness_time() + ",");
+//		System.out.println(placeVO3.getPlace_like());
+//		System.out.println("---------------------");
+//		
+//		// 查詢全部
 		List<PlaceVO> list = dao.getAll();
 		for(PlaceVO aPlace : list) {
 			System.out.print(aPlace.getPlace_id() + ",");
@@ -368,8 +367,8 @@ public class PlaceDAOJDBC implements PlaceDAO_interface {
 			System.out.print(aPlace.getPlace_state() + ",");
 			System.out.print(aPlace.getUsers_id() + ",");
 			System.out.print(aPlace.getBusiness_time() + ",");
-			System.out.println();
-			
+			System.out.println(aPlace.getPlace_like());
+			System.out.println();	
 		}
 		
 		
