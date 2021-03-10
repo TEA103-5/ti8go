@@ -17,10 +17,11 @@ public class Place_collectDAOJDBC implements Place_collectDAO_interface {
 	String passwd = "123456";
 
 	private static final String INSERT_STMT = "INSERT INTO place_collect (place_id , users_id ) VALUES(? ,? )";
-	private static final String GET_ALL_STMT = "SELECT place_collect_id , place_id , users_id , place_collect_time FROM place_collect order by place_collect_id";
-	private static final String GET_ONE_STMT = "SELECT place_collect_id , place_id , users_id , place_collect_time FROM place_collect where place_collect_id = ?";
-	private static final String DELETE = "DELETE FROM place_collect where place_collect_id = ?";
-	private static final String UPDATE = "UPDATE place_collect set place_id=? , users_id=? where place_collect_id = ?";
+	private static final String GET_ALL_STMT = "SELECT place_id , users_id , place_collect_time FROM place_collect order by users_id";
+	private static final String GET_ONE_STMT = "SELECT place_id , users_id , place_collect_time FROM place_collect where users_id = ?";
+	private static final String DELETE = "DELETE FROM place_collect where place_id = ? and users_id = ? ";
+	// 收藏不會用更新的方式去變更 , 所以更新指令只是練習用的,條件寫死在update方法裡
+	private static final String UPDATE = "UPDATE place_collect set place_id=? , users_id=?  where place_id = ? and users_id = ?";
 
 	@Override
 	public void insert(Place_collectVO place_collectVO) {
@@ -72,7 +73,8 @@ public class Place_collectDAOJDBC implements Place_collectDAO_interface {
 
 			pstmt.setObject(1, place_collectVO.getPlace_id(), Types.INTEGER);
 			pstmt.setObject(2, place_collectVO.getUsers_id(), Types.INTEGER);
-			pstmt.setObject(3, place_collectVO.getPlace_collect_id(), Types.INTEGER);
+			pstmt.setObject(3, 1, Types.INTEGER);
+			pstmt.setObject(4, 1, Types.INTEGER);
 
 			pstmt.executeUpdate();
 
@@ -100,7 +102,7 @@ public class Place_collectDAOJDBC implements Place_collectDAO_interface {
 	}
 
 	@Override
-	public void delete(Integer place_collect_id) {
+	public void delete(Integer place_id , Integer users_id) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -109,7 +111,8 @@ public class Place_collectDAOJDBC implements Place_collectDAO_interface {
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(DELETE);
 
-			pstmt.setObject(1, place_collect_id, Types.INTEGER);
+			pstmt.setObject(1, place_id, Types.INTEGER);
+			pstmt.setObject(2, users_id, Types.INTEGER);
 			pstmt.executeUpdate();
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
@@ -136,7 +139,7 @@ public class Place_collectDAOJDBC implements Place_collectDAO_interface {
 	}
 
 	@Override
-	public Place_collectVO findByPrimaryKey(Integer place_collect_id) {
+	public Place_collectVO findByPrimaryKey(Integer users_id) {
 		Place_collectVO place_collectVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -146,13 +149,12 @@ public class Place_collectDAOJDBC implements Place_collectDAO_interface {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ONE_STMT);
-			pstmt.setObject(1, place_collect_id, Types.INTEGER);
+			pstmt.setObject(1, users_id, Types.INTEGER);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				place_collectVO = new Place_collectVO();
 
-				place_collectVO.setPlace_collect_id(rs.getInt("place_collect_id"));
 				place_collectVO.setPlace_id(rs.getInt("place_id"));
 				place_collectVO.setUsers_id(rs.getInt("users_id"));
 				place_collectVO.setPlace_collect_time(rs.getTimestamp("place_collect_time"));
@@ -207,8 +209,7 @@ public class Place_collectDAOJDBC implements Place_collectDAO_interface {
 			while (rs.next()) {
 				place_collectVO = new Place_collectVO();
 
-				place_collectVO.setPlace_collect_id(rs.getInt("place_collect_id"));
-				place_collectVO.setPlace_id(rs.getInt("users_id"));
+				place_collectVO.setPlace_id(rs.getInt("place_id"));
 				place_collectVO.setUsers_id(rs.getInt("users_id"));
 				place_collectVO.setPlace_collect_time(rs.getTimestamp("place_collect_time"));
 
@@ -250,39 +251,35 @@ public class Place_collectDAOJDBC implements Place_collectDAO_interface {
 
 		Place_collectDAOJDBC dao = new Place_collectDAOJDBC();
 
-		// 新增
-		Place_collectVO place_collectVO1 = new Place_collectVO();
-		place_collectVO1.setPlace_id(5);
-		place_collectVO1.setUsers_id(1);
+//		// 新增
+//		Place_collectVO place_collectVO1 = new Place_collectVO();
+//		place_collectVO1.setPlace_id(5);
+//		place_collectVO1.setUsers_id(1);
+//
+//		dao.insert(place_collectVO1);
 
-		dao.insert(place_collectVO1);
-
-		// 修改
-		Place_collectVO place_collectVO2 = new Place_collectVO();
-		place_collectVO2.setPlace_id(5);
-		place_collectVO2.setUsers_id(1);
-		place_collectVO2.setPlace_collect_id(1);
-		;
-
-		dao.update(place_collectVO2);
+//		// 修改
+//		Place_collectVO place_collectVO2 = new Place_collectVO();
+//		place_collectVO2.setPlace_id(1);
+//		place_collectVO2.setUsers_id(2);
+//		
+//		dao.update(place_collectVO2);
 
 		// 刪除
-		dao.delete(1);
-
-		// 查詢一筆
-		Place_collectVO place_collectVO3 = dao.findByPrimaryKey(2);
-
-		System.out.print(place_collectVO3.getPlace_collect_id() + ",");
-		System.out.print(place_collectVO3.getPlace_id() + ",");
-		System.out.print(place_collectVO3.getUsers_id() + ",");
-		System.out.println(place_collectVO3.getPlace_collect_time());
-		System.out.println("---------------------");
-
+//		dao.delete(1 , 2);
+//
+//		// 查詢一筆
+//		Place_collectVO place_collectVO3 = dao.findByPrimaryKey(2);
+//
+//		System.out.print(place_collectVO3.getUsers_id() + ",");
+//		System.out.print(place_collectVO3.getPlace_id() + ",");
+//		System.out.println(place_collectVO3.getPlace_collect_time());
+//		System.out.println("---------------------");
+//
 		// 查詢全部
 		List<Place_collectVO> list = dao.getAll();
 
 		for (Place_collectVO Aplace_collectVO : list) {
-			System.out.print(Aplace_collectVO.getPlace_collect_id() + ",");
 			System.out.print(Aplace_collectVO.getPlace_id() + ",");
 			System.out.print(Aplace_collectVO.getUsers_id() + ",");
 			System.out.print(Aplace_collectVO.getPlace_collect_time());
