@@ -31,12 +31,12 @@ public class SaleService {
 		return saleVO;
 	}
 	
-	public SaleVO updateSale(String sale_pwd,Integer sale_audit_status,String sale_name,Integer sale_status,String sale_phone,String sale_nickname,Float sale_rate,Integer sale_id,byte[] sale_audit_pic) {
+//		,byte[] sale_audit_pic
+	public SaleVO updateSale(String sale_pwd,Integer sale_audit_status,String sale_name,Integer sale_status,String sale_phone,String sale_nickname,Float sale_rate,Integer sale_id) {
 		SaleVO saleVO=new SaleVO();
-		
 		saleVO.setSale_pwd(sale_pwd);
 		saleVO.setSale_audit_status(sale_audit_status);
-		saleVO.setSale_audit_pic(sale_audit_pic);
+//		saleVO.setSale_audit_pic(sale_audit_pic);
 		saleVO.setSale_name(sale_name);
 		saleVO.setSale_status(sale_status);
 		saleVO.setSale_phone(sale_phone);
@@ -46,6 +46,15 @@ public class SaleService {
 		saleVO.setSale_id(sale_id);
 		
 		dao.update(saleVO);
+		return saleVO;
+	}
+	public SaleVO updateSaleP(Integer sale_id,byte[] sale_audit_pic) {
+		SaleVO saleVO=new SaleVO();
+		
+		saleVO.setSale_id(sale_id);
+		saleVO.setSale_audit_pic(sale_audit_pic);
+		
+		dao.updatep(saleVO);
 		return saleVO;
 	}
 	//刪除

@@ -3,7 +3,9 @@
 <%@ page import="com.sale.model.*"%> 
 
 <%-- 取出 Concroller EmpServlet.java已存入request的EmpVO物件--%>
-<%SaleVO empVO = (SaleVO) request.getAttribute("empVO");%>
+<%SaleVO empVO1 = (SaleVO) request.getAttribute("empVO");%>
+<%SaleService SSV= new SaleService();%>
+<%SaleVO empVO =SSV.getOneSale(empVO1.getSale_id());%>
    
 <!DOCTYPE html>
 <html>

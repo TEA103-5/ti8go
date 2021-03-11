@@ -33,6 +33,15 @@
     <url-pattern>/sale/sale.do</url-pattern>
   </servlet-mapping>
   
+      <servlet>
+    <servlet-name>SaleServletu</servlet-name>
+    <servlet-class>com.sale.controller.UploadTest_Servlet3_Simple</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SaleServletu</servlet-name>
+    <url-pattern>/sale/uploadServlet3_simple.do</url-pattern>
+  </servlet-mapping>
+  
   		<servlet>
 		<servlet-name>DBGifReader4_1</servlet-name>
 		<servlet-class>com.sale.controller.DBGifReader4_1</servlet-class>

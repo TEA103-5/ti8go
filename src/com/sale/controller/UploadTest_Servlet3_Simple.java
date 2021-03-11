@@ -4,11 +4,12 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 
 import com.sale.model.SaleService;
+import com.sale.model.SaleVO;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.annotation.MultipartConfig;
 
-@WebServlet("/uploadServlet3_simple.do")
+//@WebServlet("/uploadServlet3_simple.do")
 @MultipartConfig
 public class UploadTest_Servlet3_Simple extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -17,13 +18,22 @@ public class UploadTest_Servlet3_Simple extends HttpServlet {
 			throws ServletException, IOException {
 		
 //		req.getPart("upfile1").write(getServletContext().getRealPath("/images_uploaded")+"/file.gif");
+		Integer sale_status = new Integer(req.getParameter("empno").trim());
 		Part part=req.getPart("upfile1");
 		InputStream in = part.getInputStream();
 		byte[] buf = new byte[in.available()];
 		in.read(buf);
 		in.close();
 		SaleService saleSvc = new SaleService();
+//		System.out.println(sale_status);
+		saleSvc.updateSaleP(sale_status,buf);
 		
-		saleSvc.updateSale("sale_email354",1, "sal54e_pwd",1,"sale_n5435ame", "sale545_nickname", 5f,1,buf);
+		SaleService empVO1=new SaleService();
+		SaleVO empVO=empVO1.getOneSale(sale_status);
+		/***************************3.修改完成.準備轉交(Send the Success view)*************/
+		req.setAttribute("empVO", empVO); // 資料庫update成功後,正確的empVO物件,存入req
+		String url = "/sale/update_sale.jsp";
+		RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後.轉交listOneEmp.jsp
+		successView.forward(req, res);
 	}
 }

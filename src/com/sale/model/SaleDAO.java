@@ -24,7 +24,7 @@ public class SaleDAO implements SaleDAO_interface{
 			e.printStackTrace();
 		}
 	}
-
+	//差一個單獨更新照片
 	//,sale_audit_pic
 	private static final String INSERT_STMT = 
 			"insert into sale(sale_email,sale_pwd,sale_name,sale_phone,sale_nickname) values (?,?,?,?,?)";
@@ -32,8 +32,10 @@ public class SaleDAO implements SaleDAO_interface{
 	private static final String DELETE = 
 			"DELETE FROM sale where sale_id = ?";
 	private static final String UPDATE = 
-			"UPDATE sale set sale_pwd=?,sale_audit_status=?,sale_audit_pic=?,sale_name=?,sale_status=?,sale_phone=?,sale_nickname=?,sale_rate=? where sale_id = ?";
-	//8+1個問號
+			"UPDATE sale set sale_pwd=?,sale_audit_status=?,sale_name=?,sale_status=?,sale_phone=?,sale_nickname=?,sale_rate=? where sale_id = ?";
+	//7+1個問號,
+	private static final String UPDATEP = 
+			"UPDATE sale set sale_audit_pic=? where sale_id = ?";
 	private static final String GET_ONE_STMT = 
 			"SELECT sale_id,sale_email,sale_pwd,sale_name,sale_audit_status,sale_audit_pic,sale_status,sale_phone,sale_nickname,sale_rate,sale_time_create FROM sale where sale_id = ?";
 	//11個欄位 
@@ -81,6 +83,40 @@ public class SaleDAO implements SaleDAO_interface{
 		}
 	}
 	@Override
+	public void updatep(SaleVO saleVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATEP);
+			
+			pstmt.setBytes(1, saleVO.getSale_audit_pic());
+			pstmt.setInt(2, saleVO.getSale_id());
+			
+			pstmt.executeUpdate();
+			}catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+				// Clean up JDBC resources
+			} finally {
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+				
+			}
+	}
+	@Override
 	public void update(SaleVO saleVO) {//更新
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -91,14 +127,14 @@ public class SaleDAO implements SaleDAO_interface{
 
 			pstmt.setString(1, saleVO.getSale_pwd());
 			pstmt.setInt(2, saleVO.getSale_audit_status());
-			pstmt.setBytes(3, saleVO.getSale_audit_pic());
-			pstmt.setString(4, saleVO.getSale_name());
-			pstmt.setInt(5, saleVO.getSale_status());
-			pstmt.setString(6, saleVO.getSale_phone());
-			pstmt.setString(7, saleVO.getSale_nickname());
-			pstmt.setFloat(8, saleVO.getSale_rate());
+			pstmt.setString(3, saleVO.getSale_name());
+			pstmt.setInt(4, saleVO.getSale_status());
+			pstmt.setString(5, saleVO.getSale_phone());
+			pstmt.setString(6, saleVO.getSale_nickname());
+			pstmt.setFloat(7, saleVO.getSale_rate());
 //			pstmt.setTimestamp(9, saleVO.getSale_time_create());
-			pstmt.setInt(9, saleVO.getSale_id());
+//			pstmt.setBytes(8, saleVO.getSale_audit_pic());
+			pstmt.setInt(8, saleVO.getSale_id());
 			
 			pstmt.executeUpdate();
 		}catch (SQLException se) {
