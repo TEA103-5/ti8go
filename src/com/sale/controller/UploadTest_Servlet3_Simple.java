@@ -27,7 +27,7 @@ public class UploadTest_Servlet3_Simple extends HttpServlet {
 		SaleService saleSvc = new SaleService();
 //		System.out.println(sale_status);
 		saleSvc.updateSaleP(sale_status,buf);
-		
+		//這裡有個如何判斷是不是圖片的問題
 		SaleService empVO1=new SaleService();
 		SaleVO empVO=empVO1.getOneSale(sale_status);
 		/***************************3.修改完成.準備轉交(Send the Success view)*************/

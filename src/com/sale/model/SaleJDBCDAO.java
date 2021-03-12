@@ -85,6 +85,10 @@ public class SaleJDBCDAO implements SaleDAO_interface{
 
 	};
 	@Override
+	public void updatep(SaleVO saleVO) {
+		
+	}
+	@Override
 	public void update(SaleVO saleVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;

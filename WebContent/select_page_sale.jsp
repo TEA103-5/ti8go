@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=BIG5"
-	pageEncoding="BIG5"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
@@ -37,10 +37,10 @@ h4 {
 
 	<p>This is the Home page for IBM Emp: Home</p>
 
-	<h3>��Ƭd��:</h3>
-	<%-- ���~���C --%>
+	<h3>資料查詢:</h3>
+	<%-- 錯誤表列 --%>
 	<c:if test="${not empty errorMsgs}">
-		<font style="color: red">�Эץ��H�U���~:</font>
+		<font style="color: red">請修正以下錯誤:</font>
 		<ul>
 			<c:forEach var="message" items="${errorMsgs}">
 				<li style="color: red">${message}</li>
@@ -58,13 +58,13 @@ h4 {
 			<FORM METHOD="post"
 				ACTION="<%=request.getContextPath()%>/sale/sale.do">
 				<%
-					/*�o�Ӧbweb.xml�̥i�H�ݨ�emp/emp.do �����Ocom.emp.controller.EmpServlet
-					    �U������hidden�saction �H���r��ӨM�w�᭱EmpServlet���欰
+					/*這個在web.xml裡可以看到emp/emp.do 指的是com.emp.controller.EmpServlet
+					    下面有個hidden叫action 以此字串來決定後面EmpServlet的行為
 					    */
 				%>
-				<b>��J�c��̽s�� (�p1):</b> <input type="text" name="empno"> <input
+				<b>輸入販賣者編號 (如1):</b> <input type="text" name="empno"> <input
 					type="hidden" name="action" value="getOne_For_Display"> <input
-					type="submit" value="�e�X">
+					type="submit" value="送出">
 			</FORM>
 		</li>
 		<jsp:useBean id="empSvc" scope="page"
@@ -72,32 +72,32 @@ h4 {
 		<li>
 			<FORM METHOD="post"
 				ACTION="<%=request.getContextPath()%>/sale/sale.do">
-				<b>��ܭ��u�s��:</b> <select size="1" name="empno">
+				<b>選擇販賣者編號:</b> <select size="1" name="empno">
 					<c:forEach var="empVO" items="${empSvc.all}">
 						<option value="${empVO.sale_id}">${empVO.sale_id}</option>
 					</c:forEach>
 				</select> <input type="hidden" name="action" value="getOne_For_Display">
-				<input type="submit" value="�e�X">
+				<input type="submit" value="送出">
 			</FORM>
 		</li>
 		<li>
 			<FORM METHOD="post"
 				ACTION="<%=request.getContextPath()%>/sale/sale.do">
-				<b>��ܭ��u�m�W:</b> <select size="1" name="empno">
+				<b>選擇販賣者姓名:</b> <select size="1" name="empno">
 					<c:forEach var="empVO" items="${empSvc.all}">
 						<option value="${empVO.sale_id}">${empVO.sale_name}</option>
 					</c:forEach>
 				</select> <input type="hidden" name="action" value="getOne_For_Display">
-				<input type="submit" value="�e�X">
+				<input type="submit" value="送出">
 			</FORM>
 		</li>
 	</ul>
 
-	<h3>���u�޲z</h3>
+	<h3>販賣者管理</h3>
 
 	<ul>
 		<li><a href='<%=request.getContextPath()%>/sale/addSale.jsp'>Add</a>
-			a new Emp.</li>
+			a new Sale.</li>
 	</ul>
 
 

@@ -76,11 +76,14 @@
 <table>
 	<tr>
 		<th>販售者編號</th>
+		<th>帳號</th>
 		<th>販售者姓名</th>
+		<th>販售者暱稱</th>
 		<th>販售者連絡電話</th>
 		<th>販售者帳號狀態</th>
 		<th>販售者資格審核照片</th>
 		<th>販售者資格審核狀態</th>
+		<th>販售者評分</th>
 		<th>販售者帳號創辦時間</th>
 		<th>修改</th>
 		<th>刪除</th>
@@ -90,13 +93,16 @@
 		
 		<tr>
 			<td>${empVO.sale_id}</td>
+			<td>${empVO.sale_email}</td>
 			<td>${empVO.sale_name}</td>
+			<td>${empVO.sale_nickname}</td>
 			<td>${empVO.sale_phone}</td>
 			<td>${empVO.sale_status}</td>
 			<td>
 		<img class="img" src="<%=request.getContextPath()%>/DBGifReader4_1?id=${empVO.sale_id}"/>
 		</td>
 			<td>${empVO.sale_audit_status}</td>
+			<td>${empVO.sale_rate}</td> 
 			<td>${empVO.sale_time_create}</td> 
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/sale/sale.do" style="margin-bottom: 0px;">
