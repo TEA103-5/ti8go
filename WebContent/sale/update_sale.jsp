@@ -68,11 +68,17 @@
 </c:if>
 
 <img class="img" src="<%=request.getContextPath()%>/DBGifReader4_1?id=<%=empVO.getSale_id()%>"/>
+
+
+
+
   <FORM action="uploadServlet3_simple.do" method=post enctype="multipart/form-data">
         <input type="file" name="upfile1">
         <input type="hidden" name="empno" value="<%=empVO.getSale_id()%>">
         <input type="submit" value="¤W¶Ç">
   </FORM>
+
+
 
 <FORM METHOD="post" ACTION="sale.do" name="form1" >
 <table>
