@@ -106,7 +106,7 @@
             <div class="carousel-item">
               <img
                 class="w-100 d-block"
-                src="assets/img/scenery/image6.jpg"
+                src="<%=request.getContextPath()%>/assets/img/scenery/image6.jpg"
                 alt="Slide Image"
               />
               <div>
@@ -151,7 +151,7 @@
             <ul>
   <li><a href='<%=request.getContextPath()%>/emp/addEmp.jsp'>Add</a> a new Emp.</li>
 </ul>
-<img src="DBGifReader4_1?id=5">
+<img src="<%=request.getContextPath()%>/DBGifReader4_1?id=5">
           </div>
           <div class="row align-items-center">
             <div class="col-md-6">

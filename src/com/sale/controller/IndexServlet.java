@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class IndexServlet
  */
-//@WebServlet("/index.html")
+@WebServlet("/")
 public class IndexServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -30,12 +30,12 @@ public class IndexServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		res.getWriter().append("Served at: ").append(req.getContextPath());
-//		RequestDispatcher failureView = req
-//				.getRequestDispatcher("/index.html");
-//		failureView.forward(req, res);
+		RequestDispatcher failureView = req
+				.getRequestDispatcher("/index.jsp");
+		failureView.forward(req, res);
 		
 //		String path = req.getContextPath();
-    	res.sendRedirect("index.jsp");
+//    	res.forward("index.jsp");
 	}
 
 	/**
