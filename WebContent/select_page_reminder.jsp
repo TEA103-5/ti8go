@@ -31,12 +31,12 @@ h4 {
 <body>
 	<table id="table-1">
 		<tr>
-			<td><h3>Ti8Go Sale: Home</h3>
+			<td><h3>Ti8Go Reminder: Home</h3>
 				<h4>( MVC )</h4></td>
 		</tr>
 	</table>
 
-	<p>This is the Home page for Ti8Go Sale: Home</p>
+	<p>This is the Home page for Ti8Go Reminder: Home</p>
 
 	<h3>資料查詢:</h3>
 	<%-- 錯誤表列 --%>
@@ -48,24 +48,19 @@ h4 {
 			</c:forEach>
 		</ul>
 	</c:if>
-
+	
 	<ul>
-		<li><a href='<%=request.getContextPath()%>/sale/ListAllSale.jsp'>List</a>
+		<li><a href='<%=request.getContextPath()%>/reminder/listAllReminder.jsp'>List</a>
 			all Sales. <br>
 		<br></li>
 
 
 		<li>
 			<FORM METHOD="post"
-				ACTION="<%=request.getContextPath()%>/sale/sale.do">
-				<%
-					/*這個在web.xml裡可以看到emp/emp.do 指的是com.emp.controller.EmpServlet
-					    下面有個hidden叫action 以此字串來決定後面EmpServlet的行為
-					    */
-				%>
-				<b>輸入販賣者編號 (如1):</b> <input type="text" name="empno"> <input
-					type="hidden" name="action" value="getOne_For_Display"> <input
-					type="submit" value="送出">
+			ACTION="<%=request.getContextPath()%>/reminder/reminder.do">
+				<b>輸入販售者訊息提醒編號 (如1):</b> <input type="text" name="empno"> 
+				<input type="hidden" name="action" value="getOne_For_Display"> 
+				<input type="submit" value="送出">
 			</FORM>
 		</li>
 		<jsp:useBean id="empSvc" scope="page"
@@ -101,6 +96,6 @@ h4 {
 			a new Sale.</li>
 	</ul>
 
-
+	
 </body>
 </html>

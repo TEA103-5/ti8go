@@ -33,6 +33,15 @@
     <url-pattern>/sale/sale.do</url-pattern>
   </servlet-mapping>
   
+    <servlet>
+    <servlet-name>ReminderServlet</servlet-name>
+    <servlet-class>com.reminder_s.controller.Reminder_sServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ReminderServlet</servlet-name>
+    <url-pattern>/reminder/reminder.do</url-pattern>
+  </servlet-mapping>
+  
       <servlet>
     <servlet-name>SaleServletu</servlet-name>
     <servlet-class>com.sale.controller.UploadTest_Servlet3_Simple</servlet-class>
