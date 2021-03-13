@@ -424,15 +424,15 @@ insert into note_c(note_c_title, note_c_content, note_id) values ('哈哈哈哈�
 create table product (
 product_id      	 int auto_increment not null,
 product_name         varchar(50) not null,
-product_status       tinyint not null,
-product_update_time  timestamp,
+product_status       tinyint default 0,
+product_update_time  timestamp default current_timestamp,
 product_content	     varchar(50),
 product_description  varchar(50),
 product_categories   varchar(50),
-product_price        int,
-product_stock        int,
-product_pic          blob,
-sale_id              int,
+product_price        int default 0,
+product_stock        int default 0,
+product_pic          longblob,
+sale_id              int not null,
 foreign key(sale_id) references sale(sale_id),
 primary key(product_id)
 );

@@ -7,11 +7,11 @@ public class ProductVO implements java.io.Serializable{
 	private String product_name;
 	private Integer product_status;
 	private Timestamp product_update_time;
-	private String product_content;
-	private String product_description;
-	private String product_categories;
+	private String product_content;//內容
+	private String product_description;//描述
+	private String product_categories;//分類
 	private Integer product_price;
-	private Integer product_stock;
+	private Integer product_stock;//庫存
 	private byte[] product_pic;
 	private Integer sale_id;
 
