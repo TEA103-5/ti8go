@@ -18,7 +18,7 @@ public class UploadTest_Servlet3_Simple extends HttpServlet {
 			throws ServletException, IOException {
 		
 //		req.getPart("upfile1").write(getServletContext().getRealPath("/images_uploaded")+"/file.gif");
-		Integer sale_status = new Integer(req.getParameter("empno").trim());
+		Integer sale_id = new Integer(req.getParameter("empno").trim());
 		Part part=req.getPart("upfile1");
 		InputStream in = part.getInputStream();
 		byte[] buf = new byte[in.available()];
@@ -26,12 +26,12 @@ public class UploadTest_Servlet3_Simple extends HttpServlet {
 		in.close();
 		SaleService saleSvc = new SaleService();
 //		System.out.println(sale_status);
-		saleSvc.updateSaleP(sale_status,buf);
+		saleSvc.updateSaleP(sale_id,buf);
 		//這裡有個如何判斷是不是圖片的問題
 		SaleService empVO1=new SaleService();
-		SaleVO empVO=empVO1.getOneSale(sale_status);
+		SaleVO saleVO=empVO1.getOneSale(sale_id);
 		/***************************3.修改完成.準備轉交(Send the Success view)*************/
-		req.setAttribute("empVO", empVO); // 資料庫update成功後,正確的empVO物件,存入req
+		req.setAttribute("empVO", saleVO); // 資料庫update成功後,正確的empVO物件,存入req
 		String url = "/sale/update_sale.jsp";
 		RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後.轉交listOneEmp.jsp
 		successView.forward(req, res);
