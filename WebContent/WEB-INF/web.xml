@@ -25,6 +25,29 @@
   </servlet-mapping>
   
     <servlet>
+    <servlet-name>DeptServlet</servlet-name>
+    <servlet-class>com.dept.controller.DeptServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeptServlet</servlet-name>
+    <url-pattern>/dept/dept.do</url-pattern>
+  </servlet-mapping>
+  
+  
+  
+     <servlet>
+    <servlet-name>ProductServlet</servlet-name>
+    <servlet-class>com.product.controller.ProductServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProductServlet</servlet-name>
+    <url-pattern>/product/prod.do</url-pattern>
+  </servlet-mapping>
+  
+  
+  
+  
+    <servlet>
     <servlet-name>SaleServlet</servlet-name>
     <servlet-class>com.sale.controller.SaleServlet</servlet-class>
   </servlet>

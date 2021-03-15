@@ -4,6 +4,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Set;
+
+import com.product.model.ProductVO;
 
 
 public class SaleService {
@@ -61,6 +64,12 @@ public class SaleService {
 	public void deleteSale(Integer sale_id) {
 		dao.delete(sale_id);
 	}
+	
+	public Set<ProductVO> getProdsBySaleid(Integer sale_id){
+		return dao.getProdsBySaleid(sale_id);
+	}
+	
+	
 	//查詢一筆
 	public SaleVO getOneSale(Integer sale_id) {
 		return dao.findByPrimaryKey(sale_id);

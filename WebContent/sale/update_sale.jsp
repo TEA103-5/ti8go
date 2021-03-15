@@ -5,6 +5,7 @@
 <%
   SaleVO empVO = (SaleVO) request.getAttribute("empVO");
 %>
+<%= empVO==null %>--${empVO.sale_id}--
 <!DOCTYPE html>
 <html>
 <head>

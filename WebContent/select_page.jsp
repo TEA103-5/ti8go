@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <html>
@@ -35,31 +35,26 @@
 
 <p>This is the Home page for IBM Emp: Home</p>
 
-<h3>¸ê®Æ¬d¸ß:</h3>
-	
-<%-- ¿ù»~ªí¦C --%>
+<h3>è³‡æ–™æŸ¥è©¢:</h3>
+<%-- éŒ¯èª¤è¡¨åˆ— --%>
 <c:if test="${not empty errorMsgs}">
-	<font style="color:red">½Ğ­×¥¿¥H¤U¿ù»~:</font>
+	<font color='red'>è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:</font>
 	<ul>
-	    <c:forEach var="message" items="${errorMsgs}">
+		<c:forEach var="message" items="${errorMsgs}">
 			<li style="color:red">${message}</li>
 		</c:forEach>
 	</ul>
 </c:if>
 
 <ul>
-  <li><a href='<%=request.getContextPath()%>/emp/listAllEmp.jsp'>List</a> all Emps.  <br><br></li>
-  
+  <li><a href='<%=request.getContextPath()%>/emp/listAllEmp.jsp'>List</a> all Emps. <br><br></li>
   
   <li>
     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do" >
-    <%/*³o­Ó¦bweb.xml¸Ì¥i¥H¬İ¨ìemp/emp.do «üªº¬Ocom.emp.controller.EmpServlet
-    ¤U­±¦³­Óhidden¥saction ¥H¦¹¦r¦ê¨Ó¨M©w«á­±EmpServletªº¦æ¬°
-    */%>
-        <b>¿é¤J­û¤u½s¸¹ (¦p7001):</b>
+        <b>è¼¸å…¥å“¡å·¥ç·¨è™Ÿ (å¦‚7001):</b>
         <input type="text" name="empno">
+        <input type="submit" value="é€å‡º">
         <input type="hidden" name="action" value="getOne_For_Display">
-        <input type="submit" value="°e¥X">
     </FORM>
   </li>
 
@@ -67,36 +62,58 @@
    
   <li>
      <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do" >
-       <b>¿ï¾Ü­û¤u½s¸¹:</b>
+       <b>é¸æ“‡å“¡å·¥ç·¨è™Ÿ:</b>
        <select size="1" name="empno">
          <c:forEach var="empVO" items="${empSvc.all}" > 
           <option value="${empVO.empno}">${empVO.empno}
          </c:forEach>   
        </select>
+       <input type="submit" value="é€å‡º">
        <input type="hidden" name="action" value="getOne_For_Display">
-       <input type="submit" value="°e¥X">
     </FORM>
   </li>
   
   <li>
      <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do" >
-       <b>¿ï¾Ü­û¤u©m¦W:</b>
+       <b>é¸æ“‡å“¡å·¥å§“å:</b>
        <select size="1" name="empno">
          <c:forEach var="empVO" items="${empSvc.all}" > 
           <option value="${empVO.empno}">${empVO.ename}
          </c:forEach>   
        </select>
+       <input type="submit" value="é€å‡º">
        <input type="hidden" name="action" value="getOne_For_Display">
-       <input type="submit" value="°e¥X">
+     </FORM>
+  </li>
+  
+  
+   <jsp:useBean id="deptSvc" scope="page" class="com.dept.model.DeptService" />
+  
+  <li>
+     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/dept/dept.do" >
+       <b><font color=orange>é¸æ“‡éƒ¨é–€:</font></b>
+       <select size="1" name="deptno">
+         <c:forEach var="deptVO" items="${deptSvc.all}" > 
+          <option value="${deptVO.deptno}">${deptVO.dname}
+         </c:forEach>   
+       </select>
+       <input type="submit" value="é€å‡º">
+       <input type="hidden" name="action" value="listEmps_ByDeptno_A">
      </FORM>
   </li>
 </ul>
 
 
-<h3>­û¤uºŞ²z</h3>
+<h3>å“¡å·¥ç®¡ç†</h3>
 
 <ul>
   <li><a href='<%=request.getContextPath()%>/emp/addEmp.jsp'>Add</a> a new Emp.</li>
+</ul>
+
+<h3><font color=orange>éƒ¨é–€ç®¡ç†</font></h3>
+
+<ul>
+  <li><a href='<%=request.getContextPath()%>/dept/listAllDept.jsp'>List</a> all Depts. </li>
 </ul>
 
 </body>

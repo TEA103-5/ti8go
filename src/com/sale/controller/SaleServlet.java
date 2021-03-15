@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 
+import com.product.model.ProductVO;
 import com.sale.model.*;
 
 
@@ -29,9 +31,79 @@ public class SaleServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) 
 			throws ServletException, IOException {
 		
+
+		//可以得到傳過來的圖片
+//		Part part=request.getPart("upfile1");
+//		InputStream in = part.getInputStream();
+//		byte[] buf = new byte[in.available()];
+//		in.read(buf);
+//		in.close();
+		
+		
+		//SaleService saleSvc = new SaleService();
+		//新增
+//		saleSvc.addSale(sale_email, sale_pwd, sale_name, sale_phone, sale_nickname, sale_rate, sale_audit_pic);
+	
+//			saleSvc.addSale("sale_email", "sale_pwd", "sale_name", "sale_phone", "sale_nickname", 5f,pic);
+	
+		//刪除
+		//saleSvc.deleteSale(2);
+		//修改
+//		saleSvc.updateSale(sale_pwd, sale_audit_status, *sale_audit_pic*, sale_name, sale_status, sale_phone, sale_nickname, sale_rate, sale_id);
+//		saleSvc.updateSale("sale_pwd1",1,"sale_name1",1,"sale_phone2","sale_nickname2",4f,1);
+		//查詢一筆
+//		SaleVO saleVO=saleSvc.getOneSale(1);
+//		System.out.println(saleVO);
+		//查詢全部
+//		List<SaleVO> saleVO=saleSvc.getAll();
+//		System.out.println(saleVO);
+	}
+
+
+	
+	
+	
+	
+	protected void doPost(HttpServletRequest req, HttpServletResponse res) 
+	throws ServletException, IOException {
+//		doGet(request, response);
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		//req會有 action 和 empno 跟 他們對應的value
+		
+		
+	    // 來自select_page_product.jsp的請求                                  // 來自 dept/listAllDept.jsp的請求
+		if ("listEmps_ByDeptno_A".equals(action) || "listEmps_ByDeptno_B".equals(action)) {
+
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/*************************** 1.接收請求參數 ****************************************/
+				Integer saleid = new Integer(req.getParameter("deptno"));
+				
+
+				/*************************** 2.開始查詢資料 ****************************************/
+				SaleService saleSvc = new SaleService();
+				Set<ProductVO> set = saleSvc.getProdsBySaleid(saleid);
+
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+				req.setAttribute("listEmps_ByDeptno", set);    // 資料庫取出的set物件,存入request
+
+				String url = null;
+				if ("listEmps_ByDeptno_A".equals(action))
+					url = "/sale/listProds_BySaleid.jsp";        // 成功轉交 sale/listProds_BySaleid.jsp
+				else if ("listEmps_ByDeptno_B".equals(action))
+					url = "/dept/listAllDept.jsp";              // 成功轉交 dept/listAllDept.jsp
+
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 ***********************************/
+			} catch (Exception e) {
+				throw new ServletException(e);
+			}
+		}
 		
 		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
 
@@ -238,24 +310,47 @@ public class SaleServlet extends HttpServlet {
 				// Store this set in the request scope, in case we need to
 				// send the ErrorPage view.
 				req.setAttribute("errorMsgs", errorMsgs);
-				String sale_name = req.getParameter("sname");
-				String sale_nickname = req.getParameter("snickname");
-				String sale_email = req.getParameter("semail");
-				String sale_pwd = req.getParameter("spwd");
-				String sale_phone = req.getParameter("sphone");
+
 				
 				
 				
 				try {
 					/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
+					String sale_name = req.getParameter("sname");
+					String sale_nickname = req.getParameter("snickname");
+					String sale_email = req.getParameter("semail");
+					String sale_pwd = req.getParameter("spwd");
+					String sale_phone = req.getParameter("sphone");
 //					String ename = req.getParameter("ename");
 //					String enameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
+					String pwdReg = "^[a-zA-Z0-9]{2,20}$";
+					String emailReg = "^[_a-z0-9-]+([.][_a-z0-9-]+)*@[a-z0-9-]+([.][a-z0-9-]+)*$";
+					String phoneReg = "[0-9]{10}";
 //					if (ename == null || ename.trim().length() == 0) {
 //						errorMsgs.add("員工姓名: 請勿空白");
 //					} else if(!ename.trim().matches(enameReg)) { //以下練習正則(規)表示式(regular-expression)
 //						errorMsgs.add("員工姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
 //		            }
-//					
+					if(sale_pwd==null || sale_pwd.trim().length() == 0) {
+						errorMsgs.add("販售者密碼: 請勿空白");
+						sale_pwd="密碼請勿空白";
+					}else if(!sale_pwd.trim().matches(pwdReg)) { //以下練習正則(規)表示式(regular-expression)
+						errorMsgs.add("密碼:只能是英文字母、數字");
+					}
+					if(sale_email==null || sale_email.trim().length() == 0) {
+						errorMsgs.add("販售者信箱: 請勿空白");
+					}else if(!sale_email.trim().matches(emailReg)) { //以下練習正則(規)表示式(regular-expression)
+						errorMsgs.add("信箱都會打錯喔? 到底?");
+			            }
+					if(sale_phone==null || sale_phone.trim().length() == 0) {
+						errorMsgs.add("電話應該是不用第一時間輸入啦");
+					}else if(!sale_phone.trim().matches(phoneReg)) { //以下練習正則(規)表示式(regular-expression)
+						errorMsgs.add("電話都會打錯喔? 到底?");
+					}
+					
+					
+					
+					
 //					String job = req.getParameter("job").trim();
 //					if (job == null || job.trim().length() == 0) {
 //						errorMsgs.add("職位請勿空白");
@@ -287,28 +382,35 @@ public class SaleServlet extends HttpServlet {
 //					Integer deptno = new Integer(req.getParameter("deptno").trim());
 //
 					SaleVO empVO = new SaleVO();
-//					empVO.setEname(ename);
-//					empVO.setJob(job);
-//					empVO.setHiredate(hiredate);
-//					empVO.setSal(sal);
-//					empVO.setComm(comm);
-//					empVO.setDeptno(deptno);
+					empVO.setSale_name(sale_name);
+					empVO.setSale_nickname(sale_nickname);
+					empVO.setSale_email(sale_email);
+					empVO.setSale_pwd(sale_pwd);
+					empVO.setSale_phone(sale_phone);
+			
+					
+	
+		
+				
+					
+	
+					
 //
 //					// Send the use back to the form, if there were errors
-//					if (!errorMsgs.isEmpty()) {
-//						req.setAttribute("empVO", empVO); // 含有輸入格式錯誤的empVO物件,也存入req
-//						RequestDispatcher failureView = req
-//								.getRequestDispatcher("/emp/addEmp.jsp");
-//						failureView.forward(req, res);
-//						return;
-//					}
+					if (!errorMsgs.isEmpty()) {
+						req.setAttribute("empVO", empVO); // 含有輸入格式錯誤的empVO物件,也存入req
+						RequestDispatcher failureView = req
+								.getRequestDispatcher("/sale/addSale.jsp");
+						failureView.forward(req, res);
+						return;
+					}
 					
 					/***************************2.開始新增資料***************************************/
 					SaleService empSvc = new SaleService();
 					empVO = empSvc.addSale(sale_email, sale_pwd, sale_name, sale_phone, sale_nickname);
 					
 					/***************************3.新增完成,準備轉交(Send the Success view)***********/
-					String url = "/sale/addSale.jsp";
+					String url = "/sale/ListAllSale.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 					successView.forward(req, res);				
 					
@@ -351,41 +453,6 @@ public class SaleServlet extends HttpServlet {
 					failureView.forward(req, res);
 				}
 			}
-		//可以得到傳過來的圖片
-//		Part part=request.getPart("upfile1");
-//		InputStream in = part.getInputStream();
-//		byte[] buf = new byte[in.available()];
-//		in.read(buf);
-//		in.close();
-		
-		
-		//SaleService saleSvc = new SaleService();
-		//新增
-//		saleSvc.addSale(sale_email, sale_pwd, sale_name, sale_phone, sale_nickname, sale_rate, sale_audit_pic);
-	
-//			saleSvc.addSale("sale_email", "sale_pwd", "sale_name", "sale_phone", "sale_nickname", 5f,pic);
-	
-		//刪除
-		//saleSvc.deleteSale(2);
-		//修改
-//		saleSvc.updateSale(sale_pwd, sale_audit_status, *sale_audit_pic*, sale_name, sale_status, sale_phone, sale_nickname, sale_rate, sale_id);
-//		saleSvc.updateSale("sale_pwd1",1,"sale_name1",1,"sale_phone2","sale_nickname2",4f,1);
-		//查詢一筆
-//		SaleVO saleVO=saleSvc.getOneSale(1);
-//		System.out.println(saleVO);
-		//查詢全部
-//		List<SaleVO> saleVO=saleSvc.getAll();
-//		System.out.println(saleVO);
-	}
-
-
-	
-	
-	
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
-	throws ServletException, IOException {
-		doGet(request, response);
 	}
 
 

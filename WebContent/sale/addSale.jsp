@@ -5,10 +5,13 @@
 <%
   SaleVO empVO = (SaleVO) request.getAttribute("empVO");
 %>
+
+<%= empVO==null %>--${empVO.sale_name==null}--
+
 <!DOCTYPE html>
 <html>
 <head>
-<title>販售者資料新增 - addEmp.jsp</title>
+<title>販售者資料新增 - addSale.jsp</title>
 
 <style>
   table#table-1 {
@@ -46,7 +49,7 @@
 <body>
 <table id="table-1">
 	<tr><td>
-		 <h3>員工資料新增 - addEmp.jsp</h3></td><td>
+		 <h3>新增販售者 - addSale.jsp</h3></td><td>
 		 <h4><a href="<%=request.getContextPath()%>/select_page_sale.jsp">
 		 <img src="images/tomcat.png" width="100" height="100" border="0">回首頁</a></h4>
 	</td></tr>
@@ -66,13 +69,15 @@
 <FORM METHOD="post" ACTION="sale.do" name="form1">
 <table>
 	<tr>
-		<td>帳號:</td>
+		<td>信箱:</td>
 		<td><input type="TEXT" name="semail" size="45"
-			 value="<%= (empVO==null)? "email" : empVO.getSale_email()%>" /></td>
+<%-- 			 value="<%= (empVO==null)? "email" : empVO.getSale_email()%>" /></td> --%>
+			 value="${(empVO.sale_email==null)? '':empVO.sale_email}" /></td>
 	</tr>
 	<tr>
 		<td>密碼:</td>
-		<td><input name="spwd" size="45" type="text"></td>
+		<td><input name="spwd" size="45" type="text"
+		 value="${(empVO.sale_pwd==null)? '':empVO.sale_pwd}" /></td>
 	</tr>
 	<tr>
 		<td>販售者姓名:</td>

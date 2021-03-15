@@ -5,12 +5,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+
+import com.product.model.ProductVO;
+
+
 
 
 
@@ -41,6 +47,64 @@ public class SaleDAO implements SaleDAO_interface{
 	//11個欄位 
 	private static final String GET_ALL_STMT = 
 			"SELECT sale_id,sale_email,sale_pwd,sale_name,sale_audit_status,sale_audit_pic,sale_status,sale_phone,sale_nickname,sale_rate,sale_time_create FROM sale order by sale_id";
+	private static final String GET_Prods_BySaleid_STMT = 
+			"SELECT product_id,product_name,sale_id FROM product where sale_id = ? order by product_id";
+	
+	public Set<ProductVO> getProdsBySaleid(Integer sale_id) {
+	
+		Set<ProductVO> set = new LinkedHashSet<ProductVO>();
+		ProductVO prodVO = null;
+	
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+	
+		try {
+	
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_Prods_BySaleid_STMT);
+			pstmt.setInt(1, sale_id);
+			rs = pstmt.executeQuery();
+	
+			while (rs.next()) {
+			prodVO = new ProductVO();
+			prodVO.setProduct_id(rs.getInt("product_id"));
+			prodVO.setProduct_name(rs.getString("product_name"));
+			prodVO.setSale_id(rs.getInt("sale_id"));
+				set.add(prodVO); // Store the row in the vector
+			}
+	
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return set;
+	}
+	
+	
 	
 	@Override
 	public void insert(SaleVO saleVO) {//新增
