@@ -23,4 +23,13 @@
     <servlet-name>EmpServlet</servlet-name>
     <url-pattern>/emp/emp.do</url-pattern>
   </servlet-mapping>
+  <servlet>
+  	<servlet-name>PlaceServlet</servlet-name>
+  	<servlet-class>com.place.controller.PlaceServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>PlaceServlet</servlet-name>
+  	<url-pattern>/place/place.do</url-pattern>
+  </servlet-mapping>
+  
 </web-app>

@@ -251,7 +251,7 @@ public class PlaceDAO implements PlaceDAO_interface {
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
-			rs = pstmt.getResultSet();
+			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
 
