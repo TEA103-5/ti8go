@@ -138,7 +138,7 @@
 			 value="<%= (placeVO==null)? "" : placeVO.getBusiness_time()%>" /></td>
 	</tr>
 
-<!-- 	這邊之後應該是用來放建立者的位置 -->
+<!-- 	未更改,這邊之後應該是用來放建立者的位置 -->
 <%-- 	<jsp:useBean id="deptSvc" scope="page" class="com.dept.model.DeptService" /> --%>
 <!-- 	<tr> -->
 <!-- 		<td>部門:<font color=red><b>*</b></font></td> -->
