@@ -36,7 +36,7 @@ public class PlaceService {
 		placeVO.setPlace_state(place_state);
 		placeVO.setUsers_id(users_id);
 		placeVO.setBusiness_time(business_time);
-		
+		dao.insert(placeVO);
 		
 		return placeVO;
 	}
@@ -63,6 +63,7 @@ public class PlaceService {
 		placeVO.setPlace_state(place_state);
 		placeVO.setUsers_id(users_id);
 		placeVO.setBusiness_time(business_time);
+		dao.update(placeVO);
 		
 		
 		return placeVO;
