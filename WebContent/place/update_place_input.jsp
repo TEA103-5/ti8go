@@ -68,7 +68,7 @@ ${not empty placeVO.place_id}
 	</ul>
 </c:if>
 
-<FORM METHOD="post" ACTION="place.do" name="form1">
+<FORM METHOD="post" ACTION="place.do" name="form1" enctype="multipart/form-data">
 <table>
 	<tr>
 		<td>地點編號:<font color=red><b>*</b></font></td>
@@ -116,17 +116,17 @@ ${not empty placeVO.place_id}
 	</tr>
 	<tr>
 		<td>圖片1:</td>
-		<td><input type="TEXT" name="place_pic1" size="45"
+		<td><input type="file" name="place_pic1" size="45"
 			 value="<%= (placeVO==null)? "" : placeVO.getPlace_pic1()%>" /></td>
 	</tr>
 	<tr>
 		<td>圖片2:</td>
-		<td><input type="TEXT" name="place_pic2" size="45"
+		<td><input type="file" name="place_pic2" size="45"
 			 value="<%= (placeVO==null)? "" : placeVO.getPlace_pic2()%>" /></td>
 	</tr>
 	<tr>
 		<td>圖片3:</td>
-		<td><input type="TEXT" name="place_pic3" size="45"
+		<td><input type="file" name="place_pic3" size="45"
 			 value="<%= (placeVO==null)? "" : placeVO.getPlace_pic3()%>" /></td>
 	</tr>
 	<tr>

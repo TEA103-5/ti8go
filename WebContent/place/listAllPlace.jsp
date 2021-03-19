@@ -103,9 +103,9 @@
 			<td>${placeVO.place_region}</td>
 			<td>${placeVO.place_type}</td>
 			<td>${placeVO.place_index}</td>
-			<td>${placeVO.place_pic1}</td>
-			<td>${placeVO.place_pic2}</td>
-			<td>${placeVO.place_pic3}</td>
+			<td><img src="DBGifReader4.do?place_pic=place_pic1&place_id=${placeVO.place_id}"></td>
+			<td><img src="DBGifReader4.do?place_pic=place_pic2&place_id=${placeVO.place_id}"></td>
+			<td><img src="DBGifReader4.do?place_pic=place_pic3&place_id=${placeVO.place_id}"></td>
 			<td>${placeVO.place_state}</td>
 			<td>${placeVO.users_id}</td>
 			<td>${placeVO.business_time}</td>

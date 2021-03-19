@@ -49,6 +49,9 @@ public class PlaceDAO implements PlaceDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
+			// setBytes 可以為null
+			// set包裝類別不能為null, 需要setNull或setObject
+
 			pstmt.setString(1, placeVO.getPlace_name());
 			pstmt.setString(2, placeVO.getPlace_address());
 			pstmt.setBigDecimal(3, placeVO.getPlace_longitude());
@@ -99,6 +102,9 @@ public class PlaceDAO implements PlaceDAO_interface {
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
+
+			// setBytes 可以為null
+			// set包裝類別不能為null, 需要setNull或setObject
 
 			pstmt.setString(1, placeVO.getPlace_name());
 			pstmt.setString(2, placeVO.getPlace_address());
@@ -243,16 +249,16 @@ public class PlaceDAO implements PlaceDAO_interface {
 	public List<PlaceVO> getAll() {
 		List<PlaceVO> list = new ArrayList<PlaceVO>();
 		PlaceVO placeVO = null;
-		
+
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
-			
+
 			while (rs.next()) {
 
 				placeVO = new PlaceVO();
@@ -277,9 +283,8 @@ public class PlaceDAO implements PlaceDAO_interface {
 
 			}
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
-		}finally {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
@@ -302,7 +307,7 @@ public class PlaceDAO implements PlaceDAO_interface {
 				}
 			}
 		}
-		
+
 		return list;
 	}
 

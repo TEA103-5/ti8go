@@ -40,7 +40,7 @@ h4 {
 		</tr>
 	</table>
 
-	<p>This is the Home page for IBM Emp: Home</p>
+	<p>This is the Home page for tea05 Place: Home</p>
 
 	<h3>資料查詢:</h3>
 	
