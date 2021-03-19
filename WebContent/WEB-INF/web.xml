@@ -23,4 +23,15 @@
     <servlet-name>EmpServlet</servlet-name>
     <url-pattern>/emp/emp.do</url-pattern>
   </servlet-mapping>
+  
+
+  <servlet>
+    <servlet-name>CardServlet</servlet-name>
+    <servlet-class>com.card.controller.CardServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CardServlet</servlet-name>
+    <url-pattern>/card/card.do</url-pattern>
+  </servlet-mapping>
+  
 </web-app>

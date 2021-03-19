@@ -2,15 +2,29 @@ package com.card.model;
 
 import java.util.*;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import util.Util;
 
 import java.sql.*;
 
-public class cardJDBCDAO implements cardDAO_interface{
+public class CardJNDIDAO implements CardDAO_interface{
 //	String driver = "com.mysql.cj.jdbc.Driver";
 //	String url = "jdbc:mysql://localhost:3306/demo?serverTimezone=Asia/Taipei";
 //	String userid = "David";
 //	String passwd = "123456";
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/tea05");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	private static final String INSERT_STMT = "INSERT INTO card (card_id, users_id, card_number, card_date, card_last, card_default) VALUES (?, ?, ?, ?, ?, ?)";
 	private static final String UPDATE_STMT = "UPDATE card SET card_id = ?, card_number = ?, card_date = ?, card_last = ?, card_default = ? where users_id = ?";
@@ -18,26 +32,26 @@ public class cardJDBCDAO implements cardDAO_interface{
 	private static final String FIND_BY_PK = "SELECT * FROM card WHERE card_id = ?";
 	private static final String GET_ALL = "SELECT * FROM card"; 
 	
-	static {
-		try {
-			Class.forName(Util.DRIVER);
-		} catch (ClassNotFoundException ce) {
-			ce.printStackTrace();
-		}
-	}
+//	static {
+//		try {
+//			Class.forName(Util.DRIVER);
+//		} catch (ClassNotFoundException ce) {
+//			ce.printStackTrace();
+//		}
+//	}
 
 
 
 	private int card_id;
 	
 	@Override
-	public void insert(cardVO cardVO) {
+	public void insert(CardVO cardVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
 		try {
 
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
 			pstmt.setInt(1, cardVO.getCard_id());
@@ -46,6 +60,7 @@ public class cardJDBCDAO implements cardDAO_interface{
 			pstmt.setString(4, cardVO.getCard_date());
 			pstmt.setString(5, cardVO.getCard_last());
 			pstmt.setInt(6, cardVO.getCard_default());
+			
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
@@ -76,13 +91,13 @@ public class cardJDBCDAO implements cardDAO_interface{
 
 
 	@Override
-	public void update(cardVO cardVO) {
+	public void update(CardVO cardVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
 		try {
 
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_STMT);
 
 			pstmt.setInt(1, cardVO.getCard_id());
@@ -91,6 +106,7 @@ public class cardJDBCDAO implements cardDAO_interface{
 			pstmt.setString(4, cardVO.getCard_last());
 			pstmt.setInt(5, cardVO.getCard_default());
 			pstmt.setInt(6, cardVO.getUsers_id());
+			
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
@@ -125,7 +141,7 @@ public class cardJDBCDAO implements cardDAO_interface{
 
 		try {
 
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(DELETE_STMT);
 
 			pstmt.setInt(1, card_id);
@@ -158,21 +174,21 @@ public class cardJDBCDAO implements cardDAO_interface{
 
 
 	@Override
-	public cardVO findByPK(Integer card_id) {
-		cardVO card = null;
+	public CardVO findByPK(Integer card_id) {
+		CardVO card = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
 		try {
 
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(FIND_BY_PK);
 			pstmt.setInt(1, card_id);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				card = new cardVO();
+				card = new CardVO();
 				card.setCard_id(rs.getInt("card_id"));
 				card.setUsers_id(rs.getInt("users_id"));
 				card.setCard_number(rs.getString("card_number"));
@@ -214,21 +230,21 @@ public class cardJDBCDAO implements cardDAO_interface{
 
 
 	@Override
-	public List<cardVO> getAll() {
-		List<cardVO> cardList = new ArrayList<>();
-		cardVO card = null;
+	public List<CardVO> getAll() {
+		List<CardVO> cardList = new ArrayList<>();
+		CardVO card = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
 		try {
 
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				card = new cardVO();
+				card = new CardVO();
 				card.setCard_id(rs.getInt("card_id"));
 				card.setUsers_id(rs.getInt("users_id"));
 				card.setCard_number(rs.getString("card_number"));
@@ -271,7 +287,7 @@ public class cardJDBCDAO implements cardDAO_interface{
 
 
 	public static void main(String[] args) {
-		cardJDBCDAO dao = new cardJDBCDAO();
+		CardJNDIDAO dao = new CardJNDIDAO();
 		
 		//新增
 //		cardVO cardVO1 = new cardVO();
@@ -297,7 +313,7 @@ public class cardJDBCDAO implements cardDAO_interface{
 //		dao.delete(4);
 		
 		//查詢
-		cardVO card3 = dao.findByPK(7);
+		CardVO card3 = dao.findByPK(7);
 		System.out.print("--- ");
 		System.out.print(card3.getCard_id() + ",");
 		System.out.print(card3.getUsers_id() + ",");
@@ -308,8 +324,8 @@ public class cardJDBCDAO implements cardDAO_interface{
 		System.out.println(" ---");
 		
 		//查詢
-		List<cardVO> list = dao.getAll();
-		for (cardVO  card : list) {
+		List<CardVO> list = dao.getAll();
+		for (CardVO  card : list) {
 			System.out.print(card.getCard_id() + ",");
 			System.out.print(card.getUsers_id() + ",");
 			System.out.print(card.getCard_number() + ",");
