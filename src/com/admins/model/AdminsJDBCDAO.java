@@ -8,7 +8,7 @@ import java.util.*;
 
 import util.Util;
 
-public class adminsJDBCDAO {
+public class AdminsJDBCDAO {
 	private static final String INSERT_STMT = "INSERT INTO admins (admins_id, admins_email, admins_name, admins_password, admins_sex, admins_authority, admins_position) VALUES (?, ?, ?, ?, ?, ?, ?)";
 	private static final String UPDATE_STMT = "UPDATE admins SET admins_email =?, admins_name =?, admins_password =?, admins_sex =?, admins_authority =?, admins_position =? where admins_id = ?";
 	private static final String DELETE_STMT = "DELETE FROM admins WHERE admins_id = ?";
@@ -31,7 +31,7 @@ public class adminsJDBCDAO {
 		return buffer;
 	}
 	
-	public void insert(adminsVO adminsVO) throws Exception {
+	public void insert(AdminsVO adminsVO) throws Exception {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
@@ -72,7 +72,7 @@ public class adminsJDBCDAO {
 		}
 	}
 	
-	public void update(adminsVO adminsVO) throws Exception {
+	public void update(AdminsVO adminsVO) throws Exception {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
@@ -151,8 +151,8 @@ public class adminsJDBCDAO {
 
 	}
 	
-	public adminsVO findByPK(Integer admins_id) {
-		adminsVO fBPK = null;
+	public AdminsVO findByPK(Integer admins_id) {
+		AdminsVO fBPK = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -165,7 +165,7 @@ public class adminsJDBCDAO {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				fBPK = new adminsVO();
+				fBPK = new AdminsVO();
 				fBPK.setAdmins_id(rs.getInt("admins_id"));
 				fBPK.setAdmins_email(rs.getString("admins_email"));
 				fBPK.setAdmins_name(rs.getString("admins_name"));
@@ -207,9 +207,9 @@ public class adminsJDBCDAO {
 	}
 	
 	
-	public List<adminsVO> getAll(){
-		List<adminsVO> dataList = new ArrayList<>();
-		adminsVO dataL = null;
+	public List<AdminsVO> getAll(){
+		List<AdminsVO> dataList = new ArrayList<>();
+		AdminsVO dataL = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -221,7 +221,7 @@ public class adminsJDBCDAO {
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
-				dataL = new adminsVO();
+				dataL = new AdminsVO();
 				dataL.setAdmins_id(rs.getInt("admins_id"));
 				dataL.setAdmins_email(rs.getString("admins_email"));
 				dataL.setAdmins_name(rs.getString("admins_name"));
@@ -262,7 +262,7 @@ public class adminsJDBCDAO {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		adminsJDBCDAO dao = new adminsJDBCDAO();
+		AdminsJDBCDAO dao = new AdminsJDBCDAO();
 		
 		//新增
 //		adminsVO VO1 = new adminsVO();
@@ -291,7 +291,7 @@ public class adminsJDBCDAO {
 //		dao.delete(12);
 		
 		//查詢單行
-				adminsVO admins1 = dao.findByPK(11);
+				AdminsVO admins1 = dao.findByPK(11);
 				System.out.print("-- ");
 				System.out.print(admins1.getAdmins_id() + ",");
 				System.out.print(admins1.getAdmins_email() + ",");
@@ -303,9 +303,9 @@ public class adminsJDBCDAO {
 				
 				System.out.println(" --");
 		//查詢全部
-				List<adminsVO> list = dao.getAll();
+				List<AdminsVO> list = dao.getAll();
 				System.out.println("------------------------------------------------------------");
-				for (adminsVO admins2 : list) {
+				for (AdminsVO admins2 : list) {
 					
 					System.out.print(admins2.getAdmins_id() + ",");
 					System.out.print(admins2.getAdmins_email() + ",");

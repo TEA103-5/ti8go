@@ -1,6 +1,6 @@
 package com.users.model;
 
-public class usersVO implements java.io.Serializable{
+public class UsersVO implements java.io.Serializable{
 	private Integer users_id;
 	private String 	users_mail;
 	private String 	users_pwd;

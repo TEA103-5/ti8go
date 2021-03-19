@@ -6,7 +6,7 @@ import java.sql.*;
 import java.util.*;
 import util.Util;
 
-public class usersJDBCDAO {
+public class UsersJDBCDAO {
 	private static final String INSERT_STMT = "INSERT INTO users (users_id, users_mail, users_pwd, users_identi_status, users_nickname, users_name, users_sex, users_birthday, users_id_number, users_pic, users_phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String UPDATE_STMT = "UPDATE users SET users_mail =?, users_pwd =?, users_identi_status =?, users_nickname =?, users_name =?, users_sex =?, users_birthday =?, users_id_number =?, users_pic =?, users_phone =? where users_id = ?";
 	private static final String DELETE_STMT = "DELETE FROM users WHERE users_id = ?";
@@ -29,7 +29,7 @@ public class usersJDBCDAO {
 		return buffer;
 	}
 	
-	public void insert(usersVO usersVO) throws Exception {
+	public void insert(UsersVO usersVO) throws Exception {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
@@ -74,7 +74,7 @@ public class usersJDBCDAO {
 		}
 	}
 	
-	public void update(usersVO usersVO) throws Exception {
+	public void update(UsersVO usersVO) throws Exception {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
@@ -157,8 +157,8 @@ public class usersJDBCDAO {
 
 	}
 	
-	public usersVO findByPK(Integer users_id) {
-		usersVO fBPK = null;
+	public UsersVO findByPK(Integer users_id) {
+		UsersVO fBPK = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -171,7 +171,7 @@ public class usersJDBCDAO {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				fBPK = new usersVO();
+				fBPK = new UsersVO();
 				fBPK.setUsers_id(rs.getInt("users_id"));
 				fBPK.setUsers_mail(rs.getString("users_mail"));
 				fBPK.setUsers_pwd(rs.getString("users_pwd"));
@@ -216,9 +216,9 @@ public class usersJDBCDAO {
 	}
 	
 	
-	public List<usersVO> getAll(){
-		List<usersVO> dataList = new ArrayList<>();
-		usersVO dataL = null;
+	public List<UsersVO> getAll(){
+		List<UsersVO> dataList = new ArrayList<>();
+		UsersVO dataL = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -230,7 +230,7 @@ public class usersJDBCDAO {
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
-				dataL = new usersVO();
+				dataL = new UsersVO();
 				dataL.setUsers_id(rs.getInt("users_id"));
 				dataL.setUsers_mail(rs.getString("users_mail"));
 				dataL.setUsers_pwd(rs.getString("users_pwd"));
@@ -274,7 +274,7 @@ public class usersJDBCDAO {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		usersJDBCDAO dao = new usersJDBCDAO();
+		UsersJDBCDAO dao = new UsersJDBCDAO();
 		
 		//新增
 //		usersVO VO1 = new usersVO();
@@ -291,7 +291,7 @@ public class usersJDBCDAO {
 //		dao.insert(VO1);
 		
 		//修改
-		usersVO VO2 = new usersVO();
+		UsersVO VO2 = new UsersVO();
 		VO2.setUsers_id(21);
 		VO2.setUsers_mail("qqaa.com");
 		VO2.setUsers_pwd("543210");
@@ -322,9 +322,9 @@ public class usersJDBCDAO {
 //				System.out.print(users1.getUser_phone() + ",");
 //				System.out.println(" --");
 		//查詢全部
-				List<usersVO> list = dao.getAll();
+				List<UsersVO> list = dao.getAll();
 				System.out.println("------------------------------------------------------------");
-				for (usersVO users2 : list) {
+				for (UsersVO users2 : list) {
 					
 					System.out.print(users2.getUsers_id() + ",");
 					System.out.print(users2.getUsers_mail() + ",");

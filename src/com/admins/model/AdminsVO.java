@@ -1,6 +1,6 @@
 package com.admins.model;
 
-public class adminsVO {
+public class AdminsVO {
 	private Integer admins_id;
 	private String admins_email;
 	private String admins_name;
