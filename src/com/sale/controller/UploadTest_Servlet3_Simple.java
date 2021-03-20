@@ -16,9 +16,11 @@ public class UploadTest_Servlet3_Simple extends HttpServlet {
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
-		
+		req.setCharacterEncoding("UTF-8");
 //		req.getPart("upfile1").write(getServletContext().getRealPath("/images_uploaded")+"/file.gif");
 		Integer sale_id = new Integer(req.getParameter("empno").trim());
+		String name=req.getParameter("sname");
+		System.out.println(name);
 		Part part=req.getPart("upfile1");
 		InputStream in = part.getInputStream();
 		byte[] buf = new byte[in.available()];

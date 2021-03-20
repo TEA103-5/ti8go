@@ -129,7 +129,15 @@ sale_time_create timestamp default current_timestamp,
 primary key(sale_id)
 );
 
-insert into sale(sale_email,sale_pwd,sale_name,sale_phone,sale_nickname,sale_rate)values("123@gmail.com","123","馬老師","0988888888","馬馬子",5);
+insert into sale(sale_email,sale_pwd,sale_name,sale_phone,sale_nickname,sale_rate)values("123@gmail.com","123","馬老師1","0988888888","馬馬子1",5),
+																						("123@gmail.com","123","馬老師2","0988888888","馬馬子2",5),
+                                                                                        ("123@gmail.com","123","馬老師3","0988888888","馬馬子3",5),
+                                                                                        ("123@gmail.com","123","馬老師4","0988888888","馬馬子4",5),
+                                                                                        ("123@gmail.com","123","馬老師5","0988888888","馬馬子5",5),
+                                                                                        ("123@gmail.com","123","馬老師6","0988888888","馬馬子6",5),
+                                                                                        ("123@gmail.com","123","馬老師7","0988888888","馬馬子7",5),
+                                                                                        ("123@gmail.com","123","馬老師8","0988888888","馬馬子8",5),
+                                                                                        ("123@gmail.com","123","馬老師9","0988888888","馬馬子9",5);
 
 create table admins (
 admins_id 			int not null primary key auto_increment ,

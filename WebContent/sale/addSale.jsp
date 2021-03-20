@@ -71,7 +71,7 @@
 	<tr>
 		<td>信箱:</td>
 		<td><input type="TEXT" name="semail" size="45"
-<%-- 			 value="<%= (empVO==null)? "email" : empVO.getSale_email()%>" /></td> --%>
+
 			 value="${(empVO.sale_email==null)? '':empVO.sale_email}" /></td>
 	</tr>
 	<tr>
@@ -82,18 +82,18 @@
 	<tr>
 		<td>販售者姓名:</td>
 		<td><input type="TEXT" name="sname" size="45" 
-			 value="<%= (empVO==null)? "馬老師" : empVO.getSale_name()%>" /></td>
+			 value="${(empVO==null)? '' : empVO.sale_name}" /></td>
 	</tr>
 	<tr>
 		<td>販售者暱稱:</td>
 		<td><input type="TEXT" name="snickname" size="45"
-			 value="<%= (empVO==null)? "馬H" : empVO.getSale_nickname()%>" /></td>
+			 value="${(empVO==null)? '' : empVO.sale_nickname}" /></td>
 	</tr>
 	<tr>
 		<td>電話:</td>
 		<td><input type="TEXT" name="sphone" size="45"
-			 value="<%= (empVO==null)? "0800100200" : empVO.getSale_phone()%>" /></td>
-	</tr>
+			 value="${(empVO==null)? '' : empVO.sale_phone}" /></td>
+	</tr>			
 </table>
 <br>
 <input type="hidden" name="action" value="insert">

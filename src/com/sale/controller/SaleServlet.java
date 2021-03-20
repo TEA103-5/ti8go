@@ -9,6 +9,7 @@ import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ import com.sale.model.*;
 
 
 //@WebServlet("/SaleServlet")
+@MultipartConfig
 public class SaleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     public SaleServlet() {
@@ -30,40 +32,8 @@ public class SaleServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) 
 			throws ServletException, IOException {
-		
 
-		//可以得到傳過來的圖片
-//		Part part=request.getPart("upfile1");
-//		InputStream in = part.getInputStream();
-//		byte[] buf = new byte[in.available()];
-//		in.read(buf);
-//		in.close();
-		
-		
-		//SaleService saleSvc = new SaleService();
-		//新增
-//		saleSvc.addSale(sale_email, sale_pwd, sale_name, sale_phone, sale_nickname, sale_rate, sale_audit_pic);
-	
-//			saleSvc.addSale("sale_email", "sale_pwd", "sale_name", "sale_phone", "sale_nickname", 5f,pic);
-	
-		//刪除
-		//saleSvc.deleteSale(2);
-		//修改
-//		saleSvc.updateSale(sale_pwd, sale_audit_status, *sale_audit_pic*, sale_name, sale_status, sale_phone, sale_nickname, sale_rate, sale_id);
-//		saleSvc.updateSale("sale_pwd1",1,"sale_name1",1,"sale_phone2","sale_nickname2",4f,1);
-		//查詢一筆
-//		SaleVO saleVO=saleSvc.getOneSale(1);
-//		System.out.println(saleVO);
-		//查詢全部
-//		List<SaleVO> saleVO=saleSvc.getAll();
-//		System.out.println(saleVO);
 	}
-
-
-	
-	
-	
-	
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) 
 	throws ServletException, IOException {
 //		doGet(request, response);
@@ -94,7 +64,7 @@ public class SaleServlet extends HttpServlet {
 				if ("listEmps_ByDeptno_A".equals(action))
 					url = "/sale/listProds_BySaleid.jsp";        // 成功轉交 sale/listProds_BySaleid.jsp
 				else if ("listEmps_ByDeptno_B".equals(action))
-					url = "/dept/listAllDept.jsp";              // 成功轉交 dept/listAllDept.jsp
+					url = "/sale/ListAllSale.jsp";              // 成功轉交 dept/listAllDept.jsp
 
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
@@ -188,7 +158,7 @@ public class SaleServlet extends HttpServlet {
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 			
-			try {
+//			try {
 				/***************************1.接收請求參數****************************************/
 				Integer empno = new Integer(req.getParameter("empno"));
 				
@@ -203,12 +173,12 @@ public class SaleServlet extends HttpServlet {
 				successView.forward(req, res);
 
 				/***************************其他可能的錯誤處理**********************************/
-			} catch (Exception e) {
-				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/sale/ListAllSale.jsp");
-				failureView.forward(req, res);
-			}
+//			} catch (Exception e) {
+//				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
+//				RequestDispatcher failureView = req
+//						.getRequestDispatcher("/sale/ListAllSale.jsp");
+//				failureView.forward(req, res);
+//			}
 		}
 		
 	if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
@@ -216,52 +186,116 @@ public class SaleServlet extends HttpServlet {
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
-		
+			Part part=null;
+					part=req.getPart("upfile1");
 			try {
 				/***************************1.接收請求參數-輸入格式的錯誤處理**********************/
+				Integer sale_status = null;
+				
+				try {
+					sale_status = new Integer(req.getParameter("sstatus").trim());
+				} catch (NumberFormatException e) {
+					sale_status = 0;
+					errorMsgs.add("帳號狀態請填整數");
+				}
+					if(!(sale_status==1||sale_status==0)) {
+						errorMsgs.add("帳號狀態在0或1之間選擇");
+					}
+				
+				Integer sale_audit_status = null;
+				
+				try {
+				sale_audit_status = new Integer(req.getParameter("sastatus").trim());
+			} catch (NumberFormatException e) {
+				sale_audit_status = 0;
+				errorMsgs.add("評分請填整數");
+			}
+				if(!(sale_audit_status==1||sale_audit_status==0)) {
+					errorMsgs.add("照片審核狀態在0或1之間選擇");
+				}
+				
+				Float sale_rate = null;
+				try {
+				sale_rate = new Float(req.getParameter("srate").trim());
+			} catch (NumberFormatException e) {
+				sale_rate = 0.0f;
+				errorMsgs.add("評分請填數字");
+			}
+				if(sale_rate>5||sale_rate<0) {
+					errorMsgs.add("評分在0~5之間");
+				}
+				
 				Integer empno = new Integer(req.getParameter("empno").trim());
-//				
+				if(part!=null) {
+				InputStream in = part.getInputStream();
+				byte[] buf = new byte[in.available()];
+				in.read(buf);
+				in.close();
+				SaleService saleSvc = new SaleService();
+//				System.out.println(sale_status);
+				saleSvc.updateSaleP(empno,buf);
+				}
+				
+				String sale_name = req.getParameter("sname");
+				String sale_nickname = req.getParameter("snickname");
+//				String sale_email = req.getParameter("semail");
+				String sale_pwd = req.getParameter("spwd");
+				String sale_phone = req.getParameter("sphone");
 //				String ename = req.getParameter("ename");
-//				String enameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
+				String enameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
+				String pwdReg = "^[a-zA-Z0-9]{2,20}$";
+				String emailReg = "^[_a-z0-9-]+([.][_a-z0-9-]+)*@[a-z0-9-]+([.][a-z0-9-]+)*$";
+				String phoneReg = "[0-9]{10}";
 //				if (ename == null || ename.trim().length() == 0) {
-//					errorMsgs.add("員工姓名:請勿空白");
-//				} else if(!ename.trim().matches(enameReg)) { //以下練習正(則)規表示式(regular-expression)
-//					errorMsgs.add("員工姓名: 只能是中`英文字母`數字和_ , 且長度必須在2到10之間");
+//					errorMsgs.add("員工姓名: 請勿空白");
+//				} else if(!ename.trim().matches(enameReg)) { //以下練習正則(規)表示式(regular-expression)
+//					errorMsgs.add("員工姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
 //	            }
-//				
-//				String job = req.getParameter("job").trim();
-//				if (job == null || job.trim().length() == 0) {
-//					errorMsgs.add("職位請勿空白");
-//				}	
-//				
-//				java.sql.Date hiredate = null;
-//				try {
-//					hiredate = java.sql.Date.valueOf(req.getParameter("hiredate").trim());
-//				} catch (IllegalArgumentException e) {
-//					hiredate=new java.sql.Date(System.currentTimeMillis());
-//					errorMsgs.add("請輸入日期");
-//				}
-//
-//				Double sal = null;
-//				try {
-//					sal = new Double(req.getParameter("sal").trim());
-//				} catch (NumberFormatException e) {
-//					sal = 0.0;
-//					errorMsgs.add("薪水請填數字");
-//				}
-//
-//				Double comm = null;
-//				try {
-//					comm = new Double(req.getParameter("comm").trim());
-//				} catch (NumberFormatException e) {
-//					comm = 0.0;
-//					errorMsgs.add("獎金請填數字");
-//				}
-//
-//				Integer deptno = new Integer(req.getParameter("deptno").trim());
+				
+				
+				
+				if(sale_pwd==null || sale_pwd.trim().length() == 0) {
+					errorMsgs.add("販售者密碼: 請勿空白");
+					sale_pwd="密碼請勿空白";
+				}else if(!sale_pwd.trim().matches(pwdReg)) { //以下練習正則(規)表示式(regular-expression)
+					errorMsgs.add("密碼:只能是英文字母、數字");
+				}
+//				if(sale_email==null || sale_email.trim().length() == 0) {
+//					errorMsgs.add("販售者信箱: 請勿空白");
+//				}else if(!sale_email.trim().matches(emailReg)) { //以下練習正則(規)表示式(regular-expression)
+//					errorMsgs.add("信箱都會打錯喔? 到底?");
+//		            }
+				if(sale_phone==null || sale_phone.trim().length() == 0) {
+					errorMsgs.add("電話應該是不用第一時間輸入啦");
+				}else if(!sale_phone.trim().matches(phoneReg)) { //以下練習正則(規)表示式(regular-expression)
+					errorMsgs.add("電話都會打錯喔? 到底?");
+				}
+				
+				if(sale_name==null || sale_name.trim().length() == 0) {
+					errorMsgs.add("販售者姓名: 請勿空白");
+				}else if(!sale_name.trim().matches(enameReg)) { //以下練習正則(規)表示式(regular-expression)
+					errorMsgs.add("販售者姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
+				}
+				
+				if(sale_nickname==null || sale_nickname.trim().length() == 0) {
+					errorMsgs.add("販售者暱稱: 請勿空白");
+				}else if(!sale_nickname.trim().matches(enameReg)) { //以下練習正則(規)表示式(regular-expression)
+					errorMsgs.add("販售者姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
+				}
+
 //
 				SaleVO empVO = new SaleVO();
 				empVO.setSale_id(empno);
+//				empVO.setSale_email(sale_email);
+				empVO.setSale_pwd(sale_pwd);
+				empVO.setSale_name(sale_name);
+				empVO.setSale_nickname(sale_nickname);
+				empVO.setSale_phone(sale_phone);
+				empVO.setSale_status(sale_status);
+				empVO.setSale_audit_status(sale_audit_status);
+				empVO.setSale_rate(sale_rate);
+				
+				
 //				empVO.setEname(ename);
 //				empVO.setJob(job);
 //				empVO.setHiredate(hiredate);
@@ -270,24 +304,18 @@ public class SaleServlet extends HttpServlet {
 //				empVO.setDeptno(deptno);
 //
 //				// Send the use back to the form, if there were errors
-//				if (!errorMsgs.isEmpty()) {
-//					req.setAttribute("empVO", empVO); // 含有輸入格式錯誤的empVO物件也存入req
-//					RequestDispatcher failureView = req
-//							.getRequestDispatcher("/emp/update_emp_input.jsp");
-//					failureView.forward(req, res);
-//					return; //程式中斷
-//				}
-				String sale_pwd=req.getParameter("spwd").trim();
-				String sale_name=req.getParameter("sname").trim();
-				String sale_nickname=req.getParameter("snickname").trim();
-				String sale_phone=req.getParameter("sphone").trim();
-				Integer sale_status = new Integer(req.getParameter("sstatus").trim());
-				Integer sale_audit_status = new Integer(req.getParameter("sastatus").trim());
-				Float sale_rate = new Float(req.getParameter("srate").trim());
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("empVO", empVO); // 含有輸入格式錯誤的empVO物件也存入req
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/sale/update_sale.jsp");
+					failureView.forward(req, res);
+					return; //程式中斷
+				}
+
 					/***************************2.開始修改資料*****************************************/
 				SaleService empSvc = new SaleService();
 				empVO = empSvc.updateSale(sale_pwd, sale_audit_status, sale_name, sale_status, sale_phone, sale_nickname, sale_rate, empno);
-				
+				empVO=empSvc.getOneSale(empno);
 				/***************************3.修改完成.準備轉交(Send the Success view)*************/
 				req.setAttribute("empVO", empVO); // 資料庫update成功後,正確的empVO物件,存入req
 				String url = "/sale/listOneSale.jsp";
@@ -322,7 +350,7 @@ public class SaleServlet extends HttpServlet {
 					String sale_pwd = req.getParameter("spwd");
 					String sale_phone = req.getParameter("sphone");
 //					String ename = req.getParameter("ename");
-//					String enameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
+					String enameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
 					String pwdReg = "^[a-zA-Z0-9]{2,20}$";
 					String emailReg = "^[_a-z0-9-]+([.][_a-z0-9-]+)*@[a-z0-9-]+([.][a-z0-9-]+)*$";
 					String phoneReg = "[0-9]{10}";
@@ -346,6 +374,18 @@ public class SaleServlet extends HttpServlet {
 						errorMsgs.add("電話應該是不用第一時間輸入啦");
 					}else if(!sale_phone.trim().matches(phoneReg)) { //以下練習正則(規)表示式(regular-expression)
 						errorMsgs.add("電話都會打錯喔? 到底?");
+					}
+					
+					if(sale_name==null || sale_name.trim().length() == 0) {
+						errorMsgs.add("販售者姓名: 請勿空白");
+					}else if(!sale_name.trim().matches(enameReg)) { //以下練習正則(規)表示式(regular-expression)
+						errorMsgs.add("販售者姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
+					}
+					
+					if(sale_nickname==null || sale_nickname.trim().length() == 0) {
+						errorMsgs.add("販售者暱稱: 請勿空白");
+					}else if(!sale_nickname.trim().matches(enameReg)) { //以下練習正則(規)表示式(regular-expression)
+						errorMsgs.add("販售者姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
 					}
 					
 					

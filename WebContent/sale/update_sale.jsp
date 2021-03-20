@@ -1,15 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="BIG5"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.sale.model.*"%>
 <%
-  SaleVO empVO = (SaleVO) request.getAttribute("empVO");
+//   SaleVO empVO = (SaleVO) request.getAttribute("empVO");
 %>
-<%= empVO==null %>--${empVO.sale_id}--
 <!DOCTYPE html>
 <html>
 <head>
-<title>³c°âªÌ¸ê®Æ­×§ï - update_emp_input.jsp</title>
+<title>è²©å”®è€…è³‡æ–™ä¿®æ”¹ - update_emp_input.jsp</title>
 
 <style>
   table#table-1 {
@@ -41,26 +40,36 @@
   th, td {
     padding: 1px;
   }
-    .img{
-		width: 50px;
-		height: 50px;
-			}
+   .img{ 
+	width: 50px; 
+		height: 50px; 
+ 			} 
+ 			
+#app {
+    padding:3rem;
+}
+
+.card {
+    width: 18rem;
+    float: left;
+    margin: 1rem;
+}
 </style>
 
 </head>
 <body>
 <table id="table-1">
 	<tr><td>
-		 <h3>³c°âªÌ¸ê®Æ­×§ï - update_sale.jsp</h3></td><td>
+		 <h3>è²©å”®è€…è³‡æ–™ä¿®æ”¹ - update_sale.jsp</h3></td><td>
 		 <h4><a href="<%=request.getContextPath()%>/select_page_sale.jsp">
-		 <img src="images/tomcat.png" width="100" height="100" border="0">¦^­º­¶</a></h4>
+		 <img src="images/tomcat.png" width="100" height="100" border="0">å›é¦–é </a></h4>
 	</td></tr>
 </table>
 
-<h3>¸ê®Æ­×§ï:</h3>
-<%-- ¿ù»~ªí¦C --%>
+<h3>è³‡æ–™ä¿®æ”¹:</h3>
+<%-- éŒ¯èª¤è¡¨åˆ— --%>
 <c:if test="${not empty errorMsgs}">
-	<font style="color:red">½Ğ­×¥¿¥H¤U¿ù»~:</font>
+	<font style="color:red">è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:</font>
 	<ul>
 		<c:forEach var="message" items="${errorMsgs}">
 			<li style="color:red">${message}</li>
@@ -68,65 +77,87 @@
 	</ul>
 </c:if>
 
-<img class="img" src="<%=request.getContextPath()%>/DBGifReader4_1?id=<%=empVO.getSale_id()%>"/>
+
+
+            
 
 
 
+<!--   <FORM action="uploadServlet3_simple.do" method=post enctype="multipart/form-data"> -->
+<!--         <input type="file" name="upfile1"> -->
+<!--         <input type="TEXT" name="sname" size="45"  -->
+<%-- 			 value="${empVO.sale_name}" /> --%>
+<%--         <input type="hidden" name="empno" value="${empVO.sale_id}"> --%>
+<!--         <input type="submit" value="ä¸Šå‚³"> -->
+<!--   </FORM> -->
 
-  <FORM action="uploadServlet3_simple.do" method=post enctype="multipart/form-data">
-        <input type="file" name="upfile1">
-        <input type="hidden" name="empno" value="<%=empVO.getSale_id()%>">
-        <input type="submit" value="¤W¶Ç">
-  </FORM>
 
-
-
-<FORM METHOD="post" ACTION="sale.do" name="form1" >
+<FORM METHOD="post" ACTION="sale.do" name="form1" enctype="multipart/form-data">
 <table>
 	<tr>
-		<td>±b¸¹:</td>
-		<td><%=empVO.getSale_email()%></td>
+	<td><img class="img" src="<%=request.getContextPath()%>/DBGifReader4_1?id=${empVO.sale_id}"/></td>
+	<td><input type="file" accept="image/*" name="upfile1"></td>
+	</tr>
+
+	<tr>
+		<td>å¸³è™Ÿ:</td>
+		<td>${empVO.sale_email}</td>
 	</tr>
 	<tr>
-		<td>±K½X:</td>
-		<td><input name="spwd" size="45" type="text" value="<%=empVO.getSale_pwd()%>"></td>
+		<td>å¯†ç¢¼:</td>
+		<td><input name="spwd" size="45" type="text" value="${empVO.sale_pwd}"></td>
 	</tr>
 	<tr>
-		<td>³c°âªÌ©m¦W:</td>
+		<td>è²©å”®è€…å§“å:</td>
 		<td><input type="TEXT" name="sname" size="45" 
-			 value="<%= empVO.getSale_name()%>" /></td>
+			 value="${empVO.sale_name}" /></td>
 	</tr>
 	<tr>
-		<td>³c°âªÌ¼ÊºÙ:</td>
+		<td>è²©å”®è€…æš±ç¨±:</td>
 		<td><input type="TEXT" name="snickname" size="45"
-			 value="<%= empVO.getSale_nickname()%>" /></td>
+			 value="${empVO.sale_nickname}" /></td>
 	</tr>
 	<tr>
-		<td>¹q¸Ü:</td>
+		<td>é›»è©±:</td>
 		<td><input type="TEXT" name="sphone" size="45"
-			 value="<%= empVO.getSale_phone()%>" /></td>
+			 value="${empVO.sale_phone}" /></td>
 	</tr>
 	<tr>
-		<td>³c°âªÌ±b¸¹ª¬ºA:</td>
+		<td>è²©å”®è€…å¸³è™Ÿç‹€æ…‹:</td>
 		<td><input type="TEXT" name="sstatus" size="45"
-			 value="<%= empVO.getSale_status()%>" /></td>
+			 value="${empVO.sale_status}" /></td>
 	</tr>
 	<tr>
-		<td>³c°âªÌ¸ê®æ·Ó¤ù¼f®Öª¬ºA:</td>
+		<td>è²©å”®è€…è³‡æ ¼ç…§ç‰‡å¯©æ ¸ç‹€æ…‹:</td>
 		<td><input type="TEXT" name="sastatus" size="45"
-			 value="<%= empVO.getSale_audit_status()%>" /></td>
+			 value="${empVO.sale_audit_status}" /></td>
 	</tr>
 	<tr>
-		<td>³c°âªÌµû¤À:</td>
+		<td>è²©å”®è€…è©•åˆ†:</td>
 		<td><input type="TEXT" name="srate" size="45"
-			 value="<%= empVO.getSale_rate()%>" /></td>
+			 value="${empVO.sale_rate}" /></td>
 	</tr>
 </table>
 <br>
 <input type="hidden" name="action" value="update">
-<input type="hidden" name="empno" value="<%=empVO.getSale_id()%>">
-<input type="submit" value="°e¥X­×§ï"></FORM>
+<input type="hidden" name="empno" value="${empVO.sale_id}">
+<input type="submit" value="é€å‡ºä¿®æ”¹"></FORM>
 
 
+
+ <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+  <script>
+    $('input').on('change', function(e){      
+      const file = this.files[0];
+      
+      const fr = new FileReader();
+      fr.onload = function (e) {
+        $('img').attr('src', e.target.result);
+      };
+      
+      // ä½¿ç”¨ readAsDataURL å°‡åœ–ç‰‡è½‰æˆ Base64
+      fr.readAsDataURL(file);
+    });
+  </script>
 </body>
 </html>

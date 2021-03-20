@@ -3,9 +3,9 @@
 <%@ page import="com.sale.model.*"%> 
 
 <%-- 取出 Concroller EmpServlet.java已存入request的EmpVO物件--%>
-<%SaleVO empVO1 = (SaleVO) request.getAttribute("empVO");%>
-<%SaleService SSV= new SaleService();%>
-<%SaleVO empVO =SSV.getOneSale(empVO1.getSale_id());%>
+<%-- <%SaleVO empVO1 = (SaleVO) request.getAttribute("empVO");%> --%>
+<%-- <%SaleService SSV= new SaleService();%> --%>
+<%-- <%SaleVO empVO =SSV.getOneSale(empVO1.getSale_id());%> --%>
    
 <!DOCTYPE html>
 <html>
@@ -73,18 +73,18 @@
 		<th>販售者帳號創辦時間</th>
 	</tr>
 	<tr>
-		<td><%=empVO.getSale_id()%></td>
-		<td><%=empVO.getSale_email()%></td>
-		<td><%=empVO.getSale_name()%></td>
-		<td><%=empVO.getSale_nickname()%></td>
-		<td><%=empVO.getSale_phone()%></td>
-		<td><%=empVO.getSale_status()%></td>
+		<td>${empVO.sale_id}</td>
+		<td>${empVO.getSale_email()}</td>
+		<td>${empVO.getSale_name()}</td>
+		<td>${empVO.getSale_nickname()}</td>
+		<td>${empVO.getSale_phone()}</td>
+		<td>${empVO.getSale_status()}</td>
 		<td>
-		<img class="img" src="<%=request.getContextPath()%>/DBGifReader4_1?id=<%=empVO.getSale_id()%>"/>
+		<img class="img" src="<%=request.getContextPath()%>/DBGifReader4_1?id=${empVO.sale_id}"/>
 		</td>
-		<td><%=empVO.getSale_audit_status()%></td>
-		<td><%=empVO.getSale_rate()%></td>
-		<td><%=empVO.getSale_time_create()%></td>
+		<td>${empVO.getSale_audit_status()}</td>
+		<td>${empVO.getSale_rate()}</td>
+		<td>${empVO.getSale_time_create()}</td>
 	</tr>
 </table>
 </body>
