@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import com.place.model.PlaceDAO;
 import com.place.model.PlaceService;
 import com.place.model.PlaceVO;
 
@@ -212,14 +213,33 @@ public class PlaceServlet extends HttpServlet {
 				
 				System.out.println("存入圖片前");
 				
+				
 				byte[] place_pic1 = null;
 				byte[] place_pic2 = null;
 				byte[] place_pic3 = null;
 				
+//				byte[] place_pic1 =  (byte[])req.getAttribute("place_pic1"); // 會為null
+				// 把圖片再次讀進來 , 很爛的方式... 但上面的req.getAttribute("place_pic1")取不到
+				// muti form data傳過來的圖片資料...先這樣
+				PlaceService PlaceSvc = new PlaceService();
+				if(PlaceSvc.getOnePlace(place_id).getPlace_pic1() != null) {
+					place_pic1 = PlaceSvc.getOnePlace(place_id).getPlace_pic1();
+				}
+				if(PlaceSvc.getOnePlace(place_id).getPlace_pic2() != null) {
+					place_pic2 = PlaceSvc.getOnePlace(place_id).getPlace_pic2();
+				}
+				if(PlaceSvc.getOnePlace(place_id).getPlace_pic3() != null) {
+					place_pic3 = PlaceSvc.getOnePlace(place_id).getPlace_pic3();
+				}
+
 				
+				
+
 //				// -----用UploadTest_Servlet3上傳------
 //				Collection<Part> parts = req.getParts();
 //				req.setAttribute("parts", parts);
+				
+				
 				RequestDispatcher uploadImage = req.getRequestDispatcher("uploadServlet3.do");
 				uploadImage.include(req, res);
 				

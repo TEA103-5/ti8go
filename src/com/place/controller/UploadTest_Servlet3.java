@@ -36,15 +36,15 @@ public class UploadTest_Servlet3 extends HttpServlet {
 				String ContentType = part.getContentType();
 				long size = part.getSize();
 //System.out.println("這裡是2");
-				if( !ContentType.contains("image")) {
+				if( !ContentType.contains("image") ) {
 					continue; // 如果該part不是圖片則跳過此次處理
 				}
-//System.out.println("這裡是3");
+
 				System.out.println("name: " + name);
 				System.out.println("filename: " + filename);
 				System.out.println("ContentType: " + ContentType);
 				System.out.println("size: " + size);
-				
+System.out.println("這裡是3");				
 //System.out.println(("place_id = " + (String)req.getParameter("place_id")));
 
 				InputStream in = part.getInputStream();
@@ -54,7 +54,7 @@ public class UploadTest_Servlet3 extends HttpServlet {
 				System.out.println("buffer length: " + buf.length);
 				
 				req.setAttribute(name, buf);
-//				byteArrayMap.put(name, buf);
+
 				
 //System.out.println("uploadServlet3的最後一行");
 			}
@@ -66,7 +66,7 @@ public class UploadTest_Servlet3 extends HttpServlet {
 		String header = part.getHeader("content-disposition");
 System.out.println("header=" + header); // 測試用
 		String filename = new File(header.substring(header.lastIndexOf("=") + 2, header.length() - 1)).getName();
-System.out.println("filename=" + filename); // 測試用
+System.out.println("123filename=" + filename); // 測試用
 		if (filename.length() == 0) {
 			return null;
 		}
