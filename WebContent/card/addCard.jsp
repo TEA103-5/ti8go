@@ -69,7 +69,7 @@
 <table>
 	<tr>
 		<td>使用者編號:</td>
-		<td><input type="TEXT" name="user_id" size="5" 
+		<td><input type="TEXT" name="users_id" size="5" 
 			 value="<%= (cardVO==null)? "1" : cardVO.getUsers_id()%>" /></td>
 	</tr>
 	<tr>
@@ -79,8 +79,8 @@
 	</tr>
 	<tr>
 		<td>到期日:</td>
-		<td><input name="card_date" id="f_date1" type="text" size="8"
-			 value="<%= (cardVO==null)? "20210101" : cardVO.getCard_date()%>" /></td>
+		<td><input name="card_date" id="f_date1" type="text" size="5"
+			 value="<%= (cardVO==null)? "0112" : cardVO.getCard_date()%>" /></td>
 	</tr>
 	<tr>
 		<td>末三碼:</td>
@@ -89,7 +89,7 @@
 	</tr>
 	<tr>
 		<td>狀態:</td>
-		<td><input type="TEXT" name="comm" size="1"
+		<td><input type="TEXT" name="card_default" size="1"
 			 value="<%= (cardVO==null)? "1" : cardVO.getCard_default()%>" /></td>
 	</tr>
 

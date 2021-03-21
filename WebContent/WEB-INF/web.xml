@@ -34,4 +34,32 @@
     <url-pattern>/card/card.do</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>UsersServlet</servlet-name>
+    <servlet-class>com.users.controller.UsersServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UsersServlet</servlet-name>
+    <url-pattern>/users/users.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>AdminsServlet</servlet-name>
+    <servlet-class>com.admins.controller.AdminsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminsServlet</servlet-name>
+    <url-pattern>/admins/admins.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+		<servlet-name>UsersGetPic</servlet-name>
+		<servlet-class>com.users.controller.UsersGetPic</servlet-class>
+
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UsersGetPic</servlet-name>
+		<url-pattern>/UsersGetPic</url-pattern>
+	</servlet-mapping>
+	
 </web-app>
