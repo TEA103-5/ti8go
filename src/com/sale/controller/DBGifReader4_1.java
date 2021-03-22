@@ -31,13 +31,29 @@ public class DBGifReader4_1 extends HttpServlet {
 		res.setContentType("image/gif");
 		ServletOutputStream out = res.getOutputStream();
 
+		String id2=null;
+		
+		try{
+		id2=req.getParameter("id2").trim();
+		}catch(Exception e) {}
+
 		try {
 			Statement stmt = con.createStatement();
 			String id=req.getParameter("id").trim();
-			ResultSet rs = stmt.executeQuery("SELECT sale_audit_pic FROM sale where sale_id="+id);
+			ResultSet rs=null;
+			String wpic=null;
+			if("p".equals(id2)) {
+				rs = stmt.executeQuery("SELECT product_pic FROM product where product_id="+id);
+				wpic="product_pic";
+			}else {
+				rs = stmt.executeQuery("SELECT sale_audit_pic FROM sale where sale_id="+id);
+				wpic="sale_audit_pic";
+			}
 
 			if (rs.next()) {
-				BufferedInputStream in = new BufferedInputStream(rs.getBinaryStream("sale_audit_pic"));
+				
+				BufferedInputStream in = new BufferedInputStream(rs.getBinaryStream(wpic));
+				
 				byte[] buf = new byte[4 * 1024]; // 4K buffer
 				int len;
 				while ((len = in.read(buf)) != -1) {
@@ -52,6 +68,9 @@ public class DBGifReader4_1 extends HttpServlet {
 				out.write(b);
 				in.close();
 			}
+			
+			
+			
 			rs.close();
 			stmt.close();
 		} catch (Exception e) {

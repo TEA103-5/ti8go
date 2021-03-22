@@ -30,7 +30,9 @@ public class SaleDAO implements SaleDAO_interface{
 			e.printStackTrace();
 		}
 	}
-	//差一個單獨更新照片
+	//單獨更新照片
+	private static final String UPDATEP = 
+			"UPDATE sale set sale_audit_pic=? where sale_id = ?";
 	//,sale_audit_pic
 	private static final String INSERT_STMT = 
 			"insert into sale(sale_email,sale_pwd,sale_name,sale_phone,sale_nickname) values (?,?,?,?,?)";
@@ -40,20 +42,18 @@ public class SaleDAO implements SaleDAO_interface{
 	private static final String UPDATE = 
 			"UPDATE sale set sale_pwd=?,sale_audit_status=?,sale_name=?,sale_status=?,sale_phone=?,sale_nickname=?,sale_rate=? where sale_id = ?";
 	//7+1個問號,
-	private static final String UPDATEP = 
-			"UPDATE sale set sale_audit_pic=? where sale_id = ?";
 	private static final String GET_ONE_STMT = 
 			"SELECT sale_id,sale_email,sale_pwd,sale_name,sale_audit_status,sale_audit_pic,sale_status,sale_phone,sale_nickname,sale_rate,sale_time_create FROM sale where sale_id = ?";
 	//11個欄位 
 	private static final String GET_ALL_STMT = 
 			"SELECT sale_id,sale_email,sale_pwd,sale_name,sale_audit_status,sale_audit_pic,sale_status,sale_phone,sale_nickname,sale_rate,sale_time_create FROM sale order by sale_id";
 	private static final String GET_Prods_BySaleid_STMT = 
-			"SELECT product_id,product_name,sale_id FROM product where sale_id = ? order by product_id";
+			"SELECT product_id,product_name,PRODUCT_Status,PRODUCT_Content,PRODUCT_Description,PRODUCT_Categories,PRODUCT_Price,PRODUCT_Stock,sale_id,product_update_time FROM product where sale_id = ? order by product_id";
 	
 	public Set<ProductVO> getProdsBySaleid(Integer sale_id) {
 	
 		Set<ProductVO> set = new LinkedHashSet<ProductVO>();
-		ProductVO prodVO = null;
+		ProductVO productVO = null;
 	
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -67,11 +67,18 @@ public class SaleDAO implements SaleDAO_interface{
 			rs = pstmt.executeQuery();
 	
 			while (rs.next()) {
-			prodVO = new ProductVO();
-			prodVO.setProduct_id(rs.getInt("product_id"));
-			prodVO.setProduct_name(rs.getString("product_name"));
-			prodVO.setSale_id(rs.getInt("sale_id"));
-				set.add(prodVO); // Store the row in the vector
+			productVO = new ProductVO();
+			productVO.setProduct_id(rs.getInt("product_id"));
+			productVO.setProduct_name(rs.getString("product_name"));
+			productVO.setProduct_status(rs.getInt("PRODUCT_Status"));
+				productVO.setProduct_content(rs.getString("Product_content"));
+				productVO.setProduct_description(rs.getString("Product_description"));
+				productVO.setProduct_categories(rs.getString("Product_categories"));
+				productVO.setProduct_price(rs.getInt("Product_price"));
+				productVO.setProduct_stock(rs.getInt("Product_stock"));
+			productVO.setSale_id(rs.getInt("sale_id"));
+			productVO.setProduct_update_time(rs.getTimestamp("product_update_time"));
+				set.add(productVO); // Store the row in the vector
 			}
 	
 			// Handle any SQL errors

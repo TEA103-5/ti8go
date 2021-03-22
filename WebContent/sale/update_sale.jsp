@@ -95,8 +95,8 @@
 <FORM METHOD="post" ACTION="sale.do" name="form1" enctype="multipart/form-data">
 <table>
 	<tr>
-	<td><img class="img" src="<%=request.getContextPath()%>/DBGifReader4_1?id=${empVO.sale_id}"/></td>
-	<td><input type="file" accept="image/*" name="upfile1"></td>
+	<td><img class="img" id="preimg" src="<%=request.getContextPath()%>/DBGifReader4_1?id=${empVO.sale_id}"/></td>
+	<td><input type="file" id="file1" accept="image/*" name="upfile1"></td>
 	</tr>
 
 	<tr>
@@ -140,6 +140,7 @@
 </table>
 <br>
 <input type="hidden" name="action" value="update">
+<input type="hidden" id="pic" name="picc" value="T">
 <input type="hidden" name="empno" value="${empVO.sale_id}">
 <input type="submit" value="送出修改"></FORM>
 
@@ -147,12 +148,13 @@
 
  <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
   <script>
-    $('input').on('change', function(e){      
+    $("#file1").on('change', function(e){      
       const file = this.files[0];
       
       const fr = new FileReader();
       fr.onload = function (e) {
-        $('img').attr('src', e.target.result);
+        $("#preimg").attr('src', e.target.result);
+        $("#pic").val("F");
       };
       
       // 使用 readAsDataURL 將圖片轉成 Base64

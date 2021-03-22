@@ -187,7 +187,7 @@ public class SaleServlet extends HttpServlet {
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 			Part part=null;
-					part=req.getPart("upfile1");
+				
 			try {
 				/***************************1.接收請求參數-輸入格式的錯誤處理**********************/
 				Integer sale_status = null;
@@ -226,13 +226,16 @@ public class SaleServlet extends HttpServlet {
 				}
 				
 				Integer empno = new Integer(req.getParameter("empno").trim());
-				if(part!=null) {
+				
+				String picc=null;
+				picc=req.getParameter("picc");
+				part=req.getPart("upfile1");
+				if(part!=null&&"F".equals(picc)) {
 				InputStream in = part.getInputStream();
 				byte[] buf = new byte[in.available()];
 				in.read(buf);
 				in.close();
 				SaleService saleSvc = new SaleService();
-//				System.out.println(sale_status);
 				saleSvc.updateSaleP(empno,buf);
 				}
 				
@@ -350,7 +353,7 @@ public class SaleServlet extends HttpServlet {
 					String sale_pwd = req.getParameter("spwd");
 					String sale_phone = req.getParameter("sphone");
 //					String ename = req.getParameter("ename");
-					String enameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
+					String enameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,20}$";
 					String pwdReg = "^[a-zA-Z0-9]{2,20}$";
 					String emailReg = "^[_a-z0-9-]+([.][_a-z0-9-]+)*@[a-z0-9-]+([.][a-z0-9-]+)*$";
 					String phoneReg = "[0-9]{10}";
@@ -379,7 +382,7 @@ public class SaleServlet extends HttpServlet {
 					if(sale_name==null || sale_name.trim().length() == 0) {
 						errorMsgs.add("販售者姓名: 請勿空白");
 					}else if(!sale_name.trim().matches(enameReg)) { //以下練習正則(規)表示式(regular-expression)
-						errorMsgs.add("販售者姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
+						errorMsgs.add("販售者姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到20之間");
 					}
 					
 					if(sale_nickname==null || sale_nickname.trim().length() == 0) {
