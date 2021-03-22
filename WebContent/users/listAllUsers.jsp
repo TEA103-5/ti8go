@@ -1,13 +1,13 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.card.model.*"%>
-<%@ page import="com.card.controller.*"%>
+<%@ page import="com.users.model.*"%>
+<%@ page import="com.users.controller.*"%>
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 
 <%
-	CardService cardSvc = new CardService();
-    List<CardVO> list = cardSvc.getAll();
+	UsersService UsersSvc = new UsersService();
+    List<UsersVO> list = UsersSvc.getAll();
     pageContext.setAttribute("list",list);
 %>
 <%-- <jsp:useBean id="cardSvc" scope="page" class="com.card.model.cardService" /> --%>
@@ -56,7 +56,7 @@
 <table id="table-1">
 	<tr><td>
 		 <h3>所有員工資料 - listAllcard.jsp</h3>
-		 <h4><a href="<%=request.getContextPath()%>/card/select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
+		 <h4><a href="<%=request.getContextPath()%>/users/select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
 	</td></tr>
 </table>
 
@@ -70,7 +70,7 @@
 	</ul>
 </c:if>
 
-<table >
+<table color="red">
 	<tr>
 		<th>信用卡編號</th>
 		<th>使用者編號</th>
@@ -83,7 +83,7 @@
 	
 	</tr>
 	<%@ include file="pages/page1.file" %> 
-	<c:forEach var="cardVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+	<c:forEach var="usersVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 		
 		<tr>
 			<td>${cardVO.card_id}</td>
@@ -97,7 +97,7 @@
 <%-- 	                    ${deptVO.deptno}【${deptVO.dname} - ${deptVO.loc}】 --%>
 <%--                     </c:if> --%>
 <%--                 </c:forEach> --%>
-<%-- 			</td> --%>
+<!-- 			</td> -->
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/card/card.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="修改">
