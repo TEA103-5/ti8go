@@ -9,16 +9,25 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Place_collectDAOJDBC implements Place_collectDAO_interface {
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 
-	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://localhost:3306/tea05?serverTimezone=Asia/Taipei";
-	String userid = "David";
-	String passwd = "123456";
+public class Place_collectDAO implements Place_collectDAO_interface {
+
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/David");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
 
 	private static final String INSERT_STMT = "INSERT INTO place_collect (place_id , users_id ) VALUES(? ,? )";
 	private static final String GET_ALL_STMT = "SELECT place_id , users_id , place_collect_time FROM place_collect order by users_id";
-//	這樣只會找到一筆
 //	private static final String GET_ONE_STMT = "SELECT place_id , users_id , place_collect_time FROM place_collect where users_id = ?";
 	private static final String DELETE = "DELETE FROM place_collect where place_id = ? and users_id = ? ";
 	// 收藏不會用更新的方式去變更 , 所以更新指令只是練習用的,條件寫死在update方法裡
@@ -26,14 +35,14 @@ public class Place_collectDAOJDBC implements Place_collectDAO_interface {
 	
 	private static final String GET_ALL_BY_ID_STMT = "SELECT place_id , users_id , place_collect_time FROM place_collect where users_id = ?";
 
+
 	@Override
 	public void insert(Place_collectVO place_collectVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setObject(1, place_collectVO.getPlace_id(), Types.INTEGER);
@@ -41,9 +50,7 @@ public class Place_collectDAOJDBC implements Place_collectDAO_interface {
 
 			pstmt.executeUpdate();
 
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-		} catch (SQLException e) {
+		}  catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		} finally {
 			if (pstmt != null) {
@@ -70,8 +77,7 @@ public class Place_collectDAOJDBC implements Place_collectDAO_interface {
 //		PreparedStatement pstmt = null;
 //
 //		try {
-//			Class.forName(driver);
-//			con = DriverManager.getConnection(url, userid, passwd);
+//			con = ds.getConnection();
 //			pstmt = con.prepareStatement(UPDATE);
 //
 //			pstmt.setObject(1, place_collectVO.getPlace_id(), Types.INTEGER);
@@ -81,8 +87,6 @@ public class Place_collectDAOJDBC implements Place_collectDAO_interface {
 //
 //			pstmt.executeUpdate();
 //
-//		} catch (ClassNotFoundException e) {
-//			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 //		} catch (SQLException e) {
 //			throw new RuntimeException("A database error occured. " + e.getMessage());
 //		} finally {
@@ -105,21 +109,18 @@ public class Place_collectDAOJDBC implements Place_collectDAO_interface {
 //	}
 
 	@Override
-	public void delete(Integer place_id , Integer users_id) {
+	public void delete(Integer place_id, Integer users_id) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(DELETE);
 
 			pstmt.setObject(1, place_id, Types.INTEGER);
 			pstmt.setObject(2, users_id, Types.INTEGER);
 			pstmt.executeUpdate();
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-		} catch (SQLException e) {
+		}  catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		} finally {
 			if (pstmt != null) {
@@ -149,8 +150,7 @@ public class Place_collectDAOJDBC implements Place_collectDAO_interface {
 //		ResultSet rs = null;
 //
 //		try {
-//			Class.forName(driver);
-//			con = DriverManager.getConnection(url, userid, passwd);
+//			con = ds.getConnection();
 //			pstmt = con.prepareStatement(GET_ONE_STMT);
 //			pstmt.setObject(1, users_id, Types.INTEGER);
 //			rs = pstmt.executeQuery();
@@ -163,8 +163,6 @@ public class Place_collectDAOJDBC implements Place_collectDAO_interface {
 //				place_collectVO.setPlace_collect_time(rs.getTimestamp("place_collect_time"));
 //
 //			}
-//		} catch (ClassNotFoundException e) {
-//			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 //		} catch (SQLException e) {
 //			throw new RuntimeException("A database error occured. " + e.getMessage());
 //		} finally {
@@ -204,8 +202,7 @@ public class Place_collectDAOJDBC implements Place_collectDAO_interface {
 		ResultSet rs = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 
@@ -219,8 +216,6 @@ public class Place_collectDAOJDBC implements Place_collectDAO_interface {
 				list.add(place_collectVO);
 
 			}
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		} finally {
@@ -260,8 +255,7 @@ public class Place_collectDAOJDBC implements Place_collectDAO_interface {
 		ResultSet rs = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_BY_ID_STMT);
 			pstmt.setObject(1, users_id, Types.INTEGER);
 			rs = pstmt.executeQuery();
@@ -276,8 +270,6 @@ public class Place_collectDAOJDBC implements Place_collectDAO_interface {
 				list.add(place_collectVO);
 
 			}
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		} finally {
@@ -306,56 +298,5 @@ public class Place_collectDAOJDBC implements Place_collectDAO_interface {
 
 		return list;
 	}
-	
 
-	public static void main(String[] args) {
-
-		Place_collectDAOJDBC dao = new Place_collectDAOJDBC();
-
-//		// 新增
-//		Place_collectVO place_collectVO1 = new Place_collectVO();
-//		place_collectVO1.setPlace_id(5);
-//		place_collectVO1.setUsers_id(1);
-//
-//		dao.insert(place_collectVO1);
-
-//		// 修改(用不上 廢棄)
-//		Place_collectVO place_collectVO2 = new Place_collectVO();
-//		place_collectVO2.setPlace_id(1);
-//		place_collectVO2.setUsers_id(2);
-//		
-//		dao.update(place_collectVO2);
-
-		// 刪除
-//		dao.delete(1 , 2);
-
-////		// 查詢一筆(廢棄)
-//		Place_collectVO place_collectVO3 = dao.findByPrimaryKey(1);
-//
-//		System.out.print(place_collectVO3.getUsers_id() + ",");
-//		System.out.print(place_collectVO3.getPlace_id() + ",");
-//		System.out.println(place_collectVO3.getPlace_collect_time());
-//		System.out.println("---------------------");
-
-		// 查詢全部
-//		List<Place_collectVO> list = dao.getAll();
-//
-//		for (Place_collectVO Aplace_collectVO : list) {
-//			System.out.print(Aplace_collectVO.getPlace_id() + ",");
-//			System.out.print(Aplace_collectVO.getUsers_id() + ",");
-//			System.out.print(Aplace_collectVO.getPlace_collect_time());
-//			System.out.println();
-//		}
-		
-//		 查詢特定使用者全部收藏
-		List<Place_collectVO> list1 = dao.getAllByPrimaryKey(1);
-
-		for (Place_collectVO Aplace_collectVO : list1) {
-			System.out.print(Aplace_collectVO.getPlace_id() + ",");
-			System.out.print(Aplace_collectVO.getUsers_id() + ",");
-			System.out.print(Aplace_collectVO.getPlace_collect_time());
-			System.out.println();
-		}
-
-	}
 }

@@ -52,5 +52,14 @@
 		<servlet-name>UploadTest_Servlet3</servlet-name>
 		<url-pattern>/place/uploadServlet3.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>Place_collectServlet</servlet-name>
+		<servlet-class>com.place_collect.controller.Place_collectServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Place_collectServlet</servlet-name>
+		<url-pattern>/place_collect/place_collect.do</url-pattern>
+	</servlet-mapping>
 
 </web-app>
