@@ -56,6 +56,7 @@ public class ApiTest {
 		JSONArray dataArray = jsonObj.getJSONArray("data");
 		JSONObject place = null ; // 用來放json陣列中取出的地點
 		String name = null;  
+		String tel = null;
 		Integer open_status = null;
 		String introduction = null;
 		String open_time = null;
@@ -103,6 +104,9 @@ public class ApiTest {
 			elong = BigDecimal.valueOf(place.getDouble("elong"));
 			facebook = place.getString("facebook");
 			System.out.println(facebook);
+			tel = place.getString("tel");
+			System.out.println("電話為:" + tel);
+			
 			url1 = place.getString("url");
 			service = place.getJSONArray("service");
 			for(int j = 0 ; j < service.length() ; j++) {
