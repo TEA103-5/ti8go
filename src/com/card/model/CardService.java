@@ -25,11 +25,11 @@ public class CardService {
 	return cardVO;
 	}
 	
-	public CardVO updateCard( Integer users_id, String card_number, String card_date, String card_last, Integer card_default) {
-		
+	public CardVO updateCard( Integer users_id, Integer card_id, String card_number, String card_date, String card_last, Integer card_default) {
+		// Integer card_id,
 		CardVO cardVO = new CardVO();
 		
-		//cardVO.setCard_id(card_id);
+		cardVO.setCard_id(card_id);
 		cardVO.setUsers_id(users_id);
 		cardVO.setCard_number(card_number);
 		cardVO.setCard_date(card_date);

@@ -1,15 +1,15 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.card.model.*"%>
 
 <%
-  CardVO cardVO = (CardVO) request.getAttribute("cardVO"); //EmpServlet.java (Concroller) ¦s¤JreqªºempVOª«¥ó (¥]¬AÀ°¦£¨ú¥XªºempVO, ¤]¥]¬A¿é¤J¸ê®Æ¿ù»~®ÉªºempVOª«¥ó)
+  CardVO cardVO = (CardVO) request.getAttribute("cardVO"); //EmpServlet.java (Concroller) å­˜å…¥reqçš„empVOç‰©ä»¶ (åŒ…æ‹¬å¹«å¿™å–å‡ºçš„empVO, ä¹ŸåŒ…æ‹¬è¼¸å…¥è³‡æ–™éŒ¯èª¤æ™‚çš„empVOç‰©ä»¶)
 %>
 
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>­û¤u¸ê®Æ­×§ï - update_emp_input.jsp</title>
+<title>å¡ç‰‡è³‡æ–™ä¿®æ”¹ - update_emp_input.jsp</title>
 
 <style>
   table#table-1 {
@@ -48,16 +48,16 @@
 
 <table id="table-1">
 	<tr><td>
-		 <h3>­û¤u¸ê®Æ­×§ï - update_card_input.jsp</h3>
-		 <h4><a href="<%=request.getContextPath()%>/card/select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">¦^­º­¶</a></h4>
+		 <h3>å¡ç‰‡è³‡æ–™ä¿®æ”¹ - update_card_input.jsp</h3>
+		 <h4><a href="<%=request.getContextPath()%>/card/select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">å›é¦–é </a></h4>
 	</td></tr>
 </table>
 
-<h3>¸ê®Æ­×§ï:</h3>
+<h3>è³‡æ–™ä¿®æ”¹:</h3>
 
-<%-- ¿ù»~ªí¦C --%>
+<%-- éŒ¯èª¤è¡¨åˆ— --%>
 <c:if test="${not empty errorMsgs}">
-	<font style="color:red">½Ğ­×¥¿¥H¤U¿ù»~:</font>
+	<font style="color:red">è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:</font>
 	<ul>
 		<c:forEach var="message" items="${errorMsgs}">
 			<li style="color:red">${message}</li>
@@ -68,33 +68,33 @@
 <FORM METHOD="post" ACTION="card.do" name="form1">
 <table>
 	<tr>
-		<td>·|­û½s¸¹:<font color=red><b>*</b></font></td>
+		<td>æœƒå“¡ç·¨è™Ÿ:<font color=red><b>*</b></font></td>
 		<td><%=cardVO.getUsers_id()%></td>
 	</tr>
 	<tr>
-		<td>¥d¤ù½s¸¹:</td>
-		<td><input type="TEXT" name="ename" size="2" value="<%=cardVO.getCard_id()%>" /></td>
+		<td>å¡ç‰‡ç·¨è™Ÿ:</td>
+		<td><%=cardVO.getCard_id()%></td>
 	</tr>
 	<tr>
-		<td>¥d¸¹:</td>
-		<td><input type="TEXT" name="job" size="16"	value="<%=cardVO.getCard_number()%>" /></td>
+		<td>å¡è™Ÿ:</td>
+		<td><input type="TEXT" name="card_number" size="16"	value="<%=cardVO.getCard_number()%>" /></td>
 	</tr>
 	<tr>
-		<td>¨ì´Á¤é:</td>
-		<td><input name="hiredate" size="4" id="f_date1" type="text" value="<%=cardVO.getCard_date()%>" /></td>
+		<td>åˆ°æœŸæ—¥:</td>
+		<td><input name="card_date" size="4"  type="text" value="<%=cardVO.getCard_date()%>" /></td>
 	</tr>
 	<tr>
-		<td>¥½¤T½X:</td>
-		<td><input type="TEXT" name="sal" size="3"	value="<%=cardVO.getCard_last()%>" /></td>
+		<td>æœ«ä¸‰ç¢¼:</td>
+		<td><input type="TEXT" name="card_last" size="3"	value="<%=cardVO.getCard_last()%>" /></td>
 	</tr>
 	<tr>
-		<td>ª¬ºA:</td>
-		<td><input type="TEXT" name="comm" size="1" value="<%=cardVO.getCard_default()%>" /></td>
+		<td>ç‹€æ…‹:</td>
+		<td><input type="TEXT" name="card_default" size="1" value="<%=cardVO.getCard_default()%>" /></td>
 	</tr>
 
 <%-- 	<jsp:useBean id="deptSvc" scope="page" class="com.dept.model.DeptService" /> --%>
 <!-- 	<tr> -->
-<!-- 		<td>³¡ªù:<font color=red><b>*</b></font></td> -->
+<!-- 		<td>éƒ¨é–€:<font color=red><b>*</b></font></td> -->
 <!-- 		<td><select size="1" name="deptno"> -->
 <%-- 			<c:forEach var="deptVO" items="${deptSvc.all}"> --%>
 <%-- 				<option value="${deptVO.deptno}" ${(empVO.deptno==deptVO.deptno)?'selected':'' } >${deptVO.dname} --%>
@@ -106,7 +106,8 @@
 <br>
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="card_id" value="<%=cardVO.getCard_id()%>">
-<input type="submit" value="°e¥X­×§ï"></FORM>
+<input type="hidden" name="users_id" value="<%=cardVO.getUsers_id()%>">
+<input type="submit" value="é€å‡ºä¿®æ”¹"></FORM>
 </body>
 
 

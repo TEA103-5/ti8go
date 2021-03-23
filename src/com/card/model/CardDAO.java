@@ -27,7 +27,7 @@ public class CardDAO implements CardDAO_interface{
 	}
 	
 	private static final String INSERT_STMT = "INSERT INTO card (users_id, card_number, card_date, card_last, card_default) VALUES (?, ?, ?, ?, ?)";
-	private static final String UPDATE_STMT = "UPDATE card SET card_id = ?, card_number = ?, card_date = ?, card_last = ?, card_default = ? where users_id = ?";
+	private static final String UPDATE_STMT = "UPDATE card SET card_number = ?, card_date = ?, card_last = ?, card_default = ? where card_id = ?";
 	private static final String DELETE_STMT = "DELETE FROM card WHERE card_id = ?";
 	private static final String FIND_BY_PK = "SELECT * FROM card WHERE card_id = ?";
 	private static final String GET_ALL = "SELECT * FROM card"; 
@@ -60,6 +60,7 @@ public class CardDAO implements CardDAO_interface{
 			pstmt.setString(3, cardVO.getCard_date());
 			pstmt.setString(4, cardVO.getCard_last());
 			pstmt.setInt(5, cardVO.getCard_default());
+
 			
 			pstmt.executeUpdate();
 
@@ -100,12 +101,13 @@ public class CardDAO implements CardDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_STMT);
 
-			pstmt.setInt(1, cardVO.getCard_id());
-			pstmt.setString(2, cardVO.getCard_number());
-			pstmt.setString(3, cardVO.getCard_date());
-			pstmt.setString(4, cardVO.getCard_last());
-			pstmt.setInt(5, cardVO.getCard_default());
-			pstmt.setInt(6, cardVO.getUsers_id());
+		//	pstmt.setInt(1, cardVO.getCard_id());
+			pstmt.setString(1, cardVO.getCard_number());
+			pstmt.setString(2, cardVO.getCard_date());
+			pstmt.setString(3, cardVO.getCard_last());
+			pstmt.setInt(4, cardVO.getCard_default());
+			pstmt.setInt(5, cardVO.getCard_id());
+			
 			
 			pstmt.executeUpdate();
 

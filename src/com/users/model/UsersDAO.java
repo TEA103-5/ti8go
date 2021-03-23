@@ -4,22 +4,37 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
 import java.util.*;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import util.Util;
 
 public class UsersDAO implements UsersDAO_interface {
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/tea05");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
 	private static final String INSERT_STMT = "INSERT INTO users (users_id, users_mail, users_pwd, users_identi_status, users_nickname, users_name, users_sex, users_birthday, users_id_number, users_pic, users_phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String UPDATE_STMT = "UPDATE users SET users_mail =?, users_pwd =?, users_identi_status =?, users_nickname =?, users_name =?, users_sex =?, users_birthday =?, users_id_number =?, users_pic =?, users_phone =? where users_id = ?";
 	private static final String DELETE_STMT = "DELETE FROM users WHERE users_id = ?";
 	private static final String FIND_BY_PK = "SELECT * FROM users WHERE users_id = ?";
 	private static final String GET_ALL = "SELECT * FROM users"; 
 
-	static {
-		try {
-			Class.forName(Util.DRIVER);
-		} catch (ClassNotFoundException ce) {
-			ce.printStackTrace();
-		}
-	}
+//	static {
+//		try {
+//			Class.forName(Util.DRIVER);
+//		} catch (ClassNotFoundException ce) {
+//			ce.printStackTrace();
+//		}
+//	}
 
 	public static byte[] getPictureByteArray(String path) throws IOException {
 		FileInputStream fis = new FileInputStream(path);
@@ -35,7 +50,7 @@ public class UsersDAO implements UsersDAO_interface {
 		
 		try {
 
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
 			pstmt.setInt(1, usersVO.getUsers_id());
@@ -49,7 +64,7 @@ public class UsersDAO implements UsersDAO_interface {
 			pstmt.setString(9, usersVO.getUsers_id_number());
 			byte[] pic = getPictureByteArray("items/user.png");
 			pstmt.setBytes(10, pic);
-			pstmt.setString(11, usersVO.getUser_phone());
+			pstmt.setString(11, usersVO.getUsers_phone());
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
@@ -80,7 +95,7 @@ public class UsersDAO implements UsersDAO_interface {
 		
 		try {
 
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_STMT);
 
 			
@@ -94,7 +109,7 @@ public class UsersDAO implements UsersDAO_interface {
 			pstmt.setString(8, usersVO.getUsers_id_number());
 			byte[] pic = getPictureByteArray("items/user.png");
 			pstmt.setBytes(9, pic);
-			pstmt.setString(10, usersVO.getUser_phone());
+			pstmt.setString(10, usersVO.getUsers_phone());
 			pstmt.setInt(11, usersVO.getUsers_id());
 
 			pstmt.executeUpdate();
@@ -127,7 +142,7 @@ public class UsersDAO implements UsersDAO_interface {
 
 		try {
 
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(DELETE_STMT);
 
 			pstmt.setInt(1, users_id);
@@ -165,7 +180,7 @@ public class UsersDAO implements UsersDAO_interface {
 
 		try {
 
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(FIND_BY_PK);
 			pstmt.setInt(1, users_id);
 			rs = pstmt.executeQuery();
@@ -181,7 +196,7 @@ public class UsersDAO implements UsersDAO_interface {
 				fBPK.setUesrs_sex(rs.getInt("users_sex"));
 				fBPK.setUesrs_birthday(rs.getString("users_birthday"));
 				fBPK.setUsers_id_number(rs.getString("users_id_number"));
-				fBPK.setUser_phone(rs.getString("users_phone"));
+				fBPK.setUsers_phone(rs.getString("users_phone"));
 			}
 
 		} catch (SQLException se) {
@@ -225,7 +240,7 @@ public class UsersDAO implements UsersDAO_interface {
 		
 		try {
 			
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL);
 			rs = pstmt.executeQuery();
 			
@@ -240,7 +255,7 @@ public class UsersDAO implements UsersDAO_interface {
 				dataL.setUesrs_sex(rs.getInt("users_sex"));
 				dataL.setUesrs_birthday(rs.getString("users_birthday"));
 				dataL.setUsers_id_number(rs.getString("users_id_number"));
-				dataL.setUser_phone(rs.getString("users_phone"));
+				dataL.setUsers_phone(rs.getString("users_phone"));
 				dataList.add(dataL);
 			}
 			
@@ -301,7 +316,7 @@ public class UsersDAO implements UsersDAO_interface {
 		VO2.setUesrs_sex(1);
 		VO2.setUesrs_birthday("29991231");
 		VO2.setUsers_id_number("Z123456789");
-		VO2.setUser_phone("0908090808");
+		VO2.setUsers_phone("0908090808");
 		dao.update(VO2);
 
 		//刪除
@@ -335,7 +350,7 @@ public class UsersDAO implements UsersDAO_interface {
 					System.out.print(users2.getUesrs_sex() + ",");
 					System.out.print(users2.getUesrs_birthday() + ",");
 					System.out.print(users2.getUsers_id_number() + ",");
-					System.out.print(users2.getUser_phone() + ",");
+					System.out.print(users2.getUsers_phone() + ",");
 					System.out.println();
 					
 				}

@@ -14,7 +14,7 @@
 
 <html>
 <head>
-<title>所有員工資料 - listAllEmp.jsp</title>
+<title>所有會員資料 - listAllUsers.jsp</title>
 
 <style>
   table#table-1 {
@@ -55,7 +55,7 @@
 <h4>此頁練習採用 EL 的寫法取值:</h4>
 <table id="table-1">
 	<tr><td>
-		 <h3>所有員工資料 - listAllcard.jsp</h3>
+		 <h3>所有會員資料 - listAllUsers.jsp</h3>
 		 <h4><a href="<%=request.getContextPath()%>/users/select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
 	</td></tr>
 </table>
@@ -70,28 +70,40 @@
 	</ul>
 </c:if>
 
-<table color="red">
+<table>
 	<tr>
-		<th>信用卡編號</th>
-		<th>使用者編號</th>
-		<th>信用卡號碼</th>
-		<th>信用卡日期</th>
-		<th>信用卡後三碼</th>
-		<th>信用卡狀態</th>
+		<th>使用者編號編號</th>
+		<th>使用者信箱</th>
+		<th>密碼</th>
+		<th>認證信狀態</th>
+		<th>暱稱</th>
+		<th>姓名</th>
+		<th>性別</th>
+		<th>出生年月日</th>
+		<th>身分證字號</th>
+		<th>頭像</th>
+		<th>連絡電話</th>
+		<th>創建日期</th>
+		<th>最後修改日期</th>
 		<th>修改</th>
 		<th>刪除</th>
-	
+		
 	</tr>
 	<%@ include file="pages/page1.file" %> 
 	<c:forEach var="usersVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 		
 		<tr>
-			<td>${cardVO.card_id}</td>
-			<td>${cardVO.users_id}</td>
-			<td>${cardVO.card_number}</td>
-			<td>${cardVO.card_date}</td>
-			<td>${cardVO.card_last}</td>
-			<td>${cardVO.card_default}</td> 
+			<td>${usersVO.users_id}</td>
+			<td>${usersVO.users_mail}</td>
+			<td>${usersVO.users_pwd}</td>
+			<td>${usersVO.users_status}</td>
+			<td>${usersVO.users_nickname}</td>
+			<td>${usersVO.users_sex}</td>
+			<td>${usersVO.users_birthday}</td>
+			<td>${usersVO.users_id_number}</td>
+			<td>${usersVO.users_pic}</td>
+			<td>${usersVO.users_phone}</td>   
+			  
 <%-- 			<td><c:forEach var="deptVO" items="${deptSvc.all}"> --%>
 <%--                     <c:if test="${empVO.deptno==deptVO.deptno}"> --%>
 <%-- 	                    ${deptVO.deptno}【${deptVO.dname} - ${deptVO.loc}】 --%>
@@ -99,15 +111,15 @@
 <%--                 </c:forEach> --%>
 <!-- 			</td> -->
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/card/card.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/users/users.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="修改">
-			     <input type="hidden" name="card_id"  value="${cardVO.card_id}">
+			     <input type="hidden" name="users_id"  value="${usersVO.users_id}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 			</td>
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/card/card.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/users/users.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="刪除">
-			     <input type="hidden" name="card_id"  value="${cardVO.card_id}">
+			     <input type="hidden" name="users_id"  value="${usersVO.users_id}">
 			     <input type="hidden" name="action" value="delete"></FORM>
 			</td>
 		</tr>

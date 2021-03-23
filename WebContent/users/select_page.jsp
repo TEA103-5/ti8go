@@ -48,26 +48,26 @@
 </c:if>
 
 <ul>
-  <li><a href='listAllCard.jsp'>List</a> all card.  <br><br></li>
+  <li><a href='listAllUsers.jsp'>List</a> all card.  <br><br></li>
   
   
   <li>
-    <FORM METHOD="post" ACTION="card.do" >
+    <FORM METHOD="post" ACTION="users.do" >
         <b>輸入信用卡編號 (如1):</b>
-        <input type="text" name="card_id">
+        <input type="text" name="users_id">
         <input type="hidden" name="action" value="getOne_For_Display">
         <input type="submit" value="送出">
     </FORM>
   </li>
 
-  <jsp:useBean id="cardSvc" scope="page" class="com.card.model.CardService" />
+  <jsp:useBean id="usersSvc" scope="page" class="com.users.model.UsersService" />
    
   <li>
-     <FORM METHOD="post" ACTION="card.do" >
+     <FORM METHOD="post" ACTION="users.do" >
        <b>選擇信用卡編號:</b>
-       <select size="1" name="card_id">
-         <c:forEach var="cardVO" items="${cardSvc.all}" > 
-          <option value="${cardVO.card_id}">${cardVO.card_id}
+       <select size="1" name="users_id">
+         <c:forEach var="usersVO" items="${usersSvc.all}" > 
+          <option value="${usersVO.users_id}">${usersVO.users_id}
          </c:forEach>   
        </select>
        <input type="hidden" name="action" value="getOne_For_Display">
@@ -76,11 +76,11 @@
   </li>
   
   <li>
-     <FORM METHOD="post" ACTION="card.do" >
+     <FORM METHOD="post" ACTION="users.do" >
        <b>選擇會員編號:</b>
-       <select size="1" name="card_id">
-         <c:forEach var="cardVO" items="${cardSvc.all}" > 
-          <option value="${cardVO.card_id}">${cardVO.users_id}
+       <select size="1" name="users_id">
+         <c:forEach var="usersVO" items="${usersSvc.all}" > 
+          <option value="${usersVO.users_id}">${usersVO.users_id}
          </c:forEach>   
        </select>
        <input type="hidden" name="action" value="getOne_For_Display">
@@ -93,7 +93,7 @@
 <h3>卡片管理</h3>
 
 <ul>
-  <li><a href='addCard.jsp'>Add</a> a new Card.</li>
+  <li><a href='addUsers.jsp'>Add</a> a new Users.</li>
 </ul>
 
 </body>

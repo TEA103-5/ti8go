@@ -14,7 +14,7 @@
 
 <html>
 <head>
-<title>所有員工資料 - listAllEmp.jsp</title>
+<title>所有卡片資料 - listAllCard.jsp</title>
 
 <style>
   table#table-1 {

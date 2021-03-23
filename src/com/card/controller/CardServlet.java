@@ -7,8 +7,7 @@ import javax.servlet.http.*;
 
 import com.card.model.CardService;
 import com.card.model.CardVO;
-import com.emp.model.EmpService;
-import com.emp.model.EmpVO;
+
 
 public class CardServlet extends HttpServlet {
 
@@ -235,18 +234,9 @@ public class CardServlet extends HttpServlet {
 				
 					try {
 						/***************************1.接收請求參數-輸入格式的錯誤處理**********************/
-				//		Integer card_id = new Integer(req.getParameter("card_id").trim());
+						Integer card_id = new Integer(req.getParameter("card_id").trim());
+					//	Integer users_id = new Integer(req.getParameter("users_id").trim());
 						
-						Integer users_id = null;
-						
-						try {
-							users_id = new Integer(req.getParameter("users_id").trim());
-						} catch (NumberFormatException e) {
-							users_id = 1;
-							errorMsgs.add("使用者編號請填數字.");
-						}
-					
-					
 						String card_number = req.getParameter("card_number").trim();
 						if (card_number == null || card_number.trim().length() == 0) {
 							errorMsgs.add("信用卡卡號: 請勿空白");
@@ -272,17 +262,16 @@ public class CardServlet extends HttpServlet {
 						}
 					
 					
-	//Integer deptno = new Integer(req.getParameter("deptno").trim());
+						Integer users_id = new Integer(req.getParameter("users_id").trim());
 
 						CardVO cardVO = new CardVO();
-					//	cardVO.setCard_id(card_id);
+						cardVO.setCard_id(card_id);
 						cardVO.setUsers_id(users_id);
 						cardVO.setCard_number(card_number);
 						cardVO.setCard_date(card_date);
 						cardVO.setCard_last(card_last);
 						cardVO.setCard_default(card_default);
-						
-
+					
 					// Send the use back to the form, if there were errors
 					if (!errorMsgs.isEmpty()) {
 						req.setAttribute("cardVO", cardVO); // 含有輸入格式錯誤的empVO物件,也存入req
@@ -293,7 +282,7 @@ public class CardServlet extends HttpServlet {
 					}
 						/***************************2.開始修改資料*****************************************/
 						CardService cardSvc = new CardService();
-						cardVO = cardSvc.updateCard(users_id, card_number, card_date, card_last, card_default);
+						cardVO = cardSvc.updateCard(users_id, card_id, card_number, card_date, card_last, card_default);
 						/***************************3.修改完成.準備轉交(Send the Success view)*************/
 						req.setAttribute("cardVO", cardVO); // 資料庫update成功後,正確的empVO物件,存入req
 						String url = "/card/listOneCard.jsp";

@@ -15,7 +15,7 @@ public class UsersService {
 	public UsersVO addusers(Integer users_id, String users_mail, String users_pwd, 
 			Integer users_status, String users_nickname, String users_name, 
 			Integer uesrs_sex, String uesrs_birthday, String users_id_number, 
-			Byte[] users_users_pic, String user_phone) {
+			Byte[] users_users_pic, String user_phone) throws Exception {
 		
 	UsersVO usersVO = new UsersVO();
 	
@@ -30,7 +30,7 @@ public class UsersService {
 	usersVO.setUesrs_birthday(uesrs_birthday);
 	usersVO.setUsers_id_number(users_id_number);
 	usersVO.setUsers_users_pic(users_users_pic);
-	usersVO.setUser_phone(user_phone);
+	usersVO.setUsers_phone(user_phone);
 	
 	dao.insert(usersVO);
 	
@@ -40,7 +40,7 @@ public class UsersService {
 	public UsersVO updateusers(Integer users_id, String users_mail, String users_pwd, 
 			Integer users_status, String users_nickname, String users_name, 
 			Integer uesrs_sex, String uesrs_birthday, String users_id_number, 
-			Byte[] users_users_pic, String user_phone) {
+			Byte[] users_users_pic, String user_phone) throws Exception{
 		
 		UsersVO usersVO = new UsersVO();
 		
@@ -54,7 +54,7 @@ public class UsersService {
 		usersVO.setUesrs_birthday(uesrs_birthday);
 		usersVO.setUsers_id_number(users_id_number);
 		usersVO.setUsers_users_pic(users_users_pic);
-		usersVO.setUser_phone(user_phone);
+		usersVO.setUsers_phone(user_phone);
 		
 		dao.update(usersVO);
 		

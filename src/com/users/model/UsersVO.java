@@ -11,7 +11,7 @@ public class UsersVO implements java.io.Serializable{
 	private String 	uesrs_birthday;
 	private String 	users_id_number;
 	private Byte[]	users_users_pic;
-	private String  user_phone;
+	private String  users_phone;
 	
 	
 	
@@ -20,7 +20,7 @@ public class UsersVO implements java.io.Serializable{
 		return "usersVO [users_id=" + users_id + ", users_mail=" + users_mail + ", users_pwd=" + users_pwd
 				+ ", users_status=" + users_status + ", users_nickname=" + users_nickname + ", users_name=" + users_name
 				+ ", uesrs_sex=" + uesrs_sex + ", uesrs_birthday=" + uesrs_birthday + ", users_id_number="
-				+ users_id_number + ", user_phone=" + user_phone + "]";
+				+ users_id_number + ", user_phone=" + users_phone + "]";
 	}
 	public Integer getUsers_id() {
 		return users_id;
@@ -82,11 +82,11 @@ public class UsersVO implements java.io.Serializable{
 	public void setUsers_users_pic(Byte[] users_users_pic) {
 		this.users_users_pic = users_users_pic;
 	}
-	public String getUser_phone() {
-		return user_phone;
+	public String getUsers_phone() {
+		return users_phone;
 	}
-	public void setUser_phone(String user_phone) {
-		this.user_phone = user_phone;
+	public void setUsers_phone(String user_phone) {
+		this.users_phone = user_phone;
 	}
 	
 	
