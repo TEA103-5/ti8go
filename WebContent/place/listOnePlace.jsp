@@ -89,9 +89,9 @@
 			<td><%=placeVO.getPlace_region()%></td>
 			<td><%=placeVO.getPlace_type()%></td>
 			<td><%=placeVO.getPlace_index()%></td>
-			<td><img src="DBGifReader4.do?place_pic=place_pic1&place_id=${placeVO.place_id}"></td>
-			<td><img src="DBGifReader4.do?place_pic=place_pic2&place_id=${placeVO.place_id}"></td>
-			<td><img src="DBGifReader4.do?place_pic=place_pic3&place_id=${placeVO.place_id}"></td>
+			<td><img width="300" height="225" src="DBGifReader4.do?place_pic=place_pic1&place_id=${placeVO.place_id}"></td>
+			<td><img width="300" height="225" src="DBGifReader4.do?place_pic=place_pic2&place_id=${placeVO.place_id}"></td>
+			<td><img width="300" height="225" src="DBGifReader4.do?place_pic=place_pic3&place_id=${placeVO.place_id}"></td>
 			
 			<td><%=placeVO.getPlace_state()%></td>
 			<td><%=placeVO.getUsers_id()%></td>
