@@ -9,19 +9,20 @@
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
     />
     <title>Home - Tivago</title>
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/assets/bootstrap/css/bootstrap.min.css" />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i"
     />
-    <link rel="stylesheet" href="assets/fonts/simple-line-icons.min.css" />
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/assets/fonts/simple-line-icons.min.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css"
     />
-    <link rel="stylesheet" href="assets/css/smoothproducts.css" />
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/assets/css/smoothproducts.css" />
 </head>
  <body>
+ 
     <nav
       class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar"
     >
@@ -82,7 +83,7 @@
             <div class="carousel-item active">
               <img
                 class="w-100 d-block"
-                src="assets/img/scenery/image1.jpg"
+                src="<%=request.getContextPath()%>/front-end/assets/img/scenery/image1.jpg"
                 alt="Slide Image"
               />
               <div>
@@ -94,7 +95,7 @@
             <div class="carousel-item">
               <img
                 class="w-100 d-block"
-                src="http://localhost:8081/T8go/assets/img/scenery/image4.jpg"
+                src="<%=request.getContextPath()%>/front-end/assets/img/scenery/image4.jpg"
                 alt="Slide Image"
               />
               <div>
@@ -106,7 +107,7 @@
             <div class="carousel-item">
               <img
                 class="w-100 d-block"
-                src="<%=request.getContextPath()%>/assets/img/scenery/image6.jpg"
+                src="<%=request.getContextPath()%>/front-end/assets/img/scenery/image6.jpg"
                 alt="Slide Image"
               />
               <div>
@@ -155,7 +156,7 @@
           </div>
           <div class="row align-items-center">
             <div class="col-md-6">
-              <img class="img-thumbnail" src="assets/img/scenery/image5.jpg" />
+              <img class="img-thumbnail" src="<%=request.getContextPath()%>/front-end/assets/img/scenery/image5.jpg" />
             </div>
             <div class="col-md-6">
               <h3>Lorem impsum dolor sit amet</h3>
@@ -187,7 +188,7 @@
               <div class="card text-center clean-card">
                 <img
                   class="card-img-top w-100 d-block"
-                  src="assets/img/avatars/avatar3.jpg"
+                  src="<%=request.getContextPath()%>/front-end/assets/img/avatars/avatar3.jpg"
                 />
                 <div class="card-body info">
                   <h4 class="card-title">John Smith</h4>
@@ -206,7 +207,7 @@
               <div class="card text-center clean-card">
                 <img
                   class="card-img-top w-100 d-block"
-                  src="DBGifReader4_1?id=2"
+                  src="<%=request.getContextPath()%>/DBGifReader4_1?id=2"
                 />
                 <div class="card-body info">
                   <h4 class="card-title">Robert Downturn</h4>
@@ -225,7 +226,7 @@
               <div class="card text-center clean-card">
                 <img
                   class="card-img-top w-100 d-block"
-                  src="DBGifReader4_1?id=18"
+                  src="<%=request.getContextPath()%>/DBGifReader4_1?id=18"
                 />
                 <div class="card-body info">
                   <h4 class="card-title">Ally Sanders</h4>
