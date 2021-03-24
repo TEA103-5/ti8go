@@ -70,7 +70,11 @@
 	</ul>
 </c:if>
 
+
 <table>
+<%@ include file="pages/page1.file" %> 
+	<c:forEach var="usersVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+
 	<tr>
 		<th>使用者編號編號</th>
 		<th>使用者信箱</th>
@@ -85,12 +89,11 @@
 		<th>連絡電話</th>
 		<th>創建日期</th>
 		<th>最後修改日期</th>
-		<th>修改</th>
-		<th>刪除</th>
+		<th>功能</th>
+		
 		
 	</tr>
-	<%@ include file="pages/page1.file" %> 
-	<c:forEach var="usersVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+	
 		
 		<tr>
 			<td>${usersVO.users_id}</td>
@@ -98,12 +101,14 @@
 			<td>${usersVO.users_pwd}</td>
 			<td>${usersVO.users_status}</td>
 			<td>${usersVO.users_nickname}</td>
+			<td>${usersVO.users_name}</td>
 			<td>${usersVO.users_sex}</td>
 			<td>${usersVO.users_birthday}</td>
 			<td>${usersVO.users_id_number}</td>
-			<td>${usersVO.users_pic}</td>
+			<td><img src="../UsersGetPic?id=${usersVO.users_id}" height="64" width="64"></td>
 			<td>${usersVO.users_phone}</td>   
-			  
+			<td>${usersVO.create_time}</td>
+			<td>${usersVO.update_time}</td>  
 <%-- 			<td><c:forEach var="deptVO" items="${deptSvc.all}"> --%>
 <%--                     <c:if test="${empVO.deptno==deptVO.deptno}"> --%>
 <%-- 	                    ${deptVO.deptno}【${deptVO.dname} - ${deptVO.loc}】 --%>
@@ -115,8 +120,9 @@
 			     <input type="submit" value="修改">
 			     <input type="hidden" name="users_id"  value="${usersVO.users_id}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
-			</td>
-			<td>
+<!-- 			</td> -->
+<BR>
+<!-- 			<td> -->
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/users/users.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="刪除">
 			     <input type="hidden" name="users_id"  value="${usersVO.users_id}">

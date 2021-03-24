@@ -30,10 +30,10 @@
 <body bgcolor='white'>
 
 <table id="table-1">
-   <tr><td><h3>IBM card: Home</h3><h4>( MVC )</h4></td></tr>
+   <tr><td><h3>IBM users: Home</h3><h4>( MVC )</h4></td></tr>
 </table>
 
-<p>This is the Home page for IBM card: Home</p>
+<p>This is the Home page for IBM users: Home</p>
 
 <h3>資料查詢:</h3>
 	

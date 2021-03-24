@@ -24,7 +24,8 @@ public class UsersDAO implements UsersDAO_interface {
 	}
 	private static final String INSERT_STMT = "INSERT INTO users (users_id, users_mail, users_pwd, users_identi_status, users_nickname, users_name, users_sex, users_birthday, users_id_number, users_pic, users_phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String UPDATE_STMT = "UPDATE users SET users_mail =?, users_pwd =?, users_identi_status =?, users_nickname =?, users_name =?, users_sex =?, users_birthday =?, users_id_number =?, users_pic =?, users_phone =? where users_id = ?";
-	private static final String DELETE_STMT = "DELETE FROM users WHERE users_id = ?";
+	private static final String DELETE_CARD = "DELETE FROM card WHERE users_id = ?";
+	private static final String DELETE_USERS = "DELETE FROM users WHERE users_id = ?";
 	private static final String FIND_BY_PK = "SELECT * FROM users WHERE users_id = ?";
 	private static final String GET_ALL = "SELECT * FROM users"; 
 
@@ -59,10 +60,11 @@ public class UsersDAO implements UsersDAO_interface {
 			pstmt.setInt(4, usersVO.getUsers_status());
 			pstmt.setString(5, usersVO.getUsers_nickname());
 			pstmt.setString(6, usersVO.getUsers_name());
-			pstmt.setInt(7, usersVO.getUesrs_sex());
-			pstmt.setString(8, usersVO.getUesrs_birthday());
+			pstmt.setInt(7, usersVO.getUsers_sex());
+			pstmt.setString(8, usersVO.getUsers_birthday());
 			pstmt.setString(9, usersVO.getUsers_id_number());
-			byte[] pic = getPictureByteArray("items/user.png");
+		// 2. setBytes
+				byte[] pic = getPictureByteArray("items/FC_Barcelona.png");
 			pstmt.setBytes(10, pic);
 			pstmt.setString(11, usersVO.getUsers_phone());
 			pstmt.executeUpdate();
@@ -104,8 +106,8 @@ public class UsersDAO implements UsersDAO_interface {
 			pstmt.setInt(3, usersVO.getUsers_status());
 			pstmt.setString(4, usersVO.getUsers_nickname());
 			pstmt.setString(5, usersVO.getUsers_name());
-			pstmt.setInt(6, usersVO.getUesrs_sex());
-			pstmt.setString(7, usersVO.getUesrs_birthday());
+			pstmt.setInt(6, usersVO.getUsers_sex());
+			pstmt.setString(7, usersVO.getUsers_birthday());
 			pstmt.setString(8, usersVO.getUsers_id_number());
 			byte[] pic = getPictureByteArray("items/user.png");
 			pstmt.setBytes(9, pic);
@@ -136,18 +138,28 @@ public class UsersDAO implements UsersDAO_interface {
 		}
 	}
 	
+	@SuppressWarnings("resource")
 	public void delete(Integer users_id) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-
+		
 		try {
 
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(DELETE_STMT);
-
+			con.setAutoCommit(false);
+			
+			pstmt = con.prepareStatement(DELETE_CARD);
 			pstmt.setInt(1, users_id);
 			
 			pstmt.executeUpdate();
+
+			pstmt = con.prepareStatement(DELETE_USERS);
+			pstmt.setInt(1, users_id);
+			
+			pstmt.executeUpdate();
+			
+			con.commit();
+			con.setAutoCommit(true);
 
 			// Handle any driver errors
 		} catch (SQLException se) {
@@ -193,10 +205,12 @@ public class UsersDAO implements UsersDAO_interface {
 				fBPK.setUsers_status(rs.getInt("users_identi_status"));
 				fBPK.setUsers_nickname(rs.getString("users_nickname"));
 				fBPK.setUsers_name(rs.getString("users_name"));
-				fBPK.setUesrs_sex(rs.getInt("users_sex"));
-				fBPK.setUesrs_birthday(rs.getString("users_birthday"));
+				fBPK.setUsers_sex(rs.getInt("users_sex"));
+				fBPK.setUsers_birthday(rs.getString("users_birthday"));
 				fBPK.setUsers_id_number(rs.getString("users_id_number"));
 				fBPK.setUsers_phone(rs.getString("users_phone"));
+				fBPK.setCreate_time(rs.getString("create_time"));
+				fBPK.setUpdate_time(rs.getString("update_time"));
 			}
 
 		} catch (SQLException se) {
@@ -252,10 +266,12 @@ public class UsersDAO implements UsersDAO_interface {
 				dataL.setUsers_status(rs.getInt("users_identi_status"));
 				dataL.setUsers_nickname(rs.getString("users_nickname"));
 				dataL.setUsers_name(rs.getString("users_name"));
-				dataL.setUesrs_sex(rs.getInt("users_sex"));
-				dataL.setUesrs_birthday(rs.getString("users_birthday"));
+				dataL.setUsers_sex(rs.getInt("users_sex"));
+				dataL.setUsers_birthday(rs.getString("users_birthday"));
 				dataL.setUsers_id_number(rs.getString("users_id_number"));
 				dataL.setUsers_phone(rs.getString("users_phone"));
+				dataL.setCreate_time(rs.getString("create_time"));
+				dataL.setUpdate_time(rs.getString("update_time"));
 				dataList.add(dataL);
 			}
 			
@@ -313,8 +329,8 @@ public class UsersDAO implements UsersDAO_interface {
 		VO2.setUsers_status(1);
 		VO2.setUsers_nickname("test");
 		VO2.setUsers_name("testadd");
-		VO2.setUesrs_sex(1);
-		VO2.setUesrs_birthday("29991231");
+		VO2.setUsers_sex(1);
+		VO2.setUsers_birthday("29991231");
 		VO2.setUsers_id_number("Z123456789");
 		VO2.setUsers_phone("0908090808");
 		dao.update(VO2);
@@ -347,8 +363,8 @@ public class UsersDAO implements UsersDAO_interface {
 					System.out.print(users2.getUsers_status() + ",");
 					System.out.print(users2.getUsers_nickname() + ",");
 					System.out.print(users2.getUsers_name() + ",");
-					System.out.print(users2.getUesrs_sex() + ",");
-					System.out.print(users2.getUesrs_birthday() + ",");
+					System.out.print(users2.getUsers_sex() + ",");
+					System.out.print(users2.getUsers_birthday() + ",");
 					System.out.print(users2.getUsers_id_number() + ",");
 					System.out.print(users2.getUsers_phone() + ",");
 					System.out.println();

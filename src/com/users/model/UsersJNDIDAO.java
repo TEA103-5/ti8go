@@ -66,7 +66,7 @@ public class UsersJNDIDAO {
 			pstmt.setString(9, usersVO.getUsers_id_number());
 			byte[] pic = getPictureByteArray("items/user.png");
 			pstmt.setBytes(10, pic);
-			pstmt.setString(11, usersVO.getUser_phone());
+			pstmt.setString(11, usersVO.getUsers_phone());
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
@@ -111,7 +111,7 @@ public class UsersJNDIDAO {
 			pstmt.setString(8, usersVO.getUsers_id_number());
 			byte[] pic = getPictureByteArray("items/user.png");
 			pstmt.setBytes(9, pic);
-			pstmt.setString(10, usersVO.getUser_phone());
+			pstmt.setString(10, usersVO.getUsers_phone());
 			pstmt.setInt(11, usersVO.getUsers_id());
 
 			pstmt.executeUpdate();
@@ -198,7 +198,7 @@ public class UsersJNDIDAO {
 				fBPK.setUesrs_sex(rs.getInt("users_sex"));
 				fBPK.setUesrs_birthday(rs.getString("users_birthday"));
 				fBPK.setUsers_id_number(rs.getString("users_id_number"));
-				fBPK.setUser_phone(rs.getString("users_phone"));
+				fBPK.setUsers_phone(rs.getString("users_phone"));
 			}
 
 		} catch (SQLException se) {
@@ -257,7 +257,7 @@ public class UsersJNDIDAO {
 				dataL.setUesrs_sex(rs.getInt("users_sex"));
 				dataL.setUesrs_birthday(rs.getString("users_birthday"));
 				dataL.setUsers_id_number(rs.getString("users_id_number"));
-				dataL.setUser_phone(rs.getString("users_phone"));
+				dataL.setUsers_phone(rs.getString("users_phone"));
 				dataList.add(dataL);
 			}
 			
@@ -304,7 +304,7 @@ public class UsersJNDIDAO {
 //		VO1.setUesrs_sex(1);
 //		VO1.setUesrs_birthday("20001231");
 //		VO1.setUsers_id_number("A123456789");
-//		VO1.setUser_phone("0909009090");
+//		VO1.setUsers_phone("0909009090");
 //		dao.insert(VO1);
 		
 		//修改
@@ -318,7 +318,7 @@ public class UsersJNDIDAO {
 		VO2.setUesrs_sex(1);
 		VO2.setUesrs_birthday("29991231");
 		VO2.setUsers_id_number("Z123456789");
-		VO2.setUser_phone("0908090808");
+		VO2.setUsers_phone("0908090808");
 		dao.update(VO2);
 
 		//刪除
@@ -336,7 +336,7 @@ public class UsersJNDIDAO {
 //				System.out.print(users1.getUesrs_sex() + ",");
 //				System.out.print(users1.getUesrs_birthday() + ",");
 //				System.out.print(users1.getUsers_id_number() + ",");
-//				System.out.print(users1.getUser_phone() + ",");
+//				System.out.print(users1.getUsers_phone() + ",");
 //				System.out.println(" --");
 		//查詢全部
 				List<UsersVO> list = dao.getAll();
@@ -352,7 +352,7 @@ public class UsersJNDIDAO {
 					System.out.print(users2.getUesrs_sex() + ",");
 					System.out.print(users2.getUesrs_birthday() + ",");
 					System.out.print(users2.getUsers_id_number() + ",");
-					System.out.print(users2.getUser_phone() + ",");
+					System.out.print(users2.getUsers_phone() + ",");
 					System.out.println();
 					
 				}

@@ -14,7 +14,7 @@ public class UsersService {
 	
 	public UsersVO addusers(Integer users_id, String users_mail, String users_pwd, 
 			Integer users_status, String users_nickname, String users_name, 
-			Integer uesrs_sex, String uesrs_birthday, String users_id_number, 
+			Integer users_sex, String users_birthday, String users_id_number, 
 			Byte[] users_users_pic, String user_phone) throws Exception {
 		
 	UsersVO usersVO = new UsersVO();
@@ -26,8 +26,8 @@ public class UsersService {
 	usersVO.setUsers_status(users_status);
 	usersVO.setUsers_nickname(users_nickname);
 	usersVO.setUsers_name(users_name);
-	usersVO.setUesrs_sex(uesrs_sex);
-	usersVO.setUesrs_birthday(uesrs_birthday);
+	usersVO.setUsers_sex(users_sex);
+	usersVO.setUsers_birthday(users_birthday);
 	usersVO.setUsers_id_number(users_id_number);
 	usersVO.setUsers_users_pic(users_users_pic);
 	usersVO.setUsers_phone(user_phone);
@@ -39,7 +39,7 @@ public class UsersService {
 	
 	public UsersVO updateusers(Integer users_id, String users_mail, String users_pwd, 
 			Integer users_status, String users_nickname, String users_name, 
-			Integer uesrs_sex, String uesrs_birthday, String users_id_number, 
+			Integer users_sex, String users_birthday, String users_id_number, 
 			Byte[] users_users_pic, String user_phone) throws Exception{
 		
 		UsersVO usersVO = new UsersVO();
@@ -50,8 +50,8 @@ public class UsersService {
 		usersVO.setUsers_status(users_status);
 		usersVO.setUsers_nickname(users_nickname);
 		usersVO.setUsers_name(users_name);
-		usersVO.setUesrs_sex(uesrs_sex);
-		usersVO.setUesrs_birthday(uesrs_birthday);
+		usersVO.setUsers_sex(users_sex);
+		usersVO.setUsers_birthday(users_birthday);
 		usersVO.setUsers_id_number(users_id_number);
 		usersVO.setUsers_users_pic(users_users_pic);
 		usersVO.setUsers_phone(user_phone);

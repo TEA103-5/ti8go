@@ -1,5 +1,7 @@
 package com.users.model;
 
+import java.util.Arrays;
+
 public class UsersVO implements java.io.Serializable{
 	private Integer users_id;
 	private String 	users_mail;
@@ -7,20 +9,35 @@ public class UsersVO implements java.io.Serializable{
 	private Integer users_status;
 	private String 	users_nickname;
 	private String 	users_name;
-	private Integer uesrs_sex;
-	private String 	uesrs_birthday;
+	private Integer users_sex;
+	private String 	users_birthday;
 	private String 	users_id_number;
 	private Byte[]	users_users_pic;
 	private String  users_phone;
+	private String  create_time;
+	private String  update_time;
 	
 	
 	
+	public String getCreate_time() {
+		return create_time;
+	}
+	public void setCreate_time(String create_time) {
+		this.create_time = create_time;
+	}
+	public String getUpdate_time() {
+		return update_time;
+	}
+	public void setUpdate_time(String update_time) {
+		this.update_time = update_time;
+	}
 	@Override
 	public String toString() {
-		return "usersVO [users_id=" + users_id + ", users_mail=" + users_mail + ", users_pwd=" + users_pwd
+		return "UsersVO [users_id=" + users_id + ", users_mail=" + users_mail + ", users_pwd=" + users_pwd
 				+ ", users_status=" + users_status + ", users_nickname=" + users_nickname + ", users_name=" + users_name
-				+ ", uesrs_sex=" + uesrs_sex + ", uesrs_birthday=" + uesrs_birthday + ", users_id_number="
-				+ users_id_number + ", user_phone=" + users_phone + "]";
+				+ ", users_sex=" + users_sex + ", users_birthday=" + users_birthday + ", users_id_number="
+				+ users_id_number + ", users_phone=" + users_phone + ", create_time=" + create_time + ", update_time="
+				+ update_time + "]";
 	}
 	public Integer getUsers_id() {
 		return users_id;
@@ -58,17 +75,17 @@ public class UsersVO implements java.io.Serializable{
 	public void setUsers_name(String users_name) {
 		this.users_name = users_name;
 	}
-	public Integer getUesrs_sex() {
-		return uesrs_sex;
+	public Integer getUsers_sex() {
+		return users_sex;
 	}
-	public void setUesrs_sex(Integer uesrs_sex) {
-		this.uesrs_sex = uesrs_sex;
+	public void setUsers_sex(Integer uesrs_sex) {
+		this.users_sex = uesrs_sex;
 	}
-	public String getUesrs_birthday() {
-		return uesrs_birthday;
+	public String getUsers_birthday() {
+		return users_birthday;
 	}
-	public void setUesrs_birthday(String uesrs_birthday) {
-		this.uesrs_birthday = uesrs_birthday;
+	public void setUsers_birthday(String uesrs_birthday) {
+		this.users_birthday = uesrs_birthday;
 	}
 	public String getUsers_id_number() {
 		return users_id_number;
