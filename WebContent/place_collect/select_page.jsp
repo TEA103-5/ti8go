@@ -54,26 +54,26 @@
 	<li><a href='listAllPlace_collect.jsp'>List</a> all Place_collect.  <br><br></li>
 	
 	<li>
-	    <FORM METHOD="post" ACTION="place_collect.do" >
+	    <FORM METHOD="post" ACTION="getAllByPrimaryKey.jsp" >
 	        <b>輸入使用者編號 (如1):</b>
 	        <input type="text" name="users_id">
-	        <input type="hidden" name="action" value="getOne_For_Display">
+<!-- 	        <input type="hidden" name="action" value="getAllByPrimaryKey"> -->
 	        <input type="submit" value="送出">
     	</FORM>
 	</li>
 	
 	<jsp:useBean id="place_collectSvc" scope="page" class="com.place_collect.model.Place_collectService" />
 
-	<li>
-		<FORM METHOD="post" ACTION="place_collect.do">
-			<b>選擇使用者編號:</b> <select size="1" name="users_id">
-				<c:forEach var="place_collectVO" items="${place_collectSvc.all}">
-					<option value="${place_collectVO.users_id}">${place_collectVO.users_id}
-				</c:forEach>
-			</select> <input type="hidden" name="action" value="getOne_For_Display">
-			<input type="submit" value="送出">
-		</FORM>
-	</li>
+<!-- 	<li> -->
+<!-- 		<FORM METHOD="post" ACTION="place_collect.do"> -->
+<!-- 			<b>選擇使用者編號:</b> <select size="1" name="users_id"> -->
+<%-- 				<c:forEach var="place_collectVO" items="${place_collectSvc.all}"> --%>
+<%-- 					<option value="${place_collectVO.users_id}">${place_collectVO.users_id} --%>
+<%-- 				</c:forEach> --%>
+<!-- 			</select> <input type="hidden" name="action" value="getAllByPrimaryKey"> -->
+<!-- 			<input type="submit" value="送出"> -->
+<!-- 		</FORM> -->
+<!-- 	</li> -->
 	
 <!-- 	<li> -->
 <!-- 		<FORM METHOD="post" ACTION="place_collect.do"> -->

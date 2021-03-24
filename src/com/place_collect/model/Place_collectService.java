@@ -35,8 +35,8 @@ public class Place_collectService {
 		return dao.getAll();
 	}
 	
-	public List<Place_collectVO> getAllByPrimaryKey(){
-		return dao.getAll();
+	public List<Place_collectVO> getAllByPrimaryKey(Integer users_id){
+		return dao.getAllByPrimaryKey(users_id);
 	}
 	
 }

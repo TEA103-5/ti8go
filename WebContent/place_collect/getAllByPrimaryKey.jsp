@@ -6,8 +6,16 @@
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 
 <%
+// 因page1.file & page2.file 會重新連結到此頁 , 故需做此處理
+	Integer users_id = null;
+	if(  request.getParameter("users_id") != null){
+		users_id = new Integer(request.getParameter("users_id"));
+		session.setAttribute("users_id", users_id);
+	}else{
+		users_id = (Integer)(session.getAttribute("users_id"));
+	}
 	Place_collectService place_collectSvc = new Place_collectService();
-	List<Place_collectVO> list = place_collectSvc.getAll();
+	List<Place_collectVO> list = place_collectSvc.getAllByPrimaryKey(users_id);
 	pageContext.setAttribute("list", list);
 %>
 
@@ -15,7 +23,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>所有地點收藏資料 - listAllPlace_collect.jsp</title>
+<title>找出特定使用者id的所有收藏 - getAllByPrimaryKey.jsp</title>
 
 <style>
   table#table-1 {
@@ -53,10 +61,13 @@
 </head>
 <body bgcolor='white'>
 
+
+
+
 <h4>此頁練習採用 EL 的寫法取值:</h4>
 <table id="table-1">
 	<tr><td>
-		 <h3>所有地點收藏資料 - listAllPlace_collect.jsp</h3>
+		 <h3>找出特定使用者id的所有收藏 - getAllByPrimaryKey.jsp</h3>
 		 <h4><a href="select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
 	</td></tr>
 </table>
@@ -95,7 +106,8 @@
 			     <input type="submit" value="刪除">
 			     <input type="hidden" name="users_id"  value="${place_collectVO.users_id}">
 			     <input type="hidden" name="place_id"  value="${place_collectVO.place_id}">
-			     <input type="hidden" name="action" value="delete"></FORM>
+			     <input type="hidden" name="action" value="delete">
+			     <input type="hidden" name="source" value="fromGetAllByPrimaryKey"></FORM>
 			</td>
 		</tr>
 	</c:forEach>
