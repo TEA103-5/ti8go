@@ -124,12 +124,20 @@ sale_audit_pic longblob,
 sale_status tinyint default 0,
 sale_phone char(20),
 sale_nickname varchar(30),
-sale_rate float,
+sale_rate float default 0,
 sale_time_create timestamp default current_timestamp,
 primary key(sale_id)
 );
 
-insert into sale(sale_email,sale_pwd,sale_name,sale_phone,sale_nickname,sale_rate)values("123@gmail.com","123","馬老師","0988888888","馬馬子",5);
+insert into sale(sale_email,sale_pwd,sale_name,sale_phone,sale_nickname,sale_rate)values("123@gmail.com","123","馬老師1","0988888888","馬馬子1",5),
+																						("123@gmail.com","123","馬老師2","0988888888","馬馬子2",5),
+                                                                                        ("123@gmail.com","123","馬老師3","0988888888","馬馬子3",5),
+                                                                                        ("123@gmail.com","123","馬老師4","0988888888","馬馬子4",5),
+                                                                                        ("123@gmail.com","123","馬老師5","0988888888","馬馬子5",5),
+                                                                                        ("123@gmail.com","123","馬老師6","0988888888","馬馬子6",5),
+                                                                                        ("123@gmail.com","123","馬老師7","0988888888","馬馬子7",5),
+                                                                                        ("123@gmail.com","123","馬老師8","0988888888","馬馬子8",5),
+                                                                                        ("123@gmail.com","123","馬老師9","0988888888","馬馬子9",5);
 
 create table admins (
 admins_id 			int not null primary key auto_increment ,
@@ -424,15 +432,15 @@ insert into note_c(note_c_title, note_c_content, note_id) values ('哈哈哈哈�
 create table product (
 product_id      	 int auto_increment not null,
 product_name         varchar(50) not null,
-product_status       tinyint not null,
-product_update_time  timestamp,
-product_content	     varchar(50),
+product_status       tinyint default 0,
+product_update_time  timestamp default current_timestamp,
+product_content	     varchar(500),
 product_description  varchar(50),
 product_categories   varchar(50),
-product_price        int,
-product_stock        int,
-product_pic          blob,
-sale_id              int,
+product_price        int default 0,
+product_stock        int default 0,
+product_pic          longblob,
+sale_id              int not null,
 foreign key(sale_id) references sale(sale_id),
 primary key(product_id)
 );
