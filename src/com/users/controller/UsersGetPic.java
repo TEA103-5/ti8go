@@ -21,7 +21,7 @@ public class UsersGetPic extends HttpServlet {
 		ServletOutputStream out = res.getOutputStream();
 		try {
 			Statement stmt = con.createStatement();
-			System.out.println("測試用");
+//			System.out.println("測試用");
 			String id = req.getParameter("id").trim();  //trim
 			ResultSet rs = stmt.executeQuery("SELECT users_pic FROM users where users_id =" + id);
 			
@@ -87,7 +87,7 @@ public class UsersGetPic extends HttpServlet {
 		try {
 			if (con != null) con.close();
 		} catch (SQLException e) {
-			System.out.println(e);
+//			System.out.println(e);
 		}
 	}
 

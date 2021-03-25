@@ -110,11 +110,13 @@ public class UsersDAO implements UsersDAO_interface {
 			pstmt.setInt(6, usersVO.getUsers_sex());
 			pstmt.setString(7, usersVO.getUsers_birthday());
 			pstmt.setString(8, usersVO.getUsers_id_number());
-			byte[] pic = getPictureByteArray("items/user.png");
-			pstmt.setBytes(9, pic);
+		
+			// 2. setBytes
+			//	byte[] pic = getPictureByteArray("items/FC_Barcelona.png");
+			pstmt.setBytes(9, usersVO.getUsers_users_pic());
 			pstmt.setString(10, usersVO.getUsers_phone());
 			pstmt.setInt(11, usersVO.getUsers_id());
-
+			
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
