@@ -313,13 +313,7 @@ public class PlaceDAOJDBC implements PlaceDAO_interface {
 				placeVO.setPlace_type(rs.getString("place_type"));
 				placeVO.setPlace_index(rs.getString("place_index"));
 				placeVO.setPlace_pic1(rs.getBytes("place_pic1"));
-//				placeVO.setPlace_pic1(rs.getBinaryStream("place_pic1"));
-				placeVO.setPlace_pic2(rs.getBytes("place_pic2"));
-				placeVO.setPlace_pic3(rs.getBytes("place_pic3"));
-				placeVO.setPlace_state(rs.getInt("place_state"));
-				placeVO.setUsers_id(rs.getInt("users_id"));
-				placeVO.setBusiness_time(rs.getInt("business_time"));
-				placeVO.setPlace_like(rs.getInt("place_like"));
+
 				list.add(placeVO);
 
 			}
