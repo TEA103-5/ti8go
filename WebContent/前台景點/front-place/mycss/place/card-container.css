@@ -1,0 +1,7 @@
+#card-container{
+    overflow:scroll;
+    height:90%;
+    width:19rem;
+    display: inline-block;
+}
+
