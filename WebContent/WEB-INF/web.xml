@@ -23,4 +23,51 @@
     <servlet-name>EmpServlet</servlet-name>
     <url-pattern>/emp/emp.do</url-pattern>
   </servlet-mapping>
+  
+    <servlet>
+    <servlet-name>Group_activitiesServlet</servlet-name>
+    <servlet-class>com.group_activities.controller.Group_activitiesServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Group_activitiesServlet</servlet-name>
+    <url-pattern>/group_activities/group_activities.do</url-pattern>
+  </servlet-mapping>
+
+   <servlet>
+    <servlet-name>ApplicantServlet</servlet-name>
+    <servlet-class>com.applicant.controller.ApplicantServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ApplicantServlet</servlet-name>
+    <url-pattern>/applicant/applicant.do</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+    <servlet-name>TeamServlet</servlet-name>
+    <servlet-class>com.team.controller.TeamServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TeamServlet</servlet-name>
+    <url-pattern>/team/team.do</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+    <servlet-name>TripServlet</servlet-name>
+    <servlet-class>com.trip.controller.TripServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TripServlet</servlet-name>
+    <url-pattern>/trip/trip.do</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+    <servlet-name>Trip_detailServlet</servlet-name>
+    <servlet-class>com.trip_detail.controller.Trip_detailServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Trip_detailServlet</servlet-name>
+    <url-pattern>/trip_detail/trip_detail.do</url-pattern>
+  </servlet-mapping>
+  
+  
 </web-app>

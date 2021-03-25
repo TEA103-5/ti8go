@@ -318,19 +318,19 @@ public class Group_activitiesJDBCDAO implements Group_activitiesDAO_interface{
 		Group_activitiesJDBCDAO dao = new Group_activitiesJDBCDAO();
 
 		// 新增
-//		Group_activitiesVO group_activitiesVO1 = new Group_activitiesVO();
-//		group_activitiesVO1.setTrip_id(1);
-//		group_activitiesVO1.setUsers_id(2);
-//		group_activitiesVO1.setActivities_state(1);
-//		group_activitiesVO1.setActivities_deadline(java.sql.Date.valueOf("2021-05-01"));
-//		group_activitiesVO1.setActivities_max_users(30);
-//		group_activitiesVO1.setActivities_users_count(4);
-//		group_activitiesVO1.setActivities_start(java.sql.Date.valueOf("2021-06-01"));
-//		group_activitiesVO1.setActivities_end(java.sql.Date.valueOf("2021-06-01"));
-//		group_activitiesVO1.setActivities_name("台北一日遊");
-//		group_activitiesVO1.setActivities_description("台北真好玩");
-//		dao.insert(group_activitiesVO1);
-//		System.out.println("-------insert success--------");
+		Group_activitiesVO group_activitiesVO1 = new Group_activitiesVO();
+		group_activitiesVO1.setTrip_id(1);
+		group_activitiesVO1.setUsers_id(2);
+		group_activitiesVO1.setActivities_state(1);
+		group_activitiesVO1.setActivities_deadline(java.sql.Date.valueOf("2021-05-01"));
+		group_activitiesVO1.setActivities_max_users(30);
+		group_activitiesVO1.setActivities_users_count(4);
+		group_activitiesVO1.setActivities_start(java.sql.Date.valueOf("2021-06-01"));
+		group_activitiesVO1.setActivities_end(java.sql.Date.valueOf("2021-06-01"));
+		group_activitiesVO1.setActivities_name("台北一日遊");
+		group_activitiesVO1.setActivities_description("台北真好玩");
+		dao.insert(group_activitiesVO1);
+		System.out.println("-------insert success--------");
 //		
 //		// 修改
 //		Group_activitiesVO group_activitiesVO2 = new Group_activitiesVO();
@@ -353,19 +353,19 @@ public class Group_activitiesJDBCDAO implements Group_activitiesDAO_interface{
 //		System.out.println("-------delete success--------");
 
 //		// 查詢
-		Group_activitiesVO group_activitiesVO3 = dao.findByPrimaryKey(1);
-		System.out.print(group_activitiesVO3.getActivities_id() + ",");
-		System.out.print(group_activitiesVO3.getTrip_id() + ",");
-		System.out.print(group_activitiesVO3.getUsers_id() + ",");
-		System.out.print(group_activitiesVO3.getActivities_create_time() + ",");
-		System.out.print(group_activitiesVO3.getActivities_state() + ",");
-		System.out.print(group_activitiesVO3.getActivities_deadline() + ",");
-		System.out.print(group_activitiesVO3.getActivities_max_users()+ ",");
-		System.out.print(group_activitiesVO3.getActivities_users_count()+ ",");
-		System.out.print(group_activitiesVO3.getActivities_start()+ ",");
-		System.out.print(group_activitiesVO3.getActivities_end()+ ",");
-		System.out.print(group_activitiesVO3.getActivities_name()+ ",");
-		System.out.println(group_activitiesVO3.getActivities_description());	
+//		Group_activitiesVO group_activitiesVO3 = dao.findByPrimaryKey(1);
+//		System.out.print(group_activitiesVO3.getActivities_id() + ",");
+//		System.out.print(group_activitiesVO3.getTrip_id() + ",");
+//		System.out.print(group_activitiesVO3.getUsers_id() + ",");
+//		System.out.print(group_activitiesVO3.getActivities_create_time() + ",");
+//		System.out.print(group_activitiesVO3.getActivities_state() + ",");
+//		System.out.print(group_activitiesVO3.getActivities_deadline() + ",");
+//		System.out.print(group_activitiesVO3.getActivities_max_users()+ ",");
+//		System.out.print(group_activitiesVO3.getActivities_users_count()+ ",");
+//		System.out.print(group_activitiesVO3.getActivities_start()+ ",");
+//		System.out.print(group_activitiesVO3.getActivities_end()+ ",");
+//		System.out.print(group_activitiesVO3.getActivities_name()+ ",");
+//		System.out.println(group_activitiesVO3.getActivities_description());	
 //		System.out.println("---------findByPrimaryKey success------------");
 
 		// 查詢

@@ -1,15 +1,14 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.emp.model.*"%>
+<%@ page import="com.trip_detail.model.*"%>
 
-<%
-  EmpVO empVO = (EmpVO) request.getAttribute("empVO"); //EmpServlet.java (Concroller) 存入req的empVO物件 (包括幫忙取出的empVO, 也包括輸入資料錯誤時的empVO物件)
-%>
-<%= empVO==null %>--${empVO.deptno}--
+<%Trip_detailVO trip_detailVO = (Trip_detailVO) request.getAttribute("trip_detailVO");%>
+
+
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>員工資料修改 - update_emp_input.jsp</title>
+<title>行程明細資料修改 - update_trip_detail_input.jsp</title>
 
 <style>
   table#table-1 {
@@ -30,7 +29,7 @@
 
 <style>
   table {
-	width: 450px;
+	width: 500px;
 	background-color: white;
 	margin-top: 1px;
 	margin-bottom: 1px;
@@ -48,8 +47,8 @@
 
 <table id="table-1">
 	<tr><td>
-		 <h3>員工資料修改 - update_emp_input.jsp</h3>
-		 <h4><a href="select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
+		 <h3>行程明細資料修改 - update_trip_detail_input.jsp</h3>
+		 <h4><a href="<%=request.getContextPath()%>/trip_detail/select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
 	</td></tr>
 </table>
 
@@ -65,47 +64,83 @@
 	</ul>
 </c:if>
 
-<FORM METHOD="post" ACTION="emp.do" name="form1">
+<FORM METHOD="post" ACTION="trip_detail.do" name="form1">
 <table>
 	<tr>
-		<td>員工編號:<font color=red><b>*</b></font></td>
-		<td><%=empVO.getEmpno()%></td>
+		<td>行程明細編號:</td>
+		<td><%=trip_detailVO.getTrip_detail_id()%></td>
 	</tr>
+	
+	<jsp:useBean id="tripSvc" scope="page" class="com.trip.model.TripService" />
 	<tr>
-		<td>員工姓名:</td>
-		<td><input type="TEXT" name="ename" size="45" value="<%=empVO.getEname()%>" /></td>
-	</tr>
-	<tr>
-		<td>職位:</td>
-		<td><input type="TEXT" name="job" size="45"	value="<%=empVO.getJob()%>" /></td>
-	</tr>
-	<tr>
-		<td>雇用日期:</td>
-		<td><input name="hiredate" id="f_date1" type="text" ></td>
-	</tr>
-	<tr>
-		<td>薪水:</td>
-		<td><input type="TEXT" name="sal" size="45"	value="<%=empVO.getSal()%>" /></td>
-	</tr>
-	<tr>
-		<td>獎金:</td>
-		<td><input type="TEXT" name="comm" size="45" value="<%=empVO.getComm()%>" /></td>
-	</tr>
-
-	<jsp:useBean id="deptSvc" scope="page" class="com.dept.model.DeptService" />
-	<tr>
-		<td>部門:<font color=red><b>*</b></font></td>
-		<td><select size="1" name="deptno">
-			<c:forEach var="deptVO" items="${deptSvc.all}">
-				<option value="${deptVO.deptno}" ${(empVO.deptno==deptVO.deptno)?'selected':'' } >${deptVO.dname}
+		<td>行程編號:<font color=red><b>*</b></font></td>
+		<td><select size="1" name="trip_id">
+			<c:forEach var="tripVO" items="${tripSvc.all}">
+				<option value="${tripVO.trip_id}" ${(group_activitiesVO.trip_id==tripVO.trip_id)? 'selected':'' } >${tripVO.trip_id}-${tripVO.trip_name}
 			</c:forEach>
 		</select></td>
 	</tr>
 
+	<tr>
+		<td>天數:</td>
+		<td><input type="TEXT" name="trip_day" size="45"  value="<%=trip_detailVO.getTrip_day()%>" /></td>
+	</tr>
+	<tr>
+		<td>順序:</td>
+		<td><input type="TEXT" name="trip_sort" size="45"  value="<%=trip_detailVO.getTrip_sort()%>" /></td>
+	</tr>
+	<tr>
+		<td>行程明細類型:</td>
+<%-- 		<td><input type="TEXT" name="trip_detail_type" size="45"  value="<%=trip_detailVO.getTrip_detail_type()%>" /></td> --%>
+		<td><select size="1" name="trip_detail_type">
+		<option value="${trip_detailVO.trip_detail_type}" selected>${trip_detailVO.trip_detail_type}
+		<option value="景點">景點
+		<option value="餐廳">餐廳
+		<option value="飯店">飯店
+		<option value="交通">交通
+		<option value="其他">其他
+			
+		</select></td>
+	</tr>
+	<tr>
+		<td>行程內容:</td>
+		<td><input type="TEXT" name="trip_content" size="45"	value="<%=trip_detailVO.getTrip_content()%>" /></td>
+	</tr>
+<!-- 	<tr> -->
+<!-- 		<td>地點編號:</td> -->
+<%-- 		<td><input type="TEXT" name="place_id" size="45"  value="<%=trip_detailVO.getPlace_id()%>" /></td> --%>
+<!-- 	</tr> -->
+	<tr>
+		<td>開始時間:</td>
+		<td><input name="trip_start_time" id="f_date1" type="text" value="<%=trip_detailVO.getTrip_start_time()%>" /></td>
+	</tr>
+<%-- 		<td><input type="time" name="trip_start_time" size="45"  value="<%=trip_detailVO.getTrip_start_time()%>" /></td> --%>
+	
+<%--  	</tr> --%>
+	<tr>
+		<td>結束時間:</td>
+		<td><input name="trip_end_time" id="f_date2" type="text" value="<%=trip_detailVO.getTrip_end_time()%>"></td>
+	</tr>
+<%-- 		<td><input type="time" name="trip_end_time" size="45"  value="<%=trip_detailVO.getTrip_end_time()%>" /></td> --%>
+	
+<%--  	</tr> --%>
+
+	<tr>
+		<td>備註:</td>
+		<td><input type="TEXT" name="trip_remarks" size="45"  value="<%=trip_detailVO.getTrip_remarks()%>" /></td>
+	</tr>
+
+	<tr>
+		<td>花費:</td>
+		<td><input type="TEXT" name="trip_cost" size="45" value="<%=trip_detailVO.getTrip_cost()%>" /></td>
+	</tr>
+	
+
+
 </table>
 <br>
 <input type="hidden" name="action" value="update">
-<input type="hidden" name="empno" value="<%=empVO.getEmpno()%>">
+<input type="hidden" name="trip_detail_id" value="<%=trip_detailVO.getTrip_detail_id()%>">
 <input type="submit" value="送出修改"></FORM>
 </body>
 
@@ -127,19 +162,31 @@
 </style>
 
 <script>
-        $.datetimepicker.setLocale('zh');
-        $('#f_date1').datetimepicker({
-           theme: '',              //theme: 'dark',
- 	       timepicker:false,       //timepicker:true,
- 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
- 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
- 		   value: '<%=empVO.getHiredate()%>', // value:   new Date(),
-           //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-           //startDate:	            '2017/07/10',  // 起始日
-           //minDate:               '-1970-01-01', // 去除今日(不含)之前
-           //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
-        });
-        
+//         $.datetimepicker.setLocale('zh');
+//         $('#f_date1').datetimepicker({
+//            theme: '',              theme: 'dark',
+//  	       timepicker:false,       //timepicker:true,
+//  	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
+//  	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
+<%--  		   value: '<%=group_activitiesVO.getActivities_deadline()%>', // value:   new Date(), --%>
+//            //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+//            //startDate:	            '2017/07/10',  // 起始日
+//            //minDate:               '-1970-01-01', // 去除今日(不含)之前
+//            //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
+//         });
+//         $.datetimepicker.setLocale('zh');
+//         $('#f_date2').datetimepicker({
+//            theme: '',              //theme: 'dark',
+//  	       timepicker:false,       //timepicker:true,
+//  	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
+//  	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
+<%--  		   value: '<%=group_activitiesVO.getActivities_start()%>', // value:   new Date(), --%>
+//            //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+//            //startDate:	            '2017/07/10',  // 起始日
+//            //minDate:               '-1970-01-01', // 去除今日(不含)之前
+//            //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
+//         }); $.datetimepicker.setLocale('zh');
+
         
    
         // ----------------------------------------------------------以下用來排定無法選擇的日期-----------------------------------------------------------

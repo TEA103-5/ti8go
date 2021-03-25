@@ -55,7 +55,7 @@
 <table id="table-1">
 	<tr><td>
 		 <h3>所有員工資料 - listAllEmp.jsp</h3>
-		 <h4><a href="<%=request.getContextPath()%>/select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
+		 <h4><a href="<%=request.getContextPath()%>/emp/select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
 	</td></tr>
 </table>
 
@@ -91,14 +91,17 @@
 			<td>${empVO.hiredate}</td>
 			<td>${empVO.sal}</td>
 			<td>${empVO.comm}</td> 
-			<td><c:forEach var="deptVO" items="${deptSvc.all}">
-                    <c:if test="${empVO.deptno==deptVO.deptno}">
-	                    ${deptVO.deptno}【${deptVO.dname} - ${deptVO.loc}】
-                    </c:if>
-                </c:forEach>
-			</td>
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do" style="margin-bottom: 0px;">
+				${deptSvc.getOneDept(empVO.deptno).dname}
+			</td>
+<%--			<td><c:forEach var="deptVO" items="${deptSvc.all}"> --%>
+ <%--                   <c:if test="${empVO.deptno==deptVO.deptno}"> --%>
+<%--	                    ${deptVO.deptno}【${deptVO.dname} - ${deptVO.loc}】 --%>
+ <%--                   </c:if> --%>
+<%--                </c:forEach> --%>
+<%--			</td> --%>
+			<td>
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do" style="margin-bottom: 0px;"> 
 			     <input type="submit" value="修改">
 			     <input type="hidden" name="empno"  value="${empVO.empno}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
