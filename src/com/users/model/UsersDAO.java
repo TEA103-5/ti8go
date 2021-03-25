@@ -22,7 +22,7 @@ public class UsersDAO implements UsersDAO_interface {
 			e.printStackTrace();
 		}
 	}
-	private static final String INSERT_STMT = "INSERT INTO users (users_id, users_mail, users_pwd, users_identi_status, users_nickname, users_name, users_sex, users_birthday, users_id_number, users_pic, users_phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String INSERT_STMT = "INSERT INTO users (users_mail, users_pwd, users_identi_status, users_nickname, users_name, users_sex, users_birthday, users_id_number, users_pic, users_phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String UPDATE_STMT = "UPDATE users SET users_mail =?, users_pwd =?, users_identi_status =?, users_nickname =?, users_name =?, users_sex =?, users_birthday =?, users_id_number =?, users_pic =?, users_phone =? where users_id = ?";
 	private static final String DELETE_CARD = "DELETE FROM card WHERE users_id = ?";
 	private static final String DELETE_USERS = "DELETE FROM users WHERE users_id = ?";
@@ -54,19 +54,20 @@ public class UsersDAO implements UsersDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
-			pstmt.setInt(1, usersVO.getUsers_id());
-			pstmt.setString(2, usersVO.getUsers_mail());
-			pstmt.setString(3, usersVO.getUsers_pwd());
-			pstmt.setInt(4, usersVO.getUsers_status());
-			pstmt.setString(5, usersVO.getUsers_nickname());
-			pstmt.setString(6, usersVO.getUsers_name());
-			pstmt.setInt(7, usersVO.getUsers_sex());
-			pstmt.setString(8, usersVO.getUsers_birthday());
-			pstmt.setString(9, usersVO.getUsers_id_number());
-		// 2. setBytes
-				byte[] pic = getPictureByteArray("items/FC_Barcelona.png");
-			pstmt.setBytes(10, pic);
-			pstmt.setString(11, usersVO.getUsers_phone());
+	//		pstmt.setInt(1, usersVO.getUsers_id());
+			pstmt.setString(1, usersVO.getUsers_mail());
+			pstmt.setString(2, usersVO.getUsers_pwd());
+			pstmt.setInt(3, usersVO.getUsers_status());
+			pstmt.setString(4, usersVO.getUsers_nickname());
+			pstmt.setString(5, usersVO.getUsers_name());
+			pstmt.setInt(6, usersVO.getUsers_sex());
+			pstmt.setString(7, usersVO.getUsers_birthday());
+			pstmt.setString(8, usersVO.getUsers_id_number());
+		
+			// 2. setBytes
+			//	byte[] pic = getPictureByteArray("items/FC_Barcelona.png");
+			pstmt.setBytes(9, usersVO.getUsers_users_pic());
+			pstmt.setString(10, usersVO.getUsers_phone());
 			pstmt.executeUpdate();
 
 			// Handle any driver errors

@@ -12,7 +12,7 @@ public class UsersVO implements java.io.Serializable{
 	private Integer users_sex;
 	private String 	users_birthday;
 	private String 	users_id_number;
-	private Byte[]	users_users_pic;
+	private byte[]	users_users_pic;
 	private String  users_phone;
 	private String  create_time;
 	private String  update_time;
@@ -78,14 +78,14 @@ public class UsersVO implements java.io.Serializable{
 	public Integer getUsers_sex() {
 		return users_sex;
 	}
-	public void setUsers_sex(Integer uesrs_sex) {
-		this.users_sex = uesrs_sex;
+	public void setUsers_sex(Integer users_sex) {
+		this.users_sex = users_sex;
 	}
 	public String getUsers_birthday() {
 		return users_birthday;
 	}
-	public void setUsers_birthday(String uesrs_birthday) {
-		this.users_birthday = uesrs_birthday;
+	public void setUsers_birthday(String users_birthday) {
+		this.users_birthday = users_birthday;
 	}
 	public String getUsers_id_number() {
 		return users_id_number;
@@ -93,19 +93,17 @@ public class UsersVO implements java.io.Serializable{
 	public void setUsers_id_number(String users_id_number) {
 		this.users_id_number = users_id_number;
 	}
-	public Byte[] getUsers_users_pic() {
+	public byte[] getUsers_users_pic() {
 		return users_users_pic;
 	}
-	public void setUsers_users_pic(Byte[] users_users_pic) {
+	public void setUsers_users_pic(byte[] users_users_pic) {
 		this.users_users_pic = users_users_pic;
 	}
 	public String getUsers_phone() {
 		return users_phone;
 	}
-	public void setUsers_phone(String user_phone) {
-		this.users_phone = user_phone;
+	public void setUsers_phone(String users_phone) {
+		this.users_phone = users_phone;
 	}
-	
-	
 	
 }
