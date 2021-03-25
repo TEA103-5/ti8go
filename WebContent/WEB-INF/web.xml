@@ -24,6 +24,7 @@
     <url-pattern>/emp/emp.do</url-pattern>
   </servlet-mapping>
   
+<<<<<<< HEAD
       <servlet>
     <servlet-name>SaleServlet</servlet-name>
     <servlet-class>com.sale.controller.SaleServlet</servlet-class>
@@ -51,4 +52,44 @@
 		<servlet-name>DBGifReader4_1</servlet-name>
 		<url-pattern>/DBGifReader4_1</url-pattern>
 	</servlet-mapping>
+=======
+
+  <servlet>
+    <servlet-name>CardServlet</servlet-name>
+    <servlet-class>com.card.controller.CardServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CardServlet</servlet-name>
+    <url-pattern>/card/card.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>UsersServlet</servlet-name>
+    <servlet-class>com.users.controller.UsersServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UsersServlet</servlet-name>
+    <url-pattern>/users/users.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>AdminsServlet</servlet-name>
+    <servlet-class>com.admins.controller.AdminsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminsServlet</servlet-name>
+    <url-pattern>/admins/admins.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+		<servlet-name>UsersGetPic</servlet-name>
+		<servlet-class>com.users.controller.UsersGetPic</servlet-class>
+
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UsersGetPic</servlet-name>
+		<url-pattern>/UsersGetPic</url-pattern>
+	</servlet-mapping>
+	
+>>>>>>> origin/wtf01
 </web-app>

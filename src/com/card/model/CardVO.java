@@ -1,6 +1,6 @@
 package com.card.model;
 
-public class cardVO implements java.io.Serializable {
+public class CardVO implements java.io.Serializable {
 	private Integer card_id;
 	private Integer users_id;
 	private String card_number;

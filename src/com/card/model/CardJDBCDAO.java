@@ -6,7 +6,7 @@ import util.Util;
 
 import java.sql.*;
 
-public class cardJDBCDAO implements cardDAO_interface{
+public class CardJDBCDAO implements CardDAO_interface{
 //	String driver = "com.mysql.cj.jdbc.Driver";
 //	String url = "jdbc:mysql://localhost:3306/demo?serverTimezone=Asia/Taipei";
 //	String userid = "David";
@@ -31,7 +31,7 @@ public class cardJDBCDAO implements cardDAO_interface{
 	private int card_id;
 	
 	@Override
-	public void insert(cardVO cardVO) {
+	public void insert(CardVO cardVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
@@ -76,7 +76,7 @@ public class cardJDBCDAO implements cardDAO_interface{
 
 
 	@Override
-	public void update(cardVO cardVO) {
+	public void update(CardVO cardVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
@@ -158,8 +158,8 @@ public class cardJDBCDAO implements cardDAO_interface{
 
 
 	@Override
-	public cardVO findByPK(Integer card_id) {
-		cardVO card = null;
+	public CardVO findByPK(Integer card_id) {
+		CardVO card = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -172,7 +172,7 @@ public class cardJDBCDAO implements cardDAO_interface{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				card = new cardVO();
+				card = new CardVO();
 				card.setCard_id(rs.getInt("card_id"));
 				card.setUsers_id(rs.getInt("users_id"));
 				card.setCard_number(rs.getString("card_number"));
@@ -214,9 +214,9 @@ public class cardJDBCDAO implements cardDAO_interface{
 
 
 	@Override
-	public List<cardVO> getAll() {
-		List<cardVO> cardList = new ArrayList<>();
-		cardVO card = null;
+	public List<CardVO> getAll() {
+		List<CardVO> cardList = new ArrayList<>();
+		CardVO card = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -228,7 +228,7 @@ public class cardJDBCDAO implements cardDAO_interface{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				card = new cardVO();
+				card = new CardVO();
 				card.setCard_id(rs.getInt("card_id"));
 				card.setUsers_id(rs.getInt("users_id"));
 				card.setCard_number(rs.getString("card_number"));
@@ -271,7 +271,7 @@ public class cardJDBCDAO implements cardDAO_interface{
 
 
 	public static void main(String[] args) {
-		cardJDBCDAO dao = new cardJDBCDAO();
+		CardJDBCDAO dao = new CardJDBCDAO();
 		
 		//新增
 //		cardVO cardVO1 = new cardVO();
@@ -297,7 +297,7 @@ public class cardJDBCDAO implements cardDAO_interface{
 //		dao.delete(4);
 		
 		//查詢
-		cardVO card3 = dao.findByPK(7);
+		CardVO card3 = dao.findByPK(7);
 		System.out.print("--- ");
 		System.out.print(card3.getCard_id() + ",");
 		System.out.print(card3.getUsers_id() + ",");
@@ -308,8 +308,8 @@ public class cardJDBCDAO implements cardDAO_interface{
 		System.out.println(" ---");
 		
 		//查詢
-		List<cardVO> list = dao.getAll();
-		for (cardVO  card : list) {
+		List<CardVO> list = dao.getAll();
+		for (CardVO  card : list) {
 			System.out.print(card.getCard_id() + ",");
 			System.out.print(card.getUsers_id() + ",");
 			System.out.print(card.getCard_number() + ",");
