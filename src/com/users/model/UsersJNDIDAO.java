@@ -61,8 +61,8 @@ public class UsersJNDIDAO {
 			pstmt.setInt(4, usersVO.getUsers_status());
 			pstmt.setString(5, usersVO.getUsers_nickname());
 			pstmt.setString(6, usersVO.getUsers_name());
-			pstmt.setInt(7, usersVO.getUesrs_sex());
-			pstmt.setString(8, usersVO.getUesrs_birthday());
+			pstmt.setInt(7, usersVO.getUsers_sex());
+			pstmt.setString(8, usersVO.getUsers_birthday());
 			pstmt.setString(9, usersVO.getUsers_id_number());
 			byte[] pic = getPictureByteArray("items/user.png");
 			pstmt.setBytes(10, pic);
