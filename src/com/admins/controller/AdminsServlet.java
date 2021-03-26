@@ -18,9 +18,10 @@ import javax.servlet.http.Part;
 import com.admins.model.AdminsService;
 import com.admins.model.AdminsVO;
 
-public class AdminisServlet extends HttpServlet {
+public class AdminsServlet extends HttpServlet {
 
-	
+	private static final long serialVersionUID = 1L;
+
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 		doPost(req, res);
@@ -36,13 +37,12 @@ public class AdminisServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		
 		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
-			System.out.println("LOOK!");
-
+	
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
-//			try {
+			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				String str = req.getParameter("admins_id");
 				if (str == null || (str.trim()).length() == 0) {
@@ -91,12 +91,12 @@ public class AdminisServlet extends HttpServlet {
 				successView.forward(req, res);
 
 				/***************************其他可能的錯誤處理*************************************/
-//			} catch (Exception e) {
-//				errorMsgs.add("無法取得資料:" + e.getMessage());
-//				RequestDispatcher failureView = req
-//						.getRequestDispatcher("/card/select_page.jsp");
-//				failureView.forward(req, res);
-//			}
+			} catch (Exception e) {
+				errorMsgs.add("無法取得資料:" + e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/card/select_page.jsp");
+				failureView.forward(req, res);
+			}
 		}
 		
 		//--------------------------------------------------//
@@ -117,7 +117,7 @@ public class AdminisServlet extends HttpServlet {
 				adminsSvc.deleteadmins(admins_id);
 				System.out.println("DELETE TEST " + admins_id);
 				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
-				String url = "/admins/listAlladmins.jsp";
+				String url = "/admins/listAllAdmins.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 				successView.forward(req, res);
 				
@@ -125,13 +125,12 @@ public class AdminisServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/admins/listAlladmins.jsp");
+						.getRequestDispatcher("/admins/listAllAdmins.jsp");
 				failureView.forward(req, res);
 			}
 		}
 		
 			if ("insert".equals(action)) { // 來自addEmp.jsp的請求  
-			
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
@@ -142,104 +141,65 @@ public class AdminisServlet extends HttpServlet {
 				String admins_name = req.getParameter("admins_name");
 				String nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
 				if (admins_name == null || admins_name.trim().length() == 0) {
-					errorMsgs.add("會員姓名: 請勿空白");
+					errorMsgs.add("管理者姓名: 請勿空白");
 				} else if(!admins_name.trim().matches(nameReg)) { //以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("會員姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
+					errorMsgs.add("管理者姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
 	            }
 				
-				String admins_mail = req.getParameter("admins_mail").trim();
-				if (admins_mail == null || admins_mail.trim().length() == 0) {
+				String admins_email = req.getParameter("admins_email").trim();
+				if (admins_email == null || admins_email.trim().length() == 0) {
 					errorMsgs.add("Mail請勿空白");
 				}
 				
-				String admins_pwd = req.getParameter("admins_pwd").trim();
-				if (admins_pwd == null || admins_pwd.trim().length() == 0) {
+				String admins_password = req.getParameter("admins_password").trim();
+				if (admins_password == null || admins_password.trim().length() == 0) {
 					errorMsgs.add("密碼請勿空白");
 				}
 				
-				String admins_nickname = req.getParameter("admins_nickname").trim();
-				if (admins_nickname == null || admins_nickname.trim().length() == 0) {
-					errorMsgs.add("匿名請勿空白");
-				}
-				
-				Integer admins_status = null ;
-				try {
-					admins_status = new Integer(req.getParameter("admins_status").trim());
-				} catch (NumberFormatException e) {
-					admins_status = 1;
-					errorMsgs.add("狀態請填數字.");
-				}
-				
-
 				Integer admins_sex = null ;
 				try {
-					admins_sex = new Integer(req.getParameter("admins_status").trim());
+					admins_sex = new Integer(req.getParameter("admins_sex").trim());
 				} catch (NumberFormatException e) {
 					admins_sex = 1;
 					errorMsgs.add("性別請填數字.");
 				}
-//				java.sql.Date hiredate = null;
-//				try {
-//					hiredate = java.sql.Date.valueOf(req.getParameter("hiredate").trim());
-//				} catch (IllegalArgumentException e) {
-//					hiredate=new java.sql.Date(System.currentTimeMillis());
-//					errorMsgs.add("請輸入日期!");
-//				}
-				
-				String admins_birthday = req.getParameter("admins_birthday").trim();
-				if (admins_birthday == null || admins_birthday.trim().length() == 0) {
-					errorMsgs.add("生日請勿空白");
+
+				String admins_authority = req.getParameter("admins_authority").trim();
+				if (admins_authority == null || admins_authority.trim().length() == 0) {
+					errorMsgs.add("權限請勿空白");
 				}
-				
-				String admins_id_number = req.getParameter("admins_id_number").trim();
-				if (admins_id_number == null || admins_id_number.trim().length() == 0) {
-					errorMsgs.add("身分證請勿空白");
+					
+				String admins_position = req.getParameter("admins_position").trim();
+				if (admins_position == null || admins_position.trim().length() == 0) {
+					errorMsgs.add("職位請勿空白");
 				}
-				
-				String admins_phone = req.getParameter("admins_phone").trim();
-				if (admins_phone == null || admins_phone.trim().length() == 0) {
-					errorMsgs.add("電話請勿空白");
-				}
-				
-				Part part=req.getPart("admins_admins_pic");
-			
-				InputStream in = part.getInputStream();
-				byte[] admins_admins_pic = new byte[in.available()];
-				in.read(admins_admins_pic);
-				in.close();
-				
 				
 			//	Integer admins_id = new Integer(req.getParameter("admins_id").trim());
 
 				AdminsVO adminsVO = new AdminsVO();
-//				adminsVO.setadmins_mail(admins_mail);
-//				adminsVO.setadmins_pwd(admins_pwd);
-//				adminsVO.setadmins_status(admins_status);
-//				adminsVO.setadmins_nickname(admins_nickname);
-//				adminsVO.setadmins_name(admins_name);
-//				adminsVO.setadmins_sex(admins_sex);
-//				adminsVO.setadmins_birthday(admins_birthday);
-//				adminsVO.setadmins_id_number(admins_id_number);
-//				adminsVO.setadmins_admins_pic(admins_admins_pic);
-//				adminsVO.setadmins_phone(admins_phone);
-		//		adminsVO.setadmins_id(admins_id);
+				
+				adminsVO.setAdmins_name(admins_name);
+				adminsVO.setAdmins_email(admins_email);
+				adminsVO.setAdmins_password(admins_password);
+				adminsVO.setAdmins_sex(admins_sex);
+				adminsVO.setAdmins_authority(admins_authority);
+				adminsVO.setAdmins_position(admins_position);
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("adminsVO", adminsVO); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/admins/addadmins.jsp");
+							.getRequestDispatcher("/admins/addAdmins.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 				
 				/***************************2.開始新增資料***************************************/
 				AdminsService adminsSvc = new AdminsService();
-//				adminsVO = adminsSvc.addadmins( admins_mail, admins_pwd, admins_status, 
-//						admins_nickname, admins_name, admins_sex, admins_birthday, admins_id_number,
-//						admins_admins_pic, admins_phone);			
+				adminsVO = adminsSvc.addadmins(admins_email, admins_name, admins_password, admins_sex, 
+						admins_authority, admins_position);		
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-				String url = "/admins/listAlladmins.jsp";
+				String url = "/admins/listAllAdmins.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);				
 				
@@ -247,7 +207,7 @@ public class AdminisServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/admins/addadmins.jsp");
+						.getRequestDispatcher("/admins/addAdmins.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -277,7 +237,7 @@ public class AdminisServlet extends HttpServlet {
 				} catch (Exception e) {
 					errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/admins/listAlladmins.jsp");
+							.getRequestDispatcher("/admins/listAllAdmins.jsp");
 					failureView.forward(req, res);
 				}
 			}
@@ -294,103 +254,67 @@ public class AdminisServlet extends HttpServlet {
 					String admins_name = req.getParameter("admins_name");
 					String nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
 					if (admins_name == null || admins_name.trim().length() == 0) {
-						errorMsgs.add("會員姓名: 請勿空白");
+						errorMsgs.add("管理者姓名: 請勿空白");
 					} else if(!admins_name.trim().matches(nameReg)) { //以下練習正則(規)表示式(regular-expression)
-						errorMsgs.add("會員姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
+						errorMsgs.add("管理者姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
 		            }
 					
-					String admins_mail = req.getParameter("admins_mail").trim();
-					if (admins_mail == null || admins_mail.trim().length() == 0) {
+					String admins_email = req.getParameter("admins_email").trim();
+					if (admins_email == null || admins_email.trim().length() == 0) {
 						errorMsgs.add("Mail請勿空白");
 					}
 					
-					String admins_pwd = req.getParameter("admins_pwd").trim();
-					if (admins_pwd == null || admins_pwd.trim().length() == 0) {
+					String admins_password = req.getParameter("admins_password").trim();
+					if (admins_password == null || admins_password.trim().length() == 0) {
 						errorMsgs.add("密碼請勿空白");
 					}
 					
-					String admins_nickname = req.getParameter("admins_nickname").trim();
-					if (admins_nickname == null || admins_nickname.trim().length() == 0) {
-						errorMsgs.add("匿名請勿空白");
-					}
-					
-					Integer admins_status = null ;
-					try {
-						admins_status = new Integer(req.getParameter("admins_status").trim());
-					} catch (NumberFormatException e) {
-						admins_status = 1;
-						errorMsgs.add("狀態請填數字.");
-					}
-					
-					System.out.println(action + req.getParameter("admins_id"));
-
 					Integer admins_sex = null ;
 					try {
-						admins_sex = new Integer(req.getParameter("admins_status").trim());
+						admins_sex = new Integer(req.getParameter("admins_sex").trim());
 					} catch (NumberFormatException e) {
 						admins_sex = 1;
 						errorMsgs.add("性別請填數字.");
 					}
-//					java.sql.Date hiredate = null;
-//					try {
-//						hiredate = java.sql.Date.valueOf(req.getParameter("hiredate").trim());
-//					} catch (IllegalArgumentException e) {
-//						hiredate=new java.sql.Date(System.currentTimeMillis());
-//						errorMsgs.add("請輸入日期!");
-//					}
-					
-					String admins_birthday = req.getParameter("admins_birthday").trim();
-					if (admins_birthday == null || admins_birthday.trim().length() == 0) {
-						errorMsgs.add("生日請勿空白");
+
+					String admins_authority = req.getParameter("admins_authority").trim();
+					if (admins_authority == null || admins_authority.trim().length() == 0) {
+						errorMsgs.add("權限請勿空白");
 					}
-					
-					String admins_id_number = req.getParameter("admins_id_number").trim();
-					if (admins_id_number == null || admins_id_number.trim().length() == 0) {
-						errorMsgs.add("身分證請勿空白");
+						
+					String admins_position = req.getParameter("admins_position").trim();
+					if (admins_position == null || admins_position.trim().length() == 0) {
+						errorMsgs.add("職位請勿空白");
 					}
-					
-					String admins_phone = req.getParameter("admins_phone").trim();
-					if (admins_phone == null || admins_phone.trim().length() == 0) {
-						errorMsgs.add("電話請勿空白");
-					}
-					
-					Part part=req.getPart("admins_admins_pic");
-				
-					InputStream in = part.getInputStream();
-					byte[] admins_admins_pic = new byte[in.available()];
-					in.read(admins_admins_pic);
-					in.close();
-					
 					
 					Integer admins_id = new Integer(req.getParameter("admins_id").trim());
 
 					AdminsVO adminsVO = new AdminsVO();
-//					adminsVO.setadmins_mail(admins_mail);
-//					adminsVO.setadmins_pwd(admins_pwd);
-//					adminsVO.setadmins_status(admins_status);
-//					adminsVO.setadmins_nickname(admins_nickname);
-//					adminsVO.setadmins_name(admins_name);
-//					adminsVO.setadmins_sex(admins_sex);
-//					adminsVO.setadmins_birthday(admins_birthday);
-//					adminsVO.setadmins_id_number(admins_id_number);
-//					adminsVO.setadmins_admins_pic(admins_admins_pic);
-//					adminsVO.setadmins_phone(admins_phone);
-//					adminsVO.setadmins_id(admins_id);
+					
+					adminsVO.setAdmins_name(admins_name);
+					adminsVO.setAdmins_email(admins_email);
+					adminsVO.setAdmins_password(admins_password);
+					adminsVO.setAdmins_sex(admins_sex);
+					adminsVO.setAdmins_authority(admins_authority);
+					adminsVO.setAdmins_position(admins_position);
+					adminsVO.setAdmins_id(admins_id);
 
 					// Send the use back to the form, if there were errors
 					if (!errorMsgs.isEmpty()) {
 						req.setAttribute("adminsVO", adminsVO); // 含有輸入格式錯誤的empVO物件,也存入req
 						RequestDispatcher failureView = req
-								.getRequestDispatcher("/admins/update_admins_input.jsp");
+								.getRequestDispatcher("/admins/addAdmins.jsp");
 						failureView.forward(req, res);
 						return;
 					}
 					
 					/***************************2.開始新增資料***************************************/
 					AdminsService adminsSvc = new AdminsService();
-//					adminsVO = adminsSvc.updateadmins(admins_id, admins_mail, admins_pwd, admins_status, admins_nickname, admins_name, admins_sex, admins_birthday, admins_id_number, admins_admins_pic, admins_phone);		
+					adminsVO = adminsSvc.updateadmins(admins_id, admins_email, admins_name, admins_password, 
+							admins_sex, admins_authority, admins_position);		
+					System.out.println("Admin Test " + admins_id );
 					/***************************3.新增完成,準備轉交(Send the Success view)***********/
-					String url = "/admins/listAlladmins.jsp";
+					String url = "/admins/listAllAdmins.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 					successView.forward(req, res);				
 					

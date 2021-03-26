@@ -25,7 +25,7 @@ public class AdminsDAO implements AdminsDAO_interface{
 			e.printStackTrace();
 		}
 	}
-	private static final String INSERT_STMT = "INSERT INTO admins (admins_id, admins_email, admins_name, admins_password, admins_sex, admins_authority, admins_position) VALUES (?, ?, ?, ?, ?, ?, ?)";
+	private static final String INSERT_STMT = "INSERT INTO admins (admins_email, admins_name, admins_password, admins_sex, admins_authority, admins_position) VALUES (?, ?, ?, ?, ?, ?)";
 	private static final String UPDATE_STMT = "UPDATE admins SET admins_email =?, admins_name =?, admins_password =?, admins_sex =?, admins_authority =?, admins_position =? where admins_id = ?";
 	private static final String DELETE_STMT = "DELETE FROM admins WHERE admins_id = ?";
 	private static final String FIND_BY_PK = "SELECT * FROM admins WHERE admins_id = ?";
@@ -48,13 +48,13 @@ public class AdminsDAO implements AdminsDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
-			pstmt.setInt(1, adminsVO.getAdmins_id());
-			pstmt.setString(2, adminsVO.getAdmins_email());
-			pstmt.setString(3, adminsVO.getAdmins_name());
-			pstmt.setString(4, adminsVO.getAdmins_password());
-			pstmt.setInt(5, adminsVO.getAdmins_sex());
-			pstmt.setString(6, adminsVO.getAdmins_authority());
-			pstmt.setString(7, adminsVO.getAdmins_position());
+//			pstmt.setInt(1, adminsVO.getAdmins_id());
+			pstmt.setString(1, adminsVO.getAdmins_email());
+			pstmt.setString(2, adminsVO.getAdmins_name());
+			pstmt.setString(3, adminsVO.getAdmins_password());
+			pstmt.setInt(4, adminsVO.getAdmins_sex());
+			pstmt.setString(5, adminsVO.getAdmins_authority());
+			pstmt.setString(6, adminsVO.getAdmins_position());
 		
 			pstmt.executeUpdate();
 
@@ -286,7 +286,7 @@ public class AdminsDAO implements AdminsDAO_interface{
 //		VO1.setAdmins_sex(2);
 //		VO1.setAdmins_authority("root");
 //		VO1.setAdmins_position(null);
-//
+////
 //		dao.insert(VO1);
 		
 		//修改

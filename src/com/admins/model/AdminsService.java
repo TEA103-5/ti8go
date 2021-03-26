@@ -41,6 +41,7 @@ public class AdminsService {
 		adminsVO.setAdmins_sex(admins_sex);
 		adminsVO.setAdmins_authority(admins_authority);
 		adminsVO.setAdmins_position(admins_position);
+		adminsVO.setAdmins_id(admins_id);
 		
 		dao.update(adminsVO);
 	
