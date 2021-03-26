@@ -3,13 +3,13 @@
 <%@ page import="com.users.model.*"%>
 
 <%
-  UsersVO usersVO = (UsersVO) request.getAttribute("usersVO");
+  UsersVO usersVO = (UsersVO) request.getAttribute("usersVO"); //EmpServlet.java (Concroller) 存入req的empVO物件 (包括幫忙取出的empVO, 也包括輸入資料錯誤時的empVO物件)
 %>
 
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>新增會員 - addUsers.jsp</title>
+<title>會員資料修改 - update_users_input.jsp</title>
 
 <style>
   table#table-1 {
@@ -48,12 +48,12 @@
 
 <table id="table-1">
 	<tr><td>
-		 <h3>會員資料新增 - addUsers.jsp</h3></td><td>
-		 <h4><a href="<%=request.getContextPath()%>/users/select_page.jsp"><img src="images/tomcat.png" width="100" height="100" border="0">回首頁</a></h4>
+		 <h3>會員資料修改 - update_users_input.jsp</h3>
+		 <h4><a href="<%=request.getContextPath()%>/users/select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
 	</td></tr>
 </table>
 
-<h3>資料新增:</h3>
+<h3>資料修改:</h3>
 
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
@@ -125,13 +125,13 @@
 <%-- 			</c:forEach> --%>
 <!-- 		</select></td> -->
 <!-- 	</tr> -->
-
 </table>
 <br>
-<input type="hidden" name="action" value="insert">
+<input type="hidden" name="action" value="update">
+<input type="hidden" name="users_id" value="<%=usersVO.getUsers_id()%>">
 <input type="hidden" name="users_status" 
 	 value="<%= (usersVO==null)? "1" : usersVO.getUsers_status()%>" />
-<input type="submit" value="送出新增"></FORM>
+<input type="submit" value="送出修改"></FORM>
 </body>
 
 

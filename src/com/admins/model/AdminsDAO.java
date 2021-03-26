@@ -15,7 +15,7 @@ import com.users.model.UsersDAO_interface;
 
 import util.Util;
 
-public class AdminsJDBCDAO {
+public class AdminsDAO implements AdminsDAO_interface{
 	private static DataSource ds = null;
 	static {
 		try {
@@ -31,14 +31,6 @@ public class AdminsJDBCDAO {
 	private static final String FIND_BY_PK = "SELECT * FROM admins WHERE admins_id = ?";
 	private static final String GET_ALL = "SELECT * FROM admins"; 
 
-	static {
-		try {
-			Class.forName(Util.DRIVER);
-		} catch (ClassNotFoundException ce) {
-			ce.printStackTrace();
-		}
-	}
-
 	public static byte[] getPictureByteArray(String path) throws IOException {
 		FileInputStream fis = new FileInputStream(path);
 		byte[] buffer = new byte[fis.available()];
@@ -53,7 +45,7 @@ public class AdminsJDBCDAO {
 		
 		try {
 
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
 			pstmt.setInt(1, adminsVO.getAdmins_id());
@@ -94,7 +86,7 @@ public class AdminsJDBCDAO {
 		
 		try {
 
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_STMT);
 
 			
@@ -137,7 +129,7 @@ public class AdminsJDBCDAO {
 
 		try {
 
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(DELETE_STMT);
 
 			pstmt.setInt(1, admins_id);
@@ -175,7 +167,7 @@ public class AdminsJDBCDAO {
 
 		try {
 
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(FIND_BY_PK);
 			pstmt.setInt(1, admins_id);
 			rs = pstmt.executeQuery();
@@ -189,6 +181,9 @@ public class AdminsJDBCDAO {
 				fBPK.setAdmins_sex(rs.getInt("admins_sex"));
 				fBPK.setAdmins_authority(rs.getString("admins_authority"));
 				fBPK.setAdmins_position(rs.getString("admins_position"));
+				fBPK.setAdmins_create_time(rs.getString("admins_create_time"));
+				fBPK.setAdmins_edit_time(rs.getString("admins_edit_time"));
+
 			}
 
 		} catch (SQLException se) {
@@ -232,7 +227,7 @@ public class AdminsJDBCDAO {
 		
 		try {
 			
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL);
 			rs = pstmt.executeQuery();
 			
@@ -245,6 +240,8 @@ public class AdminsJDBCDAO {
 				dataL.setAdmins_sex(rs.getInt("admins_sex"));
 				dataL.setAdmins_authority(rs.getString("admins_authority"));
 				dataL.setAdmins_position(rs.getString("admins_position"));
+				dataL.setAdmins_create_time(rs.getString("admins_create_time"));
+				dataL.setAdmins_edit_time(rs.getString("admins_edit_time"));
 				dataList.add(dataL);
 			}
 			

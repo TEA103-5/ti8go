@@ -1,7 +1,11 @@
 create database if not exists tea05 ;
 use tea05 ;
 
--- 以下已確認
+-- 將place_collect , trip_collect, product_collect , note_collect改成複合PK
+
+-- 如果寫入圖片時出現database error, max_allowed_packet過小 , 可執行下一行
+-- SET GLOBAL max_allowed_packet=1073741824;
+
 
 drop table if exists reminder_a;
 drop table if exists admins;
@@ -135,20 +139,21 @@ values ('54656',1);
 
 create table place (
 	place_id 		int not null auto_increment ,
-    place_name 		varchar(20) not null ,
+    place_name 		varchar(100) not null ,
     place_address	varchar(50) not null,
     place_longitude	decimal(9,6) not null,
     place_latitude 	decimal(8,6) not null,
-    place_tel		varchar(20),
+    place_tel		varchar(50),
     place_region	varchar(20) not null,
     place_type		varchar(20) not null,
-    place_index		varchar(50),
-    place_pic1		blob,
-    place_pic2		blob,
-    place_pic3		blob,
+    place_index		text,
+    place_pic1		longblob,
+    place_pic2		longblob,
+    place_pic3		longblob,
     place_state		tinyint not null,
     users_id		int,
     business_time 	tinyint,
+    place_like      int default 0 not null,
     foreign key (users_id) references users (users_id), 
 	primary key (place_id));
    insert into place (place_name, place_address, place_longitude, place_latitude, place_tel,place_region,place_type,place_index,place_state , users_id) values ("圓山捷運站","台北市大同區承德路1段1號",121.297187,24.943325,"886-1234-5678","台北市","景點","這裡是圓山捷運站",0 , 1);
@@ -164,17 +169,16 @@ create table place (
 
 
 create table place_collect(
-	place_collect_id		int not null auto_increment,
     place_id				int not null ,
 	users_id				int not null,
     place_collect_time		timestamp default current_timestamp,
     foreign key (users_id) references users (users_id),
     foreign key (place_id) references place (place_id),
-	primary key (place_collect_id)
+	primary key (place_id,users_id)
     );
     
 	insert into place_collect (place_id, users_id ) values (1 , 1 );
-    insert into place_collect (place_id, users_id ) values (2 , 2 );
+    insert into place_collect (place_id, users_id ) values (2 , 1 );
     insert into place_collect (place_id, users_id ) values (3 , 3 );
     insert into place_collect (place_id, users_id ) values (4 , 1 );
     insert into place_collect (place_id, users_id ) values (5 , 2 );
@@ -257,24 +261,24 @@ insert into trip (users_id,last_editor,trip_state,trip_like,read_authority,edit_
 
 
 create table trip_collect(
-	trip_collect_id 	int not null auto_increment,
     trip_id				int not null,
     users_id			int not null,
     trip_collect_time	timestamp default current_timestamp,
     foreign key (users_id) references users (users_id),
 	foreign key (trip_id) references trip (trip_id),
-    primary key (trip_collect_id));
+    primary key (trip_id , users_id)
+    );
     
     insert into trip_collect (trip_id, users_id ) values (1 , 1 );
     insert into trip_collect (trip_id, users_id ) values (2 , 2 );
     insert into trip_collect (trip_id, users_id ) values (2 , 3 );
-    insert into trip_collect (trip_id, users_id ) values (2 , 1 );
-    insert into trip_collect (trip_id, users_id ) values (2 , 2 );
-    insert into trip_collect (trip_id, users_id ) values (1 , 3 );
-    insert into trip_collect (trip_id, users_id ) values (2 , 1 );
-    insert into trip_collect (trip_id, users_id ) values (2 , 2 );
-    insert into trip_collect (trip_id, users_id ) values (2 , 3 );
-    insert into trip_collect (trip_id, users_id ) values (1 , 1 );
+    insert into trip_collect (trip_id, users_id ) values (2 , 4 );
+    insert into trip_collect (trip_id, users_id ) values (2 , 5 );
+    insert into trip_collect (trip_id, users_id ) values (1 , 6 );
+    insert into trip_collect (trip_id, users_id ) values (2 , 7 );
+    insert into trip_collect (trip_id, users_id ) values (2 , 8 );
+    insert into trip_collect (trip_id, users_id ) values (2 , 9 );
+    insert into trip_collect (trip_id, users_id ) values (1 , 10 );
 
 
 create table trip_detail (
@@ -410,11 +414,11 @@ values ('54656',1,1,'255.0.0.1');
 create table note (
   note_id int auto_increment not null,
   note_classid int not null,
-  note_date timestamp not null default current_timestamp,
+  note_date timestamp default current_timestamp on update current_timestamp,
   travel_start date,
   note_title varchar(30) not null,
   note_description varchar(50) not null,
-  note_update timestamp not null default current_timestamp,
+  note_update timestamp default current_timestamp on update current_timestamp,
   users_id int not null,
   trip_id int,
   note_like int default 0 ,
@@ -424,29 +428,31 @@ create table note (
 );
 
 
--- insert into note(note_classid, note_title, travel_start, note_description, users_id, trip_id) values(  1, '今天空氣品質不佳', '天氣不好空氣不好霧濛濛',1);
+insert into note(note_classid, note_title, travel_start, note_description, users_id, trip_id) values(  1, '今天天氣晴', '2021-03-06','台東好美好玩',1, 2);
+insert note(note_classid, note_title, travel_start, note_description, users_id, trip_id) values(  1, '今天天氣晴', '2021-03-06','宜蘭好吃好玩好開心',1, 2);
 insert into note(note_classid, note_title, travel_start, note_description, users_id, trip_id) values(  2, '今天天氣好','2021-02-26', '空氣清新',1, 1);
 
 
+
 create table note_collect(
-	note_collect_id 	int not null auto_increment,
     note_id				int not null,
     users_id			int not null,
     note_collect_time	timestamp default current_timestamp,
     foreign key (users_id) references users (users_id),
 	foreign key (note_id) references note (note_id),
-    primary key (note_collect_id));
+    primary key (note_id , users_id)
+    );
     
 	insert into note_collect (note_id, users_id ) values (1 , 1 );
     insert into note_collect (note_id, users_id ) values (1 , 2 );
     insert into note_collect (note_id, users_id ) values (1 , 3 );
-    insert into note_collect (note_id, users_id ) values (1 , 1 );
-    insert into note_collect (note_id, users_id ) values (1 , 2 );
-    insert into note_collect (note_id, users_id ) values (1 , 3 );
-    insert into note_collect (note_id, users_id ) values (1 , 1 );
-    insert into note_collect (note_id, users_id ) values (1 , 2 );
-    insert into note_collect (note_id, users_id ) values (1 , 3 );
-    insert into note_collect (note_id, users_id ) values (1 , 1 );
+    insert into note_collect (note_id, users_id ) values (1 , 4 );
+    insert into note_collect (note_id, users_id ) values (1 , 5 );
+    insert into note_collect (note_id, users_id ) values (1 , 6 );
+    insert into note_collect (note_id, users_id ) values (1 , 7 );
+    insert into note_collect (note_id, users_id ) values (1 , 8 );
+    insert into note_collect (note_id, users_id ) values (1 , 9 );
+    insert into note_collect (note_id, users_id ) values (1 , 10 );
 
 
 create table note_c(
@@ -542,24 +548,24 @@ insert into product (product_name , product_status , sale_id) values( "特大帳
 
 
 create table product_collect(
-	product_collect_id 		int not null auto_increment,
     product_id				int not null,
     users_id				int not null,
     product_collect_time	timestamp default current_timestamp,
     foreign key (users_id) references users (users_id),
 	foreign key (product_id) references product (product_id),
-    primary key (product_collect_id));
+    primary key (product_id,users_id)
+    );
     
 	insert into product_collect (product_id, users_id ) values (1 , 1 );
     insert into product_collect (product_id, users_id ) values (2 , 2 );
     insert into product_collect (product_id, users_id ) values (3 , 3 );
-    insert into product_collect (product_id, users_id ) values (2 , 1 );
-    insert into product_collect (product_id, users_id ) values (1 , 2 );
-    insert into product_collect (product_id, users_id ) values (2 , 3 );
-    insert into product_collect (product_id, users_id ) values (3 , 1 );
-    insert into product_collect (product_id, users_id ) values (2 , 2 );
-    insert into product_collect (product_id, users_id ) values (1 , 3 );
-    insert into product_collect (product_id, users_id ) values (2 , 1 );
+    insert into product_collect (product_id, users_id ) values (2 , 4 );
+    insert into product_collect (product_id, users_id ) values (1 , 5 );
+    insert into product_collect (product_id, users_id ) values (2 , 6 );
+    insert into product_collect (product_id, users_id ) values (3 , 7 );
+    insert into product_collect (product_id, users_id ) values (2 , 8 );
+    insert into product_collect (product_id, users_id ) values (1 , 9 );
+    insert into product_collect (product_id, users_id ) values (2 , 10 );
 
 
 create table order1(

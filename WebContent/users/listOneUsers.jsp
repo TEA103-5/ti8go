@@ -4,7 +4,7 @@
 
 <%-- 取出 Concroller EmpServlet.java已存入request的EmpVO物件 --%>
 
-<% UsersVO uesrsVO = (UsersVO) request.getAttribute("usersVO"); %>
+<% UsersVO usersVO = (UsersVO) request.getAttribute("usersVO"); %>
  
 
 <%-- 取出 對應的DeptVO物件--%>

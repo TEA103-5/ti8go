@@ -76,19 +76,19 @@
 	<c:forEach var="usersVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 
 	<tr>
-		<th>使用者編號編號</th>
-		<th>使用者信箱</th>
+		<th>使用者編號</th>
+		<th>信箱</th>
 		<th>密碼</th>
-		<th>認證信狀態</th>
+		<th>狀態</th>
 		<th>暱稱</th>
 		<th>姓名</th>
 		<th>性別</th>
-		<th>出生年月日</th>
-		<th>身分證字號</th>
+		<th>出日</th>
+		<th>身分證</th>
 		<th>頭像</th>
-		<th>連絡電話</th>
+		<th>電話</th>
 		<th>創建日期</th>
-		<th>最後修改日期</th>
+		<th>修改日期</th>
 		<th>功能</th>
 		
 		
@@ -105,7 +105,7 @@
 			<td>${usersVO.users_sex}</td>
 			<td>${usersVO.users_birthday}</td>
 			<td>${usersVO.users_id_number}</td>
-			<td><img src="../UsersGetPic?id=${usersVO.users_id}" height="64" width="64"></td>
+			<td><img src="<%=request.getContextPath()%>/UsersGetPic?id=${usersVO.users_id}" height="64" width="64"></td>
 			<td>${usersVO.users_phone}</td>   
 			<td>${usersVO.create_time}</td>
 			<td>${usersVO.update_time}</td>  
