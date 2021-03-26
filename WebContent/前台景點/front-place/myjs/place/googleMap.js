@@ -81,6 +81,22 @@ function addMarker(n) {
         // console.log(n)
         // alert(e)
         console.log(markers[n].getPosition().lat())
+        console.log(markers[n].getPosition().lng())
+
+        // 以下測試中----------------
+
+        let target_lat = markers[n].getPosition().lat();
+        let target_lng = markers[n].getPosition().lng();
+
+        let card = $(".card");
+        console.log(card.length);
+
+        for (let i = 0; i < card.length; i++) {
+            let card_lng = card.eq(i).attr("data-longitude");
+            if (card_lng == target_lng) {
+                console.log("target-data-id=" + card.eq(i).attr("data-id"));
+            }
+        }
     })
 }
 
