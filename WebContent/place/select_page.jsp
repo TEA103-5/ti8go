@@ -55,8 +55,12 @@ h4 {
 	</c:if>
 
 	<ul>
-		<li><a href="listAllPlace.jsp">List</a> all Place. <br> <br></li>
 
+		<li><a href="/Tivago_Git/place_collect/select_page.jsp">進入地點收藏.</a>  <br> <br></li>
+
+		<li><a href="listAllPlace.jsp">List</a> all Place. <br> <br></li>
+		
+		
 		<li>
 			<FORM METHOD="post" ACTION="place.do">
 				<b>輸入地點編號 (如1):</b> <input type="text" name="place_id"> 
@@ -89,6 +93,17 @@ h4 {
 					</c:forEach>
 				</select> 
 				<input type="hidden" name="action" value="getOne_For_Display">
+				<input type="submit" value="送出">
+			</FORM>
+		</li>
+		
+		<li>
+			<FORM METHOD="post" ACTION="place.do">
+				<b>輸入地址跟地點名稱進行模糊查詢 :</b> 
+				<input type="text" name="county" placeholder="請輸入縣市名稱"> 
+				<input type="text" name="district" placeholder="請輸入區域名稱"> 
+				<input type="text" name="place_name" placeholder="請輸入地點名稱" > 
+				<input type="hidden" name="action" value="getCard"> 
 				<input type="submit" value="送出">
 			</FORM>
 		</li>

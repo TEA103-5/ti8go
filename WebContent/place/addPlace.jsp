@@ -109,18 +109,21 @@
 	</tr>
 	<tr>
 		<td>圖片1:</td>
-		<td><input type="file" name="place_pic1" size="45"
-			 value="<%= (placeVO==null)? "" : placeVO.getPlace_pic1()%>" /></td>
+		<td><input id="p_file1" type="file" name="place_pic1" size="45"
+			 value="<%= (placeVO==null)? "" : placeVO.getPlace_pic1()%>" />
+			<img id="pic1" width="300" height="225" src="DBGifReader4.do"></td>
 	</tr>
 	<tr>
 		<td>圖片2:</td>
-		<td><input type="file" name="place_pic2" size="45"
-			 value="<%= (placeVO==null)? "" : placeVO.getPlace_pic2()%>" /></td>
+		<td><input id="p_file2" type="file" name="place_pic2" size="45"
+			 value="<%= (placeVO==null)? "" : placeVO.getPlace_pic2()%>" />
+			 <img id="pic2" width="300" height="225" src="DBGifReader4.do"></td>
 	</tr>
 	<tr>
 		<td>圖片3:</td>
-		<td><input type="file" name="place_pic3" size="45"
-			 value="<%= (placeVO==null)? "" : placeVO.getPlace_pic3()%>" /></td>
+		<td><input id="p_file3" type="file" name="place_pic3" size="45"
+			 value="<%= (placeVO==null)? "" : placeVO.getPlace_pic3()%>" />
+			 <img id="pic3" width="300" height="225" src="DBGifReader4.do"></td>
 	</tr>
 	<tr>
 		<td>地點狀態:</td>
@@ -153,6 +156,101 @@
 <br>
 <input type="hidden" name="action" value="insert">
 <input type="submit" value="送出新增"></FORM>
+
+<script>
+	
+// 	為何變數跟id同名時, 沒有getElementById , 監聽事件就可以直接使用元素id ???
+
+	let pic1_el = document.getElementById("pic1");
+	let p_file1_el = document.getElementById("p_file1");
+	
+	let pic2_el = document.getElementById("pic2");
+	let p_file2_el = document.getElementById("p_file2");
+	
+	let pic3_el = document.getElementById("pic3");
+	let p_file3_el = document.getElementById("p_file3");
+	
+	// 先將圖片修改前內容存起來
+	let pic1_origin = pic1_el.getAttribute("src");
+	let pic2_origin = pic2_el.getAttribute("src");
+	let pic3_origin = pic3_el.getAttribute("src");
+	
+
+// target是代表對應的圖片標籤節點
+	var preview_img = function(file , target) {
+		var reader = new FileReader(); // 用來讀取檔案
+		reader.addEventListener("load", function() {
+			target.setAttribute("src", reader.result);
+		});
+		reader.readAsDataURL(file); // 讀取檔案
+	};
+
+	
+	p_file1_el.addEventListener("change", function(e) {
+
+		// 可接受的附檔名 , 如上傳例外檔案類型 , 則不讀取 , 預覽圖仍保持原樣
+		var validExts = new Array(".jpg", ".png");
+
+		var fileExt = this.value;
+		fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
+		if (validExts.indexOf(fileExt) < 0) {
+			alert("檔案類型錯誤，可接受的副檔名有：" + validExts.toString());
+			this.value = null;
+			// 將修改前的圖片內容讀回去
+			pic1_el.setAttribute("src" , pic1_origin);
+			return;
+		}
+
+		if (this.files.length > 0) {
+			preview_img(this.files[0] , pic1_el);
+		} else {
+		}
+	});
+	
+	p_file2_el.addEventListener("change", function(e) {
+
+		// 可接受的附檔名 , 如上傳例外檔案類型 , 則不讀取 , 預覽圖仍保持原樣
+		var validExts = new Array(".jpg", ".png");
+
+		var fileExt = this.value;
+		fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
+		if (validExts.indexOf(fileExt) < 0) {
+			alert("檔案類型錯誤，可接受的副檔名有：" + validExts.toString());
+			this.value = null;
+			// 將修改前的圖片內容讀回去
+			pic2_el.setAttribute("src" , pic2_origin);
+			return;
+		}
+
+		if (this.files.length > 0) {
+			preview_img(this.files[0] , pic2_el);
+		} else {
+		}
+	});
+	
+	p_file3_el.addEventListener("change", function(e) {
+
+		// 可接受的附檔名 , 如上傳例外檔案類型 , 則不讀取 , 預覽圖仍保持原樣
+		var validExts = new Array(".jpg", ".png");
+
+		var fileExt = this.value;
+		fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
+		if (validExts.indexOf(fileExt) < 0) {
+			alert("檔案類型錯誤，可接受的副檔名有：" + validExts.toString());
+			this.value = null;
+			// 將修改前的圖片內容讀回去
+			pic3_el.setAttribute("src" , pic3_origin);
+			return;
+		}
+
+		if (this.files.length > 0) {
+			preview_img(this.files[0] , pic3_el);
+		} else {
+		}
+	});
+	
+</script>
+
 </body>
 
 

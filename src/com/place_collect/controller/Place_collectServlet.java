@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.place.model.PlaceService;
+import com.place.model.PlaceVO;
 import com.place_collect.model.Place_collectService;
 import com.place_collect.model.Place_collectVO;
 
@@ -172,26 +173,44 @@ public class Place_collectServlet extends HttpServlet {
 		}
 		
 		// 自己新增的方法, 對應介面getAllByPrimaryKey(Integer users_id)
-//		if("getAllByPrimaryKey".equals(action)) {
-//			
-//			/***************************1.直接轉接***************************************/
-//			String url = "/place_collect/getAllByPrimaryKey.jsp";
-//			RequestDispatcher successView = req.getRequestDispatcher(url);
-//			successView.forward(req, res);
+		if("getAllByPrimaryKey".equals(action)) {
 			
-			
-//			List<String> errorMsgs = new LinkedList<String>();
-//			req.setAttribute("errorMsgs", errorMsgs);
-//			
-//			/***************************1.接收請求參數***************************************/
-//			Integer users_id = new Integer(req.getParameter("users_id"));
-//			
-//			/*************************** 2.開始查詢資料 ***************************************/
-//			Place_collectService place_collectSvc = new Place_collectService();
-			
-			
-//		}
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
 
+			try {
+				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				
+				Integer users_id = new Integer(req.getParameter("users_id").trim());
+				
+
+				/*************************** 2.開始查詢資料 *****************************************/
+				Place_collectService place_collectSvc = new Place_collectService();
+				List<Place_collectVO> list = place_collectSvc.getAllByPrimaryKey(users_id);
+				
+				if (list == null) {
+					errorMsgs.add("查無資料");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/place_collect/select_page.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+				req.setAttribute("list", list);
+				String url = "/place_collect/getAllByPrimaryKey.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+				/*************************** 其他可能的錯誤處理 *************************************/
+			} catch (Exception e) {
+				errorMsgs.add("無法取得資料:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/place_collect/select_page.jsp");
+				failureView.forward(req, res);
+			}
+		}
 	}
 
 }

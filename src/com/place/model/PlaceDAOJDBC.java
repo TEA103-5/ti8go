@@ -36,7 +36,7 @@ public class PlaceDAOJDBC implements PlaceDAO_interface {
 	
 	// 利用條件篩選搜尋找出要放在畫面CARD內的資料
 	private static final String GET_BY_NAME_AND_ADDRESS = 
-			"select place_id , place_name , place_address , place_pic1 from place where place_name like '%?%' and place_address like '%?%'  ";
+			"select place_id , place_name , place_address , place_longitude  , place_latitude , place_state , users_id , place_like from place where place_name like ? and place_address like ? ";
 	
 	@Override
 	public void insert(PlaceVO placeVO) {
@@ -280,6 +280,28 @@ public class PlaceDAOJDBC implements PlaceDAO_interface {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 
 		return list;
@@ -298,7 +320,11 @@ public class PlaceDAOJDBC implements PlaceDAO_interface {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_BY_NAME_AND_ADDRESS);
+			pstmt.setString(1, "%" + place_name + "%");
+			pstmt.setString(2, "%" + place_address + "%");
 			rs = pstmt.executeQuery();
+			
+			
 
 			while (rs.next()) {
 
@@ -308,19 +334,40 @@ public class PlaceDAOJDBC implements PlaceDAO_interface {
 				placeVO.setPlace_address(rs.getString("place_address"));
 				placeVO.setPlace_longitude(rs.getBigDecimal("place_longitude"));
 				placeVO.setPlace_latitude(rs.getBigDecimal("place_latitude"));
-				placeVO.setPlace_tel(rs.getString("place_tel"));
-				placeVO.setPlace_region(rs.getString("place_region"));
-				placeVO.setPlace_type(rs.getString("place_type"));
-				placeVO.setPlace_index(rs.getString("place_index"));
-				placeVO.setPlace_pic1(rs.getBytes("place_pic1"));
-
+				placeVO.setPlace_state(rs.getInt("place_state"));
+				placeVO.setUsers_id(rs.getInt("users_id"));
+				placeVO.setPlace_like(rs.getInt("place_like"));
+				
 				list.add(placeVO);
 
 			}
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-		} catch (SQLException e) {
+		} 
+		catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 
 		return list;
@@ -330,51 +377,51 @@ public class PlaceDAOJDBC implements PlaceDAO_interface {
 		PlaceDAOJDBC dao = new PlaceDAOJDBC();
 		Picture picture = new Picture();
 
-//		// 新增
-		PlaceVO placeVO1 = new PlaceVO();
-		placeVO1.setPlace_name("南京復興捷運站");
-		placeVO1.setPlace_address("南京東路一段一號");
-		placeVO1.setPlace_longitude(new BigDecimal(121.297187));
-		placeVO1.setPlace_latitude(new BigDecimal(24.943325));
-		placeVO1.setPlace_tel("886-123456789");
-		placeVO1.setPlace_region("台北市");
-		placeVO1.setPlace_type("景點");
-		placeVO1.setPlace_index("這裡是南京復興捷運站");
-
-		
-//		-----------------處理圖片-----------------
-		
-		URL url = new URL("https://www.travel.taipei/image/175030");
-		HttpURLConnection con = (HttpURLConnection) url.openConnection();
-
-		con.setRequestMethod("GET");
-		con.setRequestProperty("accept", "application/json");
-		con.setRequestProperty("User-Agent", "rrrrr");
-
-		InputStream is = con.getInputStream();
-		ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-		
-		int nRead;
-		byte[] data = new byte[16000];
-		
-		while ((nRead = is.read(data, 0, data.length)) != -1) {
-			buffer.write(data, 0, nRead);
-		}
-		
-		buffer.close();
-		is.close();
-		
-//		-----------------處理圖片結束-----------------
-		
-		placeVO1.setPlace_pic1(buffer.toByteArray());
-//		placeVO1.setPlace_pic1( picture.getPictureByteArray("WebContent/images/1.jpg"));
-//		placeVO1.setPlace_pic2( picture.getPictureByteArray("WebContent/images/1.jpg"));
-//		placeVO1.setPlace_pic3( picture.getPictureByteArray("WebContent/images/1.jpg"));
-		placeVO1.setPlace_state(0);
-		placeVO1.setUsers_id(1);
-		placeVO1.setBusiness_time(1);
-
-		dao.insert(placeVO1);
+////		// 新增
+//		PlaceVO placeVO1 = new PlaceVO();
+//		placeVO1.setPlace_name("南京復興捷運站");
+//		placeVO1.setPlace_address("南京東路一段一號");
+//		placeVO1.setPlace_longitude(new BigDecimal(121.297187));
+//		placeVO1.setPlace_latitude(new BigDecimal(24.943325));
+//		placeVO1.setPlace_tel("886-123456789");
+//		placeVO1.setPlace_region("台北市");
+//		placeVO1.setPlace_type("景點");
+//		placeVO1.setPlace_index("這裡是南京復興捷運站");
+//
+//		
+////		-----------------處理圖片-----------------
+//		
+//		URL url = new URL("https://www.travel.taipei/image/175030");
+//		HttpURLConnection con = (HttpURLConnection) url.openConnection();
+//
+//		con.setRequestMethod("GET");
+//		con.setRequestProperty("accept", "application/json");
+//		con.setRequestProperty("User-Agent", "rrrrr");
+//
+//		InputStream is = con.getInputStream();
+//		ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+//		
+//		int nRead;
+//		byte[] data = new byte[16000];
+//		
+//		while ((nRead = is.read(data, 0, data.length)) != -1) {
+//			buffer.write(data, 0, nRead);
+//		}
+//		
+//		buffer.close();
+//		is.close();
+//		
+////		-----------------處理圖片結束-----------------
+//		
+//		placeVO1.setPlace_pic1(buffer.toByteArray());
+////		placeVO1.setPlace_pic1( picture.getPictureByteArray("WebContent/images/1.jpg"));
+////		placeVO1.setPlace_pic2( picture.getPictureByteArray("WebContent/images/1.jpg"));
+////		placeVO1.setPlace_pic3( picture.getPictureByteArray("WebContent/images/1.jpg"));
+//		placeVO1.setPlace_state(0);
+//		placeVO1.setUsers_id(1);
+//		placeVO1.setBusiness_time(1);
+//
+//		dao.insert(placeVO1);
 
 //		// 修改
 //		PlaceVO placeVO2 = new PlaceVO();
@@ -441,6 +488,21 @@ public class PlaceDAOJDBC implements PlaceDAO_interface {
 //			System.out.println();	
 //		}
 
+//		// 用地址跟地點名稱搜尋
+		List<PlaceVO> list = dao.getCard("圓山", "大同");
+		for(PlaceVO aPlace : list) {
+			System.out.print(aPlace.getPlace_id() + ",");
+			System.out.print(aPlace.getPlace_name() + ",");
+			System.out.print(aPlace.getPlace_address() + ",");
+			System.out.print(aPlace.getPlace_longitude() + ",");
+			System.out.print(aPlace.getPlace_latitude() + ",");
+			System.out.print(aPlace.getPlace_state() + ",");
+			System.out.print(aPlace.getUsers_id() + ",");
+			System.out.println(aPlace.getPlace_like());
+			System.out.println();	
+		}
+		
+		
 	}
 
 

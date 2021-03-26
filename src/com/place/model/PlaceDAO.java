@@ -40,6 +40,9 @@ public class PlaceDAO implements PlaceDAO_interface {
 	private static final String UPDATE = "UPDATE place set place_name=?, place_address=?, place_longitude=?, place_latitude=?, "
 			+ "place_tel=?,place_region=?,place_type=?,place_index=?,place_pic1=?,place_pic2=?,place_pic3=?,place_state=?,users_id=?,business_time=? where place_id=?";
 
+	// 利用條件篩選搜尋找出要放在畫面CARD內的資料
+	private static final String GET_BY_NAME_AND_ADDRESS = "select place_id , place_name , place_address , place_longitude  , place_latitude , place_state , users_id , place_like from place where place_name like ? and place_address like ? ";
+
 	@Override
 	public void insert(PlaceVO placeVO) {
 		Connection con = null;
@@ -284,6 +287,65 @@ public class PlaceDAO implements PlaceDAO_interface {
 			}
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<PlaceVO> getCard(String place_name, String place_address) {
+		List<PlaceVO> list = new ArrayList<PlaceVO>();
+		PlaceVO placeVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_BY_NAME_AND_ADDRESS);
+			pstmt.setString(1, "%" + place_name + "%");
+			pstmt.setString(2, "%" + place_address + "%");
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+
+				placeVO = new PlaceVO();
+				placeVO.setPlace_id(rs.getInt("place_id"));
+				placeVO.setPlace_name(rs.getString("place_name"));
+				placeVO.setPlace_address(rs.getString("place_address"));
+				placeVO.setPlace_longitude(rs.getBigDecimal("place_longitude"));
+				placeVO.setPlace_latitude(rs.getBigDecimal("place_latitude"));
+				placeVO.setPlace_state(rs.getInt("place_state"));
+				placeVO.setUsers_id(rs.getInt("users_id"));
+				placeVO.setPlace_like(rs.getInt("place_like"));
+
+				list.add(placeVO);
+
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException("A database error occured. " + e.getMessage());
 		} finally {
 			if (rs != null) {
 				try {

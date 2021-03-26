@@ -6,6 +6,7 @@
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 
 <%
+	System.out.println("測試");
 // 因page1.file & page2.file 會重新連結到此頁 , 故需做此處理
 	Integer users_id = null;
 	if(  request.getParameter("users_id") != null){

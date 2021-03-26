@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -45,7 +46,7 @@ public class PlaceServlet extends HttpServlet {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				String str = req.getParameter("place_id");
 				if (str == null || (str.trim()).length() == 0) {
-					errorMsgs.add("請輸入員工編號");
+					errorMsgs.add("請輸入地點編號");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -58,7 +59,7 @@ public class PlaceServlet extends HttpServlet {
 				try {
 					place_id = new Integer(str);
 				} catch (Exception e) {
-					errorMsgs.add("員工編號格式不正確");
+					errorMsgs.add("地點編號格式不正確");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -209,57 +210,51 @@ public class PlaceServlet extends HttpServlet {
 //				byte[] place_pic1 = { 1 };
 //				byte[] place_pic2 = { 1 };
 //				byte[] place_pic3 = { 1 };
-				
-				
+
 				System.out.println("存入圖片前");
-				
-				
+
 				byte[] place_pic1 = null;
 				byte[] place_pic2 = null;
 				byte[] place_pic3 = null;
-				
+
 //				byte[] place_pic1 =  (byte[])req.getAttribute("place_pic1"); // 會為null
 				// 把圖片再次讀進來 , 很爛的方式... 但上面的req.getAttribute("place_pic1")取不到
 				// muti form data傳過來的圖片資料...先這樣
 				PlaceService PlaceSvc = new PlaceService();
-				if(PlaceSvc.getOnePlace(place_id).getPlace_pic1() != null) {
+				if (PlaceSvc.getOnePlace(place_id).getPlace_pic1() != null) {
 					place_pic1 = PlaceSvc.getOnePlace(place_id).getPlace_pic1();
 				}
-				if(PlaceSvc.getOnePlace(place_id).getPlace_pic2() != null) {
+				if (PlaceSvc.getOnePlace(place_id).getPlace_pic2() != null) {
 					place_pic2 = PlaceSvc.getOnePlace(place_id).getPlace_pic2();
 				}
-				if(PlaceSvc.getOnePlace(place_id).getPlace_pic3() != null) {
+				if (PlaceSvc.getOnePlace(place_id).getPlace_pic3() != null) {
 					place_pic3 = PlaceSvc.getOnePlace(place_id).getPlace_pic3();
 				}
-
-				
-				
 
 //				// -----用UploadTest_Servlet3上傳------
 //				Collection<Part> parts = req.getParts();
 //				req.setAttribute("parts", parts);
-				
-				
+
 				RequestDispatcher uploadImage = req.getRequestDispatcher("uploadServlet3.do");
 				uploadImage.include(req, res);
-				
-				if(req.getAttribute("place_pic1") != null) {
+
+				if (req.getAttribute("place_pic1") != null) {
 					place_pic1 = (byte[]) req.getAttribute("place_pic1");
 				}
-				
-				if(req.getAttribute("place_pic2") != null) {
+
+				if (req.getAttribute("place_pic2") != null) {
 					place_pic2 = (byte[]) req.getAttribute("place_pic2");
 				}
-				
-				if(req.getAttribute("place_pic3") != null) {
+
+				if (req.getAttribute("place_pic3") != null) {
 					place_pic3 = (byte[]) req.getAttribute("place_pic3");
 				}
-				
-		System.out.println("有從include出來");
+
+				System.out.println("有從include出來");
 //				//---------------------------------
-				
+
 				// -----用UploadToDB上傳------
-				
+
 //				Collection<Part> parts = req.getParts();
 //				Map<String, byte[]> byteArrayMap = null;
 //				
@@ -278,10 +273,9 @@ public class PlaceServlet extends HttpServlet {
 //				if( byteArrayMap.containsKey("place_pic3")){
 //					place_pic3 = byteArrayMap.get("place_pic3");
 //				}
-				
+
 				// -----------
-				
-				
+
 				Integer place_state = null;
 				try {
 					place_state = new Integer(req.getParameter("place_state").trim());
@@ -324,9 +318,9 @@ public class PlaceServlet extends HttpServlet {
 				placeVO.setPlace_type(place_type);
 				placeVO.setPlace_index(place_index);
 
-				placeVO.setPlace_pic1( place_pic1);
-				placeVO.setPlace_pic2( place_pic2);
-				placeVO.setPlace_pic3( place_pic3);
+				placeVO.setPlace_pic1(place_pic1);
+				placeVO.setPlace_pic2(place_pic2);
+				placeVO.setPlace_pic3(place_pic3);
 				placeVO.setPlace_state(place_state);
 				placeVO.setUsers_id(users_id);
 				placeVO.setBusiness_time(business_time);
@@ -354,9 +348,9 @@ public class PlaceServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				
+
 				System.out.println("有跑到錯誤處理這邊");
-				
+
 				RequestDispatcher failureView = req.getRequestDispatcher("/place/update_place_input.jsp");
 				failureView.forward(req, res);
 			}
@@ -443,34 +437,33 @@ public class PlaceServlet extends HttpServlet {
 				}
 
 				// 開始 處理圖片上傳到資料庫
-				
+
 //				圖片可為空白 , 但如有圖片要顯示在畫面上
 				byte[] place_pic1 = null;
 				byte[] place_pic2 = null;
 				byte[] place_pic3 = null;
-				
-				
+
 				// -----用UploadTest_Servlet3上傳------
 //				Collection<Part> parts = req.getParts();
 //				req.setAttribute("parts", parts);
 				RequestDispatcher uploadImage = req.getRequestDispatcher("uploadServlet3.do");
 				uploadImage.include(req, res);
-				
-				if(req.getAttribute("place_pic1") != null) {
+
+				if (req.getAttribute("place_pic1") != null) {
 					place_pic1 = (byte[]) req.getAttribute("place_pic1");
 				}
-				
-				if(req.getAttribute("place_pic2") != null) {
+
+				if (req.getAttribute("place_pic2") != null) {
 					place_pic2 = (byte[]) req.getAttribute("place_pic2");
 				}
-				
-				if(req.getAttribute("place_pic3") != null) {
+
+				if (req.getAttribute("place_pic3") != null) {
 					place_pic3 = (byte[]) req.getAttribute("place_pic3");
 				}
-				//---------------------------------
-				
+				// ---------------------------------
+
 				// -----用UploadToDB上傳------
-				
+
 //				Collection<Part> parts = req.getParts();
 //				Map<String, byte[]> byteArrayMap = null;
 //				
@@ -489,9 +482,9 @@ public class PlaceServlet extends HttpServlet {
 //				if( byteArrayMap.containsKey("place_pic3")){
 //					place_pic3 = byteArrayMap.get("place_pic3");
 //				}
-				
+
 				// -----------
-				
+
 //				for (Part part : parts) {  
 //					// 要注意跟multipart/form-data中任何類型的欄位資料
 //					// 都會各自變成一個part,上傳圖片&其他類型資料時, 記得判斷該part是否是圖片
@@ -511,10 +504,9 @@ public class PlaceServlet extends HttpServlet {
 ////						place_pic1 = buf ;
 //						
 //				}
-				
-				
+
 				// 結束 處理圖片上傳到資料庫
-				
+
 				Integer place_state = null;
 				try {
 					place_state = new Integer(req.getParameter("place_state").trim());
@@ -551,9 +543,9 @@ public class PlaceServlet extends HttpServlet {
 				placeVO.setPlace_type(place_type);
 				placeVO.setPlace_index(place_index);
 
-				placeVO.setPlace_pic1( place_pic1);
-				placeVO.setPlace_pic2( place_pic2);
-				placeVO.setPlace_pic3( place_pic3);
+				placeVO.setPlace_pic1(place_pic1);
+				placeVO.setPlace_pic2(place_pic2);
+				placeVO.setPlace_pic3(place_pic3);
 				placeVO.setPlace_state(place_state);
 				placeVO.setUsers_id(users_id);
 				placeVO.setBusiness_time(business_time);
@@ -566,58 +558,126 @@ public class PlaceServlet extends HttpServlet {
 					return;
 				}
 
-				/***************************2.開始新增資料***************************************/
+				/*************************** 2.開始新增資料 ***************************************/
 				PlaceService placeSvc = new PlaceService();
-				placeVO = placeSvc.addPlace(place_name, place_address, place_longitude, place_latitude, place_tel, place_region, place_type, place_index, place_pic1, place_pic2, place_pic3, place_state, users_id, business_time);
-				
-				/***************************3.新增完成,準備轉交(Send the Success view)***********/
+				placeVO = placeSvc.addPlace(place_name, place_address, place_longitude, place_latitude, place_tel,
+						place_region, place_type, place_index, place_pic1, place_pic2, place_pic3, place_state,
+						users_id, business_time);
+
+				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				String url = "/place/listAllPlace.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
-				
-				/***************************其他可能的錯誤處理**********************************/
+
+				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/place/addPlace.jsp");
 				failureView.forward(req, res);
 			}
 		}
-		
-		if("delete".equals(action)) {
+
+		if ("delete".equals(action)) {
+
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+//			List<PlaceVO> list = null;
 			
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+
+				/*************************** 1.接收請求參數 ***************************************/
+				Integer place_id = new Integer(req.getParameter("place_id"));
+
+				/*************************** 2.開始刪除資料 ***************************************/
+				PlaceService placeSvc = new PlaceService();
+				placeSvc.deletePlace(place_id);
+
+				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
+				String url = "/place/listAllPlace.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+			} catch (Exception e) {
+				errorMsgs.add("刪除資料失敗:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/place/listAllPlace.jsp");
+				failureView.forward(req, res);
+			}
+		}
+
+		if ("getCard".equals(action)) {// 來自select_page.jsp的請求
+
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
-			
-			
+
 			try {
+				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				
-				/***************************1.接收請求參數***************************************/
-				Integer place_id = new Integer(req.getParameter("place_id"));
+				// 因為是用來模糊查詢, 所以只能是中英文字母
+				String county = req.getParameter("county");
+				String county_nameReg = "^[(\u4e00-\u9fa5)]{1,10}$";
+				if (county == null || county.trim().length() == 0) {
+					county = "" ;  // 如沒輸入則維持空白搜尋時會忽略這項
+//					errorMsgs.add("地點名稱: 請勿空白");
+				} else if (!county.trim().matches(county_nameReg)) { // 以下練習正則(規)表示式(regular-expression)
+					errorMsgs.add("縣市名稱: 只能是中文字母 , 且長度必需在1到10之間");
+				}
 				
-				/***************************2.開始刪除資料***************************************/
+				String district = req.getParameter("district");
+				String district_nameReg = "^[(\u4e00-\u9fa5)]{1,10}$";
+				if (district == null || district.trim().length() == 0) {
+					district = "" ;  // 如沒輸入則維持空白搜尋時會忽略這項
+//					errorMsgs.add("地點名稱: 請勿空白");
+				} else if (!district.trim().matches(district_nameReg)) { // 以下練習正則(規)表示式(regular-expression)
+					errorMsgs.add("區域名稱: 只能是中文字母 , 且長度必需在1到10之間");
+				}
+				
+				String place_name = req.getParameter("place_name");
+				String place_nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z)]{1,10}$";
+				if (place_name == null || place_name.trim().length() == 0) {
+					place_name = "" ;  // 如沒輸入則維持空白搜尋時會忽略這項
+//					errorMsgs.add("地點名稱: 請勿空白");
+				} else if (!place_name.trim().matches(place_nameReg)) { // 以下練習正則(規)表示式(regular-expression)
+					errorMsgs.add("地點名稱: 只能是中、英文字母 , 且長度必需在1到10之間");
+				}
+				
+				// 
+				String place_address = county + district;
+//				System.out.println(place_address);
+//				if (place_address == null || place_address.trim().length() == 0) {
+//					place_address = "" ; // 如沒輸入則維持空白搜尋時會忽略這項
+////					errorMsgs.add("地址請勿空白");
+//				}
+
+				/*************************** 2.開始查詢資料 *****************************************/
 				PlaceService placeSvc = new PlaceService();
-				placeSvc.deletePlace(place_id);
-				
-				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
-				String url = "/place/listAllPlace.jsp";
+				List<PlaceVO> list = placeSvc.getCard(place_name , place_address);
+				if (list == null) {
+					errorMsgs.add("查無資料");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/place/select_page.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+				req.setAttribute("list", list);
+				String url = "/place/listCardBySearch.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
-				
-			}catch(Exception e) {
-				errorMsgs.add("刪除資料失敗:"+e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/place/listAllPlace.jsp");
+				/*************************** 其他可能的錯誤處理 *************************************/
+			} catch (Exception e) {
+				errorMsgs.add("無法取得資料:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/place/select_page.jsp");
 				failureView.forward(req, res);
 			}
-			
-			
 		}
-	
-	
+
 	}
-	
-	
-	
 
 }

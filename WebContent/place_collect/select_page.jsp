@@ -54,10 +54,10 @@
 	<li><a href='listAllPlace_collect.jsp'>List</a> all Place_collect.  <br><br></li>
 	
 	<li>
-	    <FORM METHOD="post" ACTION="getAllByPrimaryKey.jsp" >
-	        <b>輸入使用者編號 (如1):</b>
+	    <FORM METHOD="post" ACTION="place_collect.do" >
+	        <b>輸入使用者編號 (如1)(查看收藏時會取session裡的users_id, 所以不需做users_id輸入的錯誤處理):</b>
 	        <input type="text" name="users_id">
-<!-- 	        <input type="hidden" name="action" value="getAllByPrimaryKey"> -->
+	        <input type="hidden" name="action" value="getAllByPrimaryKey">
 	        <input type="submit" value="送出">
     	</FORM>
 	</li>

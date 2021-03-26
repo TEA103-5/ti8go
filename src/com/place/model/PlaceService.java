@@ -81,6 +81,7 @@ public class PlaceService {
 		return dao.getAll();
 	}
 	
-	
-	
+	public List<PlaceVO> getCard(String place_name, String place_address) {
+		return dao.getCard(place_name, place_address);
+	}
 }

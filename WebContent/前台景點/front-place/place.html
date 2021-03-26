@@ -92,40 +92,79 @@
 
 
         <div id="card-container">
-            <div class="card" style="width: 18rem;">
+            <div class="card" style="width: 18rem;" data-id="1">
                 <img src="https://www.travel.taipei/image/64168" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Card title</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
                         card's content.</p>
                     <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-                    <button type="button" class="btn btn-secondary">地點詳情</button>
-                    <button type="button" class="btn btn-secondary">加入收藏</button>
-                    <!-- <button type="button" class="btn btn-secondary">Secondary</button> -->
+                    <form class="card-form" action="https://www.google.com/" method="get">
+                        <button type="submit" class="btn btn-secondary">地點詳情</button>
+                    </form>
+                    <form class="card-form" action="https://www.google.com/" method="get">
+                        <button type="submit" class="btn btn-secondary">加入收藏</button>
+                    </form>
                 </div>
             </div>
-            <div class="card" style="width: 18rem;">
+            <div class="card" style="width: 18rem;" data-id="2">
                 <img src="https://www.travel.taipei/image/64168" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Card title</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
                         card's content.</p>
                     <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-                    <button type="button" class="btn btn-secondary">地點詳情</button>
-                    <button type="button" class="btn btn-secondary">加入收藏</button>
-                    <!-- <button type="button" class="btn btn-secondary">Secondary</button> -->
+                    <form class="card-form" action="https://www.google.com/" method="get">
+                        <button type="submit" class="btn btn-secondary">地點詳情</button>
+                    </form>
+                    <form class="card-form" action="https://www.google.com/" method="get">
+                        <button type="submit" class="btn btn-secondary">加入收藏</button>
+                    </form>
                 </div>
             </div>
-            <div class="card" style="width: 18rem;">
+            <div class="card" style="width: 18rem;" data-id="3">
                 <img src="https://www.travel.taipei/image/64168" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Card title</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
                         card's content.</p>
                     <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-                    <button type="button" class="btn btn-secondary">地點詳情</button>
-                    <button type="button" class="btn btn-secondary">加入收藏</button>
-                    <!-- <button type="button" class="btn btn-secondary">Secondary</button> -->
+                    <form class="card-form" action="https://www.google.com/" method="get">
+                        <button type="submit" class="btn btn-secondary">地點詳情</button>
+                    </form>
+                    <form class="card-form" action="https://www.google.com/" method="get">
+                        <button type="submit" class="btn btn-secondary">加入收藏</button>
+                    </form>
+                </div>
+            </div>
+            <div class="card" style="width: 18rem;" data-id="4">
+                <img src="https://www.travel.taipei/image/64168" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's content.</p>
+                    <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                    <form class="card-form" action="https://www.google.com/" method="get">
+                        <button type="submit" class="btn btn-secondary">地點詳情</button>
+                    </form>
+                    <form class="card-form" action="https://www.google.com/" method="get">
+                        <button type="submit" class="btn btn-secondary">加入收藏</button>
+                    </form>
+                </div>
+            </div>
+            <div class="card" style="width: 18rem;" data-id="5">
+                <img src="https://www.travel.taipei/image/64168" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's content.</p>
+                    <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                    <form class="card-form" action="https://www.google.com/" method="get">
+                        <button type="submit" class="btn btn-secondary">地點詳情</button>
+                    </form>
+                    <form class="card-form" action="https://www.google.com/" method="get">
+                        <button type="submit" class="btn btn-secondary">加入收藏</button>
+                    </form>
                 </div>
             </div>
 
@@ -185,21 +224,21 @@
 
     <!-- 以下是自己新增的js -->
     <script src="myjs/place/googleMap.js"></script>
-    <script src="myjs/place/search-bar.js"></script>
 
     <script src="./tw-city-selector-master/dist/tw-city-selector.js"></script> // 載入的地址選單套件
+    <script src="myjs/place/search-bar.js"></script>
+    <script src="myjs/place/card_container.js"></script>
+
     <script>
-        function init() {
-            new TwCitySelector({
-                // el: '.city-selector',
-                // bootstrapStyle: true
-            });
-        }
-        init();
+
 
     </script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=你的金鑰&callback=initMap&libraries=&v=weekly" async></script>
+
+
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=你的金鑰&callback=initMap&libraries=&v=weekly"
+        async></script>
 
 </body>
 
