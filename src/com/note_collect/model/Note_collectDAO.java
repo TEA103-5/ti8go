@@ -9,14 +9,22 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.place_collect.model.Place_collectVO;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 
-public class Note_collectDAOJDBC implements Note_collectDAO_interface {
+public class Note_collectDAO implements Note_collectDAO_interface  {
 
-	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://localhost:3306/tea05?serverTimezone=Asia/Taipei";
-	String userid = "David";
-	String passwd = "123456";
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/David");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
 
 	private static final String INSERT_STMT = "INSERT INTO note_collect (note_id , users_id) VALUES (? , ?)";
 	private static final String GET_ALL_STMT = "SELECT note_id , users_id , note_collect_time FROM note_collect order by users_id";
@@ -33,8 +41,7 @@ public class Note_collectDAOJDBC implements Note_collectDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setObject(1, note_collectVO.getNote_id(), Types.INTEGER);
@@ -42,8 +49,6 @@ public class Note_collectDAOJDBC implements Note_collectDAO_interface {
 
 			pstmt.executeUpdate();
 
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		} finally {
@@ -108,16 +113,13 @@ public class Note_collectDAOJDBC implements Note_collectDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(DELETE);
 			
 			pstmt.setObject(1, note_id, Types.INTEGER);
 			pstmt.setObject(2, users_id, Types.INTEGER);
 			pstmt.executeUpdate();
 			
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		} finally {
@@ -146,8 +148,7 @@ public class Note_collectDAOJDBC implements Note_collectDAO_interface {
 		ResultSet rs = null;
 		
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 			pstmt.setObject(1, note_id, Types.INTEGER);
 			pstmt.setObject(2, users_id, Types.INTEGER);
@@ -162,8 +163,6 @@ public class Note_collectDAOJDBC implements Note_collectDAO_interface {
 				
 				
 			}
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		} finally {
@@ -203,9 +202,7 @@ public class Note_collectDAOJDBC implements Note_collectDAO_interface {
 		ResultSet rs = null;
 		
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(GET_ALL_STMT);
+			con = ds.getConnection();			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -218,8 +215,6 @@ public class Note_collectDAOJDBC implements Note_collectDAO_interface {
 				list.add(note_collectVO);
 				
 			}
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		} finally {
@@ -260,8 +255,7 @@ public class Note_collectDAOJDBC implements Note_collectDAO_interface {
 		ResultSet rs = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_BY_ID_STMT);
 			pstmt.setObject(1, users_id, Types.INTEGER);
 			rs = pstmt.executeQuery();
@@ -276,8 +270,6 @@ public class Note_collectDAOJDBC implements Note_collectDAO_interface {
 				list.add(note_collectVO);
 
 			}
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		} finally {
@@ -306,44 +298,11 @@ public class Note_collectDAOJDBC implements Note_collectDAO_interface {
 
 		return list;
 	}
-
-	public static void main(String args[]) {
-		Note_collectDAOJDBC dao = new Note_collectDAOJDBC();
-
-//		// 新增
-//		Note_collectVO note_collectVO1 = new Note_collectVO();
-//		note_collectVO1.setNote_id(3);
-//		note_collectVO1.setUsers_id(10);
-//		dao.insert(note_collectVO1);
-//
-//		// 修改
-//		Note_collectVO note_collectVO2 = new Note_collectVO();
-//		note_collectVO2.setNote_id(1);
-//		note_collectVO2.setUsers_id(2);
-//		dao.update(note_collectVO2);
-//		
-//		// 刪除
-//		dao.delete(3 , 10);
-		
-		// 查詢一筆
-//		Note_collectVO note_collectVO3 = dao.findByPrimaryKey(3 , 7);
-//		
-//		System.out.print(note_collectVO3.getNote_id() + ",");
-//		System.out.print(note_collectVO3.getUsers_id() + ",");
-//		System.out.println(note_collectVO3.getNote_collect_time() );
-//		System.out.println("---------------------");
-//		
-//		// 查詢全部
-		List<Note_collectVO> list = dao.getAll();
-		
-		for(Note_collectVO aNote_collect : list) {
-			
-			System.out.print(aNote_collect.getNote_id() + ",");
-			System.out.print(aNote_collect.getUsers_id() + ",");
-			System.out.print(aNote_collect.getNote_collect_time() );
-			System.out.println();
-		}
-		
-	}
-
+	
+	
+	
+	
+	
+	
+	
 }

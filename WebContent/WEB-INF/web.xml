@@ -80,4 +80,13 @@
 		<url-pattern>/trip_collect/trip_collect.do</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>Note_collectServlet</servlet-name>
+		<servlet-class>com.note_collect.controller.Note_collectServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Note_collectServlet</servlet-name>
+		<url-pattern>/note_collect/note_collect.do</url-pattern>
+	</servlet-mapping>
+	
 </web-app>
