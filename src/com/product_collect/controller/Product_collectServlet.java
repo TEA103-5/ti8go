@@ -1,4 +1,4 @@
-package com.place_collect.controller;
+package com.product_collect.controller;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -6,17 +6,14 @@ import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.place.model.PlaceService;
-import com.place.model.PlaceVO;
-import com.place_collect.model.Place_collectService;
-import com.place_collect.model.Place_collectVO;
+import com.product_collect.model.Product_collectService;
+import com.product_collect.model.Product_collectVO;
 
-public class Place_collectServlet extends HttpServlet {
+public class Product_collectServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
@@ -35,31 +32,31 @@ public class Place_collectServlet extends HttpServlet {
 
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-				Integer place_id = new Integer(req.getParameter("place_id").trim());
-				
+				Integer product_id = new Integer(req.getParameter("product_id").trim());
+
 				Integer users_id = new Integer(req.getParameter("users_id").trim());
 
 				/*************************** 2.開始查詢資料 *****************************************/
-				Place_collectService place_collectSvc = new Place_collectService();
-				Place_collectVO place_collectVO = place_collectSvc.getOnePlace_collect(place_id , users_id);
-				if (place_collectVO == null) {
+				Product_collectService product_collectSvc = new Product_collectService();
+				Product_collectVO product_collectVO = product_collectSvc.getOneProduct_collect(product_id, users_id);
+				if (product_collectVO == null) {
 					errorMsgs.add("查無資料");
 				}
 
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/place_collect/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/product_collect/select_page.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-				req.setAttribute("place_collectVO", place_collectVO); // 資料庫取出的place_collectVO物件,存入req
-				String url = "/place_collect/listOnePlace_collect.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOnePlace_collect.jsp
+				req.setAttribute("product_collectVO", product_collectVO); //
+				String url = "/product_collect/listOneProduct_collect.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 
 				successView.forward(req, res);
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/place_collect/select_page.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/product_collect/select_page.jsp");
 				failureView.forward(req, res);
 			}
 
@@ -71,11 +68,11 @@ public class Place_collectServlet extends HttpServlet {
 
 			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
-				Integer place_id = null;
+				Integer product_id = null;
 				try {
-					place_id = new Integer(req.getParameter("place_id").trim());
+					product_id = new Integer(req.getParameter("product_id").trim());
 				} catch (NumberFormatException e) {
-					place_id = 1;
+					product_id = 1;
 					errorMsgs.add("地點編號請填數字");
 				}
 
@@ -87,35 +84,35 @@ public class Place_collectServlet extends HttpServlet {
 					errorMsgs.add("使用者請填數字");
 				}
 
-				Place_collectVO place_collectVO = new Place_collectVO();
+				Product_collectVO product_collectVO = new Product_collectVO();
 
-				place_collectVO.setPlace_id(place_id);
-				place_collectVO.setUsers_id(users_id);
+				product_collectVO.setProduct_id(product_id);
+				product_collectVO.setUsers_id(users_id);
 
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("place_collectVO", place_collectVO); // 含有輸入格式錯誤的place_collectVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/place_collect/addPlace_collect.jsp");
+					req.setAttribute("product_collectVO", product_collectVO); // 含有輸入格式錯誤的product_collectVO物件,也存入req
+					RequestDispatcher failureView = req.getRequestDispatcher("/product_collect/addProduct_collect.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 
 				/*************************** 2.開始新增資料 ***************************************/
-				Place_collectService place_collectSvc = new Place_collectService();
-				place_collectVO = place_collectSvc.addPlace_collect(place_id, users_id);
+				Product_collectService product_collectSvc = new Product_collectService();
+				product_collectVO = product_collectSvc.addProduct_collect(product_id, users_id);
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				String url = "/place_collect/listAllPlace_collect.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllPlace_collect.jsp
+				String url = "/product_collect/listAllProduct_collect.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllProduct_collect.jsp
 				successView.forward(req, res);
 
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/place_collect/addPlace_collect.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/product_collect/addProduct_collect.jsp");
 				failureView.forward(req, res);
 			}
 		}
 
-		if ("delete".equals(action)) { // 來自listAllPlace_collect.jsp
+		if ("delete".equals(action)) { // 來自listAllProduct_collect.jsp
 
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -123,38 +120,36 @@ public class Place_collectServlet extends HttpServlet {
 			try {
 
 				/*************************** 1.接收請求參數 ***************************************/
-				Integer place_id = new Integer(req.getParameter("place_id"));
+				Integer product_id = new Integer(req.getParameter("product_id"));
 				Integer users_id = new Integer(req.getParameter("users_id"));
 
 				/*************************** 2.開始刪除資料 ***************************************/
-				Place_collectService place_collectSvc = new Place_collectService();
-				place_collectSvc.deletePlace_collect(place_id, users_id);
+				Product_collectService product_collectSvc = new Product_collectService();
+				product_collectSvc.deleteProduct_collect(product_id, users_id);
 
 				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
-				if("fromGetAllByPrimaryKey".equals(source)) { // 從getAllByPrimaryKey.jsp來的delete請求
-					String url = "/place_collect/getAllByPrimaryKey.jsp" ;
+				if ("fromGetAllByPrimaryKey".equals(source)) { // 從getAllByPrimaryKey.jsp來的delete請求
+					String url = "/product_collect/getAllByPrimaryKey.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url);
 					successView.forward(req, res);
-				} else { // 從listAllPlace_collect.jsp來的delete請求
-					String url = "/place_collect/listAllPlace_collect.jsp";
+				} else { // 從listAllProduct_collect.jsp來的delete請求
+					String url = "/product_collect/listAllProduct_collect.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url);
-					successView.forward(req, res);					
+					successView.forward(req, res);
 				}
-				
-				
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/place_collect/listAllPlace_collect.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/product_collect/listAllProduct_collect.jsp");
 				failureView.forward(req, res);
-			
+
 			}
 		}
-		
+
 		// 自己新增的方法, 對應介面getAllByPrimaryKey(Integer users_id)
-		if("getAllByPrimaryKey".equals(action)) {
-			
+		if ("getAllByPrimaryKey".equals(action)) {
+
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
@@ -162,32 +157,31 @@ public class Place_collectServlet extends HttpServlet {
 
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-				
+
 				Integer users_id = new Integer(req.getParameter("users_id").trim());
-				
 
 				/*************************** 2.開始查詢資料 *****************************************/
-				Place_collectService place_collectSvc = new Place_collectService();
-				List<Place_collectVO> list = place_collectSvc.getAllByPrimaryKey(users_id);
-				
+				Product_collectService product_collectSvc = new Product_collectService();
+				List<Product_collectVO> list = product_collectSvc.getAllByPrimaryKey(users_id);
+
 				if (list == null) {
 					errorMsgs.add("查無資料");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/place_collect/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/product_collect/select_page.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("list", list);
-				String url = "/place_collect/getAllByPrimaryKey.jsp";
+				String url = "/product_collect/getAllByPrimaryKey.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/place_collect/select_page.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/product_collect/select_page.jsp");
 				failureView.forward(req, res);
 			}
 		}

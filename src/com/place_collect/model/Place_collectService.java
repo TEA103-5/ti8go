@@ -27,9 +27,9 @@ public class Place_collectService {
 		dao.delete(place_id, users_id);
 	}
 	
-//	public Place_collectVO getOnePlace_collect(Integer users_id) {
-//		return dao.findByPrimaryKey(users_id);
-//	}
+	public Place_collectVO getOnePlace_collect(Integer place_id, Integer users_id) {
+		return dao.findByPrimaryKey(place_id , users_id);
+	}
 	
 	public List<Place_collectVO> getAll(){
 		return dao.getAll();

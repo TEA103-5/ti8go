@@ -62,4 +62,13 @@
 		<url-pattern>/place_collect/place_collect.do</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>Product_collectServlet</servlet-name>
+		<servlet-class>com.product_collect.controller.Product_collectServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Product_collectServlet</servlet-name>
+		<url-pattern>/product_collect/product_collect.do</url-pattern>
+	</servlet-mapping>
+	
 </web-app>

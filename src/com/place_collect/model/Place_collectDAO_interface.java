@@ -8,7 +8,7 @@ public interface Place_collectDAO_interface {
 //	public void update(Place_collectVO place_collectVO);
 	public void delete(Integer place_id , Integer users_id);
 //	收藏不會只找一筆
-//	public Place_collectVO findByPrimaryKey(Integer users_id);
+	public Place_collectVO findByPrimaryKey(Integer place_id , Integer users_id);
 	public List<Place_collectVO> getAll();
 
 	public List<Place_collectVO> getAllByPrimaryKey(Integer users_id);
