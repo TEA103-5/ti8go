@@ -71,4 +71,13 @@
 		<url-pattern>/product_collect/product_collect.do</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>Trip_collectServlet</servlet-name>
+		<servlet-class>com.trip_collect.controller.Trip_collectServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Trip_collectServlet</servlet-name>
+		<url-pattern>/trip_collect/trip_collect.do</url-pattern>
+	</servlet-mapping>
+	
 </web-app>
