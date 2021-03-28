@@ -116,37 +116,46 @@ ${not empty placeVO.place_id}
 	</tr>
 	<tr>
 		<td>圖片1:</td>
-		<td><input id="p_file1" type="file" name="place_pic1" size="45"
-			 value="<%= (placeVO==null)? "" : placeVO.getPlace_pic1()%>" />
+		<td><input id="p_file1" type="file" name="place_pic1" size="45"/>
 			 <img id="pic1" width="300" height="225" src="DBGifReader4.do?place_pic=place_pic1&place_id=${placeVO.place_id}"></td>
 	</tr>
 	<tr>
 		<td>圖片2:</td>
-		<td><input id="p_file2" type="file" name="place_pic2" size="45"
-			 value="<%= (placeVO==null)? "" : placeVO.getPlace_pic2()%>" />
+		<td><input id="p_file2" type="file" name="place_pic2" size="45" />
 			 <img id="pic2" width="300" height="225" src="DBGifReader4.do?place_pic=place_pic2&place_id=${placeVO.place_id}"></td>
 	</tr>
 	<tr>
 		<td>圖片3:</td>
-		<td><input id="p_file3" type="file" name="place_pic3" size="45"
-			 value="<%= (placeVO==null)? "" : placeVO.getPlace_pic3()%>" />
+		<td><input id="p_file3" type="file" name="place_pic3" size="45" />
 			 <img id="pic3" width="300" height="225" src="DBGifReader4.do?place_pic=place_pic3&place_id=${placeVO.place_id}"></td>
 	</tr>
 	<tr>
 		<td>地點狀態:</td>
-		<td><input type="TEXT" name="place_state" size="45"
-			 value="<%= (placeVO==null)? "" : placeVO.getPlace_state()%>" /></td>
+		<td>
+			<select size="1" name="place_state">
+				<c:choose>
+	            	<c:when test="${placeVO.place_state == 1}">
+	                	<option selected="selected" value="1">上架中
+						<option value="0">審核中
+	           		</c:when>
+	          		<c:otherwise>
+	                 	<option value="1">上架中
+						<option selected="selected" value="0">審核中
+	            	</c:otherwise>
+	        	</c:choose>
+			</select>	
+		</td>
 	</tr>
 	<tr>
 		<td>建立者:</td>
 		<td><input type="TEXT" name="users_id" size="45"
 			 value="<%= (placeVO==null)? "" : placeVO.getUsers_id()%>" /></td>
 	</tr>
-	<tr>
-		<td>營業時間:</td>
-		<td><input type="TEXT" name="business_time" size="45"
-			 value="<%= (placeVO==null)? "" : placeVO.getBusiness_time()%>" /></td>
-	</tr>
+<!-- 	<tr> -->
+<!-- 		<td>營業時間:</td> -->
+<!-- 		<td><input type="TEXT" name="business_time" size="45" -->
+<%-- 			 value="<%= (placeVO==null)? "" : placeVO.getBusiness_time()%>" /></td> --%>
+<!-- 	</tr> -->
 
 <!-- 	未更改,這邊之後應該是用來放建立者的位置 -->
 <%-- 	<jsp:useBean id="deptSvc" scope="page" class="com.dept.model.DeptService" /> --%>

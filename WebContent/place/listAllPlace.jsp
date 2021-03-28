@@ -85,7 +85,7 @@
 		<th>圖片3</th>
 		<th>地點狀態</th>
 		<th>建立者</th>
-		<th>營業時間</th>
+<!-- 		<th>營業時間</th> -->
 		<th>讚數</th>
 		<th>修改</th>
 		<th>刪除</th>
@@ -106,9 +106,16 @@
 			<td><img width="300" height="225" src="DBGifReader4.do?place_pic=place_pic1&place_id=${placeVO.place_id}"></td>
 			<td><img width="300" height="225" src="DBGifReader4.do?place_pic=place_pic2&place_id=${placeVO.place_id}"></td>
 			<td><img width="300" height="225" src="DBGifReader4.do?place_pic=place_pic3&place_id=${placeVO.place_id}"></td>
-			<td>${placeVO.place_state}</td>
+			<td><c:choose>
+	            	<c:when test="${placeVO.place_state == 1}">
+	                	上架中
+	           		</c:when>
+	          		<c:otherwise>
+	                 	審核中
+	            	</c:otherwise>
+	        	</c:choose></td>
 			<td>${placeVO.users_id}</td>
-			<td>${placeVO.business_time}</td>
+<%-- 			<td>${placeVO.business_time}</td> --%>
 			<td>${placeVO.place_like}</td>
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/place/place.do" style="margin-bottom: 0px;">

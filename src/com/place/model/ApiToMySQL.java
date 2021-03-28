@@ -167,9 +167,12 @@ public class ApiToMySQL {
 					}
 
 				}
-
-				placeVO1.setPlace_state(0);
-				placeVO1.setUsers_id(1);
+				
+				// 爬回來的地點是有效的所以直接設為上架中
+				placeVO1.setPlace_state(1);
+				
+				// 管理者上架的地點users_id不設值
+//				placeVO1.setUsers_id(1);
 				placeVO1.setBusiness_time(1);
 
 				dao.insert(placeVO1);

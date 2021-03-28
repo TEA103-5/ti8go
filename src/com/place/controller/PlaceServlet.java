@@ -22,7 +22,7 @@ import com.place.model.PlaceDAO;
 import com.place.model.PlaceService;
 import com.place.model.PlaceVO;
 
-@MultipartConfig
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 
 public class PlaceServlet extends HttpServlet {
 
@@ -207,74 +207,112 @@ public class PlaceServlet extends HttpServlet {
 				}
 
 //				圖片可為空白 , 但如有圖片要顯示在畫面上
-//				byte[] place_pic1 = { 1 };
-//				byte[] place_pic2 = { 1 };
-//				byte[] place_pic3 = { 1 };
-
+//				getPart的欄位如果沒選擇上傳圖片, 依然會傳一個不是NULL的物件, 所以要用getSize判斷有無上傳
 				System.out.println("存入圖片前");
 
 				byte[] place_pic1 = null;
 				byte[] place_pic2 = null;
 				byte[] place_pic3 = null;
 
-//				byte[] place_pic1 =  (byte[])req.getAttribute("place_pic1"); // 會為null
-				// 把圖片再次讀進來 , 很爛的方式... 但上面的req.getAttribute("place_pic1")取不到
-				// muti form data傳過來的圖片資料...先這樣
+				Part part1 = null;
+				Part part2 = null;
+				Part part3 = null;
+
 				PlaceService PlaceSvc = new PlaceService();
-				if (PlaceSvc.getOnePlace(place_id).getPlace_pic1() != null) {
+				
+				if ( req.getPart("place_pic1").getSize() > 0) {
+					part1 = req.getPart("place_pic1");
+					InputStream in = part1.getInputStream();
+					place_pic1 = new byte[in.available()];
+					in.read(place_pic1);
+					in.close();
+				} else {
 					place_pic1 = PlaceSvc.getOnePlace(place_id).getPlace_pic1();
 				}
-				if (PlaceSvc.getOnePlace(place_id).getPlace_pic2() != null) {
+				if ( req.getPart("place_pic2").getSize() > 0) {
+					part2 = req.getPart("place_pic2");
+					InputStream in2 = part2.getInputStream();
+					place_pic2 = new byte[in2.available()];
+					in2.read(place_pic2);
+					in2.close();
+
+				} else {
 					place_pic2 = PlaceSvc.getOnePlace(place_id).getPlace_pic2();
 				}
-				if (PlaceSvc.getOnePlace(place_id).getPlace_pic3() != null) {
+				if ( req.getPart("place_pic3").getSize() > 0) {
+					part3 = req.getPart("place_pic3");
+					InputStream in3 = part3.getInputStream();
+					place_pic3 = new byte[in3.available()];
+					in3.read(place_pic3);
+					in3.close();
+
+				} else {
 					place_pic3 = PlaceSvc.getOnePlace(place_id).getPlace_pic3();
 				}
 
-//				// -----用UploadTest_Servlet3上傳------
-//				Collection<Part> parts = req.getParts();
-//				req.setAttribute("parts", parts);
-
-				RequestDispatcher uploadImage = req.getRequestDispatcher("uploadServlet3.do");
-				uploadImage.include(req, res);
-
-				if (req.getAttribute("place_pic1") != null) {
-					place_pic1 = (byte[]) req.getAttribute("place_pic1");
-				}
-
-				if (req.getAttribute("place_pic2") != null) {
-					place_pic2 = (byte[]) req.getAttribute("place_pic2");
-				}
-
-				if (req.getAttribute("place_pic3") != null) {
-					place_pic3 = (byte[]) req.getAttribute("place_pic3");
-				}
-
-				System.out.println("有從include出來");
-//				//---------------------------------
-
-				// -----用UploadToDB上傳------
-
-//				Collection<Part> parts = req.getParts();
-//				Map<String, byte[]> byteArrayMap = null;
+////				---0328註解內容---
 //				
-//				byteArrayMap = UploadToDB.getByteArrayFromPart(parts);
-//				
-//				System.out.println(parts);
-//				
-//				if( byteArrayMap.containsKey("place_pic1")){
-//					place_pic1 = byteArrayMap.get("place_pic1");
+////				byte[] place_pic1 =  (byte[])req.getAttribute("place_pic1"); // 會為null
+//				// 把圖片再次讀進來 , 很爛的方式... 但上面的req.getAttribute("place_pic1")取不到
+//				// muti form data傳過來的圖片資料...先這樣
+//				PlaceService PlaceSvc = new PlaceService();
+//				if (PlaceSvc.getOnePlace(place_id).getPlace_pic1() != null) {
+//					place_pic1 = PlaceSvc.getOnePlace(place_id).getPlace_pic1();
 //				}
-//				
-//				if( byteArrayMap.containsKey("place_pic2")){
-//					place_pic2 = byteArrayMap.get("place_pic2");
+//				if (PlaceSvc.getOnePlace(place_id).getPlace_pic2() != null) {
+//					place_pic2 = PlaceSvc.getOnePlace(place_id).getPlace_pic2();
 //				}
-//				
-//				if( byteArrayMap.containsKey("place_pic3")){
-//					place_pic3 = byteArrayMap.get("place_pic3");
+//				if (PlaceSvc.getOnePlace(place_id).getPlace_pic3() != null) {
+//					place_pic3 = PlaceSvc.getOnePlace(place_id).getPlace_pic3();
 //				}
-
-				// -----------
+//
+////				// -----用UploadTest_Servlet3上傳------
+////				Collection<Part> parts = req.getParts();
+////				req.setAttribute("parts", parts);
+//
+//				RequestDispatcher uploadImage = req.getRequestDispatcher("uploadServlet3.do");
+//				uploadImage.include(req, res);
+//
+//				if (req.getAttribute("place_pic1") != null) {
+//					place_pic1 = (byte[]) req.getAttribute("place_pic1");
+//				}
+//
+//				if (req.getAttribute("place_pic2") != null) {
+//					place_pic2 = (byte[]) req.getAttribute("place_pic2");
+//				}
+//
+//				if (req.getAttribute("place_pic3") != null) {
+//					place_pic3 = (byte[]) req.getAttribute("place_pic3");
+//				}
+//
+//				System.out.println("有從include出來");
+////				//---------------------------------
+//
+//				// -----用UploadToDB上傳------
+//
+////				Collection<Part> parts = req.getParts();
+////				Map<String, byte[]> byteArrayMap = null;
+////				
+////				byteArrayMap = UploadToDB.getByteArrayFromPart(parts);
+////				
+////				System.out.println(parts);
+////				
+////				if( byteArrayMap.containsKey("place_pic1")){
+////					place_pic1 = byteArrayMap.get("place_pic1");
+////				}
+////				
+////				if( byteArrayMap.containsKey("place_pic2")){
+////					place_pic2 = byteArrayMap.get("place_pic2");
+////				}
+////				
+////				if( byteArrayMap.containsKey("place_pic3")){
+////					place_pic3 = byteArrayMap.get("place_pic3");
+////				}
+//
+//				// -----------
+//				
+//				
+////				-- 0328註解內容 ---
 
 				Integer place_state = null;
 				try {
@@ -291,14 +329,15 @@ public class PlaceServlet extends HttpServlet {
 					users_id = 0;
 					errorMsgs.add("建立者請填數字.");
 				}
-
+				
+				// 營業時間目前暫不使用
 				Integer business_time = null;
-				try {
-					business_time = new Integer(req.getParameter("business_time").trim());
-				} catch (NumberFormatException e) {
-					business_time = 0;
-					errorMsgs.add("營業時間請填數字.");
-				}
+//				try {
+//					business_time = new Integer(req.getParameter("business_time").trim());
+//				} catch (NumberFormatException e) {
+//					business_time = 0;
+//					errorMsgs.add("營業時間請填數字.");
+//				}
 
 //				讚數不需要錯誤處理
 
@@ -349,7 +388,7 @@ public class PlaceServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
 
-				System.out.println("有跑到錯誤處理這邊");
+System.out.println("有跑到錯誤處理這邊");
 
 				RequestDispatcher failureView = req.getRequestDispatcher("/place/update_place_input.jsp");
 				failureView.forward(req, res);
@@ -443,6 +482,37 @@ public class PlaceServlet extends HttpServlet {
 				byte[] place_pic2 = null;
 				byte[] place_pic3 = null;
 
+				
+				Part part1 = null;
+				Part part2 = null;
+				Part part3 = null;
+
+//			getPart的欄位如果沒選擇上傳圖片, 依然會傳一個不是NULL的物件, 所以要用getSize判斷有無上傳
+				
+				if ( req.getPart("place_pic1").getSize() > 0) {
+					part1 = req.getPart("place_pic1");
+					InputStream in = part1.getInputStream();
+					place_pic1 = new byte[in.available()];
+					in.read(place_pic1);
+					in.close();
+				} 
+				if ( req.getPart("place_pic2").getSize() > 0) {
+					part2 = req.getPart("place_pic2");
+					InputStream in2 = part2.getInputStream();
+					place_pic2 = new byte[in2.available()];
+					in2.read(place_pic2);
+					in2.close();
+				} 
+				if ( req.getPart("place_pic3").getSize() > 0) {
+					part3 = req.getPart("place_pic3");
+					InputStream in3 = part3.getInputStream();
+					place_pic3 = new byte[in3.available()];
+					in3.read(place_pic3);
+					in3.close();
+				} 
+				
+				
+//---0328修改 舊圖片上傳方法---
 				// -----用UploadTest_Servlet3上傳------
 //				Collection<Part> parts = req.getParts();
 //				req.setAttribute("parts", parts);
@@ -506,6 +576,8 @@ public class PlaceServlet extends HttpServlet {
 //				}
 
 				// 結束 處理圖片上傳到資料庫
+				
+//---0328修改 舊圖片上傳方法---
 
 				Integer place_state = null;
 				try {
@@ -523,13 +595,14 @@ public class PlaceServlet extends HttpServlet {
 					errorMsgs.add("建立者請填數字.");
 				}
 
+				// 營業時間目前暫不使用
 				Integer business_time = null;
-				try {
-					business_time = new Integer(req.getParameter("business_time").trim());
-				} catch (NumberFormatException e) {
-					business_time = 0;
-					errorMsgs.add("營業時間請填數字.");
-				}
+//				try {
+//					business_time = new Integer(req.getParameter("business_time").trim());
+//				} catch (NumberFormatException e) {
+//					business_time = 0;
+//					errorMsgs.add("營業時間請填數字.");
+//				}
 
 //				Integer deptno = new Integer(req.getParameter("deptno").trim());
 
@@ -583,7 +656,7 @@ public class PlaceServlet extends HttpServlet {
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 //			List<PlaceVO> list = null;
-			
+
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
@@ -616,36 +689,36 @@ public class PlaceServlet extends HttpServlet {
 
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-				
+
 				// 因為是用來模糊查詢, 所以只能是中英文字母
 				String county = req.getParameter("county");
 				String county_nameReg = "^[(\u4e00-\u9fa5)]{1,10}$";
 				if (county == null || county.trim().length() == 0) {
-					county = "" ;  // 如沒輸入則維持空白搜尋時會忽略這項
+					county = ""; // 如沒輸入則維持空白搜尋時會忽略這項
 //					errorMsgs.add("地點名稱: 請勿空白");
 				} else if (!county.trim().matches(county_nameReg)) { // 以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("縣市名稱: 只能是中文字母 , 且長度必需在1到10之間");
 				}
-				
+
 				String district = req.getParameter("district");
 				String district_nameReg = "^[(\u4e00-\u9fa5)]{1,10}$";
 				if (district == null || district.trim().length() == 0) {
-					district = "" ;  // 如沒輸入則維持空白搜尋時會忽略這項
+					district = ""; // 如沒輸入則維持空白搜尋時會忽略這項
 //					errorMsgs.add("地點名稱: 請勿空白");
 				} else if (!district.trim().matches(district_nameReg)) { // 以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("區域名稱: 只能是中文字母 , 且長度必需在1到10之間");
 				}
-				
+
 				String place_name = req.getParameter("place_name");
 				String place_nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z)]{1,10}$";
 				if (place_name == null || place_name.trim().length() == 0) {
-					place_name = "" ;  // 如沒輸入則維持空白搜尋時會忽略這項
+					place_name = ""; // 如沒輸入則維持空白搜尋時會忽略這項
 //					errorMsgs.add("地點名稱: 請勿空白");
 				} else if (!place_name.trim().matches(place_nameReg)) { // 以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("地點名稱: 只能是中、英文字母 , 且長度必需在1到10之間");
 				}
-				
-				// 
+
+				//
 				String place_address = county + district;
 //				System.out.println(place_address);
 //				if (place_address == null || place_address.trim().length() == 0) {
@@ -655,7 +728,7 @@ public class PlaceServlet extends HttpServlet {
 
 				/*************************** 2.開始查詢資料 *****************************************/
 				PlaceService placeSvc = new PlaceService();
-				List<PlaceVO> list = placeSvc.getCard(place_name , place_address);
+				List<PlaceVO> list = placeSvc.getCard(place_name, place_address);
 				if (list == null) {
 					errorMsgs.add("查無資料");
 				}

@@ -102,7 +102,14 @@ ${not empty list}
 			<td>${placeVO.place_longitude}</td>
 			<td>${placeVO.place_latitude}</td>
 			<td><img width="300" height="225" src="DBGifReader4.do?place_pic=place_pic1&place_id=${placeVO.place_id}"></td>
-			<td>${placeVO.place_state}</td>
+			<td><c:choose>
+	            	<c:when test="${placeVO.place_state == 1}">
+	                	上架中
+	           		</c:when>
+	          		<c:otherwise>
+	                 	審核中
+	            	</c:otherwise>
+	        	</c:choose></td>
 			<td>${placeVO.users_id}</td>
 			<td>${placeVO.place_like}</td>
 			<td>
@@ -114,7 +121,8 @@ ${not empty list}
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/place_collect/place_collect.do" style="margin-bottom: 0px;">
 			     
-			     <input type="submit" value="加入收藏">  // 判斷是否已加入收藏 , 可用foreach 還有if 跟GetAllByPrimaryKey比對
+<!-- 			  // 判斷是否已加入收藏 , 可用foreach 還有if 跟GetAllByPrimaryKey比對 -->
+			     <input type="submit" value="加入收藏">  
 			     <input type="hidden" name="place_id"  value="${placeVO.place_id}">
 			     <input type="hidden" name="users_id"  value="${users_id}">
 			     <input type="hidden" name="action" value="insert"></FORM>

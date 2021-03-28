@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="com.place.model.*"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <%-- 此頁暫練習採用 Script 的寫法取值 --%>
 
 <%
@@ -74,7 +76,7 @@
 		<th>圖片3</th>
 		<th>地點狀態</th>
 		<th>建立者</th>
-		<th>營業時間</th>
+<!-- 		<th>營業時間</th> -->
 		<th>讚數</th>
 		<th>修改</th>
 		<th>刪除</th>
@@ -92,10 +94,16 @@
 			<td><img width="300" height="225" src="DBGifReader4.do?place_pic=place_pic1&place_id=${placeVO.place_id}"></td>
 			<td><img width="300" height="225" src="DBGifReader4.do?place_pic=place_pic2&place_id=${placeVO.place_id}"></td>
 			<td><img width="300" height="225" src="DBGifReader4.do?place_pic=place_pic3&place_id=${placeVO.place_id}"></td>
-			
-			<td><%=placeVO.getPlace_state()%></td>
+			<td><c:choose>
+	            	<c:when test="${placeVO.place_state == 1}">
+	                	上架中
+	           		</c:when>
+	          		<c:otherwise>
+	                 	審核中
+	            	</c:otherwise>
+	        	</c:choose></td>
 			<td><%=placeVO.getUsers_id()%></td>
-			<td><%=placeVO.getBusiness_time()%></td>
+<%-- 			<td><%=placeVO.getBusiness_time()%></td> --%>
 			<td><%=placeVO.getPlace_like()%></td>
 		</tr>
 </table>
