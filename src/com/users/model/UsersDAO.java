@@ -72,7 +72,8 @@ public class UsersDAO implements UsersDAO_interface {
 
 			// Handle any driver errors
 		} catch (SQLException se) {
-			se.printStackTrace();
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {
@@ -121,7 +122,8 @@ public class UsersDAO implements UsersDAO_interface {
 
 			// Handle any driver errors
 		} catch (SQLException se) {
-			se.printStackTrace();
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {
@@ -166,7 +168,8 @@ public class UsersDAO implements UsersDAO_interface {
 
 			// Handle any driver errors
 		} catch (SQLException se) {
-			se.printStackTrace();
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {
@@ -217,7 +220,8 @@ public class UsersDAO implements UsersDAO_interface {
 			}
 
 		} catch (SQLException se) {
-			se.printStackTrace();
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {
@@ -279,7 +283,8 @@ public class UsersDAO implements UsersDAO_interface {
 			}
 			
 		} catch (SQLException se) {
-			se.printStackTrace();
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {
