@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.place_collect.model.*"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 
 <%
@@ -10,6 +11,7 @@
 	List<Place_collectVO> list = place_collectSvc.getAll();
 	pageContext.setAttribute("list", list);
 %>
+<jsp:useBean id="placeSvc" scope="page" class="com.place.model.PlaceService" />
 
 <!DOCTYPE html>
 <html>
@@ -81,9 +83,10 @@
 	<c:forEach var="place_collectVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 		
 		<tr>
-			<td>${place_collectVO.place_id}</td>
+			<td>${place_collectVO.place_id}【${placeSvc.getOnePlace(place_collectVO.place_id).place_name}】</td>
 			<td>${place_collectVO.users_id}</td>
-			<td>${place_collectVO.place_collect_time}</td>
+<%-- 			<td>${place_collectVO.place_collect_time}</td> --%>
+			<td><fmt:formatDate value="${place_collectVO.place_collect_time}" pattern="yyyy-MM-dd"/></td>
 <!-- 			<td> -->
 <%-- 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/place_collect/place_collect.do" style="margin-bottom: 0px;"> --%>
 <!-- 			     <input type="submit" value="修改"> -->

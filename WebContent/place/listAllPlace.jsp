@@ -2,6 +2,7 @@
 <%@page import="com.place.model.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 
@@ -97,7 +98,9 @@
 			<td>${placeVO.place_id}</td>
 			<td>${placeVO.place_name}</td>
 			<td>${placeVO.place_address}</td>
+<%-- 			<td><fmt:formatNumber value="${placeVO.place_longitude}" maxFractionDigits="6"/></td> --%>
 			<td>${placeVO.place_longitude}</td>
+<%-- 			<td><fmt:formatNumber value="${placeVO.place_latitude}" maxFractionDigits="6"/></td> --%>
 			<td>${placeVO.place_latitude}</td>
 			<td>${placeVO.place_tel}</td>
 			<td>${placeVO.place_region}</td>
