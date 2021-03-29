@@ -56,7 +56,7 @@ h4 {
 
 	<ul>
 
-		<li><a href="/Tivago_Git/place_collect/select_page.jsp">進入地點收藏.</a>  <br> <br></li>
+<!-- 		<li><a href="/Tivago_Git/place_collect/select_page.jsp">進入地點收藏.</a>  <br> <br></li> -->
 
 		<li><a href="listAllPlace.jsp">List</a> all Place. <br> <br></li>
 		

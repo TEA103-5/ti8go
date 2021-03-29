@@ -1,10 +1,11 @@
 package com.place.model;
 
 import java.io.InputStream;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Blob;
 
-public class PlaceVO {
+public class PlaceVO implements Serializable {
 
 	private Integer place_id;
 	private String place_name;

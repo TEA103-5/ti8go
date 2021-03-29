@@ -388,7 +388,7 @@ public class PlaceServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
 
-System.out.println("有跑到錯誤處理這邊");
+//System.out.println("有跑到錯誤處理這邊");
 
 				RequestDispatcher failureView = req.getRequestDispatcher("/place/update_place_input.jsp");
 				failureView.forward(req, res);
