@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 
 <%
-	session.setAttribute("users_id", null);  //  測試用
+	session.setAttribute("users_id", 1);  //  測試用
 	
 	if(session.getAttribute("users_id") != null){
 		// 先把目前登入的users_id放進變數, 並產生一個服務 , 將服務放在pageContext供下面EL使用
@@ -174,7 +174,7 @@
     </script>
     <script src="<%=request.getContextPath()%>/rock_place/front-place_jsp/myjs/place/card_container.js"></script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=你的金鑰&callback=initMap&libraries=&v=weekly" async></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBt62TZeRNMLW9m5vw1DfsxwUE_xdmK7rQ&callback=initMap&libraries=&v=weekly" async></script>
 	
 	<script>
 		
