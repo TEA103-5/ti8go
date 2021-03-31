@@ -13,9 +13,15 @@ ${not empty list}
 	List<PlaceVO> list = null;	
 	if(request.getAttribute("list") != null){
 		list = (List<PlaceVO>)request.getAttribute("list");
-		session.setAttribute("list", list);
-	}else{
-		list = (List<PlaceVO>)session.getAttribute("list");
+// 		session.setAttribute("list", list);
+	}
+// 	else if(session.getAttribute("list") != null){
+// 		list = (List<PlaceVO>)session.getAttribute("list");
+// 	}
+	else{
+		PlaceService placeSvc = new PlaceService();
+		list = placeSvc.getAll();
+		pageContext.setAttribute("list", list);
 	}
 // 	pageContext.setAttribute("list", list);
 %>

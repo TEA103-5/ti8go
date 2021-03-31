@@ -41,6 +41,9 @@ public class PlaceServlet extends HttpServlet {
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
+			
+			String requestURI = req.getParameter("requestURL"); // 目前來源為0201  /place/select_page.jsp 以及 正式頁面  /rock_place/front-place_jsp/place.jsp
+System.out.println(requestURI);
 
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
@@ -81,10 +84,21 @@ public class PlaceServlet extends HttpServlet {
 					return;// 程式中斷
 				}
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-				req.setAttribute("placeVO", placeVO);
-				String url = "/place/listOnePlace.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);
-				successView.forward(req, res);
+				if(requestURI.equals("/rock_place/front-place_jsp/place.jsp")) {
+					
+					req.setAttribute("placeVO", placeVO);
+					String url = "/rock_place/front-place_jsp/place_listOnePlace.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url);
+					successView.forward(req, res);
+					
+				}else if(requestURI.equals("/place/select_page.jsp")){
+					
+					req.setAttribute("placeVO", placeVO);
+					String url = "/place/listOnePlace.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url);
+					successView.forward(req, res);
+				}
+				
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
@@ -686,6 +700,9 @@ public class PlaceServlet extends HttpServlet {
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
+			
+			String requestURI = req.getParameter("requestURL"); // 目前可能來源為/place/listCardBySearch.jsp , /rock_place/front-place_jsp/place.jsp
+//System.out.println(requestURI);
 
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
@@ -739,10 +756,21 @@ public class PlaceServlet extends HttpServlet {
 					return;// 程式中斷
 				}
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-				req.setAttribute("list", list);
-				String url = "/place/listCardBySearch.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);
-				successView.forward(req, res);
+				if(requestURI.equals("/rock_place/front-place_jsp/place.jsp")) {  // 從景點頁面的請求
+					req.setAttribute("list", list);
+					String url = requestURI;
+					RequestDispatcher successView = req.getRequestDispatcher(url);
+					successView.forward(req, res);
+				}
+				
+				if(requestURI.equals("/place/select_page.jsp")) { // 從0201來的請求
+					req.setAttribute("list", list);
+					String url = requestURI;
+					RequestDispatcher successView = req.getRequestDispatcher(url);
+					successView.forward(req, res);
+				}
+				
+				
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());

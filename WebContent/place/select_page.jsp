@@ -79,6 +79,7 @@ h4 {
 						<option value="${placeVO.place_id}">${placeVO.place_id}
 					</c:forEach>
 				</select> 
+				<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>"> 
 				<input type="hidden" name="action" value="getOne_For_Display">
 				<input type="submit" value="送出">
 			</FORM>
@@ -92,6 +93,7 @@ h4 {
 						<option value="${placeVO.place_id}">${placeVO.place_name}
 					</c:forEach>
 				</select> 
+				<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>"> 
 				<input type="hidden" name="action" value="getOne_For_Display">
 				<input type="submit" value="送出">
 			</FORM>
@@ -103,6 +105,7 @@ h4 {
 				<input type="text" name="county" placeholder="請輸入縣市名稱"> 
 				<input type="text" name="district" placeholder="請輸入區域名稱"> 
 				<input type="text" name="place_name" placeholder="請輸入地點名稱" > 
+				<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>"> 
 				<input type="hidden" name="action" value="getCard"> 
 				<input type="submit" value="送出">
 			</FORM>

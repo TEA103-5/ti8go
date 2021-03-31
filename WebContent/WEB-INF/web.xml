@@ -63,6 +63,17 @@
 	</servlet-mapping>
 
 	<servlet>
+		<servlet-name>Place_collectAjaxHandler</servlet-name>
+		<servlet-class>com.place_collect.controller.Place_collectAjaxHandler</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Place_collectAjaxHandler</servlet-name>
+		<url-pattern>/place_collect/Place_collectAjaxHandler.do</url-pattern>
+	</servlet-mapping>
+
+
+
+	<servlet>
 		<servlet-name>Product_collectServlet</servlet-name>
 		<servlet-class>com.product_collect.controller.Product_collectServlet</servlet-class>
 	</servlet>
@@ -88,5 +99,6 @@
 		<servlet-name>Note_collectServlet</servlet-name>
 		<url-pattern>/note_collect/note_collect.do</url-pattern>
 	</servlet-mapping>
+	
 	
 </web-app>

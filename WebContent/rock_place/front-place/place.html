@@ -71,13 +71,17 @@
                 首个元素放置于起点，末尾元素放置于终点  -->
             <div>
                 <a class="nav-link active" href="#">新增地點</a>
-                <a class="nav-link active" href="#">前往地點收藏</a>
+                <a class="nav-link active" href="#">我的地點</a>
+                <a class="nav-link active" href="#">我的收藏</a>
             </div>
 
-            <form class="form-inline">
+            <form class="form-inline" METHOD="post" ACTION="<%=request.getContextPath()%>/place/place.do">
                 <div class="city-selector" role="tw-city-selector" data-bootstrap-style data-standard-words></div>
 
-                <input class="form-control mr-sm-2" type="search" placeholder="請輸入地點名稱" aria-label="Search">
+                <input class="form-control mr-sm-2" type="search" name="place_name" placeholder="請輸入地點名稱"
+                    aria-label="Search">
+                <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
+                <input type="hidden" name="action" value="getCard">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜尋</button>
             </form>
 
@@ -256,7 +260,10 @@
 
 
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=你的金鑰&callback=initMap&libraries=&v=weekly" async></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=你的金鑰&callback=initMap&libraries=&v=weekly"
+        async></script>
+
 
 </body>
 
