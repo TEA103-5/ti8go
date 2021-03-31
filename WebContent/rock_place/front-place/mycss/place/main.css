@@ -1,0 +1,7 @@
+
+/* map容器的父層& map容器都必須定義高度跟寬度,否則地圖無法顯示 */
+
+.page.service-page{
+    height: 100%;
+    width: 100%;
+}
