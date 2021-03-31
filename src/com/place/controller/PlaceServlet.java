@@ -701,8 +701,8 @@ System.out.println(requestURI);
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 			
-			String requestURI = req.getParameter("requestURL"); // 目前可能來源為/place/listCardBySearch.jsp , /rock_place/front-place_jsp/place.jsp
-//System.out.println(requestURI);
+			String requestURI = req.getParameter("requestURL"); // 目前可能來源為/place/listCardBySearch.jsp , /front-end/place/selectPlace.jsp , /rock_place/front-place_jsp/place.jsp
+System.out.println(requestURI);
 
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
@@ -770,6 +770,12 @@ System.out.println(requestURI);
 					successView.forward(req, res);
 				}
 				
+				if(requestURI.equals("/front-end/place/selectPlace.jsp")) { // 從正式結構頁面來的請求
+					req.setAttribute("list", list);
+					String url = requestURI;
+					RequestDispatcher successView = req.getRequestDispatcher(url);
+					successView.forward(req, res);
+				}
 				
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
