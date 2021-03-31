@@ -174,7 +174,7 @@
     </script>
     <script src="<%=request.getContextPath()%>/rock_place/front-place_jsp/myjs/place/card_container.js"></script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBt62TZeRNMLW9m5vw1DfsxwUE_xdmK7rQ&callback=initMap&libraries=&v=weekly" async></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=APIKEY&callback=initMap&libraries=&v=weekly" async></script>
 	
 	<script>
 		
