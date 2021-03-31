@@ -3,17 +3,10 @@ package com.note_collect.model;
 import java.sql.Timestamp;
 
 public class Note_collectVO {
-	private Integer note_collect_id;
 	private Integer note_id;
 	private Integer users_id;
 	private Timestamp note_collect_time;
 	
-	public Integer getNote_collect_id() {
-		return note_collect_id;
-	}
-	public void setNote_collect_id(Integer note_collect_id) {
-		this.note_collect_id = note_collect_id;
-	}
 	public Integer getNote_id() {
 		return note_id;
 	}

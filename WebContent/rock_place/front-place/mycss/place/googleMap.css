@@ -1,0 +1,11 @@
+
+/* map容器的父層& map容器都必須定義高度跟寬度,否則地圖無法顯示 */
+
+#map{
+    display: inline-block;
+    /* height:400px;
+    width:18rem;  */
+    height: 90%;
+    width: 83.5%; 
+
+}
