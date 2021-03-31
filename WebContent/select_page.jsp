@@ -60,14 +60,14 @@
     </FORM>
   </li>
 
-  <jsp:useBean id="empSvc" scope="page" class="com.emp.model.EmpService" />
+  <jsp:useBean id="empSvc" scope="page" class="com.product.model.ProductService" />
    
   <li>
      <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do" >
        <b>選擇員工編號:</b>
        <select size="1" name="empno">
-         <c:forEach var="empVO" items="${empSvc.all}" > 
-          <option value="${empVO.empno}">${empVO.empno}
+         <c:forEach var="a1" items="${empSvc.all}" > 
+          <option value="${a1.product_id}">${a1.product_id}
          </c:forEach>   
        </select>
        <input type="hidden" name="action" value="getOne_For_Display">
@@ -80,7 +80,7 @@
        <b>選擇員工姓名:</b>
        <select size="1" name="empno">
          <c:forEach var="empVO" items="${empSvc.all}" > 
-          <option value="${empVO.empno}">${empVO.ename}
+          <option value="${empVO.product_id}">${empVO.product_name}
          </c:forEach>   
        </select>
        <input type="hidden" name="action" value="getOne_For_Display">

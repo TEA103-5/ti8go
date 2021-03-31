@@ -1,4 +1,5 @@
 package com.order.model;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -7,11 +8,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderDAO implements OrderDAO_Interface{
-	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://localhost:3306/tea05?serverTimezone=Asia/Taipei";
-	String userid = "David";
-	String passwd = "123456";
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
+public class OrderJNDIDAO implements OrderDAO_Interface{
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TEA05");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
+	
 
 	private static final String INSERT_STMT = "INSERT INTO ORDER1 (Order_Status,Card_Number,Order_Rate) VALUES (?, ? ,? )";
 	private static final String UPDATE = "UPDATE ORDER1 set Order_Status=?,Card_Number=?,Order_Rate=? where Order_Id = ?";
@@ -28,8 +40,7 @@ public class OrderDAO implements OrderDAO_Interface{
 		PreparedStatement pstmt = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setInt(1, orderVO.getOrder_status());
@@ -38,8 +49,6 @@ public class OrderDAO implements OrderDAO_Interface{
 			System.out.println("成功");
 			
 			pstmt.executeUpdate();
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		} finally {
@@ -66,8 +75,7 @@ public class OrderDAO implements OrderDAO_Interface{
 		PreparedStatement pstmt = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setInt(1, orderVO.getOrder_status());
@@ -77,9 +85,6 @@ public class OrderDAO implements OrderDAO_Interface{
 			System.out.println("成功");
 
 			pstmt.executeUpdate();
-
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		} finally {
@@ -107,8 +112,7 @@ public class OrderDAO implements OrderDAO_Interface{
 		PreparedStatement pstmt = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 
 			con.setAutoCommit(false);
 
@@ -126,8 +130,6 @@ public class OrderDAO implements OrderDAO_Interface{
 			con.setAutoCommit(true);
 			System.out.println("刪除訂單明細編號" + Order_Id + "時,共有訂單明細" + deleteCount_ODD + "張同時被刪除");
 
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException se) {
 			if (con != null) {
 				try {
@@ -164,8 +166,7 @@ public class OrderDAO implements OrderDAO_Interface{
 		ResultSet rs = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
 			pstmt.setInt(1, Order_Id);
@@ -179,8 +180,6 @@ public class OrderDAO implements OrderDAO_Interface{
 				orderVO.setOrder_rate(rs.getInt("Order_rate"));
 				orderVO.setOrder_date(rs.getTimestamp("Order_date"));
 			}
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		} finally {
@@ -218,8 +217,7 @@ public class OrderDAO implements OrderDAO_Interface{
 		ResultSet rs = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 
@@ -233,8 +231,6 @@ public class OrderDAO implements OrderDAO_Interface{
 				list.add(orderVO);
 			}
 
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		} finally {
@@ -307,3 +303,15 @@ public class OrderDAO implements OrderDAO_Interface{
 		
 }
 }
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+

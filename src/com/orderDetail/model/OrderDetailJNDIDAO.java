@@ -1,18 +1,33 @@
 package com.orderDetail.model;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderDetailDAO implements OrderDetailDAO_interface{
-	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://localhost:3306/tea05?serverTimezone=Asia/Taipei";
-	String userid = "David";
-	String passwd = "123456";
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
+import com.order.model.OrderDAO;
+import com.order.model.OrderDAO_Interface;
+import com.order.model.OrderVO;
+
+public class OrderDetailJNDIDAO implements OrderDetailDAO_interface {
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TEA05");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
+	
 
 	private static final String INSERT_STMT = "INSERT INTO ORDER_DETAIL (Order_Detail_Count,PRODUCT_Id ,Order_Id) VALUES (?,?,?)";
 	private static final String UPDATE = "UPDATE ORDER_DETAIL set Order_Detail_Count=?,product_id=?,order_id=? where Order_Detail_Id = ?";
@@ -20,14 +35,13 @@ public class OrderDetailDAO implements OrderDetailDAO_interface{
 	private static final String GET_ONE_STMT = "SELECT Order_Detail_Id,Order_Detail_Count,Product_id,order_id FROM ORDER_DETAIL where Order_Detail_Id = ? ";
 	private static final String GET_ALL_STMT = "SELECT Order_Detail_Id,Order_Detail_Count,product_id,order_id FROM ORDER_DETAIL";
 
-
 	public void insert(OrderDetailVO orderDetailVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setInt(1, orderDetailVO.getOrder_detail_count());
@@ -37,8 +51,7 @@ public class OrderDetailDAO implements OrderDetailDAO_interface{
 			pstmt.executeUpdate();
 			
 			
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+		
 		} catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		} finally {
@@ -65,10 +78,9 @@ public class OrderDetailDAO implements OrderDetailDAO_interface{
 		PreparedStatement pstmt = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
-
 
 			pstmt.setInt(1, orderDetailVO.getOrder_detail_count());
 			pstmt.setInt(2, orderDetailVO.getOrder_detail_id());
@@ -78,8 +90,7 @@ public class OrderDetailDAO implements OrderDetailDAO_interface{
 
 			pstmt.executeUpdate();
 
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+		
 		} catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		} finally {
@@ -107,8 +118,7 @@ public class OrderDetailDAO implements OrderDetailDAO_interface{
 		PreparedStatement pstmt = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 
 			con.setAutoCommit(false);
 
@@ -120,8 +130,6 @@ public class OrderDetailDAO implements OrderDetailDAO_interface{
 			con.commit();
 			con.setAutoCommit(true);
 
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException se) {
 			if (con != null) {
 				try {
@@ -156,8 +164,7 @@ public class OrderDetailDAO implements OrderDetailDAO_interface{
 		ResultSet rs = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
 			pstmt.setInt(1, Order_Detail_Id);
@@ -171,8 +178,6 @@ public class OrderDetailDAO implements OrderDetailDAO_interface{
 				orderDetailVO.setOrder_id(rs.getInt("order_id"));
 			}
 
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		}
@@ -213,8 +218,7 @@ public class OrderDetailDAO implements OrderDetailDAO_interface{
 		ResultSet rs = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 
@@ -227,8 +231,6 @@ public class OrderDetailDAO implements OrderDetailDAO_interface{
 				list.add(orderDetailVO);
 			}
 
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		} finally {
@@ -259,21 +261,20 @@ public class OrderDetailDAO implements OrderDetailDAO_interface{
 	}
 
 	public static void main(String[] args) {
-		OrderDetailDAO od = new OrderDetailDAO();
+		OrderDetailJNDIDAO od = new OrderDetailJNDIDAO();
 //		 新增
-//		OrderDetailVO vo = new OrderDetailVO();
-//		vo.setOrder_detail_count(1);
-//		vo.setProduct_id(2);
-//		vo.setOrder_id(3);
-//		od.insert(vo);
+		OrderDetailVO vo = new OrderDetailVO();
+		vo.setOrder_detail_count(1);
+		vo.setProduct_id(2);
+		vo.setOrder_id(3);
+		od.insert(vo);
 	
 		//修改
 //		OrderDetailVO vo = new OrderDetailVO();
+//		vo.setOrder_detail_id(1);
 //		vo.setOrder_detail_count(5);
-//		vo.setOrder_detail_id(2);
-//		vo.setProduct_id(3);
-//		vo.setOrder_id(4);
 //		od.update(vo);
+	
 		//刪除
 //		od.delete(1);
 		

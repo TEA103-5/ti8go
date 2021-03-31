@@ -1,9 +1,9 @@
 package com.orderDetail.model;
 
 public class OrderDetailVO implements java.io.Serializable{
-	private Integer product_id;
-	private Integer order_detail_count;
 	private Integer order_detail_id;
+	private Integer order_detail_count;
+	private Integer product_id;
 	private Integer order_id;
 
 	public Integer getOrder_id() {
