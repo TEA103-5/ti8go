@@ -47,7 +47,6 @@ public class UsersGetPic extends HttpServlet {
 			rs.close();
 			stmt.close();
 		} catch (Exception e) {
-			System.out.println(e);
 			InputStream in = getServletContext().getResourceAsStream("/NoData/null.jpg");
 			byte[] b = new byte[in.available()];
 			in.read(b);

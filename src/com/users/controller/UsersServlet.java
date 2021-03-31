@@ -138,7 +138,8 @@ public class UsersServlet extends HttpServlet {
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
-
+		
+			
 			try {
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 				String users_name = req.getParameter("users_name");
@@ -175,10 +176,10 @@ public class UsersServlet extends HttpServlet {
 
 				Integer users_sex = null ;
 				try {
-					users_sex = new Integer(req.getParameter("users_status").trim());
-				} catch (NumberFormatException e) {
-					users_sex = 1;
-					errorMsgs.add("性別請填數字.");
+					users_sex = new Integer(req.getParameter("users_sex").trim());
+				} catch (Exception e) {
+					//users_sex = 1;
+					errorMsgs.add("請選擇性別.");
 				}
 //				java.sql.Date hiredate = null;
 //				try {
@@ -324,13 +325,10 @@ public class UsersServlet extends HttpServlet {
 						errorMsgs.add("狀態請填數字.");
 					}
 					
-					System.out.println(action + req.getParameter("users_id"));
-
 					Integer users_sex = null ;
 					try {
-						users_sex = new Integer(req.getParameter("users_status").trim());
-					} catch (NumberFormatException e) {
-						users_sex = 1;
+						users_sex = new Integer(req.getParameter("users_sex").trim());
+					} catch (Exception e) {
 						errorMsgs.add("性別請填數字.");
 					}
 //					java.sql.Date hiredate = null;

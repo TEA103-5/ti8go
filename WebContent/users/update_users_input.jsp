@@ -70,47 +70,46 @@
 	<tr>
 		<td>使用者姓名:</td>
 		<td><input type="TEXT" name="users_name" size="15" 
-			 value="<%= (usersVO==null)? "會員假" : usersVO.getUsers_id()%>" /></td>
+			 value="<%=usersVO.getUsers_name()%>" /></td>
 	</tr>
 	<tr>
 		<td>暱稱:</td>
 		<td><input type="TEXT" name="users_nickname" size="20"
-			 value="<%= (usersVO==null)? "假甲" : usersVO.getUsers_nickname()%>" /></td>
+			 value="<%=usersVO.getUsers_nickname()%>" /></td>
 	</tr>
-	<tr>
+	<tr>	
 		<td>性別:</td>
-		<td><input type="TEXT" name="users_sex" size="2"
-			 value="<%= (usersVO==null)? "1" : usersVO.getUsers_sex()%>" /></td>
+		<td>	
+			<input type="radio" name="users_sex" value="1" 
+				<%= usersVO.getUsers_sex()==1 ? "checked" : ""%> />男
+			<input type="radio" name="users_sex" value="0" 
+				<%= usersVO.getUsers_sex()==0 ? "checked" : ""%> />女	
+		</td>
 	</tr>
 	<tr>
 		<td>信箱:</td>
 		<td><input name="users_mail" type="text" size="20"
-			 value="<%= (usersVO==null)? "aa@us.com.us" : usersVO.getUsers_mail()%>" /></td>
+			 value="<%=usersVO.getUsers_mail()%>" /></td>
 	</tr>
 	<tr>
 		<td>密碼:</td>
 		<td><input type="password" name="users_pwd" size="20"
-			 value="<%= (usersVO==null)? "444" : usersVO.getUsers_pwd()%>" /></td>
+			 value="<%=usersVO.getUsers_pwd()%>" /></td>
 	</tr>
 	<tr>
 		<td>生日:</td>
 		<td><input type="TEXT" name="users_birthday" size="10"
-			 value="<%= (usersVO==null)? "20200101" : usersVO.getUsers_birthday()%>" /></td>
+			 value="<%=usersVO.getUsers_birthday()%>" /></td>
 	</tr>
 	<tr>
 		<td>身分證號碼:</td>
 		<td><input type="TEXT" name="users_id_number" size="10"
-			 value="<%= (usersVO==null)? "A123456789" : usersVO.getUsers_id_number()%>" /></td>
+			 value="<%=usersVO.getUsers_id_number()%>" /></td>
 	</tr>
 	<tr>
 		<td>電話:</td>
 		<td><input type="TEXT" name="users_phone" size="15"
-			 value="<%= (usersVO==null)? "8825252" : usersVO.getUsers_phone()%>" /></td>
-	</tr>
-	<tr>
-		<td>性別:</td>
-		<td><input type="TEXT" name="users_sex" size="2"
-			 value="<%= (usersVO==null)? "1" : usersVO.getUsers_sex()%>" /></td>
+			 value="<%=usersVO.getUsers_phone()%>" /></td>
 	</tr>
 	<tr>
 		<td>頭像:</td>
@@ -129,8 +128,7 @@
 <br>
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="users_id" value="<%=usersVO.getUsers_id()%>">
-<input type="hidden" name="users_status" 
-	 value="<%= (usersVO==null)? "1" : usersVO.getUsers_status()%>" />
+<input type="hidden" name="users_status" value="<%=usersVO.getUsers_status()%>" />
 <input type="submit" value="送出修改"></FORM>
 </body>
 

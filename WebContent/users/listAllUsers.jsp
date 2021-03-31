@@ -99,10 +99,16 @@
 			<td>${usersVO.users_id}</td>
 			<td>${usersVO.users_mail}</td>
 			<td>${usersVO.users_pwd}</td>
-			<td>${usersVO.users_status}</td>
+			<td>
+			<c:if test="${usersVO.users_status==0}">停用</c:if>
+			<c:if test="${usersVO.users_status==1}">正常</c:if>
+			</td>
 			<td>${usersVO.users_nickname}</td>
 			<td>${usersVO.users_name}</td>
-			<td>${usersVO.users_sex}</td>
+			<td>
+			<c:if test="${usersVO.users_sex==0}">女</c:if>
+			<c:if test="${usersVO.users_sex==1}">男</c:if>
+			</td>
 			<td>${usersVO.users_birthday}</td>
 			<td>${usersVO.users_id_number}</td>
 			<td><img src="<%=request.getContextPath()%>/UsersGetPic?id=${usersVO.users_id}" height="64" width="64"></td>

@@ -79,9 +79,11 @@
 	</tr>
 	<tr>
 		<td>性別:</td>
-		<td><input type="TEXT" name="users_sex" size="2"
-			 value="<%= (usersVO==null)? "1" : usersVO.getUsers_sex()%>" /></td>
-	</tr>
+		<td>
+			<input type="radio" name="users_sex" value="1" />男
+			<input type="radio" name="users_sex" value="0" />女	 	 
+		</td>
+	</tr>	
 	<tr>
 		<td>信箱:</td>
 		<td><input name="users_mail" type="text" size="20"
@@ -106,11 +108,6 @@
 		<td>電話:</td>
 		<td><input type="TEXT" name="users_phone" size="15"
 			 value="<%= (usersVO==null)? "8825252" : usersVO.getUsers_phone()%>" /></td>
-	</tr>
-	<tr>
-		<td>性別:</td>
-		<td><input type="TEXT" name="users_sex" size="2"
-			 value="<%= (usersVO==null)? "1" : usersVO.getUsers_sex()%>" /></td>
 	</tr>
 	<tr>
 		<td>頭像:</td>
