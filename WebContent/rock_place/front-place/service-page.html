@@ -18,7 +18,6 @@
 
         }
     </style>
-
 </head>
 
 <body>
@@ -57,30 +56,58 @@
 
         </nav>
 
-
         <section class="clean-block clean-services dark">
             <div class="container">
+                <!-- 使用Google Maps Embed API , q放的是搜尋目標 , 如有明確對象(地址或名稱)marker會標註在此位置 ,  -->
+                <div class="block-heading"><iframe id="map-iframe" allowfullscreen="" frameborder="0"
+                        src="https://www.google.com/maps/embed/v1/search?key=AIzaSyBt62TZeRNMLW9m5vw1DfsxwUE_xdmK7rQ&q=111台北市信義區信義路五段7號&zoom=20&center=25.033952,121.564360"
+                        width="100%" height="400"></iframe>
+                    <h2 class="text-info">新增地點</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in,
+                        mattis vitae leo.</p>
+                </div>
+
                 <!-- 表單驗證參考這一項 利用加上特定class來標註錯誤或正確訊息 https://getbootstrap.com/docs/4.6/components/forms/#server-side -->
                 <form>
                     <div class="form-row">
+                        <div class="col-md-12 mb-3">
+                            <label for="validationServer01">地點名稱</label>
+                            <input type="text" class="form-control is-valid" id="validationServer01" name="place_name"
+                                value="" required>
+                            <div class="valid-feedback">
+                                class有is-valid 就會顯示div class="valid-feedback"驗證通過的設定文字
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12 mb-3">
+                            <label for="validationServer02">地址</label>
+                            <input type="text" class="form-control " id="validationServer02" name="place_address"
+                                value="" required>
+                            <div class="valid-feedback">
+                                class有is-valid 就會顯示div class="valid-feedback"驗證通過的設定文字
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
                         <div class="col-md-6 mb-3">
-                            <label for="validationServer01">First name</label>
-                            <input type="text" class="form-control is-valid" id="validationServer01" value="Mark"
-                                required>
+                            <label for="validationServer01">經度</label>
+                            <input type="text" class="form-control is-valid" id="validationServer01" value="" required
+                                readonly>
                             <div class="valid-feedback">
                                 Looks good!
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="validationServer02">Last name</label>
-                            <input type="text" class="form-control is-valid" id="validationServer02" value="Otto"
-                                required>
+                            <label for="validationServer02">緯度</label>
+                            <input type="text" class="form-control is-valid" id="validationServer02" value="" required
+                                readonly>
                             <div class="valid-feedback">
                                 Looks good!
                             </div>
                         </div>
                     </div>
-                    <div class="form-row">
+                    <!-- <div class="form-row">
                         <div class="col-md-6 mb-3">
                             <label for="validationServer03">City</label>
                             <input type="text" class="form-control is-invalid" id="validationServer03"
@@ -108,7 +135,7 @@
                                 Please provide a valid zip.
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="form-group">
                         <div class="form-check">
                             <input class="form-check-input is-invalid" type="checkbox" value="" id="invalidCheck3"
@@ -123,7 +150,7 @@
                     </div>
                     <button type="submit" class="btn btn-secondary">submit</button>
                 </form>
-
+                <!-- 表單結束 -->
 
             </div>
         </section>
