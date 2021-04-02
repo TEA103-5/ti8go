@@ -427,7 +427,7 @@ System.out.println(requestURI);
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 
-			try {
+//			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 				String place_name = req.getParameter("place_name");
 				String place_nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
@@ -480,25 +480,26 @@ System.out.println(requestURI);
 					errorMsgs.add("緯度請填數字.");
 				}
 
-				String place_tel = req.getParameter("place_tel").trim();
-				if (place_tel == null || place_tel.trim().length() == 0) {
-					errorMsgs.add("電話請勿空白(尚未改正規表示法)");
-				}
+				// 字串.trim() 是去掉頭尾空白後產生新字串 , 所以可以為null的欄位req.getParameter("place_tel").trim()會出錯
+				String place_tel = req.getParameter("place_tel");
+//				if (place_tel == null || place_tel.trim().length() == 0) {
+//					errorMsgs.add("電話請勿空白(尚未改正規表示法)");
+//				}
 
-				String place_region = req.getParameter("place_region").trim();
-				if (place_region == null || place_region.trim().length() == 0) {
-					errorMsgs.add("縣市請勿空白(尚未改正規表示法)");
-				}
+				String place_region = req.getParameter("place_region");
+//				if (place_region == null || place_region.trim().length() == 0) {
+//					errorMsgs.add("縣市請勿空白(尚未改正規表示法)");
+//				}
 
-				String place_type = req.getParameter("place_type").trim();
+				String place_type = req.getParameter("place_type");
 				if (place_type == null || place_type.trim().length() == 0) {
 					errorMsgs.add("地點類型請勿空白");
 				}
 
-				String place_index = req.getParameter("place_index").trim();
-				if (place_index == null || place_index.trim().length() == 0) {
-					errorMsgs.add("地點簡介請勿空白");
-				}
+				String place_index = req.getParameter("place_index");
+//				if (place_index == null || place_index.trim().length() == 0) {
+//					errorMsgs.add("地點簡介請勿空白");
+//				}
 
 				// 開始 處理圖片上傳到資料庫
 
@@ -668,11 +669,11 @@ System.out.println(requestURI);
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
-			} catch (Exception e) {
-				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/place/addPlace.jsp");
-				failureView.forward(req, res);
-			}
+//			} catch (Exception e) {
+//				errorMsgs.add(e.getMessage());
+//				RequestDispatcher failureView = req.getRequestDispatcher("/place/addPlace.jsp");
+//				failureView.forward(req, res);
+//			}
 		}
 
 		if ("delete".equals(action)) {
