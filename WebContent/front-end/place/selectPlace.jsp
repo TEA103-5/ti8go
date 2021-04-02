@@ -31,22 +31,22 @@
 
 
 <html>
-
+/Tivago_Git/WebContent/front-end/place/selectPlace.jsp
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Services - Tivago</title>
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/rock_place/front-place_jsp/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/place/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/rock_place/front-place_jsp/assets/fonts/simple-line-icons.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/place/assets/fonts/simple-line-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/rock_place/front-place_jsp/assets/css/smoothproducts.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/place/assets/css/smoothproducts.css">
 
     <!-- 以下是自己新增的css -->
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/rock_place/front-place_jsp/mycss/place/main.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/rock_place/front-place_jsp/mycss/place/card-container.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/rock_place/front-place_jsp/mycss/place/googleMap.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/rock_place/front-place_jsp/mycss/place/search-bar.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/place/mycss/place/main.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/place/mycss/place/card-container.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/place/mycss/place/googleMap.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/place/mycss/place/search-bar.css">
     <style>
         /* .form-group {
             display: inline-flex;
@@ -151,18 +151,18 @@
     </main>
 
 
-    <script src="<%=request.getContextPath()%>/rock_place/front-place_jsp/assets/js/jquery.min.js"></script>
-    <script src="<%=request.getContextPath()%>/rock_place/front-place_jsp/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="<%=request.getContextPath()%>/front-end/place/assets/js/jquery.min.js"></script>
+    <script src="<%=request.getContextPath()%>/front-end/place/assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
-    <script src="<%=request.getContextPath()%>/rock_place/front-place_jsp/assets/js/smoothproducts.min.js"></script>
-    <script src="<%=request.getContextPath()%>/rock_place/front-place_jsp/assets/js/theme.js"></script>
+    <script src="<%=request.getContextPath()%>/front-end/place/assets/js/smoothproducts.min.js"></script>
+    <script src="<%=request.getContextPath()%>/front-end/place/assets/js/theme.js"></script>
 
     <!-- 以下是自己新增的js -->
-    <script src="<%=request.getContextPath()%>/rock_place/front-place_jsp/myjs/place/googleMap.js"></script>
-    <script src="<%=request.getContextPath()%>/rock_place/front-place_jsp/myjs/place/search-bar.js"></script>
+    <script src="<%=request.getContextPath()%>/front-end/place/myjs/place/googleMap.js"></script>
+    <script src="<%=request.getContextPath()%>/front-end/place/myjs/place/search-bar.js"></script>
 
 <!-- 	載入的地址選單套件 -->
-    <script src="<%=request.getContextPath()%>/rock_place/front-place_jsp/tw-city-selector-master/dist/tw-city-selector.js"></script> 
+    <script src="<%=request.getContextPath()%>/front-end/place/tw-city-selector-master/dist/tw-city-selector.js"></script> 
     <script>
         function init() {
             new TwCitySelector({
@@ -172,9 +172,9 @@
         }
         init();
     </script>
-    <script src="<%=request.getContextPath()%>/rock_place/front-place_jsp/myjs/place/card_container.js"></script>
+    <script src="<%=request.getContextPath()%>/front-end/place/myjs/place/card_container.js"></script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=金鑰&callback=initMap&libraries=&v=weekly" async></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBt62TZeRNMLW9m5vw1DfsxwUE_xdmK7rQ&callback=initMap&libraries=&v=weekly" async></script>
 	
 	<script>
 		
@@ -207,7 +207,7 @@
 	// console.log($(this).parent(".card-body").find(".users_id_value").attr("value"));
 				
 				$.ajax({
-			        url: "/Tivago_Git/place_collect/Place_collectAjaxHandler.do",           // 資料請求的網址
+			        url: "<%=request.getContextPath()%>/place_collect/Place_collectAjaxHandler.do",           // 資料請求的網址
 			        type: "POST",                  // GET | POST | PUT | DELETE | PATCH
 			        data: data,               // 傳送資料到指定的 url
 			        dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html

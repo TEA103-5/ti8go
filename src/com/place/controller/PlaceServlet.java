@@ -42,7 +42,7 @@ public class PlaceServlet extends HttpServlet {
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 			
-			String requestURI = req.getParameter("requestURL"); // 目前來源為0201  /place/select_page.jsp 以及 正式頁面  /rock_place/front-place_jsp/place.jsp
+			String requestURI = req.getParameter("requestURL"); // 目前來源為0201  /place/select_page.jsp 以及 正式頁面/front-end/place/selectPlace.jsp 測試頁面  /rock_place/front-place_jsp/place.jsp
 System.out.println(requestURI);
 
 			try {
@@ -84,6 +84,17 @@ System.out.println(requestURI);
 					return;// 程式中斷
 				}
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+//				/Tivago_Git/WebContent/front-end/place/listOnePlace.jsp
+				
+				if(requestURI.equals("/front-end/place/selectPlace.jsp")) {
+					
+					req.setAttribute("placeVO", placeVO);
+					String url = "/front-end/place/listOnePlace.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url);
+					successView.forward(req, res);
+					
+				}
+				
 				if(requestURI.equals("/rock_place/front-place_jsp/place.jsp")) {
 					
 					req.setAttribute("placeVO", placeVO);
