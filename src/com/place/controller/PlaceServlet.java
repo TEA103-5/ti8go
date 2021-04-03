@@ -22,7 +22,7 @@ import com.place.model.PlaceDAO;
 import com.place.model.PlaceService;
 import com.place.model.PlaceVO;
 
-@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 10 * 5 * 5 * 1024 * 1024, maxRequestSize = 10 * 5 * 5 * 1024 * 1024)
 
 public class PlaceServlet extends HttpServlet {
 
@@ -42,8 +42,9 @@ public class PlaceServlet extends HttpServlet {
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 			
-			String requestURI = req.getParameter("requestURL"); // 目前來源為0201  /place/select_page.jsp 以及 正式頁面/front-end/place/selectPlace.jsp 測試頁面  /rock_place/front-place_jsp/place.jsp
-System.out.println(requestURI);
+			String requestURL = req.getParameter("requestURL"); 
+			// 目前來源為0201  /place/select_page.jsp 以及 正式頁面/front-end/place/selectPlace.jsp , /front-end/place_collect/listMyPlace_collect.jsp , /front-end/place/listMyPlace.jsp 測試頁面  /rock_place/front-place_jsp/place.jsp
+System.out.println(requestURL);
 
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
@@ -84,9 +85,10 @@ System.out.println(requestURI);
 					return;// 程式中斷
 				}
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-//				/Tivago_Git/WebContent/front-end/place/listOnePlace.jsp
-				
-				if(requestURI.equals("/front-end/place/selectPlace.jsp")) {
+
+				if(requestURL.equals("/front-end/place/selectPlace.jsp") || 
+						requestURL.equals("/front-end/place_collect/listMyPlace_collect.jsp") || 
+							requestURL.equals("/front-end/place/listMyPlace.jsp")) {
 					
 					req.setAttribute("placeVO", placeVO);
 					String url = "/front-end/place/listOnePlace.jsp";
@@ -95,14 +97,14 @@ System.out.println(requestURI);
 					
 				}
 				
-				if(requestURI.equals("/rock_place/front-place_jsp/place.jsp")) {
+				if(requestURL.equals("/rock_place/front-place_jsp/place.jsp")) {
 					
 					req.setAttribute("placeVO", placeVO);
 					String url = "/rock_place/front-place_jsp/place_listOnePlace.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url);
 					successView.forward(req, res);
 					
-				}else if(requestURI.equals("/place/select_page.jsp")){
+				}else if(requestURL.equals("/place/select_page.jsp")){
 					
 					req.setAttribute("placeVO", placeVO);
 					String url = "/place/listOnePlace.jsp";
@@ -124,6 +126,9 @@ System.out.println(requestURI);
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
+			
+			String requestURL = req.getParameter("requestURL");  // 目前來源為0201  
+System.out.println(requestURL);
 
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
@@ -134,10 +139,25 @@ System.out.println(requestURI);
 				PlaceVO placeVO = placeSvc.getOnePlace(place_id);
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-				req.setAttribute("placeVO", placeVO);
-				String url = "/place/update_place_input.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);
-				successView.forward(req, res);
+//				req.setAttribute("placeVO", placeVO);
+//				String url = "/place/update_place_input.jsp";
+//				RequestDispatcher successView = req.getRequestDispatcher(url);
+//				successView.forward(req, res);
+				
+				if(requestURL.equals("/place/listAllPlace.jsp")) {   // 來自0201的頁面listAllPlace.jsp
+					
+					req.setAttribute("placeVO", placeVO);
+					String url = "/place/update_place_input.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url);
+					successView.forward(req, res);
+				}
+				if(requestURL.equals("/front-end/place/listMyPlace.jsp")) {   // 來自正式前台頁面
+					
+					req.setAttribute("placeVO", placeVO);
+					String url = "/front-end/place/update_place_input.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url);
+					successView.forward(req, res);
+				}
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
@@ -426,6 +446,8 @@ System.out.println(requestURI);
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
+			String requestURL = req.getParameter("requestURL"); // 
+System.out.println("requestURL = " + requestURL);
 
 //			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
@@ -492,9 +514,9 @@ System.out.println(requestURI);
 //				}
 
 				String place_type = req.getParameter("place_type");
-				if (place_type == null || place_type.trim().length() == 0) {
-					errorMsgs.add("地點類型請勿空白");
-				}
+//				if (place_type == null || place_type.trim().length() == 0) {
+//					errorMsgs.add("地點類型請勿空白");
+//				}
 
 				String place_index = req.getParameter("place_index");
 //				if (place_index == null || place_index.trim().length() == 0) {
@@ -542,20 +564,20 @@ System.out.println(requestURI);
 				// -----用UploadTest_Servlet3上傳------
 //				Collection<Part> parts = req.getParts();
 //				req.setAttribute("parts", parts);
-				RequestDispatcher uploadImage = req.getRequestDispatcher("uploadServlet3.do");
-				uploadImage.include(req, res);
-
-				if (req.getAttribute("place_pic1") != null) {
-					place_pic1 = (byte[]) req.getAttribute("place_pic1");
-				}
-
-				if (req.getAttribute("place_pic2") != null) {
-					place_pic2 = (byte[]) req.getAttribute("place_pic2");
-				}
-
-				if (req.getAttribute("place_pic3") != null) {
-					place_pic3 = (byte[]) req.getAttribute("place_pic3");
-				}
+//				RequestDispatcher uploadImage = req.getRequestDispatcher("uploadServlet3.do");
+//				uploadImage.include(req, res);
+//
+//				if (req.getAttribute("place_pic1") != null) {
+//					place_pic1 = (byte[]) req.getAttribute("place_pic1");
+//				}
+//
+//				if (req.getAttribute("place_pic2") != null) {
+//					place_pic2 = (byte[]) req.getAttribute("place_pic2");
+//				}
+//
+//				if (req.getAttribute("place_pic3") != null) {
+//					place_pic3 = (byte[]) req.getAttribute("place_pic3");
+//				}
 				// ---------------------------------
 
 				// -----用UploadToDB上傳------
@@ -664,9 +686,19 @@ System.out.println(requestURI);
 						users_id, business_time);
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				String url = "/place/listAllPlace.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);
-				successView.forward(req, res);
+//				if(requestURL.equals("/front-end/place/addPlace.jsp")) {  // 來自前台正式頁面, 預計導向我的地點
+//					
+//				}
+
+				
+				if(requestURL.equals("/place/addPlace.jsp")) {   // 來自0201的頁面
+					
+					String url = "/place/listAllPlace.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url);
+					successView.forward(req, res);
+				}
+				
+				
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 //			} catch (Exception e) {
@@ -713,8 +745,8 @@ System.out.println(requestURI);
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 			
-			String requestURI = req.getParameter("requestURL"); // 目前可能來源為/place/listCardBySearch.jsp , /front-end/place/selectPlace.jsp , /rock_place/front-place_jsp/place.jsp
-System.out.println(requestURI);
+			String requestURL = req.getParameter("requestURL"); // 目前可能來源為/place/listCardBySearch.jsp , /front-end/place/selectPlace.jsp , /rock_place/front-place_jsp/place.jsp
+System.out.println(requestURL);
 
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
@@ -768,23 +800,23 @@ System.out.println(requestURI);
 					return;// 程式中斷
 				}
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-				if(requestURI.equals("/rock_place/front-place_jsp/place.jsp")) {  // 從景點頁面的請求
+				if(requestURL.equals("/rock_place/front-place_jsp/place.jsp")) {  // 從景點頁面的請求
 					req.setAttribute("list", list);
-					String url = requestURI;
+					String url = requestURL;
 					RequestDispatcher successView = req.getRequestDispatcher(url);
 					successView.forward(req, res);
 				}
 				
-				if(requestURI.equals("/place/select_page.jsp")) { // 從0201來的請求
+				if(requestURL.equals("/place/select_page.jsp")) { // 從0201來的請求
 					req.setAttribute("list", list);
-					String url = requestURI;
+					String url = requestURL;
 					RequestDispatcher successView = req.getRequestDispatcher(url);
 					successView.forward(req, res);
 				}
 				
-				if(requestURI.equals("/front-end/place/selectPlace.jsp")) { // 從正式結構頁面來的請求
+				if(requestURL.equals("/front-end/place/selectPlace.jsp")) { // 從正式結構頁面來的請求
 					req.setAttribute("list", list);
-					String url = requestURI;
+					String url = requestURL;
 					RequestDispatcher successView = req.getRequestDispatcher(url);
 					successView.forward(req, res);
 				}

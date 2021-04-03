@@ -1,43 +1,30 @@
 <%@page import="java.util.*"%>
 <%@page import="com.place.model.*"%>
-<%@page import="com.place_collect.model.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-
-
+<%@ page import="com.place_collect.model.*"%>
 
 <%
-	session.setAttribute("users_id", 1);  //  測試用
+
+
+	Integer login_users = (Integer)session.getAttribute("users_id");
+
+	Place_collectService place_collectSvc = new Place_collectService();
+	List<Place_collectVO> list = place_collectSvc.getAllByPrimaryKey(login_users);
 	
-	if(session.getAttribute("users_id") != null){
-		// 先把目前登入的users_id放進變數, 並產生一個地點收藏service , 將service放在pageContext供下面EL使用
-		Integer login_users = (Integer)session.getAttribute("users_id");
-		Place_collectService place_collectSvc = new Place_collectService();
-		pageContext.setAttribute("place_collectSvc", place_collectSvc);
-		
-	}
-	
-	
-	List<PlaceVO> list = null;	
-	if(request.getAttribute("list") != null){
-		list = (List<PlaceVO>)request.getAttribute("list");
-	}else{
-		PlaceService placeSvc = new PlaceService();
-		list = placeSvc.getAll();
-		pageContext.setAttribute("list", list);
-	}
+	pageContext.setAttribute("list", list);
+	pageContext.setAttribute("place_collectSvc", place_collectSvc);
 %>
+<jsp:useBean id="placeSvc" scope="page" class="com.place.model.PlaceService" />
 
 
 <!DOCTYPE html>
-
 <html>
-/Tivago_Git/WebContent/front-end/place/selectPlace.jsp
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>景點首頁 - Tivago</title>
+    <title>我的收藏 - Tivago</title>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/place/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/place/assets/fonts/simple-line-icons.min.css">
@@ -45,28 +32,13 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/place/assets/css/smoothproducts.css">
 
     <!-- 以下是自己新增的css -->
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/place/mycss/place/main.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/place/mycss/place/card-container.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/place/mycss/place/googleMap.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/place/mycss/place/search-bar.css">
     <style>
-        /* .form-group {
+        .nav-link.active {
             display: inline-flex;
-            
-        }
 
-        .form-control {
-            display: inline-flex;
-        }
-
-        .form-inline {
-            display: inline-flex;
-        } */
-
-        .city-selector {
-            display: inline-flex;
         }
     </style>
+
 </head>
 
 <body>
@@ -91,96 +63,107 @@
             </div>
         </div>
     </nav>
-
-
-
-
-
     <main class="page service-page">
 
         <nav id="search-bar" class="navbar navbar-light bg-light">
             <!-- <a class="navbar-brand">Navbar</a> -->
             <!-- id="search-bar" 的屬性justify-content: space-between;  均匀排列每个元素
                 首个元素放置于起点，末尾元素放置于终点  -->
-
             <div>
                 <a class="nav-link active" href="<%=request.getContextPath()%>/front-end/place/addPlace.jsp">新增地點</a>
                 <a class="nav-link active" href="#">我的地點</a>
-                <a class="nav-link active" href="<%=request.getContextPath()%>/front-end/place_collect/listMyPlace_collect.jsp">我的收藏</a>
+                <a class="nav-link active disabled" href="#" aria-disabled="true">我的收藏</a>
             </div>
 
-            <form class="form-inline" METHOD="post" ACTION="<%=request.getContextPath()%>/place/place.do">
-                <div class="city-selector" role="tw-city-selector" data-bootstrap-style data-standard-words></div>
-
-                <input class="form-control mr-sm-2" type="search" name="place_name" placeholder="請輸入地點名稱" aria-label="Search">
-				<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>"> 
-                <input type="hidden" name="action" value="getCard"> 
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜尋</button>
-            </form>
-
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active " aria-current="page">地點收藏</li>
+                    <li class="breadcrumb-item"><a href="#">行程收藏</a></li>
+                    <li class="breadcrumb-item"><a href="#">遊記收藏</a></li>
+                    <li class="breadcrumb-item"><a href="#">商品收藏</a></li>
+                </ol>
+            </nav>
         </nav>
 
-        <div id="card-container">
-            <c:forEach var="placeVO" items="${list}"  varStatus="loop">
-	            <c:if test="${(placeVO.place_state == 1 ) ||  (sessionScope.users_id == placeVO.users_id) }">
-		            <div class="card" style="width: 18rem;" data-id="${loop.index}" data-longitude="${placeVO.place_longitude}" data-latitude="${placeVO.place_latitude}">
-		                <img src="<%=request.getContextPath()%>/place/DBGifReader4.do?place_pic=place_pic1&place_id=${placeVO.place_id}" class="card-img-top" alt="...">
-		                <div class="card-body">
-		                    <h5 class="card-title">${placeVO.place_name}</h5>
-		                    <p class="card-text">${placeVO.place_address}</p>
-		                    <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-		                    <form class="card-form" action="<%=request.getContextPath()%>/place/place.do" method="post">
-		                    	<input class="place_id_value" type="hidden" name="place_id" value="${placeVO.place_id}"> 
-		                    	<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>"> 
-		                    	<input type="hidden" name="action" value="getOne_For_Display">
-		                        <button type="submit" class="btn btn-secondary">地點詳情</button>
-		                        <c:if test="${place_collectSvc.getOnePlace_collect(placeVO.place_id,users_id) == null}">
-		                       		<button type="button" class="collect_btn btn btn-secondary">加入收藏</button>
-		                        </c:if>
-		                        <c:if test="${place_collectSvc.getOnePlace_collect(placeVO.place_id,users_id) != null}">
-		                       		<button type="button" class="collect_btn btn btn-secondary">取消收藏</button>
-		                        </c:if>
-		                    </form>
-	<!-- 	                    <form class="card-form" action="https://www.google.com/" method="get"> -->
-	<%-- 	                    	<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">  --%>
-	<%-- 	                        <input class="users_id_value" type="hidden" name="users_id" value="${placeVO.users_id}">  --%>
-	<!-- 	                    </form> -->
-		                </div>
-		            </div>
-	            </c:if>
-            </c:forEach>
 
-        </div>
-
-        <div id="map"></div>
+        <section class="clean-block clean-services dark">
+            <div class="container">
+                <div class="row">
+                    <c:forEach var="place_collectVO" items="${list}"  varStatus="loop">
+	                    <div class="col-md-6 col-lg-4">
+	                        <div class="card"><img class="card-img-top w-100 d-block" src="<%=request.getContextPath()%>/place/DBGifReader4.do?place_pic=place_pic1&place_id=${place_collectVO.place_id}">
+	                            <div class="card-body">
+	                                <h4 class="card-title">${placeSvc.getOnePlace(place_collectVO.place_id).place_name}</h4>
+	                                <p class="card-text">${placeSvc.getOnePlace(place_collectVO.place_id).place_address}</p>
+		                            <form class="card-form" action="<%=request.getContextPath()%>/place/place.do" method="post">
+				                    	<input class="place_id_value" type="hidden" name="place_id" value="${(place_collectVO.place_id)}"> 
+				                    	<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>"> 
+				                    	<input type="hidden" name="action" value="getOne_For_Display">
+				                        <button class="btn btn-outline-primary btn-sm" type="submit">地點詳情</button>
+		                           		 <c:if test="${place_collectSvc.getOnePlace_collect(place_collectVO.place_id,sessionScope.users_id) == null}">
+				                       		<button class="collect_btn btn btn-outline-primary btn-sm" type="button">加入收藏</button>
+				                        </c:if>
+				                        <c:if test="${place_collectSvc.getOnePlace_collect(place_collectVO.place_id,sessionScope.users_id) != null}">
+				                       		<button class="collect_btn btn btn-outline-primary btn-sm" type="button">取消收藏</button>
+				                        </c:if>
+				                        
+				                    </form>
+	                            </div>
+	                        </div>
+	                    </div>
+                    </c:forEach>
+                </div>
+            </div>
+        </section>
     </main>
-
-
+<!--     <footer class="page-footer dark"> -->
+<!--         <div class="container"> -->
+<!--             <div class="row"> -->
+<!--                 <div class="col-sm-3"> -->
+<!--                     <h5>Get started</h5> -->
+<!--                     <ul> -->
+<!--                         <li><a href="#">Home</a></li> -->
+<!--                         <li><a href="#">註冊</a></li> -->
+<!--                         <li><a href="#">登入</a></li> -->
+<!--                     </ul> -->
+<!--                 </div> -->
+<!--                 <div class="col-sm-3"> -->
+<!--                     <h5>About us</h5> -->
+<!--                     <ul> -->
+<!--                         <li><a href="#">Company Information</a></li> -->
+<!--                         <li><a href="#">Contact us</a></li> -->
+<!--                         <li><a href="#">Reviews</a></li> -->
+<!--                     </ul> -->
+<!--                 </div> -->
+<!--                 <div class="col-sm-3"> -->
+<!--                     <h5>Support</h5> -->
+<!--                     <ul> -->
+<!--                         <li><a href="#">FAQ</a></li> -->
+<!--                         <li><a href="#">Help desk</a></li> -->
+<!--                         <li><a href="#">Forums</a></li> -->
+<!--                     </ul> -->
+<!--                 </div> -->
+<!--                 <div class="col-sm-3"> -->
+<!--                     <h5>Legal</h5> -->
+<!--                     <ul> -->
+<!--                         <li><a href="#">Terms of Service</a></li> -->
+<!--                         <li><a href="#">Terms of Use</a></li> -->
+<!--                         <li><a href="#">Privacy Policy</a></li> -->
+<!--                     </ul> -->
+<!--                 </div> -->
+<!--             </div> -->
+<!--         </div> -->
+<!--         <div class="footer-copyright"> -->
+<!--             <p>© 2021 Tivago</p> -->
+<!--         </div> -->
+<!--     </footer> -->
     <script src="<%=request.getContextPath()%>/front-end/place/assets/js/jquery.min.js"></script>
     <script src="<%=request.getContextPath()%>/front-end/place/assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
     <script src="<%=request.getContextPath()%>/front-end/place/assets/js/smoothproducts.min.js"></script>
     <script src="<%=request.getContextPath()%>/front-end/place/assets/js/theme.js"></script>
 
-    <!-- 以下是自己新增的js -->
-    <script src="<%=request.getContextPath()%>/front-end/place/myjs/place/googleMap.js"></script>
-    <script src="<%=request.getContextPath()%>/front-end/place/myjs/place/search-bar.js"></script>
 
-<!-- 	載入的地址選單套件 -->
-    <script src="<%=request.getContextPath()%>/front-end/place/tw-city-selector-master/dist/tw-city-selector.js"></script> 
-    <script>
-        function init() {
-            new TwCitySelector({
-                // el: '.city-selector',
-                // bootstrapStyle: true
-            });
-        }
-        init();
-    </script>
-    <script src="<%=request.getContextPath()%>/front-end/place/myjs/place/card_container.js"></script>
-
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBt62TZeRNMLW9m5vw1DfsxwUE_xdmK7rQ&callback=initMap&libraries=&v=weekly" async></script>
-	
 	<script>
 		
 	$(function () {
@@ -202,13 +185,15 @@
 				}
 				let that = $(this);
 				
-				let place_id = $(this).closest(".card-body").find(".place_id_value").attr("value");
+				// parents是會一直往上找,可能回傳一個陣列 , parent只會找到父元素且只找第一個
+				let place_id = that.parents(".card-body").find(".place_id_value").attr("value");
 				
 			  	let data = {
 			  			"action": "ajax_insert_or_delete_PlaceCollect",
 			            "place_id": place_id,
 			            "users_id": login_users
 			  	}		
+			  	console.log(data)
 	// console.log($(this).parent(".card-body").find(".place_id_value").attr("value"));
 	// console.log($(this).parent(".card-body").find(".users_id_value").attr("value"));
 				
@@ -223,7 +208,10 @@
 	// 		        	  // 新增成功則按鈕改成顯示取消收藏
 			        	  that.html("取消收藏")
 			          }else if(data.result == "delete_success"){
+			        	  // 在此頁刪除成功則從畫面上移除
+			        	  that.closest(".col-md-6.col-lg-4").fadeOut(300, function(){ $(this).remove();});
 			        	  that.html("加入收藏")
+
 			          }
 			          
 			        }
@@ -232,8 +220,6 @@
 	});
 		
 	</script>
-	
-	
 </body>
 
 </html>

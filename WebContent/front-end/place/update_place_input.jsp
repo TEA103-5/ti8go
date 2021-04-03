@@ -1,15 +1,27 @@
+<%@page import="java.util.*"%>
+<%@page import="com.place.model.*"%>
+<%@page import="com.place_collect.model.*"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+
+<% 
+	PlaceVO placeVO = (PlaceVO)request.getAttribute("placeVO");
+%>
+
+
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Services - Tivago</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <title>修改地點 - Tivago</title>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/place/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
-    <link rel="stylesheet" href="assets/fonts/simple-line-icons.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/place/assets/fonts/simple-line-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
-    <link rel="stylesheet" href="assets/css/smoothproducts.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/place/assets/css/smoothproducts.css">
 
     <!-- 以下是自己新增的css -->
     <style>
@@ -65,19 +77,18 @@
             <div class="container">
                 <!-- 使用Google Maps Embed API , q放的是搜尋目標 , 如有明確對象(地址或名稱)marker會標註在此位置 ,  -->
                 <div class="block-heading"><iframe id="map-iframe" allowfullscreen="" frameborder="0"
-                        src="https://www.google.com/maps/embed/v1/search?key=AIzaSyBt62TZeRNMLW9m5vw1DfsxwUE_xdmK7rQ&q=111台北市信義區信義路五段7號&zoom=20&center=25.033952,121.564360"
+                        src="https://www.google.com/maps/embed/v1/search?key=AIzaSyAjDUYEdEloKExVbhYLVsCg4EqL0KQLSDs&q=111台北市信義區信義路五段7號&zoom=20&center=25.033952,121.564360"
                         width="100%" height="400"></iframe>
-                    <h2 class="text-info">新增地點</h2>
+                    <h2 class="text-info">修改地點</h2>
                     <p> </p>
                 </div>
 
                 <!-- 表單驗證參考這一項 利用加上特定class來標註錯誤或正確訊息 https://getbootstrap.com/docs/4.6/components/forms/#server-side -->
-                <!-- <form METHOD="post" ACTION="place.do" name="form1" enctype="multipart/form-data"> -->
-                <form id="insert_form">
+                <form METHOD="post" ACTION="<%=request.getContextPath()%>/place/place.do" name="form1" enctype="multipart/form-data"> 
                     <div class="form-row">
                         <div class="col-md-12 mb-3">
                             <label class="xrequired" for="validationServer01">地點名稱</label>
-                            <input type="text" class="form-control " id="validationServer01" name="place_name" value=""
+                            <input type="text" class="form-control " id="validationServer01" name="place_name" value="<%= (placeVO==null)? "" : placeVO.getPlace_name()%>"
                                 required>
                             <div class="valid-feedback">
                                 驗證通過
@@ -111,7 +122,7 @@
 
                             <label class="xrequired" for="validationServer02">地址</label>
                             <input type="text" class="form-control " id="validationServer02" name="place_address"
-                                value="" required>
+                                value="<%= (placeVO==null)? "" : placeVO.getPlace_address()%>" required>
                             <div class="valid-feedback">
                                 驗證通過
                             </div>
@@ -125,7 +136,7 @@
                         <div class="col-md-6 mb-3">
                             <label class="xrequired" for="validationServer03">經度</label>
                             <input type="text" class="form-control" id="validationServer03" name="place_longitude"
-                                value="" required readonly>
+                                value="<%= (placeVO==null)? "" : placeVO.getPlace_longitude()%>" required readonly>
                             <div class="valid-feedback">
                                 驗證通過
                             </div>
@@ -136,7 +147,7 @@
                         <div class="col-md-6 mb-3">
                             <label class="xrequired" for="validationServer04">緯度</label>
                             <input type="text" class="form-control" id="validationServer04" name="place_latitude"
-                                value="" required readonly>
+                                value="<%= (placeVO==null)? "" : placeVO.getPlace_latitude()%>" required readonly>
                             <div class="valid-feedback">
                                 驗證通過
                             </div>
@@ -148,7 +159,7 @@
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
                             <label for="validationServer05">電話</label>
-                            <input type="text" class="form-control" id="validationServer05" name="place_tel" value="">
+                            <input type="text" class="form-control" id="validationServer05" name="place_tel" value="<%= (placeVO==null)? "" : placeVO.getPlace_tel()%>">
                             <div class="valid-feedback">
                                 驗證通過
                             </div>
@@ -158,7 +169,7 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="validationServer06">地點類型</label>
-                            <input type="text" class="form-control" id="validationServer06" name="place_type" value="">
+                            <input type="text" class="form-control" id="validationServer06" name="place_type" value="<%= (placeVO==null)? "" : placeVO.getPlace_type()%>">
                             <div class="valid-feedback">
                                 驗證通過
                             </div>
@@ -171,7 +182,7 @@
                         <div class="col-md-12 mb-3">
                             <label for="validationServer07">地點簡介</label>
                             <textarea class="form-control " id="validationServer07" name="place_index" rows="6"
-                                placeholder=""></textarea>
+                                placeholder=""><%= (placeVO==null)? "" : placeVO.getPlace_index()%></textarea>
                             <div class="valid-feedback">
                                 驗證通過
                             </div>
@@ -184,20 +195,21 @@
                         <div class="col-md-12 mb-3">
                             <label for="validationServer08">圖片1</label>
                             <input type="file" class="form-control-file " id="validationServer08" name="place_pic1">
-                            <!-- <img
-                                src="https://images.pexels.com/photos/6757343/pexels-photo-6757343.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=200&w=1260" /> -->
+							<img id="pic1" width="300" height="225" src="DBGifReader4.do?place_pic=place_pic1&place_id=${placeVO.place_id}">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-md-12 mb-3">
                             <label for="validationServer09">圖片2</label>
                             <input type="file" class="form-control-file " id="validationServer09" name="place_pic2">
+                        	<img id="pic2" width="300" height="225" src="DBGifReader4.do?place_pic=place_pic2&place_id=${placeVO.place_id}">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-md-12 mb-3">
                             <label for="validationServer10">圖片3</label>
                             <input type="file" class="form-control-file " id="validationServer10" name="place_pic3">
+                            <img id="pic3" width="300" height="225" src="DBGifReader4.do?place_pic=place_pic3&place_id=${placeVO.place_id}">
                         </div>
                     </div>
                     <!-- <div class="form-row">
@@ -229,24 +241,25 @@
                             </div>
                         </div>
                     </div> -->
-                    <div class="form-group">
-                        <div class="form-check">
-                            <!-- <input class="form-check-input is-invalid" type="checkbox" value="" id="invalidCheck3"
-                                aria-describedby="invalidCheck3Feedback" required> -->
-                            <label class="form-check-label" for="invalidCheck3">
-                                Agree to terms and conditions
-                            </label>
-                            <div id="invalidCheck3Feedback" class="invalid-feedback">
-                                You must agree before submitting.
-                            </div>
-                        </div>
-                    </div>
-                    <input type="hidden" name="place_state" value="0">
+<!--                     <div class="form-group"> -->
+<!--                         <div class="form-check"> -->
+<!--                             <input class="form-check-input is-invalid" type="checkbox" value="" id="invalidCheck3" -->
+<!--                                 aria-describedby="invalidCheck3Feedback" required>  -->
+<!--                             <label class="form-check-label" for="invalidCheck3"> -->
+<!--                                 Agree to terms and conditions -->
+<!--                             </label> -->
+<!--                             <div id="invalidCheck3Feedback" class="invalid-feedback"> -->
+<!--                                 You must agree before submitting. -->
+<!--                             </div> -->
+<!--                         </div> -->
+<!--                     </div> -->
+                    <input type="hidden" name="place_state" value="<%= (placeVO==null)? "" : placeVO.getPlace_state()%>">
                     <!-- 使用者新增的地點的place_state一律為0 -> 未審核 -->
-                    <input type="hidden" name="users_id" value="1">
-                    <!-- users_id 為當前當入的id -->
-                    <input type="hidden" name="action" value="insert">
+                    <input type="hidden" name="users_id" value="${sessionScope.users_id}">
+                    <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
+                    <input type="hidden" name="action" value="update">
                     <!-- <button id="getGeo_button" type="button" class="btn btn-secondary">取得經緯度及定位</button> -->
+                    <input type="hidden" name="place_id" value="<%=placeVO.getPlace_id()%>">
                     <button type="submit" class="btn btn-secondary">submit</button>
                 </form>
                 <!-- 表單結束 -->
@@ -295,14 +308,16 @@
             <p>© 2021 Tivago</p>
         </div>
     </footer>
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="<%=request.getContextPath()%>/front-end/place/assets/js/jquery.min.js"></script>
+    <script src="<%=request.getContextPath()%>/front-end/place/assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
-    <script src="assets/js/smoothproducts.min.js"></script>
-    <script src="assets/js/theme.js"></script>
+    <script src="<%=request.getContextPath()%>/front-end/place/assets/js/smoothproducts.min.js"></script>
+    <script src="<%=request.getContextPath()%>/front-end/place/assets/js/theme.js"></script>
 
     <!-- 以下是自己新增的js -->
-    <script src="./tw-city-selector-master/dist/tw-city-selector.js"></script> <!-- // 載入的地址選單套件 -->
+    <script src="<%=request.getContextPath()%>/front-end/place/tw-city-selector-master/dist/tw-city-selector.js"></script> <!-- // 載入的地址選單套件 -->
+<!--     			匯入變數google_api_key   -->
+    <script src="<%=request.getContextPath()%>/front-end/place/google_key/google_key.js"></script>
     <script>
         // 這行如果放在下一個script內 , 會導致地址選單還沒初始化就執行了跟地址選單有關的綁定而沒綁定到
         function init() {
@@ -311,7 +326,102 @@
         init();
 
     </script>
-    <script>
+	<script>
+	
+// 	這個script負責上傳圖片的預覽
+	
+		// 	為何變數跟id同名時, 沒有getElementById , 監聽事件就可以直接使用元素id ???
+
+		let pic1_el = document.getElementById("pic1");
+		let p_file1_el = document.getElementById("validationServer08");
+
+		let pic2_el = document.getElementById("pic2");
+		let p_file2_el = document.getElementById("validationServer09");
+
+		let pic3_el = document.getElementById("pic3");
+		let p_file3_el = document.getElementById("validationServer10");
+
+		// 先將圖片修改前內容存起來
+		let pic1_origin = pic1_el.getAttribute("src");
+		let pic2_origin = pic2_el.getAttribute("src");
+		let pic3_origin = pic3_el.getAttribute("src");
+
+		// target是代表對應的圖片標籤節點
+		var preview_img = function(file, target) {
+			var reader = new FileReader(); // 用來讀取檔案
+			reader.addEventListener("load", function() {
+				target.setAttribute("src", reader.result);
+			});
+			reader.readAsDataURL(file); // 讀取檔案
+		};
+
+		p_file1_el.addEventListener("change", function(e) {
+
+			// 可接受的附檔名 , 如上傳例外檔案類型 , 則不讀取 , 預覽圖仍保持原樣
+			var validExts = new Array(".jpg", ".png");
+
+			var fileExt = this.value;
+			fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
+			if (validExts.indexOf(fileExt) < 0) {
+				alert("檔案類型錯誤，可接受的副檔名有：" + validExts.toString());
+				this.value = null;
+				// 將修改前的圖片內容讀回去
+				pic1_el.setAttribute("src", pic1_origin);
+				return;
+			}
+
+			if (this.files.length > 0) {
+				preview_img(this.files[0], pic1_el);
+			} else {
+			}
+		});
+
+		p_file2_el.addEventListener("change", function(e) {
+
+			// 可接受的附檔名 , 如上傳例外檔案類型 , 則不讀取 , 預覽圖仍保持原樣
+			var validExts = new Array(".jpg", ".png");
+
+			var fileExt = this.value;
+			fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
+			if (validExts.indexOf(fileExt) < 0) {
+				alert("檔案類型錯誤，可接受的副檔名有：" + validExts.toString());
+				this.value = null;
+				// 將修改前的圖片內容讀回去
+				pic2_el.setAttribute("src", pic2_origin);
+				return;
+			}
+
+			if (this.files.length > 0) {
+				preview_img(this.files[0], pic2_el);
+			} else {
+			}
+		});
+
+		p_file3_el.addEventListener("change", function(e) {
+
+			// 可接受的附檔名 , 如上傳例外檔案類型 , 則不讀取 , 預覽圖仍保持原樣
+			var validExts = new Array(".jpg", ".png");
+
+			var fileExt = this.value;
+			fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
+			if (validExts.indexOf(fileExt) < 0) {
+				alert("檔案類型錯誤，可接受的副檔名有：" + validExts.toString());
+				this.value = null;
+				// 將修改前的圖片內容讀回去
+				pic3_el.setAttribute("src", pic3_origin);
+				return;
+			}
+
+			if (this.files.length > 0) {
+				preview_img(this.files[0], pic3_el);
+			} else {
+			}
+		});
+	</script>
+	<script>
+
+//         const google_api_key = "AIzaSyAjDUYEdEloKExVbhYLVsCg4EqL0KQLSDs";
+
         $(function () {
 
 
@@ -510,8 +620,10 @@
                     return;
                 }
 
+                let google_geocode_api = "https://maps.googleapis.com/maps/api/geocode/json?key=" + google_api_key + "&address=" + target_address;
+
                 $.ajax({
-                    url: `https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyBt62TZeRNMLW9m5vw1DfsxwUE_xdmK7rQ&address=${target_address}`,           // 資料請求的網址
+                    url: google_geocode_api,           // 資料請求的網址
                     type: "POST",                  // GET | POST | PUT | DELETE | PATCH
                     // data: data,               // 傳送資料到指定的 url
                     dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
@@ -522,7 +634,9 @@
                         let lng = data.results[0].geometry.location.lng;
                         console.log(lat);
                         console.log(lng);
-                        let src = `https://www.google.com/maps/embed/v1/search?key=AIzaSyBt62TZeRNMLW9m5vw1DfsxwUE_xdmK7rQ&q=${target_address}&zoom=20&center=${lat},${lng}`
+                        let google_embed_src = "https://www.google.com/maps/embed/v1/search?key=" + google_api_key + "&q=" + target_address + "&zoom=20&center=" + lat + "," + lng;
+                        // let src = google_api_url + "&zoom=20&center=" + lat + "," + lng ;
+                        let src = google_embed_src;
                         console.log(src)
                         $("#map-iframe").attr("src", src);
 
