@@ -114,7 +114,7 @@ public class ApiToMySQL {
 				System.out.println("電話為:" + tel);
 				placeVO1.setPlace_tel(tel);
 
-				placeVO1.setPlace_region(place_region); // 這邊是串接台北市的api
+				
 
 				category = place.getJSONArray("category");
 				placeVO1.setPlace_type(category.getJSONObject(0).getString("name"));
@@ -177,7 +177,10 @@ public class ApiToMySQL {
 
 				dao.insert(placeVO1);
 
+//				placeVO1.setPlace_region(place_region); // 這邊是串接台北市的api
+				
 				distric = place.getString("distric");
+				placeVO1.setPlace_region(distric); //place_region改放地區
 				System.out.println("地區為:" + distric);
 
 				open_time = place.getString("open_time"); // 營業時間
