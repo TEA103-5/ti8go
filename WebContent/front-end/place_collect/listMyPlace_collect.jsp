@@ -71,8 +71,8 @@
                 首个元素放置于起点，末尾元素放置于终点  -->
             <div>
                 <a class="nav-link active" href="<%=request.getContextPath()%>/front-end/place/addPlace.jsp">新增地點</a>
-                <a class="nav-link active" href="#">我的地點</a>
-                <a class="nav-link active disabled" href="#" aria-disabled="true">我的收藏</a>
+                <a class="nav-link active" href="<%=request.getContextPath()%>/front-end/place/listMyPlace.jsp">我的地點</a>
+                <a class="nav-link active disabled" href="<%=request.getContextPath()%>/front-end/place_collect/listMyPlace_collect.jsp" aria-disabled="true">我的收藏</a>
             </div>
 
             <nav aria-label="breadcrumb">

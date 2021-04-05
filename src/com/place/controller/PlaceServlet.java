@@ -46,7 +46,7 @@ public class PlaceServlet extends HttpServlet {
 			// 目前來源為0201  /place/select_page.jsp 以及 正式頁面/front-end/place/selectPlace.jsp , /front-end/place_collect/listMyPlace_collect.jsp , /front-end/place/listMyPlace.jsp 測試頁面  /rock_place/front-place_jsp/place.jsp
 System.out.println(requestURL);
 
-			try {
+//			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				String str = req.getParameter("place_id");
 				if (str == null || (str.trim()).length() == 0) {
@@ -86,6 +86,18 @@ System.out.println(requestURL);
 				}
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 
+				
+				if(requestURL.equals("/back-end/place/listAllPlace.jsp") ) { // 從back-end正式頁面過來
+					
+					req.setAttribute("placeVO", placeVO);
+					String url = "/back-end/place/listOnePlace.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url);
+					successView.forward(req, res);
+					
+					return;
+					
+				}
+				
 				if(requestURL.equals("/front-end/place/selectPlace.jsp") || 
 						requestURL.equals("/front-end/place_collect/listMyPlace_collect.jsp") || 
 							requestURL.equals("/front-end/place/listMyPlace.jsp")) {
@@ -94,6 +106,8 @@ System.out.println(requestURL);
 					String url = "/front-end/place/listOnePlace.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url);
 					successView.forward(req, res);
+					
+					return;
 					
 				}
 				
@@ -104,20 +118,26 @@ System.out.println(requestURL);
 					RequestDispatcher successView = req.getRequestDispatcher(url);
 					successView.forward(req, res);
 					
-				}else if(requestURL.equals("/place/select_page.jsp")){
+					return;
+					
+				}
+				
+				if(requestURL.equals("/place/select_page.jsp")){
 					
 					req.setAttribute("placeVO", placeVO);
 					String url = "/place/listOnePlace.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url);
 					successView.forward(req, res);
+					
+					return;
 				}
-				
+//System.out.println("有到這邊");
 				/*************************** 其他可能的錯誤處理 *************************************/
-			} catch (Exception e) {
-				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/place/select_page.jsp");
-				failureView.forward(req, res);
-			}
+//			} catch (Exception e) {
+//				errorMsgs.add("無法取得資料:" + e.getMessage());
+//				RequestDispatcher failureView = req.getRequestDispatcher("/place/select_page.jsp");
+//				failureView.forward(req, res);
+//			}
 		}
 
 		if ("getOne_For_Update".equals(action)) { // 來自listAllPlace.jsp的請求
@@ -174,11 +194,12 @@ System.out.println(requestURL);
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
-
-			try {
+			String requestURL = req.getParameter("requestURL");
+			
+//			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				Integer place_id = new Integer(req.getParameter("place_id").trim());
-				System.out.println("place_id=" + place_id);
+//System.out.println("place_id=" + place_id);
 
 				String place_name = req.getParameter("place_name");
 				String place_nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
@@ -187,8 +208,12 @@ System.out.println(requestURL);
 				} else if (!place_name.trim().matches(place_nameReg)) { // 以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("地點名稱: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
 				}
-
-				String place_address = req.getParameter("place_address").trim();
+				
+				String county = req.getParameter("county");
+				String district = req.getParameter("district");
+				
+				String place_address = county + district + (req.getParameter("place_address").trim());
+//				String place_address = req.getParameter("place_address").trim();
 				if (place_address == null || place_address.trim().length() == 0) {
 					errorMsgs.add("地址請勿空白");
 				}
@@ -231,25 +256,29 @@ System.out.println(requestURL);
 					errorMsgs.add("緯度請填數字.");
 				}
 
-				String place_tel = req.getParameter("place_tel").trim();
-				if (place_tel == null || place_tel.trim().length() == 0) {
-					errorMsgs.add("電話請勿空白(尚未改正規表示法)");
-				}
+				String place_tel = req.getParameter("place_tel");
+//				String place_tel = req.getParameter("place_tel").trim();
+//				if (place_tel == null || place_tel.trim().length() == 0) {
+//					errorMsgs.add("電話請勿空白(尚未改正規表示法)");
+//				}
+				
+				String place_region = req.getParameter("district");
+//				String place_region = req.getParameter("place_region").trim();
+//				if (place_region == null || place_region.trim().length() == 0) {
+//					errorMsgs.add("縣市請勿空白(尚未改正規表示法)");
+//				}
 
-				String place_region = req.getParameter("place_region").trim();
-				if (place_region == null || place_region.trim().length() == 0) {
-					errorMsgs.add("縣市請勿空白(尚未改正規表示法)");
-				}
+				String place_type = req.getParameter("place_type");
+//				String place_type = req.getParameter("place_type").trim();
+//				if (place_type == null || place_type.trim().length() == 0) {
+//					errorMsgs.add("地點類型請勿空白");
+//				}
 
-				String place_type = req.getParameter("place_type").trim();
-				if (place_type == null || place_type.trim().length() == 0) {
-					errorMsgs.add("地點類型請勿空白");
-				}
-
-				String place_index = req.getParameter("place_index").trim();
-				if (place_index == null || place_index.trim().length() == 0) {
-					errorMsgs.add("地點簡介請勿空白");
-				}
+				String place_index = req.getParameter("place_index");
+//				String place_index = req.getParameter("place_index").trim();
+//				if (place_index == null || place_index.trim().length() == 0) {
+//					errorMsgs.add("地點簡介請勿空白");
+//				}
 
 //				圖片可為空白 , 但如有圖片要顯示在畫面上
 //				getPart的欄位如果沒選擇上傳圖片, 依然會傳一個不是NULL的物件, 所以要用getSize判斷有無上傳
@@ -424,20 +453,51 @@ System.out.println(requestURL);
 						place_state, users_id, business_time);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-				req.setAttribute("placeVO", placeVO); // 資料庫update成功後,正確的的placeVO物件,存入req
-				String url = "/place/listOnePlace.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOnePlace.jsp
-				successView.forward(req, res);
+				
+				if( requestURL.equals("/back-end/place/listOnePlace.jsp") ) {   // 從back-end 正式頁面來的
+					
+					req.setAttribute("placeVO", placeVO); // 資料庫update成功後,正確的的placeVO物件,存入req
+					String url = "/back-end/place/listOnePlace.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOnePlace.jsp
+					successView.forward(req, res);
+					
+					return;
+				}
+				
+				if( requestURL.equals("/front-end/place/update_place_input.jsp") ) { 
+					
+					req.setAttribute("placeVO", placeVO); // 資料庫update成功後,正確的的placeVO物件,存入req
+					String url = "/front-end/place/listOnePlace.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url);  
+					successView.forward(req, res);
+					
+					return;
+				}
+				
+				
+				if( requestURL.equals("/place/update_place_input.jsp") ) { 
+					
+					req.setAttribute("placeVO", placeVO); // 資料庫update成功後,正確的的placeVO物件,存入req
+					String url = "/place/listOnePlace.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOnePlace.jsp
+					successView.forward(req, res);
+					
+					return;
+				}
+				
+
+				
+				
 
 				/*************************** 其他可能的錯誤處理 *************************************/
-			} catch (Exception e) {
-				errorMsgs.add("修改資料失敗:" + e.getMessage());
-
-//System.out.println("有跑到錯誤處理這邊");
-
-				RequestDispatcher failureView = req.getRequestDispatcher("/place/update_place_input.jsp");
-				failureView.forward(req, res);
-			}
+//			} catch (Exception e) {
+//				errorMsgs.add("修改資料失敗:" + e.getMessage());
+//
+////System.out.println("有跑到錯誤處理這邊");
+//
+//				RequestDispatcher failureView = req.getRequestDispatcher("/place/update_place_input.jsp");
+//				failureView.forward(req, res);
+//			}
 		}
 
 		if ("insert".equals(action)) { // 來自addPlace.jsp的請求
@@ -449,7 +509,7 @@ System.out.println(requestURL);
 			String requestURL = req.getParameter("requestURL"); // 
 System.out.println("requestURL = " + requestURL);
 
-//			try {
+			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 				String place_name = req.getParameter("place_name");
 				String place_nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
@@ -458,8 +518,13 @@ System.out.println("requestURL = " + requestURL);
 				} else if (!place_name.trim().matches(place_nameReg)) { // 以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("地點名稱: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
 				}
-
-				String place_address = req.getParameter("place_address").trim();
+				
+				// 取得地址選單套件的欄位參數
+				String county = req.getParameter("county");
+				String district = req.getParameter("district");
+				
+				String place_address = county + district + (req.getParameter("place_address").trim());
+//				String place_address = req.getParameter("place_address").trim();
 				if (place_address == null || place_address.trim().length() == 0) {
 					errorMsgs.add("地址請勿空白");
 				}
@@ -507,8 +572,9 @@ System.out.println("requestURL = " + requestURL);
 //				if (place_tel == null || place_tel.trim().length() == 0) {
 //					errorMsgs.add("電話請勿空白(尚未改正規表示法)");
 //				}
-
-				String place_region = req.getParameter("place_region");
+				
+				String place_region = req.getParameter("district"); // 把地址選單的區域存在place_region欄位
+//				String place_region = req.getParameter("place_region");
 //				if (place_region == null || place_region.trim().length() == 0) {
 //					errorMsgs.add("縣市請勿空白(尚未改正規表示法)");
 //				}
@@ -686,9 +752,11 @@ System.out.println("requestURL = " + requestURL);
 						users_id, business_time);
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-//				if(requestURL.equals("/front-end/place/addPlace.jsp")) {  // 來自前台正式頁面, 預計導向我的地點
-//					
-//				}
+				if(requestURL.equals("/front-end/place/addPlace.jsp")) {  // 來自前台正式頁面, 預計導向我的地點
+					String url = "/front-end/place/listMyPlace.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url);
+					successView.forward(req, res);
+				}
 
 				
 				if(requestURL.equals("/place/addPlace.jsp")) {   // 來自0201的頁面
@@ -701,11 +769,11 @@ System.out.println("requestURL = " + requestURL);
 				
 
 				/*************************** 其他可能的錯誤處理 **********************************/
-//			} catch (Exception e) {
-//				errorMsgs.add(e.getMessage());
-//				RequestDispatcher failureView = req.getRequestDispatcher("/place/addPlace.jsp");
-//				failureView.forward(req, res);
-//			}
+			} catch (Exception e) {
+				errorMsgs.add(e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/place/addPlace.jsp");
+				failureView.forward(req, res);
+			}
 		}
 
 		if ("delete".equals(action)) {

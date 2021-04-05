@@ -171,6 +171,7 @@ ${not empty placeVO.place_id}
 </table>
 <br>
 <input type="hidden" name="action" value="update">
+<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>"> 
 <input type="hidden" name="place_id" value="<%=placeVO.getPlace_id()%>">
 <input type="submit" value="送出修改"></FORM>
 

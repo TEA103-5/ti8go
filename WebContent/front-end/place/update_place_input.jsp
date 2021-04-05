@@ -7,6 +7,19 @@
 
 <% 
 	PlaceVO placeVO = (PlaceVO)request.getAttribute("placeVO");
+
+	// 以下將place_address字串做處理以便設定地址選單套件的選項
+	String address = placeVO.getPlace_address(); // 
+	
+	Integer index = null;
+	String county = null;
+	if( ( index = address.indexOf("市")) != -1  || ( index = address.indexOf("縣")) != -1){
+		county = address.substring(0 , index+1).replaceAll("\\d+", "").trim(); // 取出縣市之前的字串 , 去掉數字以及空格
+	}
+	
+	String district = placeVO.getPlace_region();
+	pageContext.setAttribute("district" , district);
+	pageContext.setAttribute("county" , county);
 %>
 
 
@@ -77,7 +90,7 @@
             <div class="container">
                 <!-- 使用Google Maps Embed API , q放的是搜尋目標 , 如有明確對象(地址或名稱)marker會標註在此位置 ,  -->
                 <div class="block-heading"><iframe id="map-iframe" allowfullscreen="" frameborder="0"
-                        src="https://www.google.com/maps/embed/v1/search?key=AIzaSyAjDUYEdEloKExVbhYLVsCg4EqL0KQLSDs&q=111台北市信義區信義路五段7號&zoom=20&center=25.033952,121.564360"
+                        src="https://www.google.com/maps/embed/v1/search?key=AIzaSyCQspd49Wmywh3L5LAOftK_jV4qA2i89VQ&q=<%= (placeVO==null)? "" : placeVO.getPlace_address()%>&zoom=20&center=${placeVO.getPlace_latitude()},${placeVO.getPlace_longitude()}"
                         width="100%" height="400"></iframe>
                     <h2 class="text-info">修改地點</h2>
                     <p> </p>
@@ -122,7 +135,8 @@
 
                             <label class="xrequired" for="validationServer02">地址</label>
                             <input type="text" class="form-control " id="validationServer02" name="place_address"
-                                value="<%= (placeVO==null)? "" : placeVO.getPlace_address()%>" required>
+                                value="<%= (placeVO==null)? "" : placeVO.getPlace_address().split(district)[1]%>" required>
+<!--                                 	用place_region把地址的地區之後擷取顯示出來 -->
                             <div class="valid-feedback">
                                 驗證通過
                             </div>
@@ -317,13 +331,21 @@
     <!-- 以下是自己新增的js -->
     <script src="<%=request.getContextPath()%>/front-end/place/tw-city-selector-master/dist/tw-city-selector.js"></script> <!-- // 載入的地址選單套件 -->
 <!--     			匯入變數google_api_key   -->
-    <script src="<%=request.getContextPath()%>/front-end/place/google_key/google_key.js"></script>
+<%--     <script src="<%=request.getContextPath()%>/front-end/place/google_key/google_key.js"></script> --%>
     <script>
-        // 這行如果放在下一個script內 , 會導致地址選單還沒初始化就執行了跟地址選單有關的綁定而沒綁定到
-        function init() {
-            new TwCitySelector();
-        }
-        init();
+	    // 這行如果放在下一個script內 , 會導致地址選單還沒初始化就執行了跟地址選單有關的綁定而沒綁定到
+	    let tcs;
+	    function init() {
+	        tcs = new TwCitySelector({
+	            el: '.city-selector',
+	            bootstrapStyle: true,
+	            standardWords: true,
+// 	            countyValue: 新北市
+	            countyValue: "${county}", // 此處需用正體字的臺 , 這一項可以設定預設的縣市 , 用EL指定值
+	            districtValue: "${district}" // 用EL指定值
+	        });
+	    }
+	    init();
 
     </script>
 	<script>
@@ -605,7 +627,7 @@
 
 
 
-
+			const google_api_key = "AIzaSyCQspd49Wmywh3L5LAOftK_jV4qA2i89VQ";
             // let target_address = "台灣台北市萬華區康定路190號"
 
             function get_lat_lng() {

@@ -58,9 +58,9 @@
 			<!-- id="search-bar" 的屬性justify-content: space-between;  均匀排列每个元素
              	   首个元素放置于起点，末尾元素放置于终点  -->
 			<div>
-				<a class="nav-link active" href="#">新增地點</a> <a
-					class="nav-link active" href="#">我的地點</a> <a
-					class="nav-link active" href="#">我的收藏</a>
+				<a class="nav-link active" href="<%=request.getContextPath()%>/front-end/place/addPlace.jsp">新增地點</a> <a
+					class="nav-link active" href="<%=request.getContextPath()%>/front-end/place/listMyPlace.jsp">我的地點</a> <a
+					class="nav-link active" href="<%=request.getContextPath()%>/front-end/place_collect/listMyPlace_collect.jsp">我的收藏</a>
 			</div>
 
 		</nav>

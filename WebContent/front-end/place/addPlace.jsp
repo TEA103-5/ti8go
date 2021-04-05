@@ -77,7 +77,7 @@
             <div class="container">
                 <!-- 使用Google Maps Embed API , q放的是搜尋目標 , 如有明確對象(地址或名稱)marker會標註在此位置 ,  -->
                 <div class="block-heading"><iframe id="map-iframe" allowfullscreen="" frameborder="0"
-                        src="https://www.google.com/maps/embed/v1/search?key=AIzaSyAjDUYEdEloKExVbhYLVsCg4EqL0KQLSDs&q=111台北市信義區信義路五段7號&zoom=20&center=25.033952,121.564360"
+                        src="https://www.google.com/maps/embed/v1/search?key=AIzaSyCQspd49Wmywh3L5LAOftK_jV4qA2i89VQ&q=緯育TibaMe附設台北職訓中心&zoom=20&center=25.052052,121.543220"
                         width="100%" height="400"></iframe>
                     <h2 class="text-info">新增地點</h2>
                     <p> </p>
@@ -319,7 +319,7 @@
     <!-- 以下是自己新增的js -->
     <script src="<%=request.getContextPath()%>/front-end/place/tw-city-selector-master/dist/tw-city-selector.js"></script> <!-- // 載入的地址選單套件 -->
 <!--     			匯入變數google_api_key   -->
-    <script src="<%=request.getContextPath()%>/front-end/place/google_key/google_key.js"></script>
+<%--     <script src="<%=request.getContextPath()%>/front-end/place/google_key/google_key.js"></script> --%>
     <script>
    		 // 這行如果放在下一個script內 , 會導致地址選單還沒初始化就執行了跟地址選單有關的綁定而沒綁定到
 	    let tcs;
@@ -464,11 +464,11 @@
                 if ($(".is-invalid").length != 0) {
                     return false;
                 } else {
-                    let select_group = $('.city-selector').find(":selected");
-                    let county = select_group.eq(0).text();
-                    let district = select_group.eq(1).text();
-                    let address = el_place_address.val();
-                    el_place_address.val(county + district + address);
+//                     let select_group = $('.city-selector').find(":selected");
+//                     let county = select_group.eq(0).text();
+//                     let district = select_group.eq(1).text();
+//                     let address = el_place_address.val();
+//                     el_place_address.val(county + district + address);
 
 
                 }
@@ -612,7 +612,7 @@
             })
 
 
-
+	const google_api_key = "AIzaSyCQspd49Wmywh3L5LAOftK_jV4qA2i89VQ";
 
             // let target_address = "台灣台北市萬華區康定路190號"
 
