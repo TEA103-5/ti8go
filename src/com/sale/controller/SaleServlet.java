@@ -41,7 +41,7 @@ public class SaleServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		//req會有 action 和 empno 跟 他們對應的value
 		
-		
+System.out.println("有到這邊");	
 	    // 來自select_page_product.jsp的請求                                  // 來自 dept/listAllDept.jsp的請求
 		if ("listEmps_ByDeptno_A".equals(action) || "listEmps_ByDeptno_B".equals(action)) {
 
