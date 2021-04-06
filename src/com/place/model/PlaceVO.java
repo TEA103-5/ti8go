@@ -1,10 +1,11 @@
 package com.place.model;
 
 import java.io.InputStream;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Blob;
 
-public class PlaceVO {
+public class PlaceVO implements Serializable {
 
 	private Integer place_id;
 	private String place_name;
@@ -15,20 +16,21 @@ public class PlaceVO {
 	private String place_region;
 	private String place_type;
 	private String place_index;
-	private InputStream place_pic1;   //  用這個型別ok嗎?
-	private InputStream place_pic2;
-	private InputStream place_pic3;
+	private byte[] place_pic1;
+	private byte[] place_pic2;
+	private byte[] place_pic3;
 	private Integer place_state;
 	private Integer users_id;
-	private Integer business_time;   // 目前用不到, 
+	private Integer business_time; // 目前用不到,
+	private Integer place_like;  // 讚數不會由新增或修改的方式變動
 
-	
-	public PlaceVO() {};
-	
+	public PlaceVO() {
+	};
+
 	public PlaceVO(Integer place_id, String place_name, String place_address, BigDecimal place_longitude,
 			BigDecimal place_latitude, String place_tel, String place_region, String place_type, String place_index,
-			InputStream place_pic1, InputStream place_pic2, InputStream place_pic3, Integer place_state, Integer users_id,
-			Integer business_time) {
+			byte[] place_pic1, byte[] place_pic2, byte[] place_pic3, Integer place_state,
+			Integer users_id, Integer business_time) {
 		super();
 		this.place_id = place_id;
 		this.place_name = place_name;
@@ -119,27 +121,27 @@ public class PlaceVO {
 		this.place_index = place_index;
 	}
 
-	public InputStream getPlace_pic1() {
+	public byte[] getPlace_pic1() {
 		return place_pic1;
 	}
 
-	public void setPlace_pic1(InputStream place_pic1) {
+	public void setPlace_pic1(byte[] place_pic1) {
 		this.place_pic1 = place_pic1;
 	}
 
-	public InputStream getPlace_pic2() {
+	public byte[] getPlace_pic2() {
 		return place_pic2;
 	}
 
-	public void setPlace_pic2(InputStream place_pic2) {
+	public void setPlace_pic2(byte[] place_pic2) {
 		this.place_pic2 = place_pic2;
 	}
 
-	public InputStream getPlace_pic3() {
+	public byte[] getPlace_pic3() {
 		return place_pic3;
 	}
 
-	public void setPlace_pic3(InputStream place_pic3) {
+	public void setPlace_pic3(byte[] place_pic3) {
 		this.place_pic3 = place_pic3;
 	}
 
@@ -165,6 +167,14 @@ public class PlaceVO {
 
 	public void setBusiness_time(Integer business_time) {
 		this.business_time = business_time;
+	}
+
+	public Integer getPlace_like() {
+		return place_like;
+	}
+
+	public void setPlace_like(Integer place_like) {
+		this.place_like = place_like;
 	}
 
 }

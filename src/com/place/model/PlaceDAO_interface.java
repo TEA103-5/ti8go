@@ -8,4 +8,5 @@ public interface PlaceDAO_interface {
 	public void	delete(Integer place_id);
 	public PlaceVO findByPrimaryKey(Integer place_id);
 	public List<PlaceVO> getAll();
+	public List<PlaceVO> getCard(String place_name , String place_address);
 }

@@ -44,8 +44,8 @@ public class UsersJDBCDAO {
 			pstmt.setInt(4, usersVO.getUsers_status());
 			pstmt.setString(5, usersVO.getUsers_nickname());
 			pstmt.setString(6, usersVO.getUsers_name());
-			pstmt.setInt(7, usersVO.getUesrs_sex());
-			pstmt.setString(8, usersVO.getUesrs_birthday());
+			pstmt.setInt(7, usersVO.getUsers_sex());
+			pstmt.setString(8, usersVO.getUsers_birthday());
 			pstmt.setString(9, usersVO.getUsers_id_number());
 			byte[] pic = getPictureByteArray("items/user.png");
 			pstmt.setBytes(10, pic);
@@ -89,8 +89,8 @@ public class UsersJDBCDAO {
 			pstmt.setInt(3, usersVO.getUsers_status());
 			pstmt.setString(4, usersVO.getUsers_nickname());
 			pstmt.setString(5, usersVO.getUsers_name());
-			pstmt.setInt(6, usersVO.getUesrs_sex());
-			pstmt.setString(7, usersVO.getUesrs_birthday());
+			pstmt.setInt(6, usersVO.getUsers_sex());
+			pstmt.setString(7, usersVO.getUsers_birthday());
 			pstmt.setString(8, usersVO.getUsers_id_number());
 			byte[] pic = getPictureByteArray("items/user.png");
 			pstmt.setBytes(9, pic);
@@ -178,8 +178,8 @@ public class UsersJDBCDAO {
 				fBPK.setUsers_status(rs.getInt("users_identi_status"));
 				fBPK.setUsers_nickname(rs.getString("users_nickname"));
 				fBPK.setUsers_name(rs.getString("users_name"));
-				fBPK.setUesrs_sex(rs.getInt("users_sex"));
-				fBPK.setUesrs_birthday(rs.getString("users_birthday"));
+				fBPK.setUsers_sex(rs.getInt("users_sex"));
+				fBPK.setUsers_birthday(rs.getString("users_birthday"));
 				fBPK.setUsers_id_number(rs.getString("users_id_number"));
 				fBPK.setUsers_phone(rs.getString("users_phone"));
 			}
@@ -237,8 +237,8 @@ public class UsersJDBCDAO {
 				dataL.setUsers_status(rs.getInt("users_identi_status"));
 				dataL.setUsers_nickname(rs.getString("users_nickname"));
 				dataL.setUsers_name(rs.getString("users_name"));
-				dataL.setUesrs_sex(rs.getInt("users_sex"));
-				dataL.setUesrs_birthday(rs.getString("users_birthday"));
+				dataL.setUsers_sex(rs.getInt("users_sex"));
+				dataL.setUsers_birthday(rs.getString("users_birthday"));
 				dataL.setUsers_id_number(rs.getString("users_id_number"));
 				dataL.setUsers_phone(rs.getString("users_phone"));
 				dataList.add(dataL);
@@ -298,8 +298,8 @@ public class UsersJDBCDAO {
 		VO2.setUsers_status(1);
 		VO2.setUsers_nickname("test");
 		VO2.setUsers_name("testadd");
-		VO2.setUesrs_sex(1);
-		VO2.setUesrs_birthday("29991231");
+		VO2.setUsers_sex(1);
+		VO2.setUsers_birthday("29991231");
 		VO2.setUsers_id_number("Z123456789");
 		VO2.setUsers_phone("0908090808");
 		dao.update(VO2);
@@ -332,8 +332,8 @@ public class UsersJDBCDAO {
 					System.out.print(users2.getUsers_status() + ",");
 					System.out.print(users2.getUsers_nickname() + ",");
 					System.out.print(users2.getUsers_name() + ",");
-					System.out.print(users2.getUesrs_sex() + ",");
-					System.out.print(users2.getUesrs_birthday() + ",");
+					System.out.print(users2.getUsers_sex() + ",");
+					System.out.print(users2.getUsers_birthday() + ",");
 					System.out.print(users2.getUsers_id_number() + ",");
 					System.out.print(users2.getUsers_phone() + ",");
 					System.out.println();

@@ -1,50 +1,20 @@
 package com.product.model;
 
 import java.sql.Timestamp;
-import java.util.Arrays;
 
 public class ProductVO implements java.io.Serializable{
 	private Integer product_id;
 	private String product_name;
 	private Integer product_status;
 	private Timestamp product_update_time;
-	private String product_content;
-	private String product_description;
-	private String product_categories;
+	private String product_content;//內容
+	private String product_description;//描述
+	private String product_categories;//分類
 	private Integer product_price;
-	private Integer product_stock;
+	private Integer product_stock;//庫存
 	private byte[] product_pic;
 	private Integer sale_id;
-	
-	
-	
-	@Override
-	public String toString() {
-		return "ProductVO [product_id=" + product_id + ", product_name=" + product_name + ", product_status="
-				+ product_status + ", product_update_time=" + product_update_time + ", product_content="
-				+ product_content + ", product_description=" + product_description + ", product_categories="
-				+ product_categories + ", product_price=" + product_price + ", product_stock=" + product_stock
-				+ ", product_pic=" + Arrays.toString(product_pic) + ", sale_id=" + sale_id + "]";
-	}
-	public ProductVO() {
-		
-	}
-	public ProductVO(Integer product_id, String product_name, Integer product_status, Timestamp product_update_time,
-			String product_content, String product_description, String product_categories, Integer product_price,
-			Integer product_stock, byte[] product_pic, Integer sale_id) {
-		super();
-		this.product_id = product_id;
-		this.product_name = product_name;
-		this.product_status = product_status;
-		this.product_update_time = product_update_time;
-		this.product_content = product_content;
-		this.product_description = product_description;
-		this.product_categories = product_categories;
-		this.product_price = product_price;
-		this.product_stock = product_stock;
-		this.product_pic = product_pic;
-		this.sale_id = sale_id;
-	}
+
 	public Integer getProduct_id() {
 		return product_id;
 	}
@@ -112,5 +82,5 @@ public class ProductVO implements java.io.Serializable{
 		this.sale_id = sale_id;
 	}
 	
-	
+
 }

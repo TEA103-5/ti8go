@@ -1,4 +1,4 @@
-package com.place.model;
+package com.place.model;  //  測試測試
 
 import java.io.BufferedReader;
 import java.io.IOException;

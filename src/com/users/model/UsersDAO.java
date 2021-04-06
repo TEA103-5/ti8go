@@ -17,7 +17,7 @@ public class UsersDAO implements UsersDAO_interface {
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/tea05");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/David");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}

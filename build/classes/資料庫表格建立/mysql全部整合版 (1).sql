@@ -118,23 +118,57 @@ values
 -- alter table card add constraint fk_card_users
 -- foreign key (users_id) references users (users_id);
 
-
-create table reminder_u(
-reminder_u_id int AUTO_INCREMENT not null,
-reminder_u_time timestamp default current_timestamp,
--- reminder_u_time_last timestamp default current_timestamp on update current_timestamp,
-reminder_u_text varchar(2000) not null,
-reminder_u_status tinyint default 0 not null,
-users_id int not null,
-primary key(reminder_u_id),
-constraint fk_reminder_u_users
-foreign key(users_id) references users(users_id)
+create table sale(
+sale_id int AUTO_INCREMENT not null,
+sale_email varchar(30) not null,
+sale_pwd varchar(30) not null,
+sale_name varchar(30),
+sale_audit_status tinyint default 0,
+sale_audit_pic longblob,
+sale_status tinyint default 0,
+sale_phone char(20),
+sale_nickname varchar(30),
+sale_rate float default 0,
+sale_time_create timestamp default current_timestamp,
+primary key(sale_id)
 );
 
-insert into reminder_u (reminder_u_text,users_id) 
-values ('54656',1);
--- select * from reminder_u;
---  UPDATE reminder_u SET reminder_u_text = "131" WHERE reminder_u_id = 1;
+insert into sale(sale_email,sale_pwd,sale_name,sale_phone,sale_nickname,sale_rate)values("123@gmail.com","123","馬老師1","0988888888","馬馬子1",5),
+																						("123@gmail.com","123","馬老師2","0988888888","馬馬子2",5),
+                                                                                        ("123@gmail.com","123","馬老師3","0988888888","馬馬子3",5),
+                                                                                        ("123@gmail.com","123","馬老師4","0988888888","馬馬子4",5),
+                                                                                        ("123@gmail.com","123","馬老師5","0988888888","馬馬子5",5),
+                                                                                        ("123@gmail.com","123","馬老師6","0988888888","馬馬子6",5),
+                                                                                        ("123@gmail.com","123","馬老師7","0988888888","馬馬子7",5),
+                                                                                        ("123@gmail.com","123","馬老師8","0988888888","馬馬子8",5),
+                                                                                        ("123@gmail.com","123","馬老師9","0988888888","馬馬子9",5);
+
+create table admins (
+admins_id 			int not null primary key auto_increment ,
+admins_email 		varchar(30) not null ,
+admins_name 		varchar(20) not null ,
+admins_password 	varchar(20) not null ,
+admins_sex			tinyint not null ,
+admins_authority	varchar(20) not null , 
+admins_position		varchar(20) ,
+admins_create_time	timestamp not null default current_timestamp,
+admins_edit_time	timestamp not null default current_timestamp on update current_timestamp
+);
+
+insert into admins (admins_email,admins_name,admins_password,admins_sex,admins_authority,admins_position)
+values
+
+('aa.@aa.com','aa','12345','1','root',null),
+('ab.@aa.com','ab','12345','1','root',null),
+('ac.@aa.com','ac','12345','1','root',null),
+('ad.@aa.com','ad','12345','2','root',null),
+('ae.@aa.com','ae','12345','2','root',null),
+('af.@aa.com','af','12345','3','root',null),
+('ag.@aa.com','ag','12345','2','root',null),
+('ah.@aa.com','ah','12345','1','root',null),
+('ai.@aa.com','ai','12345','2','root',null),
+('aj.@aa.com','aj','12345','1','root',null),
+('ak.@aa.com','ak','12345','2','root',null);
 
 
 create table place (
@@ -190,44 +224,7 @@ create table place_collect(
     
     
     
-    create table msg_p(
-msg_p_id int AUTO_INCREMENT not null,
-msg_p_time timestamp default current_timestamp,
-msg_p_time_last timestamp default current_timestamp on update current_timestamp,
-msg_p_status tinyint default 0,
-msg_p_ip char(20),
-msg_p_text varchar(2000) not null,
-users_id int not null,
-place_id int not null,
-primary key(msg_p_id),
-constraint fk_msg_p_users
-foreign key(users_id) references users(users_id),
-constraint fk_msg_p_place
-foreign key(place_id) references place(place_id)
-);
 
-insert into msg_p (msg_p_text,users_id,place_id,msg_p_ip) 
-values ('這是msg_p_text測試文字',1,1,'255.0.0.1');
-
-
-create table msg_p_c(
-msg_p_c_id int AUTO_INCREMENT not null,
-msg_p_c_time timestamp default current_timestamp,
-msg_p_c_time_last timestamp default current_timestamp on update current_timestamp,
-msg_p_c_status tinyint default 0,
-msg_p_c_ip char(20),
-msg_p_c_text varchar(2000) not null,
-msg_p_id int not null,
-users_id int not null,
-primary key(msg_p_c_id),
-constraint fk_msg_p_c_msg_p
-foreign key(msg_p_id) references msg_p(msg_p_id),
-constraint fk_msg_p_c_users
-foreign key(users_id) references users(users_id)
-);
-
-insert into msg_p_c (msg_p_c_text,users_id,msg_p_id,msg_p_c_ip) 
-values ('54656',1,1,'255.0.0.1');
 
 
     create table trip(
@@ -372,43 +369,6 @@ create table team(
 
 
 
-create table msg_t(
-msg_t_id int AUTO_INCREMENT not null,
-msg_t_time timestamp default current_timestamp,
-msg_t_time_last timestamp default current_timestamp on update current_timestamp,
-msg_t_status tinyint default 0,
-msg_t_ip char(20),
-msg_t_text varchar(2000) not null,
-trip_id int not null,
-users_id int not null,
-primary key(msg_t_id),
-constraint fk_msg_t_trip
-foreign key(trip_id) references trip(trip_id),
-constraint fk_msg_t_users
-foreign key(users_id) references users(users_id)
-);
-
-insert into msg_t (msg_t_text,users_id,trip_id,msg_t_ip) 
-values ('54656',1,1,'255.0.0.1');
-
-create table msg_t_c(
-msg_t_c_id int AUTO_INCREMENT not null,
-msg_t_c_time timestamp default current_timestamp,
-msg_t_c_time_last timestamp default current_timestamp on update current_timestamp,
-msg_t_c_status tinyint default 0,
-msg_t_c_ip char(20),
-msg_t_c_text varchar(2000) not null,
-msg_t_id int not null,
-users_id int not null,
-primary key(msg_t_c_id),
-constraint fk_msg_t_c_msg_t
-foreign key(msg_t_id) references msg_t(msg_t_id),
-constraint fk_msg_t_c_users
-foreign key(users_id) references users(users_id)
-);
-
-insert into msg_t_c (msg_t_c_text,users_id,msg_t_id,msg_t_c_ip) 
-values ('54656',1,1,'255.0.0.1');
 
 
 create table note (
@@ -469,76 +429,24 @@ insert into note_c(note_c_title, note_c_content, note_id) values ('哈哈哈哈�
 
 
 
-create table msg_n(
-msg_n_id int AUTO_INCREMENT not null,
-msg_n_time timestamp default current_timestamp,
-msg_n_time_last timestamp default current_timestamp on update current_timestamp,
-msg_n_status tinyint default 0,
-msg_n_ip char(20),
-msg_n_text varchar(2000) not null,
-note_id int not null,
-users_id int not null,
-primary key(msg_n_id),
-constraint fk_msg_n_note
-foreign key(note_id) references note(note_id),
-constraint fk_msg_n_users
-foreign key(users_id) references users(users_id)
-);
-
-insert into msg_n (msg_n_text,users_id,note_id,msg_n_ip) 
-values ('54656',1,1,'255.0.0.1');
 
 
-create table msg_n_c(
-msg_n_c_id int AUTO_INCREMENT not null,
-msg_n_c_time timestamp default current_timestamp,
-msg_n_c_time_last timestamp default current_timestamp on update current_timestamp,
-msg_n_c_status tinyint default 0,
-msg_n_c_ip char(20),
-msg_n_c_text varchar(2000) not null,
-msg_n_id int not null,
-users_id int not null,
-primary key(msg_n_c_id),
-constraint fk_msg_n_c_msg_n
-foreign key(msg_n_id) references msg_n(msg_n_id),
-constraint fk_msg_n_c_users
-foreign key(users_id) references users(users_id)
-);
-
-insert into msg_n_c (msg_n_c_text,users_id,msg_n_id,msg_n_c_ip) 
-values ('54656',1,1,'255.0.0.1');
 
 
-create table sale(
-sale_id int AUTO_INCREMENT not null,
-sale_email varchar(30) not null,
-sale_pwd varchar(30) not null,
-sale_name varchar(30),
-sale_audit_status tinyint default 0,
-sale_audit_pic blob,
-sale_status tinyint,
-sale_phone char(20),
-sale_nickname varchar(30),
-sale_rate float(2,2),
-sale_time_create timestamp default current_timestamp,
-primary key(sale_id)
-);
-
-insert into sale(sale_email,sale_pwd)values("123@gmail.com","123");
 
 
 create table product (
 product_id      	 int auto_increment not null,
 product_name         varchar(50) not null,
-product_status       tinyint not null,
-product_update_time  timestamp,
-product_content	     varchar(50),
+product_status       tinyint default 0,
+product_update_time  timestamp default current_timestamp,
+product_content	     varchar(500),
 product_description  varchar(50),
 product_categories   varchar(50),
-product_price        int,
-product_stock        int,
-product_pic          blob,
-sale_id              int,
+product_price        int default 0,
+product_stock        int default 0,
+product_pic          longblob,
+sale_id              int not null,
 foreign key(sale_id) references sale(sale_id),
 primary key(product_id)
 );
@@ -636,6 +544,123 @@ foreign key(users_id) references users(users_id)
 insert into msg_pro_c (msg_pro_c_text , msg_pro_id , sale_id , users_id ) 
 values ('這裡是msg_pro_c_text測試內容',1,1,1);
 
+    create table msg_p(
+msg_p_id int AUTO_INCREMENT not null,
+msg_p_time timestamp default current_timestamp,
+msg_p_time_last timestamp default current_timestamp on update current_timestamp,
+msg_p_status tinyint default 0,
+msg_p_ip char(20),
+msg_p_text varchar(2000) not null,
+users_id int not null,
+place_id int not null,
+primary key(msg_p_id),
+constraint fk_msg_p_users
+foreign key(users_id) references users(users_id),
+constraint fk_msg_p_place
+foreign key(place_id) references place(place_id)
+);
+
+insert into msg_p (msg_p_text,users_id,place_id,msg_p_ip) 
+values ('這是msg_p_text測試文字',1,1,'255.0.0.1');
+
+
+create table msg_p_c(
+msg_p_c_id int AUTO_INCREMENT not null,
+msg_p_c_time timestamp default current_timestamp,
+msg_p_c_time_last timestamp default current_timestamp on update current_timestamp,
+msg_p_c_status tinyint default 0,
+msg_p_c_ip char(20),
+msg_p_c_text varchar(2000) not null,
+msg_p_id int not null,
+users_id int not null,
+primary key(msg_p_c_id),
+constraint fk_msg_p_c_msg_p
+foreign key(msg_p_id) references msg_p(msg_p_id),
+constraint fk_msg_p_c_users
+foreign key(users_id) references users(users_id)
+);
+
+insert into msg_p_c (msg_p_c_text,users_id,msg_p_id,msg_p_c_ip) 
+values ('54656',1,1,'255.0.0.1');
+
+create table msg_t(
+msg_t_id int AUTO_INCREMENT not null,
+msg_t_time timestamp default current_timestamp,
+msg_t_time_last timestamp default current_timestamp on update current_timestamp,
+msg_t_status tinyint default 0,
+msg_t_ip char(20),
+msg_t_text varchar(2000) not null,
+trip_id int not null,
+users_id int not null,
+primary key(msg_t_id),
+constraint fk_msg_t_trip
+foreign key(trip_id) references trip(trip_id),
+constraint fk_msg_t_users
+foreign key(users_id) references users(users_id)
+);
+
+insert into msg_t (msg_t_text,users_id,trip_id,msg_t_ip) 
+values ('54656',1,1,'255.0.0.1');
+
+create table msg_t_c(
+msg_t_c_id int AUTO_INCREMENT not null,
+msg_t_c_time timestamp default current_timestamp,
+msg_t_c_time_last timestamp default current_timestamp on update current_timestamp,
+msg_t_c_status tinyint default 0,
+msg_t_c_ip char(20),
+msg_t_c_text varchar(2000) not null,
+msg_t_id int not null,
+users_id int not null,
+primary key(msg_t_c_id),
+constraint fk_msg_t_c_msg_t
+foreign key(msg_t_id) references msg_t(msg_t_id),
+constraint fk_msg_t_c_users
+foreign key(users_id) references users(users_id)
+);
+
+insert into msg_t_c (msg_t_c_text,users_id,msg_t_id,msg_t_c_ip) 
+values ('54656',1,1,'255.0.0.1');
+
+create table msg_n(
+msg_n_id int AUTO_INCREMENT not null,
+msg_n_time timestamp default current_timestamp,
+msg_n_time_last timestamp default current_timestamp on update current_timestamp,
+msg_n_status tinyint default 0,
+msg_n_ip char(20),
+msg_n_text varchar(2000) not null,
+note_id int not null,
+users_id int not null,
+primary key(msg_n_id),
+constraint fk_msg_n_note
+foreign key(note_id) references note(note_id),
+constraint fk_msg_n_users
+foreign key(users_id) references users(users_id)
+);
+
+insert into msg_n (msg_n_text,users_id,note_id,msg_n_ip) 
+values ('54656',1,1,'255.0.0.1');
+
+
+create table msg_n_c(
+msg_n_c_id int AUTO_INCREMENT not null,
+msg_n_c_time timestamp default current_timestamp,
+msg_n_c_time_last timestamp default current_timestamp on update current_timestamp,
+msg_n_c_status tinyint default 0,
+msg_n_c_ip char(20),
+msg_n_c_text varchar(2000) not null,
+msg_n_id int not null,
+users_id int not null,
+primary key(msg_n_c_id),
+constraint fk_msg_n_c_msg_n
+foreign key(msg_n_id) references msg_n(msg_n_id),
+constraint fk_msg_n_c_users
+foreign key(users_id) references users(users_id)
+);
+
+insert into msg_n_c (msg_n_c_text,users_id,msg_n_id,msg_n_c_ip) 
+values ('54656',1,1,'255.0.0.1');
+
+
 
 create table reminder_s(
 reminder_s_id int AUTO_INCREMENT not null,
@@ -649,32 +674,7 @@ foreign key(sale_id) references sale(sale_id)
 );
 insert into reminder_s( reminder_s_text , reminder_s_status , sale_id) values("這是reminder_s測試文字", 0 , 1);
 
-create table admins (
-admins_id 			int not null primary key auto_increment ,
-admins_email 		varchar(30) not null ,
-admins_name 		varchar(20) not null ,
-admins_password 	varchar(20) not null ,
-admins_sex			tinyint not null ,
-admins_authority	varchar(20) not null , 
-admins_position		varchar(20) ,
-admins_create_time	timestamp not null default current_timestamp,
-admins_edit_time	timestamp not null default current_timestamp on update current_timestamp
-);
 
-insert into admins (admins_email,admins_name,admins_password,admins_sex,admins_authority,admins_position)
-values
-
-('aa.@aa.com','aa','12345','1','root',null),
-('ab.@aa.com','ab','12345','1','root',null),
-('ac.@aa.com','ac','12345','1','root',null),
-('ad.@aa.com','ad','12345','2','root',null),
-('ae.@aa.com','ae','12345','2','root',null),
-('af.@aa.com','af','12345','3','root',null),
-('ag.@aa.com','ag','12345','2','root',null),
-('ah.@aa.com','ah','12345','1','root',null),
-('ai.@aa.com','ai','12345','2','root',null),
-('aj.@aa.com','aj','12345','1','root',null),
-('ak.@aa.com','ak','12345','2','root',null);
 
 
 create table reminder_a(
@@ -689,6 +689,22 @@ foreign key(admins_id) references admins(admins_id)
 );
 insert into reminder_a( reminder_a_text , reminder_a_status , admins_id) values("這是reminder_a測試文字", 0 , 1);
 
+create table reminder_u(
+reminder_u_id int AUTO_INCREMENT not null,
+reminder_u_time timestamp default current_timestamp,
+-- reminder_u_time_last timestamp default current_timestamp on update current_timestamp,
+reminder_u_text varchar(2000) not null,
+reminder_u_status tinyint default 0 not null,
+users_id int not null,
+primary key(reminder_u_id),
+constraint fk_reminder_u_users
+foreign key(users_id) references users(users_id)
+);
+
+insert into reminder_u (reminder_u_text,users_id) 
+values ('54656',1);
+-- select * from reminder_u;
+--  UPDATE reminder_u SET reminder_u_text = "131" WHERE reminder_u_id = 1;
 
 
 
