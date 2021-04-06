@@ -12,7 +12,7 @@
 		<%@ include file="/sale-end/pages/nav.html"%>
 		<div class="d-flex flex-column" id="content-wrapper">
 			<div id="content">
-				<%@ include file="/sale-end/pages/fnav"%>
+				<%@ include file="/sale-end/pages/fnav.html"%>
 				<div class="container-fluid">
 					<div class="card rounded shadow border-0">
 						<div class="card-body p-5 bg-white rounded">
@@ -33,18 +33,16 @@
 									<form METHOD="post"
 										ACTION="<%=request.getContextPath()%>/login.do" id="form1">
 										<div class="form-group">
-										<c:if test="${not empty errorMsgs}">
-													<c:forEach var="message" items="${errorMsgs}">
-														<h10 style="color:red">${message}</h10>
-													</c:forEach>
-												</c:if>
+							
+														<h10 id="errormessage" style="color:red">${message}</h10>
+								
 											<input class="form-control form-control-user" type="email" name="email"
 												id="email" placeholder="Email Address" v-model="account">
 										</div>
 										<div class="form-group">
 										<input
 												class="form-control" type="password" name="pwd"
-												id="password" placeholder="Password" v-model="password">
+												id="password" placeholder="Password" v-model="password">{{password}}
 										</div>
 										<div class="form-group">
 											<div class="form-check">
@@ -76,8 +74,9 @@
 									ACTION="<%=request.getContextPath()%>/sale/sale.do" id="form2">
 
 									<div class="form-group">
-										<input class="form-control form-control-user" type="email"
-											id="exampleInputEmail" aria-describedby="emailHelp"
+										<input class="form-control-user form-control " type="email"
+											id="exampleInputEmail"
+											 aria-describedby="emailHelp"
 											placeholder="Email Address" name="semail" v-model="account1">
 									</div>
 									<div class="form-group row">
@@ -133,13 +132,14 @@
 
 	<script type="text/javascript"
 		src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>
+
+	
 	<script>
 		var app = new Vue({
 			el : '#app',
 			data : {
 				account : '',
 				password : '',
-				
 				account1 : '',
 				password1 : '',
 				repassword1 : '',
@@ -148,9 +148,45 @@
 				send : function() {
 
 					if (this.account !== '' && this.password !== '') {
-						$("#form1").submit();
+						$("#errormessage").show();
+						$("#errormessage").text("");
+						let uid=this.account;
+						let pwd=this.password;
+ 						console.log(uid);
+					  	let data = {
+				  			"action": "check",
+				  			"pwd": pwd,
+	 			            "u_id":uid 
+//	 			            "users_id": login_users
+				  				}		
+		// console.log($(this).parent(".card-body").find(".place_id_value").attr("value"));
+		// console.log($(this).parent(".card-body").find(".users_id_value").attr("value"));
+					
+					$.ajax({
+				        url: "/TEA103G5/login.do",           // 資料請求的網址
+				        type: "POST",                  // GET | POST | PUT | DELETE | PATCH
+				        data: data,               // 傳送資料到指定的 url
+				        dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
+				        success: function (data) {      // request 成功取得回應後執行
+				          console.log(data);
+				          
+				        	$("#errormessage").text(data.errormsg);
+				        	$("#errormessage").fadeOut(1300);
+				          if(data.hasVO ==false){
+// 								document.getElementById('password').value=data.hasV;
+														$("#form1").submit();
+				          }
+// 				          else if(data.result == "delete_success"){
+//	 			        	  that.html("加入收藏")
+// 				          }
+				          
+				        }
+				    });
 					} else {
-						alert('資料尚未輸入完全')
+						$("#errormessage").show();
+						$("#errormessage").text('資料尚未輸入完全');
+						$("#errormessage").fadeOut(1300);
+						
 					}
 
 				},
@@ -167,11 +203,14 @@
 					alert('資料尚未輸入完全')
 				}
 
-			}
-			}
+			},
+				
+
+		  }
 			
 			
 			
+
 
 		})
 	</script>

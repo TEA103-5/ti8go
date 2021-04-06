@@ -1,15 +1,24 @@
 package com.login.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-
+import java.util.Map;
+import java.util.Base64;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+
+import org.json.JSONObject;
 
 import com.login.model.LoginService;
 import com.sale.model.SaleService;
@@ -17,10 +26,13 @@ import com.sale.model.SaleVO;
 import com.users.model.UsersService;
 import com.users.model.UsersVO;
 
+
+
 /**
  * Servlet implementation class ifLoginServlet
  */
 //@WebServlet("/ifLoginServlet")
+//@MultipartConfig
 public class ifLoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -33,7 +45,7 @@ public class ifLoginServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String url=req.getParameter("requestURL");
 		
-		req.getSession().invalidate();
+		req.getSession().	invalidate();
 		
 		RequestDispatcher failureView = req
 				.getRequestDispatcher(url);
@@ -48,19 +60,50 @@ public class ifLoginServlet extends HttpServlet {
 	//4.資安? 先不考慮
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
+		res.setContentType("application/json ; charset=UTF-8"); 
 		String action = req.getParameter("action");
+//		String url=req.getParameter("requestURL");
 		
 		List<String> errorMsgs = new LinkedList<String>();
 		req.setAttribute("errorMsgs", errorMsgs);
+		HashMap result = new HashMap();
+		LoginService lgSrc=new LoginService();
+//		errorMsgs.add("帳號或密碼有問題");
+//		errorMsgs.add("帳號或密碼有問題2");
+//		result.put("errormsg" , errorMsgs);
+//		System.out.println(req.getParameter("confirmPassword"));
+//		PrintWriter out = res.getWriter();
+//		JSONObject resultJSON = new JSONObject(result);
+//		out.println(resultJSON);
 		
+		if ("check".equals(action)){
+			String uid = req.getParameter("u_id").trim();
+			String pwd = req.getParameter("pwd").trim();
+			PrintWriter out = res.getWriter();
+		
+			SaleVO uVO=null;
+			uVO=lgSrc.checkIdType(uid,pwd);
+			if(uVO!=null) {
+				
+			result.put("hasVO" , false);
+				
+			}else {
+				errorMsgs.add("帳號或密碼有問題");
+			}
+			if(!errorMsgs.isEmpty()) {
+				result.put("errormsg" , errorMsgs);
+			}
+			JSONObject resultJSON = new JSONObject(result);
+			out.println(resultJSON);
+		}
 		if ("login".equals(action)){
+			String url=req.getParameter("requestURL");
+	
 		String id = req.getParameter("email");
 		String pwd = req.getParameter("pwd");
-		LoginService lgSrc=new LoginService();
-		String url=req.getParameter("requestURL");
-		//這邊是傳帳密進去,找type之後順便驗證密碼 密碼不對也回傳null,有東西則回傳 帳號type,pk號碼 因為懶得用set 所以用saleVO來接
+		
 		SaleVO uVO=null;
-				uVO=lgSrc.checkIdType(id,pwd);
+		uVO=lgSrc.checkIdType(id,pwd);
 		if(uVO!=null) {
 			
 			if("users".equals(uVO.getSale_name())) {
@@ -86,6 +129,11 @@ public class ifLoginServlet extends HttpServlet {
 		failureView.forward(req, res);	
 		}
 		
+	
+	
+	
+	
+	
 	}
 
 }
