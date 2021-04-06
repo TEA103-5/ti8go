@@ -1,7 +1,12 @@
 package com.sale.model;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Set;
+
+import com.product.model.ProductVO;
 
 
 public class SaleService {
@@ -9,9 +14,10 @@ public class SaleService {
 	public SaleService(){
 		dao=new SaleDAO();
 	}
-	
-	//新增,Byte[] sale_audit_pic
-	public SaleVO addSale(String sale_email,String sale_pwd,String sale_name,String sale_phone,String sale_nickname,Float sale_rate) {
+
+
+//	,byte[] sale_audit_pic
+	public SaleVO addSale(String sale_email,String sale_pwd,String sale_name,String sale_phone,String sale_nickname) {
 		SaleVO saleVO=new SaleVO();
 		
 
@@ -21,16 +27,16 @@ public class SaleService {
 //		saleVO.setSale_audit_pic(sale_audit_pic);
 		saleVO.setSale_phone(sale_phone);
 		saleVO.setSale_nickname(sale_nickname);
-		saleVO.setSale_rate(sale_rate);
+//		saleVO.setSale_rate(sale_rate);
 
 		
 		dao.insert(saleVO);
 		return saleVO;
 	}
-	//修改 沒放Byte[] sale_audit_pic
+	
+//		,byte[] sale_audit_pic
 	public SaleVO updateSale(String sale_pwd,Integer sale_audit_status,String sale_name,Integer sale_status,String sale_phone,String sale_nickname,Float sale_rate,Integer sale_id) {
 		SaleVO saleVO=new SaleVO();
-		
 		saleVO.setSale_pwd(sale_pwd);
 		saleVO.setSale_audit_status(sale_audit_status);
 //		saleVO.setSale_audit_pic(sale_audit_pic);
@@ -45,10 +51,25 @@ public class SaleService {
 		dao.update(saleVO);
 		return saleVO;
 	}
+	public SaleVO updateSaleP(Integer sale_id,byte[] sale_audit_pic) {
+		SaleVO saleVO=new SaleVO();
+		
+		saleVO.setSale_id(sale_id);
+		saleVO.setSale_audit_pic(sale_audit_pic);
+		
+		dao.updatep(saleVO);
+		return saleVO;
+	}
 	//刪除
 	public void deleteSale(Integer sale_id) {
 		dao.delete(sale_id);
 	}
+	
+	public Set<ProductVO> getProdsBySaleid(Integer sale_id){
+		return dao.getProdsBySaleid(sale_id);
+	}
+	
+	
 	//查詢一筆
 	public SaleVO getOneSale(Integer sale_id) {
 		return dao.findByPrimaryKey(sale_id);

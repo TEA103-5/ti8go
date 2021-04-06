@@ -1,4 +1,4 @@
-package com.place.model;
+package com.place.model;  //  測試測試
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,7 +11,6 @@ public class ApiTest2 {
 	
 	// 取得此網站json: https://data.gov.tw/dataset/7780
 	// 網站資料太多,要想一下如何處理
-	//乾 根本陷阱 
 	public static final String API_URL = "https://gis.taiwan.net.tw/XMLReleaseALL_public/hotel_C_f.json";
 	
 	
