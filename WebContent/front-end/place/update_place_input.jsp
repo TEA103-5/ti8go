@@ -79,9 +79,9 @@
             <!-- id="search-bar" 的屬性justify-content: space-between;  均匀排列每个元素
                 首个元素放置于起点，末尾元素放置于终点  -->
             <div>
-                <a class="nav-link active disabled" href="#" aria-disabled="true">新增地點</a>
-                <a class="nav-link active" href="#">我的地點</a>
-                <a class="nav-link active" href="#">我的收藏</a>
+                <a class="nav-link active disabled" href="<%=request.getContextPath()%>/front-end/place/addPlace.jsp" aria-disabled="true">新增地點</a>
+                <a class="nav-link active" href="<%=request.getContextPath()%>/front-end/place/listMyPlace.jsp">我的地點</a>
+                <a class="nav-link active" href="<%=request.getContextPath()%>/front-end/place_collect/listMyPlace_collect.jsp">我的收藏</a>
             </div>
 
         </nav>
@@ -97,7 +97,7 @@
                 </div>
 
                 <!-- 表單驗證參考這一項 利用加上特定class來標註錯誤或正確訊息 https://getbootstrap.com/docs/4.6/components/forms/#server-side -->
-                <form METHOD="post" ACTION="<%=request.getContextPath()%>/place/place.do" name="form1" enctype="multipart/form-data"> 
+                <form id="insert_form" METHOD="post" ACTION="<%=request.getContextPath()%>/place/place.do" name="form1" enctype="multipart/form-data"> 
                     <div class="form-row">
                         <div class="col-md-12 mb-3">
                             <label class="xrequired" for="validationServer01">地點名稱</label>
@@ -476,6 +476,7 @@
             el_form.on("submit", function (e) {
                 // alert("777")
                 if ($(".is-invalid").length != 0) {
+                	alert("尚有欄位未輸入正確");
                     return false;
                 } else {
                     let select_group = $('.city-selector').find(":selected");

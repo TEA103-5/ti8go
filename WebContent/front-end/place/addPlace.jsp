@@ -66,25 +66,26 @@
             <!-- id="search-bar" 的屬性justify-content: space-between;  均匀排列每个元素
                 首个元素放置于起点，末尾元素放置于终点  -->
             <div>
-                <a class="nav-link active disabled" href="#" aria-disabled="true">新增地點</a>
-                <a class="nav-link active" href="#">我的地點</a>
-                <a class="nav-link active" href="#">我的收藏</a>
+                <a class="nav-link active disabled" href="<%=request.getContextPath()%>/front-end/place/addPlace.jsp" aria-disabled="true">新增地點</a>
+                <a class="nav-link active" href="<%=request.getContextPath()%>/front-end/place/listMyPlace.jsp">我的地點</a>
+                <a class="nav-link active" href="<%=request.getContextPath()%>/front-end/place_collect/listMyPlace_collect.jsp">我的收藏</a>
             </div>
-
+            
+        
         </nav>
 
         <section class="clean-block clean-services dark">
             <div class="container">
                 <!-- 使用Google Maps Embed API , q放的是搜尋目標 , 如有明確對象(地址或名稱)marker會標註在此位置 ,  -->
                 <div class="block-heading"><iframe id="map-iframe" allowfullscreen="" frameborder="0"
-                        src="https://www.google.com/maps/embed/v1/search?key=AIzaSyCQspd49Wmywh3L5LAOftK_jV4qA2i89VQ&q=緯育TibaMe附設台北職訓中心&zoom=20&center=25.052052,121.543220"
+                        src="https://www.google.com/maps/embed/v1/search?key=AIzaSyDM_Y61o18dhHK3q-h3n6WRu9oRTuR7fN0&q=緯育TibaMe附設台北職訓中心&zoom=20&center=25.052052,121.543220"
                         width="100%" height="400"></iframe>
                     <h2 class="text-info">新增地點</h2>
                     <p> </p>
                 </div>
 
                 <!-- 表單驗證參考這一項 利用加上特定class來標註錯誤或正確訊息 https://getbootstrap.com/docs/4.6/components/forms/#server-side -->
-                <form METHOD="post" ACTION="<%=request.getContextPath()%>/place/place.do" name="form1" enctype="multipart/form-data"> 
+                <form id="insert_form" METHOD="post" ACTION="<%=request.getContextPath()%>/place/place.do" name="form1" enctype="multipart/form-data"> 
                     <div class="form-row">
                         <div class="col-md-12 mb-3">
                             <label class="xrequired" for="validationServer01">地點名稱</label>
@@ -462,6 +463,7 @@
             el_form.on("submit", function (e) {
                 // alert("777")
                 if ($(".is-invalid").length != 0) {
+                    alert("尚有欄位未輸入正確");
                     return false;
                 } else {
 //                     let select_group = $('.city-selector').find(":selected");
@@ -470,7 +472,7 @@
 //                     let address = el_place_address.val();
 //                     el_place_address.val(county + district + address);
 
-
+//                 	都驗證通過則submit
                 }
 
 
@@ -612,7 +614,7 @@
             })
 
 
-	const google_api_key = "AIzaSyCQspd49Wmywh3L5LAOftK_jV4qA2i89VQ";
+	const google_api_key = "AIzaSyDM_Y61o18dhHK3q-h3n6WRu9oRTuR7fN0";
 
             // let target_address = "台灣台北市萬華區康定路190號"
 
