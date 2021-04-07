@@ -33,13 +33,13 @@
 <body id="page-top">
     <div id="wrapper">
     	
-    	<%@include file="/back-end/html_component/side_nav.html" %>
+    	<%@include file="/back-end/pages/side_nav.html" %>
 <%--     	<jsp:include page="/back-end/html_component/side_nav.html"></jsp:include> --%>
 
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content">
            		
-           		<%@include file="/back-end/html_component/top_nav.html" %>
+           		<%@include file="/back-end/pages/top_nav.html" %>
 <%--            		<jsp:include page="/back-end/html_component/top_nav.html"></jsp:include> --%>
          	
 
