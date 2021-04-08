@@ -25,7 +25,6 @@
     <url-pattern>/emp/emp.do</url-pattern>
   </servlet-mapping>
   
-
       <servlet>
     <servlet-name>SaleServlet</servlet-name>
     <servlet-class>com.sale.controller.SaleServlet</servlet-class>
@@ -36,7 +35,7 @@
   </servlet-mapping>
   
   
-       <servlet>
+    <servlet>
     <servlet-name>ProductServlet</servlet-name>
     <servlet-class>com.product.controller.ProductServlet</servlet-class>
   </servlet>
@@ -186,4 +185,38 @@
 		<url-pattern>/login.do</url-pattern>
 	</servlet-mapping>
 	
+<!--     <url-pattern>/Product/Product.do</url-pattern> -->
+<!--   </servlet-mapping> -->
+  
+   <servlet>
+    <servlet-name>OrderServlet</servlet-name>
+    <servlet-class>com.order.controller.OrderServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>OrderServlet</servlet-name>
+    <url-pattern>/Order/Order.do</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+    <servlet-name>OrderDetailServlet</servlet-name>
+    <servlet-class>com.orderDetail.controller.OrderDetailServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>OrderDetailServlet</servlet-name>
+    <url-pattern>/OrderDetail/OrderDetail.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+		<servlet-name>BLOB_Reader</servlet-name>
+		<servlet-class>com.product.model.BLOB_Reader</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>BLOB_Reader</servlet-name>
+		<url-pattern>/BLOB_Reader</url-pattern>
+	</servlet-mapping>
+	
+  
 </web-app>
+  
+ 
