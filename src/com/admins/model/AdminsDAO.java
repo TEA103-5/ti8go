@@ -20,7 +20,11 @@ public class AdminsDAO implements AdminsDAO_interface{
 	static {
 		try {
 			Context ctx = new InitialContext();
+<<<<<<< HEAD
 			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/tea05");
+=======
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/David");
+>>>>>>> 52127341715097179cb0b7789127f07772f68669
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
