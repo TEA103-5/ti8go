@@ -3,16 +3,10 @@ package com.product_collect.model;
 import java.sql.Timestamp;
 
 public class Product_collectVO {
-	private Integer product_collect_id;
 	private Integer	product_id;
 	private Integer	users_id;
 	private Timestamp product_collect_time;
-	public Integer getProduct_collect_id() {
-		return product_collect_id;
-	}
-	public void setProduct_collect_id(Integer product_collect_id) {
-		this.product_collect_id = product_collect_id;
-	}
+
 	public Integer getProduct_id() {
 		return product_id;
 	}

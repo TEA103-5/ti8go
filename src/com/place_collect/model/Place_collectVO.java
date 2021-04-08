@@ -3,16 +3,10 @@ package com.place_collect.model;
 import java.sql.Timestamp;
 
 public class Place_collectVO {
-	private Integer place_collect_id;
 	private Integer place_id;
 	private Integer users_id;
 	private	Timestamp place_collect_time;
-	public Integer getPlace_collect_id() {
-		return place_collect_id;
-	}
-	public void setPlace_collect_id(Integer place_collect_id) {
-		this.place_collect_id = place_collect_id;
-	}
+
 	public Integer getPlace_id() {
 		return place_id;
 	}

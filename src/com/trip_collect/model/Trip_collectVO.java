@@ -3,16 +3,10 @@ package com.trip_collect.model;
 import java.sql.Timestamp;
 
 public class Trip_collectVO {
-	private Integer trip_collect_id;
 	private Integer trip_id;
 	private Integer users_id;
 	private Timestamp trip_collect_time;
-	public Integer getTrip_collect_id() {
-		return trip_collect_id;
-	}
-	public void setTrip_collect_id(Integer trip_collect_id) {
-		this.trip_collect_id = trip_collect_id;
-	}
+	
 	public Integer getTrip_id() {
 		return trip_id;
 	}

@@ -15,7 +15,7 @@ import org.json.JSONObject;
 public class GooglePlaceTest {
 	public static final String GOOGLE_URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
 			+ "location=25.05320,121.54447&" + "radius=500&" + "types=food&" + "name=牛排&" + "language=zh-TW&"
-			+ "key=AIzaSyA-Pkxc4v0F1wdpbv0Uvo9fM20x7oGY87k";
+			+ "key=放入key";
 
 	public static void main(String[] args) throws IOException, JSONException {
 		URL url = new URL(GOOGLE_URL);
