@@ -300,18 +300,18 @@ public class NoteCJDBCDAO implements NoteCDAO_interface {
 //			noteCVO1.setNote_c_title("宜蘭遊");
 //			noteCVO1.setNote_c_content("今天天氣晴宜蘭好好玩");
 //			noteCVO1.setNote_c_img(picture.getPictureByteArray("C:/TEA103_Workspace/TivagoTest/items/1.jpg"));
-//			noteCVO1.setNote_id(1);
+//			noteCVO1.setNote_id(2);
 //			
 //			dao.insert(noteCVO1);
 
 			// 修改
-//			NoteCVO noteCVO2 = new NoteCVO();
-//			noteCVO2.setNote_c_id(1);
-//			noteCVO2.setNote_c_title("宜蘭天氣晴");
-//			noteCVO2.setNote_c_content("今天好開心,天氣晴朗又好玩!");
-//			noteCVO2.setNote_c_img(picture.getPictureByteArray("C:/TEA103_Workspace/TivagoTest/items/2.jpg"));
-//			noteCVO2.setNote_id(1);
-//			dao.update(noteCVO2);
+			NoteCVO noteCVO2 = new NoteCVO();
+			noteCVO2.setNote_c_id(3);
+			noteCVO2.setNote_c_title("宜蘭天氣晴");
+			noteCVO2.setNote_c_content("今天好開心,天氣晴朗又好玩!");
+			noteCVO2.setNote_c_img(picture.getPictureByteArray("C:/TEA103_Workspace/TivagoTest/items/2.jpg"));
+			noteCVO2.setNote_id(1);
+			dao.update(noteCVO2);
 
 //			// 刪除
 //			dao.delete(2);
@@ -327,14 +327,14 @@ public class NoteCJDBCDAO implements NoteCDAO_interface {
 //			System.out.println("---------------------");
 //
 //			// 查詢
-			List<NoteCVO> list = dao.getAll();
-			for (NoteCVO aNoteC : list) {
-				System.out.print(aNoteC.getNote_c_id() + ",");
-				System.out.print(aNoteC.getNote_c_title() + ",");
-				System.out.print(aNoteC.getNote_c_content() + ",");
-				System.out.print(aNoteC.getNote_c_img() + ",");
-				System.out.print(aNoteC.getNote_id() + ",");
-				System.out.println();
-			}
+//			List<NoteCVO> list = dao.getAll();
+//			for (NoteCVO aNoteC : list) {
+//				System.out.print(aNoteC.getNote_c_id() + ",");
+//				System.out.print(aNoteC.getNote_c_title() + ",");
+//				System.out.print(aNoteC.getNote_c_content() + ",");
+//				System.out.print(aNoteC.getNote_c_img() + ",");
+//				System.out.print(aNoteC.getNote_id() + ",");
+//				System.out.println();
+//			}
 		}
 }

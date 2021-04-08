@@ -7,6 +7,20 @@ public class NoteCVO implements java.io.Serializable {
 	private byte[] note_c_img;
 	private Integer note_id;
 	
+	public NoteCVO() {
+		
+	}
+	
+	@Override
+	public String toString() {
+		return "NoteCVO：note_c_id=" + note_c_id 
+				+ ", note_c_title=" + note_c_title 
+				+ ", note_c_content=" + note_c_content
+				+ ", note_c_img=" + note_c_img 
+				+ ", note_id=" + note_id;
+	}
+
+	
 	public Integer getNote_c_id() {
 		return note_c_id;
 	}

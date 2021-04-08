@@ -12,5 +12,7 @@ public interface NoteCDAO_interface {
         public NoteCVO findByPrimaryKey(Integer note_C_id);
         public List<NoteCVO> getAll();
         
+//        public NoteCVO getoneNote(Integer note_id);
+        
 }
 
