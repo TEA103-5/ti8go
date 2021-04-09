@@ -178,7 +178,7 @@
     </script>
     <script src="<%=request.getContextPath()%>/front-end/place/myjs/place/card_container.js"></script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBt62TZeRNMLW9m5vw1DfsxwUE_xdmK7rQ&callback=initMap&libraries=&v=weekly" async></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDM_Y61o18dhHK3q-h3n6WRu9oRTuR7fN0&callback=initMap&libraries=&v=weekly" async></script>
 	
 	<script>
 		
