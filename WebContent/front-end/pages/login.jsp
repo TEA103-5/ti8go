@@ -10,21 +10,21 @@
 <body id="page-top">
 	<div id="wrapper">
 <%-- 		<%@ include file="/sale-end/pages/nav.html"%> --%>
-		<div class="d-flex flex-column" id="content-wrapper">
-			<div id="content">
+<!-- 		<div class="d-flex flex-column" id="content-wrapper"> -->
+<!-- 			<div id="content"> -->
 <%-- 				<%@ include file="/sale-end/pages/fnav.html"%> --%>
-				<div class="container-fluid">
-					<div class="card rounded shadow border-0">
-						<div class="card-body p-5 bg-white rounded">
+<!-- 				<div class="container-fluid"> -->
+<!-- 					<div class="card rounded shadow border-0"> -->
+<!-- 						<div class="card-body p-5 bg-white rounded"> -->
 
 
 
 
 
-							<div class="container" id="app">
+							<div class="container mx-auto mt-5" id="app">
 							
 								 <div class="row">
-                        <div class="col-md-6 col-xl-6 mb-6">
+                        <div class="col-md-5 col-xl-5 mb-5 mx-auto">
 								<div class="block-heading">
 									<h2 class="text-info">登 入</h2>
 								</div>
@@ -60,7 +60,7 @@
 								</div>
 									</div>
 
-									 <div class="col-md-6 col-xl-6 mb-6">
+									 <div class="col-md-5 col-xl-5 mb-5 mx-auto">
 								<div class="text-center block-heading">
 									<h4 class="text-dark mb-4">註冊新帳戶</h4>
 								</div>
@@ -72,19 +72,19 @@
 									</ul>
 								</c:if>
 								<form class="user" METHOD="post"
-									ACTION="<%=request.getContextPath()%>/sale/sale.do" id="form2">
+									ACTION="<%=request.getContextPath()%>/users/users.do" id="form2">
 
 									<div class="form-group">
 										<input class="form-control-user form-control " type="email"
 											id="exampleInputEmail"
 											 aria-describedby="emailHelp"
-											placeholder="Email Address" name="semail" v-model="account1"
+											placeholder="Email Address" name="users_mail" v-model="account1"
 											required="true" placeholder="Email">
 									</div>
 									<div class="form-group row">
 										<div class="col-sm-6 mb-3 mb-sm-0">
 											<input class="form-control form-control-user" type="password"
-												id="examplePasswordInput" placeholder="Password" name="spwd"
+												id="examplePasswordInput" placeholder="Password" name="users_pwd"
 												v-model="password1">
 										</div>
 										<div class="col-sm-6">
@@ -94,9 +94,9 @@
 												v-model="repassword1">
 										</div>
 									</div>
-									<input class="btn btn-primary btn-block text-white btn-user"
+									<input class="btn btn-primary btn-block"
 										@click="send2" type="button" value="Register Account">
-									<input type="hidden" name="action" value="insertjsp">
+									<input type="hidden" name="action" value="insertUsers">
 								</form>
 
 						

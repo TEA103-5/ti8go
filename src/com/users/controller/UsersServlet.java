@@ -540,7 +540,65 @@ public class UsersServlet extends HttpServlet {
 				}
 			}
 	
-		
+			if ("insertUsers".equals(action)) { // 來自addEmp.jsp的請求  
+				
+				List<String> errorMsgs = new LinkedList<String>();
+				// Store this set in the request scope, in case we need to
+				// send the ErrorPage view.
+				req.setAttribute("errorMsgs", errorMsgs);
+			
+				
+				try {
+					/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
+					String users_mail = req.getParameter("users_mail").trim();
+					if (users_mail == null || users_mail.trim().length() == 0) {
+						errorMsgs.add("Mail請勿空白");
+					}
+					
+					String users_pwd = req.getParameter("users_pwd").trim();
+					if (users_pwd == null || users_pwd.trim().length() == 0) {
+						errorMsgs.add("密碼請勿空白");
+					}
+
+						
+					Integer users_status = 1 ;
+					
+					
+//					Integer users_id = new Integer(req.getParameter("users_id").trim());
+
+					UsersVO usersVO = new UsersVO();
+					usersVO.setUsers_mail(users_mail);
+					usersVO.setUsers_pwd(users_pwd);
+					usersVO.setUsers_status(users_status);
+
+
+					// Send the use back to the form, if there were errors
+					if (!errorMsgs.isEmpty()) {
+						req.setAttribute("usersVO", usersVO); // 含有輸入格式錯誤的empVO物件,也存入req
+						RequestDispatcher failureView = req
+								.getRequestDispatcher("/front-end/users/addUsers.jsp");
+						failureView.forward(req, res);
+						return;
+					}
+
+					/***************************2.開始新增資料***************************************/
+					UsersService usersSvc = new UsersService();
+					usersVO = usersSvc.addusers_new( users_mail, users_pwd, users_status);			
+					/***************************3.新增完成,準備轉交(Send the Success view)***********/
+//					usersVO = usersSvc.getOneusers(users_mail);
+					req.setAttribute("usersVO", usersVO);
+					String url = "/front-end/users/listOneUsers.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+					successView.forward(req, res);				
+					
+					/***************************其他可能的錯誤處理**********************************/
+				} catch (Exception e) {
+					errorMsgs.add(e.getMessage());
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front-end/users/addUsers.jsp");
+					failureView.forward(req, res);
+				}
+			}
 		
 	}
 }

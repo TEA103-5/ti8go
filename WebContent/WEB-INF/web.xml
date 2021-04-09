@@ -73,12 +73,9 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>UsersServlet</servlet-name>
-    <url-pattern>/front-end/users/users.do</url-pattern>
+    <url-pattern>/users/users.do</url-pattern>
   </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>UsersServlet</servlet-name>
-    <url-pattern>/back-end/users/users.do</url-pattern>
-  </servlet-mapping>
+  
   
   <servlet>
     <servlet-name>AdminsServlet</servlet-name>

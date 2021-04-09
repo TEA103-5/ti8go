@@ -22,6 +22,7 @@ public class UsersDAO implements UsersDAO_interface {
 			e.printStackTrace();
 		}
 	}
+	private static final String INSERT_STMT_NEW = "INSERT INTO users (users_mail, users_pwd, users_identi_status) VALUES (?, ?, ?)";
 	private static final String INSERT_STMT = "INSERT INTO users (users_mail, users_pwd, users_identi_status, users_nickname, users_name, users_sex, users_birthday, users_id_number, users_pic, users_phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String UPDATE_STMT = "UPDATE users SET users_mail =?, users_pwd =?, users_identi_status =?, users_nickname =?, users_name =?, users_sex =?, users_birthday =?, users_id_number =?, users_pic =?, users_phone =? where users_id = ?";
 	private static final String DELETE_CARD = "DELETE FROM card WHERE users_id = ?";
@@ -45,16 +46,54 @@ public class UsersDAO implements UsersDAO_interface {
 		return buffer;
 	}
 	
-	public void insert(UsersVO usersVO) throws Exception {
+	public void insert_new(UsersVO usersVO) throws Exception {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
 		try {
 
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(INSERT_STMT);
+			pstmt = con.prepareStatement(INSERT_STMT_NEW);
 			
 	//		pstmt.setInt(1, usersVO.getUsers_id());
+			pstmt.setString(1, usersVO.getUsers_mail());
+			pstmt.setString(2, usersVO.getUsers_pwd());
+			pstmt.setInt(3, usersVO.getUsers_status());
+		
+			pstmt.executeUpdate();
+
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+	public void insert(UsersVO usersVO) throws Exception {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(INSERT_STMT);
+			
+			//		pstmt.setInt(1, usersVO.getUsers_id());
 			pstmt.setString(1, usersVO.getUsers_mail());
 			pstmt.setString(2, usersVO.getUsers_pwd());
 			pstmt.setInt(3, usersVO.getUsers_status());
@@ -63,13 +102,13 @@ public class UsersDAO implements UsersDAO_interface {
 			pstmt.setInt(6, usersVO.getUsers_sex());
 			pstmt.setString(7, usersVO.getUsers_birthday());
 			pstmt.setString(8, usersVO.getUsers_id_number());
-		
+			
 			// 2. setBytes
 			//	byte[] pic = getPictureByteArray("items/FC_Barcelona.png");
 			pstmt.setBytes(9, usersVO.getUsers_users_pic());
 			pstmt.setString(10, usersVO.getUsers_phone());
 			pstmt.executeUpdate();
-
+			
 			// Handle any driver errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
