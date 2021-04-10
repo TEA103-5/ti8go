@@ -92,6 +92,13 @@
 				<form style="margin: 20px" METHOD="post" ACTION="<%=request.getContextPath()%>/users/users.do"
 					 name="form1" enctype="multipart/form-data">
 					
+<!-- 					<div class="form-group form-row"> -->
+<!-- 						<div class="col-6 col-sm-6"> -->
+<!-- 							<img id="showImg" class="img-fluid float-right img-thumbnail col-sm-6"  -->
+<%-- 									src="<%=request.getContextPath()%>/UsersGetPic?id=${usersVO.users_id}"> --%>
+<!-- 							</img>							 -->
+<!-- 						</div> -->
+<!-- 					</div> -->
 					<div class="form-group form-row">
 						<label for="users_id" class="col-sm-2">會員編號</label>
 						<div class="col-sm-6">
@@ -111,11 +118,13 @@
 						<div class="col-sm-4">
 							<label>性別 : </label>
 							<div class="form-check-inline">
-								<input type="radio" name="users_sex" id="sexF" value="0">
+								<input type="radio" name="users_sex" id="sexF" value="0"
+									<%= usersVO.getUsers_sex()==0 ? "checked" : ""%> >
 								<label for="sexF"> 女</label>
 							</div>
 							<div class="form-check-inline">
-								<input type="radio" name="users_sex" id="sexM" value="1">
+								<input type="radio" name="users_sex" id="sexM" value="1"
+									<%= usersVO.getUsers_sex()==1 ? "checked" : ""%>>
 								<label for="sexM"> 男</label>
 							</div>
 						</div>
@@ -171,7 +180,7 @@
 						<div class="col-sm-6">
 							<input class="form-control" type="text" id="users_phone"
 								placeholder="請輸入你的電話號碼..." name="users_phone" size="10" 
-								value="<%= (usersVO==null)?"":usersVO.getUsers_id_number()%>">
+								value="<%= (usersVO==null)?"":usersVO.getUsers_phone()%>">
 						</div>
 					</div>	
 					<div class="form-group form-row">
@@ -179,15 +188,18 @@
 						<div class="col-sm-6">
 							<input class="form" type="file" name="users_users_pic"  id="users_users_pic"
 								onchange="selectImgFile(this.files)">
-							<img id="showImg" class="img-fluid float-right img-thumbnail"></img>
+							<img id="showImg" class="img-fluid float-right img-thumbnail" 
+								src="<%=request.getContextPath()%>/UsersGetPic?id=${usersVO.users_id}">
+							</img>
 						</div>
 					</div>
 					<div>
+					<div style="margin: 0 auto">
 					<input type="hidden" name="action" value="update">
 					<input type="hidden" name="users_status" value="1" />
 					<input type="hidden" name="users_id" value="${usersVO.users_id}" />
-					<input type="submit" value="確認新增">
-					</div>	
+					<input type="submit" value="確認新增" >
+					</div></div>	
 				</form>
 			</div>
 		</div>
