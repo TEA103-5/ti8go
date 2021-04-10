@@ -100,11 +100,19 @@
 <!-- 						</div> -->
 <!-- 					</div> -->
 					<div class="form-group form-row">
-						<label for="users_id" class="col-sm-2">會員編號</label>
+						<label for="users_mail" class="col-sm-2">會員編號</label>
 						<div class="col-sm-6">
-							<P>${usersVO.users_id}</P>
+							<input type="text" class="form-control" id="users_id" name="users_id" 
+								size="10" placeholder="For Test ID" 
+								value="${usersVO.users_id}">
 						</div>
-					</div>
+					</div>	
+<!-- 					<div class="form-group form-row"> -->
+<!-- 						<label for="users_id" class="col-sm-2">會員編號</label> -->
+<!-- 						<div class="col-sm-6"> -->
+<%-- 							<P>${usersVO.users_id}</P> --%>
+<!-- 						</div> -->
+<!-- 					</div> -->
 					
 					<div class="form-group form-row">
 						<label for="users_name" class="col-sm-2">會員姓名</label>
