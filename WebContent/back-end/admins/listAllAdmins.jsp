@@ -68,7 +68,7 @@
 <!-- 								  </li> -->
 								
 <%-- 								  <jsp:useBean id="adminsSvc" scope="page" class="com.admins.model.AdminsService" /> --%>
-								   
+								   <li><a href='<%=request.getContextPath()%>/back-end/admins/addAdmins.jsp'>新增</a> 管理員.  <br><br></li>
 								   
 								  <li>
 								     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/admins/admins.do" >
@@ -135,7 +135,7 @@
 											<th>最後修改日期</th>
 											<th>詳情</th>
 <!--                                             <th>修改</th> -->
-                                            <th>上架/下架</th>
+                                            <th>移除</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -171,8 +171,9 @@
 <!-- 											</td> -->
 											<td>
 											  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/admins/admins.do" style="margin-bottom: 0px;">
-											     <input type="submit" value="上架/下架(未寫好)">
+											     <input type="submit" value="移除管理員">
 											     <input type="hidden" name="admins_id"  value="${adminsVO.admins_id}">
+											     <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
 											     <input type="hidden" name="action" value="delete"></FORM>
 											</td>
                                         </tr>
@@ -189,7 +190,7 @@
 											<th>最後修改日期</th>
 											<th>詳情</th>
 <!--                                             <th>修改</th> -->
-                                            <th>上架/下架</th>
+                                            <th>移除</th>
                                         </tr>
                                     </tfoot>
                                 </table>

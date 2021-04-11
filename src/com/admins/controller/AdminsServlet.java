@@ -132,10 +132,19 @@ public class AdminsServlet extends HttpServlet {
 				AdminsService adminsSvc = new AdminsService();
 				adminsSvc.deleteadmins(admins_id);
 				System.out.println("DELETE TEST " + admins_id);
-				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
-				String url = "/admins/listAllAdmins.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
-				successView.forward(req, res);
+				/***************************3.刪除完成,準備轉交(Send the Success view)***********/		
+				if(requestURL.equals("/back-end/admins/listAllAdmins.jsp")) {  // 來自back-end正式頁面
+					String url = "/back-end/admins/listAllAdmins.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url); 
+					successView.forward(req, res);		
+					return;
+				}else {
+					String url = "/admins/listAllAdmins.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
+					successView.forward(req, res);
+					return;
+				}
+				
 				
 				/***************************其他可能的錯誤處理**********************************/
 			} catch (Exception e) {
