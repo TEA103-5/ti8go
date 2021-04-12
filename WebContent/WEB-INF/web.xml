@@ -82,6 +82,15 @@
   </servlet-mapping>
   
   <servlet>
+    <servlet-name>AdminsAjaxHandler</servlet-name>
+    <servlet-class>com.admins.controller.AdminsAjaxHandler</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminsAjaxHandler</servlet-name>
+    <url-pattern>/admins/adminsAjaxHandler.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
 		<servlet-name>UsersGetPic</servlet-name>
 		<servlet-class>com.users.controller.UsersGetPic</servlet-class>
 
