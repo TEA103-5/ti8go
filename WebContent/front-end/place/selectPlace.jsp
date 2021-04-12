@@ -95,7 +95,7 @@
 
 
 
-
+<!-- 	在原本的主題外額外加上了class=fixed-top , 用來固定主區塊避免垂直卷軸出現 -->
     <main class="page service-page fixed-top">
 
         <nav id="search-bar" class="navbar navbar-light bg-light">
