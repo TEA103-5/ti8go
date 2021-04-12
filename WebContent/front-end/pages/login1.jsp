@@ -99,14 +99,16 @@
 <!-- 							</img>							 -->
 <!-- 						</div> -->
 <!-- 					</div> -->
-					<div class="form-group form-row">
-						<label for="users_mail" class="col-sm-2">會員編號</label>
-						<div class="col-sm-6">
-							<input type="text" class="form-control" id="users_id" name="users_id" 
-								size="10" placeholder="For Test ID" 
-								value="${usersVO.users_id}">
-						</div>
-					</div>	
+
+<!-- 					<div class="form-group form-row"> -->
+<!-- 						<label for="users_mail" class="col-sm-2">會員編號</label> -->
+<!-- 						<div class="col-sm-6"> -->
+<!-- 							<input type="text" class="form-control" id="users_id" name="users_id"  -->
+<!-- 								size="10" placeholder="For Test ID"  -->
+<%-- 								value="${usersVO.users_id}"> --%>
+<!-- 						</div> -->
+<!-- 					</div>	 -->
+
 <!-- 					<div class="form-group form-row"> -->
 <!-- 						<label for="users_id" class="col-sm-2">會員編號</label> -->
 <!-- 						<div class="col-sm-6"> -->
@@ -148,9 +150,10 @@
 					<div class="form-group form-row">
 						<label for="users_mail" class="col-sm-2">Email</label>
 						<div class="col-sm-6">
-							<input type="email" class="form-control" id="users_mail" name="users_mail" 
-								size="30" placeholder="請輸入你的電子郵件信箱..." 
-								value="${usersVO.users_mail}">
+<!-- 							<input type="email" class="form-control" id="users_mail" name="users_mail"  -->
+<!-- 								size="30" placeholder="請輸入你的電子郵件信箱..."  -->
+<%-- 								value="${usersVO.users_mail}"> --%>
+							<p>${usersVO.users_mail}</p>
 						</div>
 					</div>	
 					<div class="form-group form-row">

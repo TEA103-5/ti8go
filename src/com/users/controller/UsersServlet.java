@@ -312,6 +312,7 @@ public class UsersServlet extends HttpServlet {
 		            }
 					
 					String users_mail = req.getParameter("users_mail").trim();
+					
 					if (users_mail == null || users_mail.trim().length() == 0) {
 						errorMsgs.add("Mail請勿空白");
 					}
@@ -354,9 +355,12 @@ public class UsersServlet extends HttpServlet {
 					}
 					
 					String users_id_number = req.getParameter("users_id_number").trim();
+					String idReg = "/^[A-Za-z][12]\\\\d{8}$/";
 					if (users_id_number == null || users_id_number.trim().length() == 0) {
 						errorMsgs.add("身分證請勿空白");
-					}
+					} else if(!users_id_number.trim().matches(idReg)) { //以下練習正則(規)表示式(regular-expression)
+						errorMsgs.add("身分證號碼格式錯誤...");
+			            }
 					
 					String users_phone = req.getParameter("users_phone").trim();
 					if (users_phone == null || users_phone.trim().length() == 0) {
@@ -428,14 +432,32 @@ public class UsersServlet extends HttpServlet {
 				try {
 					/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 					String users_mail = req.getParameter("users_mail").trim();
+				//	String mailReg = "/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/";
+							//"/^[A-Za-z][12]\\d{8}$/";
 					if (users_mail == null || users_mail.trim().length() == 0) {
 						errorMsgs.add("Mail請勿空白");
-					}
+					} 
+					
+//					String users_name = req.getParameter("users_name");
+//					String nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
+//					if (users_name == null || users_name.trim().length() == 0) {
+//						errorMsgs.add("會員姓名: 請勿空白");
+//					} else if(!users_name.trim().matches(nameReg)) { //以下練習正則(規)表示式(regular-expression)
+//						errorMsgs.add("會員姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
+//		            }
+					
 					
 					String users_pwd = req.getParameter("users_pwd").trim();
+					String pwdReg = "/^.*(?=.{6,16})(?=.*\\d)(?=.*[A-Z]{1,})(?=.*[a-z]{1,})(?=.*[!@#$%^&*?\\(\\)]).*$/" ;
 					if (users_pwd == null || users_pwd.trim().length() == 0) {
 						errorMsgs.add("密碼請勿空白");
-					}
+					}else if(!users_pwd.trim().matches(pwdReg)) { //以下練習正則(規)表示式(regular-expression)
+						errorMsgs.add("最短6位，最長16位 {6,16}\r\n" + 
+										"必須包含1個數字\r\n" + 
+										"必須包含2個小寫字母\r\n" + 
+										"必須包含2個大寫字母\r\n" + 
+										"必須包含1個特殊字符");
+			        }
 
 						
 					Integer users_status = 1 ;
