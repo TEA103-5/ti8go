@@ -122,7 +122,7 @@
         <div id="card-container">
             <c:forEach var="placeVO" items="${list}"  varStatus="loop">
 	            <c:if test="${(placeVO.place_state == 1 ) ||  (sessionScope.users_id == placeVO.users_id) }">
-		            <div class="card" style="width: 18rem;" data-id="${loop.index}" data-longitude="${placeVO.place_longitude}" data-latitude="${placeVO.place_latitude}">
+		            <div class="card" style="width: 100%;" data-id="${loop.index}" data-longitude="${placeVO.place_longitude}" data-latitude="${placeVO.place_latitude}">
 		                <img src="<%=request.getContextPath()%>/place/DBGifReader4.do?place_pic=place_pic1&place_id=${placeVO.place_id}" class="card-img-top" alt="...">
 		                <div class="card-body">
 		                    <h5 class="card-title">${placeVO.place_name}</h5>
