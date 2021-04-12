@@ -1,5 +1,5 @@
 #card-container{
-    overflow:scroll;
+    overflow-y:scroll;
     height:90%;
     width:16%;
     display: inline-block;

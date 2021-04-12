@@ -96,7 +96,7 @@
 
 
 
-    <main class="page service-page">
+    <main class="page service-page fixed-top">
 
         <nav id="search-bar" class="navbar navbar-light bg-light">
             <!-- <a class="navbar-brand">Navbar</a> -->
