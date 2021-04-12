@@ -8,4 +8,5 @@ public interface Login_interface {
 	//所以總結為 傳回帳號的type 若為null則此帳號不重複
 	public SaleVO loginType(String account,String pwd);
 	public String idcheck(String account);
+	public SaleVO usersLogin(String account,String pass);
 }

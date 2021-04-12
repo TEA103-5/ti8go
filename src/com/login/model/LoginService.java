@@ -9,6 +9,9 @@ public class LoginService {
 	}
 	
 	
+	public SaleVO usersLogin(String id,String pwd) {
+		return dao.usersLogin(id,pwd);
+	}
 	public SaleVO checkIdType(String id,String pwd) {
 		return dao.loginType(id,pwd);
 	}

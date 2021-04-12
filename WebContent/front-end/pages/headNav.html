@@ -49,7 +49,7 @@
                     <div class="nav-item dropdown" style="padding: 5px;width: 70.7083px;"><a class="dropdown-toggle"
                             aria-expanded="false" data-toggle="dropdown" href="#"
                             style="padding: -64px;width: 0px;height: -8px;margin: -3px;color: rgba(0,0,0,0.5);">商城</a>
-                        <div class="dropdown-menu"><a class="dropdown-item" href="#">First Item</a><a
+                        <div class="dropdown-menu"><a class="dropdown-item" href="<%=request.getContextPath()%>/front-end/order/addOrder.jsp">購物區</a><a
                                 class="dropdown-item" href="#">Second Item</a><a class="dropdown-item"
                                 href="#">Third Item</a></div>
                     </div>
@@ -68,7 +68,7 @@
                         <a class="dropdown-toggle" aria-expanded="false" data-toggle="dropdown" href="#"
                             style="padding: 20px;width: 0px;height: -8px;margin: -3px;color: rgba(0,0,0,0.5);">會員中心</a>
                         <div class="dropdown-menu"><a class="dropdown-item" href="#">登入者:${usersVO.users_mail}</a><a
-                                class="dropdown-item" href="#">空白項</a><a class="dropdown-item"
+                                class="dropdown-item" href="<%=request.getContextPath()%>/front-end/users/login.jsp">登入</a><a class="dropdown-item"
                                 href="<%=request.getContextPath()%>/login.do?requestURL=<%=request.getServletPath()%>">登出</a></div>
                     </div>
                 </li>
