@@ -191,5 +191,14 @@
     <servlet-name>OrderServlet</servlet-name>
     <url-pattern>/Order/Order.do</url-pattern>
   </servlet-mapping>
+  
+     <servlet>
+    <servlet-name>TripServlet</servlet-name>
+    <servlet-class>com.trip.controller.TripServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TripServlet</servlet-name>
+    <url-pattern>/trip/trip.do</url-pattern>
+  </servlet-mapping>
 	
 </web-app>

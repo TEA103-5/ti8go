@@ -12,7 +12,7 @@ public class UsersVO implements java.io.Serializable{
 	private Integer users_sex;
 	private String 	users_birthday;
 	private String 	users_id_number;
-	private Byte[]	users_users_pic;
+	private byte[]	users_users_pic;
 	private String  users_phone;
 	private String  create_time;
 	private String  update_time;
@@ -93,10 +93,10 @@ public class UsersVO implements java.io.Serializable{
 	public void setUsers_id_number(String users_id_number) {
 		this.users_id_number = users_id_number;
 	}
-	public Byte[] getUsers_users_pic() {
+	public byte[] getUsers_users_pic() {
 		return users_users_pic;
 	}
-	public void setUsers_users_pic(Byte[] users_users_pic) {
+	public void setUsers_users_pic(byte[] users_users_pic) {
 		this.users_users_pic = users_users_pic;
 	}
 	public String getUsers_phone() {

@@ -214,6 +214,7 @@ public class UsersServlet extends HttpServlet {
 				in.close();
 				
 				
+				
 //				Integer users_id = new Integer(req.getParameter("users_id").trim());
 
 				UsersVO usersVO = new UsersVO();
@@ -240,9 +241,11 @@ public class UsersServlet extends HttpServlet {
 				
 				/***************************2.開始新增資料***************************************/
 				UsersService usersSvc = new UsersService();
-				usersVO = usersSvc.addusers( users_mail, users_pwd, users_status, 
-						users_nickname, users_name, users_sex, users_birthday, users_id_number,
-						users_users_pic, users_phone);			
+				
+				usersVO = usersSvc.addusers(usersVO); 
+//				usersVO = usersSvc.addusers( users_mail, users_pwd, users_status, 
+//						users_nickname, users_name, users_sex, users_birthday, users_id_number,
+//						users_users_pic, users_phone);			
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 //				usersVO = usersSvc.getOneusers(users_mail);
 				req.setAttribute("usersVO", usersVO);
@@ -398,7 +401,8 @@ public class UsersServlet extends HttpServlet {
 					}
 					
 					/***************************2.開始新增資料***************************************/
-					usersVO = usersSvc.updateusers(users_id, users_mail, users_pwd, users_status, users_nickname, users_name, users_sex, users_birthday, users_id_number, users_users_pic, users_phone);		
+					usersVO = usersSvc.updateusers(usersVO);		
+//					usersVO = usersSvc.updateusers(users_id, users_mail, users_pwd, users_status, users_nickname, users_name, users_sex, users_birthday, users_id_number, users_users_pic, users_phone);		
 					/***************************3.新增完成,準備轉交(Send the Success view)***********/
 					usersVO = usersSvc.getOneusers(users_id);
 					req.setAttribute("usersVO", usersVO); 
