@@ -863,9 +863,16 @@ System.out.println(requestURL);
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/place/select_page.jsp");
-					failureView.forward(req, res);
-					return;// 程式中斷
+					if(requestURL.equals("/back-end/place/listAllPlace.jsp")) {    // 將錯誤訊息傳回去
+						RequestDispatcher failureView = req.getRequestDispatcher("/back-end/place/listAllPlace.jsp");
+						failureView.forward(req, res);
+						return;// 程式中斷
+					}else {
+						
+						RequestDispatcher failureView = req.getRequestDispatcher("/place/select_page.jsp");
+						failureView.forward(req, res);
+						return;// 程式中斷
+					}
 				}
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				if(requestURL.equals("/rock_place/front-place_jsp/place.jsp")) {  // 從景點頁面的請求
@@ -873,6 +880,7 @@ System.out.println(requestURL);
 					String url = requestURL;
 					RequestDispatcher successView = req.getRequestDispatcher(url);
 					successView.forward(req, res);
+					return;
 				}
 				
 				if(requestURL.equals("/place/select_page.jsp")) { // 從0201來的請求
@@ -880,6 +888,7 @@ System.out.println(requestURL);
 					String url = requestURL;
 					RequestDispatcher successView = req.getRequestDispatcher(url);
 					successView.forward(req, res);
+					return;
 				}
 				
 				if(requestURL.equals("/front-end/place/selectPlace.jsp")) { // 從正式結構頁面來的請求
@@ -887,6 +896,15 @@ System.out.println(requestURL);
 					String url = requestURL;
 					RequestDispatcher successView = req.getRequestDispatcher(url);
 					successView.forward(req, res);
+					return;
+				}
+				
+				if(requestURL.equals("/back-end/place/listAllPlace.jsp")) {
+					req.setAttribute("list", list);
+					String url = requestURL;
+					RequestDispatcher successView = req.getRequestDispatcher(url);
+					successView.forward(req, res);
+					return;
 				}
 				
 				/*************************** 其他可能的錯誤處理 *************************************/
