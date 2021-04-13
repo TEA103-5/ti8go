@@ -128,7 +128,7 @@ public class Trip_detailServlet extends HttpServlet {
 					/***************************2.開始新增資料***************************************/
 					Trip_detailService trip_detailSvc = new Trip_detailService();
 					trip_detailVO = trip_detailSvc.addEmp(trip_detailVO);
-//					System.out.println("tripDetail add ok");
+
 	    			HashMap result = new HashMap();
 	    			PrintWriter out = res.getWriter();
 	    			result.put("trip_detail",trip_detailVO);
