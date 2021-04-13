@@ -22,6 +22,7 @@ import javax.servlet.http.Part;
 
 import org.json.JSONObject;
 
+import com.admins.model.AdminsService;
 import com.login.model.LoginService;
 import com.orderDetail.model.OrderDetailVO;
 import com.sale.model.SaleService;
@@ -195,8 +196,8 @@ public class ifLoginServlet extends HttpServlet {
 	
 				url="/sale-end/saleEndIndex.jsp";
 			}else if("admins".equals(uVO.getSale_name())) {
-				//缺
-				//缺
+				AdminsService adminsSrc = new AdminsService();
+				req.getSession().setAttribute("adminsVO",adminsSrc.getOneadmins(uVO.getSale_id()));
 				url="/back-end/backindex.jsp";
 			}
 		}else {
