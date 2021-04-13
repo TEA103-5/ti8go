@@ -6,9 +6,17 @@
 
 <%
 	PlaceService placeSvc = new PlaceService();
-	List<PlaceVO> list = placeSvc.getAll();
-	pageContext.setAttribute("list", list);
+
+	List<PlaceVO> list = null;	
+	if(request.getAttribute("list") != null){
+		list = (List<PlaceVO>)request.getAttribute("list");
+	}else{
+		list = placeSvc.getAll();
+	}
+
 	
+// 	List<PlaceVO> list = placeSvc.getAll();
+	pageContext.setAttribute("list", list);
 	pageContext.setAttribute("placeSvc", placeSvc);  // 用來取代底下的jsp:bean
 %>
 
@@ -62,32 +70,32 @@
                                 <!-- <li><a href="listAllPlace.jsp">List</a> all Place. <br> <br></li> -->
 
 
-                                <li>
-                                    <FORM METHOD="post" ACTION="place.do">
-                                        <b>輸入地點編號 (如1):</b> <input type="text" name="place_id">
-                                        <input type="hidden" name="action" value="getOne_For_Display">
-                                        <input type="submit" value="送出">
-                                    </FORM>
-                                </li>
+<!--                                 <li> -->
+<!--                                     <FORM METHOD="post" ACTION="place.do"> -->
+<!--                                         <b>輸入地點編號 (如1):</b> <input type="text" name="place_id"> -->
+<!--                                         <input type="hidden" name="action" value="getOne_For_Display"> -->
+<!--                                         <input type="submit" value="送出"> -->
+<!--                                     </FORM> -->
+<!--                                 </li> -->
 
-<%--                                 <jsp:useBean id="placeSvc" scope="page" class="com.place.model.PlaceService" /> --%>
+<%-- <%--                                 <jsp:useBean id="placeSvc" scope="page" class="com.place.model.PlaceService" /> --%> 
+
+<!--                                 <li> -->
+<!--                                     <FORM METHOD="post" ACTION="place.do"> -->
+<!--                                         <b>選擇地點編號 :</b> -->
+<!--                                         <select size="1" name="place_id"> -->
+<%--                                             <c:forEach var="placeVO" items="${placeSvc.all}"> --%>
+<%--                                                 <option value="${placeVO.place_id}">${placeVO.place_id} --%>
+<%--                                             </c:forEach> --%>
+<!--                                         </select> -->
+<%--                                         <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>"> --%>
+<!--                                         <input type="hidden" name="action" value="getOne_For_Display"> -->
+<!--                                         <input type="submit" value="送出"> -->
+<!--                                     </FORM> -->
+<!--                                 </li> -->
 
                                 <li>
-                                    <FORM METHOD="post" ACTION="place.do">
-                                        <b>選擇地點編號 :</b>
-                                        <select size="1" name="place_id">
-                                            <c:forEach var="placeVO" items="${placeSvc.all}">
-                                                <option value="${placeVO.place_id}">${placeVO.place_id}
-                                            </c:forEach>
-                                        </select>
-                                        <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
-                                        <input type="hidden" name="action" value="getOne_For_Display">
-                                        <input type="submit" value="送出">
-                                    </FORM>
-                                </li>
-
-                                <li>
-                                    <FORM METHOD="post" ACTION="place.do">
+                                    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/place/place.do">
                                         <b>選擇地點名稱:</b>
                                         <select size="1" name="place_id">
                                             <c:forEach var="placeVO" items="${placeSvc.all}">
@@ -101,7 +109,7 @@
                                 </li>
 
                                 <li>
-                                    <FORM METHOD="post" ACTION="place.do">
+                                    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/place/place.do">
                                         <b>輸入地址跟地點名稱進行模糊查詢 :</b>
                                         <input type="text" name="county" placeholder="請輸入縣市名稱">
                                         <input type="text" name="district" placeholder="請輸入區域名稱">
@@ -111,7 +119,7 @@
                                         <input type="submit" value="送出">
                                     </FORM>
                                 </li>
-                                <li><a href="addPlace.jsp">新增</a> 一個新地點</li>
+<!--                                 <li><a href="addPlace.jsp">新增</a> 一個新地點</li> -->
                             </ul>
 
                             <!-- <h3>地點管理</h3> -->
@@ -161,7 +169,7 @@
                                             <!-- 		<th>營業時間</th> -->
 <!--                                             <th>讚數</th> -->
 											<th>詳情</th>
-                                            <th>修改</th>
+<!--                                             <th>修改</th> -->
                                             <th>上架/下架</th>
                                         </tr>
                                     </thead>
@@ -170,7 +178,7 @@
                                         <tr>
                                             <td>${placeVO.place_id}</td>
 											<td>${placeVO.place_name}</td>
-											<td><c:choose>
+											<td class="place_state_text"><c:choose>
 									            	<c:when test="${placeVO.place_state == 1}">
 									                	上架中
 									           		</c:when>
@@ -186,18 +194,24 @@
 											     <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
 											     <input type="hidden" name="action"	value="getOne_For_Display"></FORM>
 											</td>
-	                                        <td>
-											  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/place/place.do" style="margin-bottom: 0px;">
-											     <input type="submit" value="修改">
-											     <input type="hidden" name="place_id"  value="${placeVO.place_id}">
-											     <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
-											     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
-											</td>
+<!-- 	                                        <td> -->
+<%-- 											  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/place/place.do" style="margin-bottom: 0px;"> --%>
+<!-- 											     <input type="submit" value="修改"> -->
+<%-- 											     <input type="hidden" name="place_id"  value="${placeVO.place_id}"> --%>
+<%-- 											     <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>"> --%>
+<!-- 											     <input type="hidden" name="action"	value="getOne_For_Update"></FORM> -->
+<!-- 											</td> -->
 											<td>
 											  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/place/place.do" style="margin-bottom: 0px;">
-											     <input type="submit" value="上架/下架(未寫好)">
-											     <input type="hidden" name="place_id"  value="${placeVO.place_id}">
-											     <input type="hidden" name="action" value="delete"></FORM>
+											     <c:if test="${placeVO.place_state == 1}">
+						                       		 <input class="change_place_state" type="button" value="下架">
+						                         </c:if>
+						                         <c:if test="${placeVO.place_state == 0}">
+						                       		 <input class="change_place_state" type="button" value="上架">
+						                         </c:if>
+											     
+<!-- 											     <input class="change_place_state" type="button" value="上架/下架(未寫好)"> -->
+											     <input class="place_id_value" type="hidden" name="place_id"  value="${placeVO.place_id}"></FORM>
 											</td>
                                         </tr>
 									</c:forEach>
@@ -221,7 +235,7 @@
                                             <!-- 		<th>營業時間</th> -->
 <!--                                             <th>讚數</th> -->
 											<th>詳情</th>
-                                            <th>修改</th>
+<!--                                             <th>修改</th> -->
                                             <th>上架/下架</th>
                                         </tr>
                                     </tfoot>
@@ -271,7 +285,50 @@
     <script>$(document).ready(function () {
             $('#table_id').DataTable();
         });</script>
-
+    
+    <script>
+    
+    	$(".change_place_state").on("click",function(e){
+    		let that = $(this);
+    		let place_id_value = that.closest("form").find(".place_id_value").attr("value")
+    		
+		  	let data = {
+		  			"action": "change_place_state",
+		            "place_id": place_id_value,
+		  	}		
+    		
+			$.ajax({
+		        url: "<%=request.getContextPath()%>/place/PlaceAjaxHandler.do",           // 資料請求的網址
+		        type: "POST",                  // GET | POST | PUT | DELETE | PATCH
+		        data: data,               // 傳送資料到指定的 url
+		        dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
+		        success: function (data) {      // request 成功取得回應後執行
+//console.log(data);
+		          if(data.result == "state_off"){
+		        	  that.closest("tr").find(".place_state_text").text("審核中")
+		        	  that.val("上架")
+		          }else if(data.result == "state_on"){
+		        	  that.closest("tr").find(".place_state_text").text("上架中")
+		        	  that.val("下架")
+		          }
+		          
+		        }
+		    });
+    	})
+    </script>
+	
+	
+<!-- 	這個script用來放錯誤處理訊息 -->
+	<script>
+		window.addEventListener("load", function(event) {
+			<c:if test="${not empty errorMsgs}">
+					<c:forEach var="message" items="${errorMsgs}">
+						alert("${message}");
+					</c:forEach>
+			</c:if>
+		});
+	</script>
+	
 
 </body>
 

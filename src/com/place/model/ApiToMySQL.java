@@ -175,7 +175,6 @@ public class ApiToMySQL {
 //				placeVO1.setUsers_id(1);
 				placeVO1.setBusiness_time(1);
 
-				dao.insert(placeVO1);
 
 //				placeVO1.setPlace_region(place_region); // 這邊是串接台北市的api
 				
@@ -206,6 +205,8 @@ public class ApiToMySQL {
 				System.out.println("");
 				System.out.println("-------------------");
 
+//				將該次VO insert進資料庫
+				dao.insert(placeVO1);
 			}
 		}
 

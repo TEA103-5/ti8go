@@ -8,18 +8,22 @@
 
 <% 
 	PlaceVO placeVO = (PlaceVO)request.getAttribute("placeVO");
-
+// System.out.println( "listOne");	
+// System.out.println( (placeVO == null));	
 	// 以下將place_address字串做處理以便設定地址選單套件的選項
 	String address = placeVO.getPlace_address(); // 
-	
+// System.out.println("address=" + address);	
 	Integer index = null;
 	String county = null;
 	if( ( index = address.indexOf("市")) != -1  || ( index = address.indexOf("縣")) != -1){
 		county = address.substring(0 , index+1).replaceAll("\\d+", "").trim(); // 取出縣市之前的字串 , 去掉數字以及空格
 	}
-	
+// System.out.println("county=" +  county);
 	String district = placeVO.getPlace_region();
 	pageContext.setAttribute("district" , district);
+// System.out.println("district=" +  district);
+// String handle_address = address.split(district)[1];
+// System.out.println("handle_address" +  handle_address);
 	pageContext.setAttribute("county" , county);
 	
 	pageContext.setAttribute("placeVO" , placeVO);
@@ -396,10 +400,10 @@
 	                    
 	                    <div class="form-row">
 	                    <!-- 	                建立者這邊純顯示, 值由底下的input=hidden 發送 -->
-	                        <div class="col-md-12 mb-3">
-	                            <label  for="validationServer12">建立者</label>
-	                            <input type="text" class="form-control " id="validationServer12" name="" value="<%= (placeVO==null)? "" : placeVO.getUsers_id()%>" >
-	                        </div>
+<!-- 	                        <div class="col-md-12 mb-3"> -->
+<!-- 	                            <label  for="validationServer12">建立者</label> -->
+<%-- 	                            <input type="text" class="form-control " id="validationServer12" name="" value="<%= (placeVO==null)? "" : placeVO.getUsers_id()%>" > --%>
+<!-- 	                        </div> -->
 	                    </div>
 	                    
 			        	
@@ -598,7 +602,7 @@
 
             // <input> class有is-valid 就會顯示標籤div class="valid-feedback"內設定的文字 ,is-invalid則顯示class=invalid-feedback的內容
             let el_place_name = $("#validationServer01");
-            const place_nameReg = /^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$/; // 只能是中、英文字母、數字和_ , 且長度必需在2到10之間
+            const place_nameReg = /^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,20}$/; // 只能是中、英文字母、數字和_ , 且長度必需在2到10之間
             let el_place_address = $("#validationServer02")
             const place_addressReg = /^[(\u4e00-\u9fa5)(0-9)]{5,50}$/; // 只能是中文字母、數字,且長度必需在5到50之間
 

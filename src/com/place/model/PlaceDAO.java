@@ -122,9 +122,7 @@ public class PlaceDAO implements PlaceDAO_interface {
 			pstmt.setBytes(10, placeVO.getPlace_pic2());
 			pstmt.setBytes(11, placeVO.getPlace_pic3());
 			pstmt.setInt(12, placeVO.getPlace_state());
-//			pstmt.setInt(13, placeVO.getUsers_id());   // 因setInt 會將傳入的Integer物件轉換成int,當傳入物件為null時會出現空指針例外
 			pstmt.setObject(13, placeVO.getUsers_id(), Types.INTEGER);
-//			pstmt.setInt(14, placeVO.getBusiness_time());
 			pstmt.setObject(14, placeVO.getBusiness_time(), Types.INTEGER);
 			pstmt.setObject(15, placeVO.getPlace_id(), Types.INTEGER);
 

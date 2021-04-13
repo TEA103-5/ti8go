@@ -108,6 +108,15 @@
 		<servlet-name>PlaceServlet</servlet-name>
 		<url-pattern>/place/place.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>PlaceAjaxHandler</servlet-name>
+		<servlet-class>com.place.controller.PlaceAjaxHandler</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PlaceAjaxHandler</servlet-name>
+		<url-pattern>/place/PlaceAjaxHandler.do</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>DBGifReader4_place</servlet-name>

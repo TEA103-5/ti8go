@@ -46,7 +46,7 @@ public class PlaceServlet extends HttpServlet {
 			// 目前來源為0201  /place/select_page.jsp 以及 正式頁面/front-end/place/selectPlace.jsp , /front-end/place_collect/listMyPlace_collect.jsp , /front-end/place/listMyPlace.jsp 測試頁面  /rock_place/front-place_jsp/place.jsp
 System.out.println(requestURL);
 
-//			try {
+			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				String str = req.getParameter("place_id");
 				if (str == null || (str.trim()).length() == 0) {
@@ -71,10 +71,11 @@ System.out.println(requestURL);
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
-
+System.out.println("place_id =" + place_id);
 				/*************************** 2.開始查詢資料 *****************************************/
 				PlaceService placeSvc = new PlaceService();
 				PlaceVO placeVO = placeSvc.getOnePlace(place_id);
+System.out.println(placeVO == null);
 				if (placeVO == null) {
 					errorMsgs.add("查無資料");
 				}
@@ -86,9 +87,8 @@ System.out.println(requestURL);
 				}
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 
-				
+		
 				if(requestURL.equals("/back-end/place/listAllPlace.jsp") ) { // 從back-end正式頁面過來
-					
 					req.setAttribute("placeVO", placeVO);
 					String url = "/back-end/place/listOnePlace.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url);
@@ -97,6 +97,7 @@ System.out.println(requestURL);
 					return;
 					
 				}
+System.out.println("有到這邊rrr");					
 				
 				if(requestURL.equals("/front-end/place/selectPlace.jsp") || 
 						requestURL.equals("/front-end/place_collect/listMyPlace_collect.jsp") || 
@@ -131,13 +132,15 @@ System.out.println(requestURL);
 					
 					return;
 				}
-//System.out.println("有到這邊");
+System.out.println("有到這邊");
 				/*************************** 其他可能的錯誤處理 *************************************/
-//			} catch (Exception e) {
-//				errorMsgs.add("無法取得資料:" + e.getMessage());
-//				RequestDispatcher failureView = req.getRequestDispatcher("/place/select_page.jsp");
-//				failureView.forward(req, res);
-//			}
+			} catch (Exception e) {
+				errorMsgs.add("無法取得資料:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/place/select_page.jsp");
+				failureView.forward(req, res);
+				
+				return;
+			}
 		}
 
 		if ("getOne_For_Update".equals(action)) { // 來自listAllPlace.jsp的請求
@@ -202,11 +205,11 @@ System.out.println(requestURL);
 //System.out.println("place_id=" + place_id);
 
 				String place_name = req.getParameter("place_name");
-				String place_nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
+				String place_nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,30}$";
 				if (place_name == null || place_name.trim().length() == 0) {
 					errorMsgs.add("員工姓名: 請勿空白");
 				} else if (!place_name.trim().matches(place_nameReg)) { // 以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("地點名稱: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
+					errorMsgs.add("地點名稱: 只能是中、英文字母、數字和_ , 且長度必需在2到30之間");
 				}
 				
 				String county = req.getParameter("county");
@@ -397,13 +400,28 @@ System.out.println(requestURL);
 				}
 
 				Integer users_id = null;
-				try {
-					users_id = new Integer(req.getParameter("users_id").trim());
-				} catch (NumberFormatException e) {
-					users_id = 0;
-					errorMsgs.add("建立者請填數字.");
-				}
 				
+System.out.println("users_id 是否為null 5555");
+System.out.println( req.getParameter("users_id") + "在這邊" );
+//				空字串變為數字會變成零
+//				if(new String(req.getParameter("users_id")).equals("")) {
+//					users_id = null ;
+//				}
+//
+//				if(new Integer(req.getParameter("users_id")) == 0) {
+//					users_id = null ;
+//				}else {
+					try {
+						if(new Integer(req.getParameter("users_id")) == 0) {
+						users_id = null ;
+						}else {
+						users_id = new Integer(req.getParameter("users_id").trim());
+						}
+					} catch (NumberFormatException e) {
+						users_id = null;
+//						errorMsgs.add("建立者請填數字.");
+					}
+//				}
 				// 營業時間目前暫不使用
 				Integer business_time = null;
 //				try {
@@ -863,9 +881,16 @@ System.out.println(requestURL);
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/place/select_page.jsp");
-					failureView.forward(req, res);
-					return;// 程式中斷
+					if(requestURL.equals("/back-end/place/listAllPlace.jsp")) {    // 將錯誤訊息傳回去
+						RequestDispatcher failureView = req.getRequestDispatcher("/back-end/place/listAllPlace.jsp");
+						failureView.forward(req, res);
+						return;// 程式中斷
+					}else {
+						
+						RequestDispatcher failureView = req.getRequestDispatcher("/place/select_page.jsp");
+						failureView.forward(req, res);
+						return;// 程式中斷
+					}
 				}
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				if(requestURL.equals("/rock_place/front-place_jsp/place.jsp")) {  // 從景點頁面的請求
@@ -873,6 +898,7 @@ System.out.println(requestURL);
 					String url = requestURL;
 					RequestDispatcher successView = req.getRequestDispatcher(url);
 					successView.forward(req, res);
+					return;
 				}
 				
 				if(requestURL.equals("/place/select_page.jsp")) { // 從0201來的請求
@@ -880,6 +906,7 @@ System.out.println(requestURL);
 					String url = requestURL;
 					RequestDispatcher successView = req.getRequestDispatcher(url);
 					successView.forward(req, res);
+					return;
 				}
 				
 				if(requestURL.equals("/front-end/place/selectPlace.jsp")) { // 從正式結構頁面來的請求
@@ -887,6 +914,15 @@ System.out.println(requestURL);
 					String url = requestURL;
 					RequestDispatcher successView = req.getRequestDispatcher(url);
 					successView.forward(req, res);
+					return;
+				}
+				
+				if(requestURL.equals("/back-end/place/listAllPlace.jsp")) {
+					req.setAttribute("list", list);
+					String url = requestURL;
+					RequestDispatcher successView = req.getRequestDispatcher(url);
+					successView.forward(req, res);
+					return;
 				}
 				
 				/*************************** 其他可能的錯誤處理 *************************************/
