@@ -921,5 +921,13 @@ public class TripJDBCDAO implements TripDAO_interface{
 
 
 
+	@Override
+	public TripVO insert2(TripVO tripVO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
 	
 }
