@@ -191,14 +191,14 @@ body {
 
 }
 .glass{
-	min-height:90vh;
+	min-height:100vh;
 
 	background: linear-gradient(to right top,#DBC7B5,#6091AB);
 	padding:2rem 0rem;
 }
 
 .conn{
-	margin: 0rem 1rem;
+	margin: 0rem 0.5rem;
 	background: linear-gradient(to right bottom,rgba(255,255,255,0.1),rgba(255,255,255,0.1));
 	border-radius: 2rem;
 	backdrop-filter:blur(1rem);

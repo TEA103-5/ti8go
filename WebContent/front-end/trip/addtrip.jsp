@@ -34,8 +34,8 @@
                 <div class="block-heading">
                     <h2 class="text-info">addtrip</h2>
 					</div>
-            <div class="container">
-            <div class="row">
+            <div class="container-fluid" style="margin:0px;">
+            <div class="row w-100 justify-content-center align-items-center" style="margin-right:0px; margin-left:0px; flex-wrap:wrap;">
             	
 						 <div class="col-md-2 col-xl-2 mb-2 conn">
 					<table class="table-users">
@@ -48,15 +48,75 @@
 						<td>
 						{{item.place_name}}
 						</td>
+						<td>
+						<button @click="tripDetailAdd(item)">add</button>
+						</td>
 					</tr>
 					</table>
 						
 						 </div>
-				 <div class="col-md-3 col-xl-3 mb-3 conn">
+					<div class="col-md-4 col-xl-4 mb-4 conn">
+									<table class="table-users">
+					<tr>
+							<th>
+							 day
+							</th>
+							<th>
+							 行程明細列表
+							</th>
+							<th>
+							 time
+							</th>
+					</tr>
+					<tr v-for="(item, index) in tripDetaillist" >
+						<td>
+						{{item.trip_day}}
+						</td>
+						<td>
+						{{item.place_name}}
+						</td>
+						<td>
+						{{item.trip_start_time}}~{{item.trip_end_time}}
+						</td>
+						<td>
+						<button @click="tripDetailDel(index)">del</button>
+						</td>
+						<td>
+						<button @click="tripDetailEdit(item,index)">edit</button>
+						</td>
+					</tr>
+					</table>
+					</div>	 
+					 <div class="col-md-2 col-xl-2 mb-2 conn">
+				 地點:{{tripDetail.place_name}}<br/>
+		
+				開始時間:<input type="time"  id="time1" />
+							<br/>
+				結束時間:<input type="time" id="time2"  />
+					<br/>
+				<input
+				class="" type="text" name="trip_name"
+				placeholder="行程內容"
+				v-model="tripDetail.trip_content">
+				 <br/>
+				備註:<input
+				class="" type="text" name="trip_name"
+				placeholder="備註"
+				v-model="tripDetail.trip_remarks">
+				 <br/>
+					<button @click="sendDetailEditToList">確認</button>
+					 </div>	 
+						 
+				 <div class="col-md-2 col-xl-2 mb-2 conn">
 				 行程名稱:<br/>
 				<input
 				class="" type="text" name="trip_name"
 				placeholder="行程名稱" v-model="addtrip.trip_name">
+				 <br/>
+				 行程描述:<br/>
+				<input
+				class="" type="text" name="trip_name"
+				placeholder="行程描述" v-model="addtrip.trip_description">
 				 <br/>
 				開始時間:<br/>
 				<input
@@ -68,9 +128,9 @@
 							class="" type="text" name="trip_end"
 							id="f_date2">
 
-
+					<br/>
 					<button @click="submitTrip">確認</button>
-						 </div>
+				 </div>
 						 
             </div>
         
@@ -85,6 +145,22 @@
 	var vm = new Vue({
 	    el: '#app',
 	    data: {
+	    	tripDetaillist:[],
+	    	tripDetail:{
+	    		trip_day:'1',
+	    		place_id:'1',
+	    		trip_id:'1',
+	    		trip_sort:1,
+	    		trip_detail_type:'其他',
+	    		trip_content:'',
+	    		trip_start_time:'',
+	    		trip_end_time:'',
+	    		trip_remarks:'無',
+	    		trip_cost:'0',
+	    		action:'insertajax',
+	    		place_name:'',
+	    		indexOfList:0,
+	    	},
 	    	addtrip:{
 	    		users_id:${(usersVO==null)?1:usersVO.users_id },
 	    		last_editor:${(usersVO==null)?1:usersVO.users_id },
@@ -117,10 +193,59 @@
 				this.addtrip.trip_end=$('#f_date2').val();
 				console.log(this.addtrip.trip_name);
 			},
+			sendDetailEditToList(){
+				console.log("dfasfds");
+				this.tripDetail.trip_start_time=$('#time1').val();
+				this.tripDetail.trip_end_time=$('#time2').val();
+				this.tripDetaillist[this.tripDetail.indexOfList]=this.tripDetail;
+			},
+			tripDetailEdit(item,index){
+				this.tripDetail=item;
+				this.tripDetail.indexOfList=index;
+				$('#time1').val(item.trip_start_time);
+				$('#time2').val(item.trip_end_time);
+			},
+			tripDetailDel(index){
+				this.tripDetaillist.splice(index, 1);
+			},
+			tripDetailAdd(e){
+	            this.tripDetaillist.push({
+		    		trip_day:'1',
+		    		place_id:e.place_id,
+		    		trip_id:'1',
+		    		trip_sort:1,
+		    		trip_detail_type:'其他',
+		    		trip_content:'',
+		    		trip_start_time:'',
+		    		trip_end_time:'',
+		    		trip_remarks:'無',
+		    		trip_cost:'0',
+		    		action:'insertajax',
+		    		place_name:e.place_name,
+		    		indexOfList:0,
+	            });
+			},
+			submitTripDetail(){//行程細節送出 目前以submitTrip()觸發
+				this.tripDetail.trip_start_time=$('#time1').val();
+				this.tripDetail.trip_end_time=$('#time2').val();
+				
+				$.ajax({
+			        url: "<%=request.getContextPath()%>/trip_detail/trip_detail.do",           // 資料請求的網址
+			        type: "POST",                  // GET | POST | PUT | DELETE | PATCH
+			        async: false,
+			        data: this.tripDetail,               // 傳送資料到指定的 url
+			        dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
+			        success: function (data) {      // request 成功取得回應後執行
+			          console.log(data);
+			      	          
+			        }
+			    });
+			},
 			submitTrip(){
+				let self=this;
 				this.addtrip.trip_start=$('#f_date1').val();
 				this.addtrip.trip_end=$('#f_date2').val();
-
+				
 				$.ajax({
 			        url: "<%=request.getContextPath()%>/trip/trip.do",           // 資料請求的網址
 			        type: "POST",                  // GET | POST | PUT | DELETE | PATCH
@@ -129,7 +254,7 @@
 			        dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
 			        success: function (data) {      // request 成功取得回應後執行
 			          console.log(data);
-			      	          
+			          //self.submitTripDetail();        
 			        }
 			    });
 			},
