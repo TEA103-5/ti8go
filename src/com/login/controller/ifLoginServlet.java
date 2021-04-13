@@ -196,8 +196,8 @@ public class ifLoginServlet extends HttpServlet {
 	
 				url="/sale-end/saleEndIndex.jsp";
 			}else if("admins".equals(uVO.getSale_name())) {
-				AdminsService adminSrc = new AdminsService();
-				req.getSession().setAttribute("adminsVO",adminSrc.getOneadmins(uVO.getSale_id()));
+				AdminsService adminsSrc = new AdminsService();
+				req.getSession().setAttribute("adminsVO",adminsSrc.getOneadmins(uVO.getSale_id()));
 				url="/back-end/backindex.jsp";
 			}
 		}else {

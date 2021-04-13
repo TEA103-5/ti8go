@@ -399,10 +399,10 @@
 	                    
 	                    <div class="form-row">
 	                    <!-- 	                建立者這邊純顯示, 值由底下的input=hidden 發送 -->
-	                        <div class="col-md-12 mb-3">
-	                            <label  for="validationServer12">建立者</label>
-	                            <input type="text" class="form-control " id="validationServer12" name="" value="<%= (placeVO==null)? "" : placeVO.getUsers_id()%>" >
-	                        </div>
+<!-- 	                        <div class="col-md-12 mb-3"> -->
+<!-- 	                            <label  for="validationServer12">建立者</label> -->
+<%-- 	                            <input type="text" class="form-control " id="validationServer12" name="" value="<%= (placeVO==null)? "" : placeVO.getUsers_id()%>" > --%>
+<!-- 	                        </div> -->
 	                    </div>
 	                    
 			        	

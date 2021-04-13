@@ -1,3 +1,5 @@
+<%@page import="com.users.model.UsersService"%>
+<%@page import="com.admins.model.AdminsService"%>
 <%@page import="java.util.*"%>
 <%@page import="com.place.model.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -6,6 +8,7 @@
 
 <%
 	PlaceService placeSvc = new PlaceService();
+	UsersService usersSvc = new UsersService();
 
 	List<PlaceVO> list = null;	
 	if(request.getAttribute("list") != null){
@@ -18,6 +21,7 @@
 // 	List<PlaceVO> list = placeSvc.getAll();
 	pageContext.setAttribute("list", list);
 	pageContext.setAttribute("placeSvc", placeSvc);  // 用來取代底下的jsp:bean
+	pageContext.setAttribute("usersSvc", usersSvc);
 %>
 
 <!DOCTYPE html>
@@ -178,7 +182,8 @@
                                         <tr>
                                             <td>${placeVO.place_id}</td>
 											<td>${placeVO.place_name}</td>
-											<td class="place_state_text"><c:choose>
+											<td class="place_state_text">
+												<c:choose>
 									            	<c:when test="${placeVO.place_state == 1}">
 									                	上架中
 									           		</c:when>
@@ -186,7 +191,15 @@
 									                 	審核中
 									            	</c:otherwise>
 									        	</c:choose></td>
-									        <td>${placeVO.users_id}</td>
+									        <td>
+									        	<c:choose>
+									            	<c:when test="${placeVO.users_id == 0}">
+									                	管理員
+									           		</c:when>
+									          		<c:otherwise>
+									          			${usersSvc.getOneusers(placeVO.users_id).users_mail}
+									            	</c:otherwise>
+									        	</c:choose></td>
 									        <td>
 											  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/place/place.do" style="margin-bottom: 0px;">
 											     <input type="submit" value="詳情">
