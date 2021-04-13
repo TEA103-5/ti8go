@@ -1,3 +1,4 @@
+
 <%@page import="java.util.*"%>
 <%@page import="com.place.model.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -6,6 +7,7 @@
 
 <%
 	PlaceService placeSvc = new PlaceService();
+// 	UsersService usersSvc = new UsersService();
 
 	List<PlaceVO> list = null;	
 	if(request.getAttribute("list") != null){
@@ -18,6 +20,7 @@
 // 	List<PlaceVO> list = placeSvc.getAll();
 	pageContext.setAttribute("list", list);
 	pageContext.setAttribute("placeSvc", placeSvc);  // 用來取代底下的jsp:bean
+// 	pageContext.setAttribute("usersSvc", usersSvc);
 %>
 
 <!DOCTYPE html>
@@ -169,7 +172,7 @@
                                             <!-- 		<th>營業時間</th> -->
 <!--                                             <th>讚數</th> -->
 											<th>詳情</th>
-                                            <th>修改</th>
+<!--                                             <th>修改</th> -->
                                             <th>上架/下架</th>
                                         </tr>
                                     </thead>
@@ -178,7 +181,8 @@
                                         <tr>
                                             <td>${placeVO.place_id}</td>
 											<td>${placeVO.place_name}</td>
-											<td class="place_state_text"><c:choose>
+											<td class="place_state_text">
+												<c:choose>
 									            	<c:when test="${placeVO.place_state == 1}">
 									                	上架中
 									           		</c:when>
@@ -186,7 +190,15 @@
 									                 	審核中
 									            	</c:otherwise>
 									        	</c:choose></td>
-									        <td>${placeVO.users_id}</td>
+									        <td>
+									        	<c:choose>
+									            	<c:when test="${placeVO.users_id == 0}">
+									                	管理員
+									           		</c:when>
+									          		<c:otherwise>
+									          			${usersSvc.getOneusers(placeVO.users_id).users_mail}
+									            	</c:otherwise>
+									        	</c:choose></td>
 									        <td>
 											  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/place/place.do" style="margin-bottom: 0px;">
 											     <input type="submit" value="詳情">
@@ -194,13 +206,13 @@
 											     <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
 											     <input type="hidden" name="action"	value="getOne_For_Display"></FORM>
 											</td>
-	                                        <td>
-											  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/place/place.do" style="margin-bottom: 0px;">
-											     <input type="submit" value="修改">
-											     <input type="hidden" name="place_id"  value="${placeVO.place_id}">
-											     <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
-											     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
-											</td>
+<!-- 	                                        <td> -->
+<%-- 											  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/place/place.do" style="margin-bottom: 0px;"> --%>
+<!-- 											     <input type="submit" value="修改"> -->
+<%-- 											     <input type="hidden" name="place_id"  value="${placeVO.place_id}"> --%>
+<%-- 											     <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>"> --%>
+<!-- 											     <input type="hidden" name="action"	value="getOne_For_Update"></FORM> -->
+<!-- 											</td> -->
 											<td>
 											  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/place/place.do" style="margin-bottom: 0px;">
 											     <c:if test="${placeVO.place_state == 1}">
@@ -211,8 +223,7 @@
 						                         </c:if>
 											     
 <!-- 											     <input class="change_place_state" type="button" value="上架/下架(未寫好)"> -->
-											     <input class="place_id_value" type="hidden" name="place_id"  value="${placeVO.place_id}">
-											     <input type="hidden" name="action" value="delete"></FORM>
+											     <input class="place_id_value" type="hidden" name="place_id"  value="${placeVO.place_id}"></FORM>
 											</td>
                                         </tr>
 									</c:forEach>
@@ -236,7 +247,7 @@
                                             <!-- 		<th>營業時間</th> -->
 <!--                                             <th>讚數</th> -->
 											<th>詳情</th>
-                                            <th>修改</th>
+<!--                                             <th>修改</th> -->
                                             <th>上架/下架</th>
                                         </tr>
                                     </tfoot>
