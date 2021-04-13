@@ -8,6 +8,7 @@ import com.team.model.TeamVO;
 import com.trip_detail.model.Trip_detailVO;
 
 public interface TripDAO_interface {
+	public TripVO insert2(TripVO tripVO);
     public void insert(TripVO tripVO);
     public void update(TripVO tripVO);
     public void delete(Integer trip_id);

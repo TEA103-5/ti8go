@@ -200,5 +200,14 @@
     <servlet-name>TripServlet</servlet-name>
     <url-pattern>/trip/trip.do</url-pattern>
   </servlet-mapping>
+  
+     <servlet>
+    <servlet-name>Trip_detailServlet</servlet-name>
+    <servlet-class>com.trip_detail.controller.Trip_detailServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Trip_detailServlet</servlet-name>
+    <url-pattern>/trip_detail/trip_detail.do</url-pattern>
+  </servlet-mapping>
 	
 </web-app>

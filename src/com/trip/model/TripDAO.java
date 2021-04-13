@@ -24,7 +24,11 @@ public class TripDAO implements TripDAO_interface {
 				e.printStackTrace();
 			}
 		}
-	
+		private static final String GET_ONE_STMT2 =  "SELECT * FROM trip where trip_create_time = ? and users_id=?";
+		private static final String INSERT_STMT2 = 
+				"INSERT INTO trip (users_id,last_editor,trip_state,read_authority,"
+						+ "edit_authority,trip_area,trip_start,trip_end,trip_name,trip_description,"
+						+ "trip_type,trip_tot_cost,place_weather,trip_create_time) VALUES (?, ?,?, ?, ?, ?,?,?,?,?,?,?,?,?)";
 	private static final String INSERT_STMT = 
 			"INSERT INTO trip (users_id,last_editor,trip_state,read_authority,"
 					+ "edit_authority,trip_area,trip_start,trip_end,trip_name,trip_description,"
@@ -42,6 +46,85 @@ public class TripDAO implements TripDAO_interface {
 	private static final String GET_Team_ByTrip_STMT = "SELECT * FROM team where trip_id = ? order by users_id";
 //	private static final String GET_Activities_ByTrip_STMT = "SELECT * FROM group_activities where trip_id = ? order by activities_id";
 	
+	public TripVO insert2(TripVO tripVO) {
+		TripVO tvo=new TripVO();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(INSERT_STMT2);
+			
+			pstmt.setInt(1, tripVO.getUsers_id());
+			pstmt.setInt(2, tripVO.getLast_editor());
+			pstmt.setInt(3, tripVO.getTrip_state());
+			pstmt.setInt(4, tripVO.getRead_authority());
+			pstmt.setInt(5, tripVO.getEdit_authority());
+			pstmt.setString(6, tripVO.getTrip_area());
+			pstmt.setDate(7, tripVO.getTrip_start());
+			pstmt.setDate(8, tripVO.getTrip_end());
+			pstmt.setString(9, tripVO.getTrip_name());
+			pstmt.setString(10, tripVO.getTrip_description());
+			pstmt.setString(11, tripVO.getTrip_type());
+			pstmt.setInt(12, tripVO.getTrip_tot_cost());
+			pstmt.setString(13, tripVO.getPlace_weather());
+			pstmt.setTimestamp(14, tripVO.getTrip_create_time());
+			
+			pstmt.executeUpdate();
+			
+			pstmt = con.prepareStatement(GET_ONE_STMT2);
+			pstmt.setTimestamp(1, tripVO.getTrip_create_time());
+			pstmt.setInt(2, tripVO.getUsers_id());
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				// TripVO 也稱為 Domain objects
+				tripVO = new TripVO();
+				tripVO.setTrip_id(rs.getInt("trip_id"));
+				 tripVO.setUsers_id(rs.getInt("Users_id"));
+				 tripVO.setTrip_create_time(rs.getTimestamp("Trip_create_time"));
+				 tripVO.setLast_edit_time(rs.getTimestamp("Last_edit_time"));
+				 tripVO.setLast_editor(rs.getInt("Last_editor"));
+				 tripVO.setTrip_state(rs.getInt("Trip_state"));
+				 tripVO.setTrip_like(rs.getInt("Trip_like"));
+				 tripVO.setTrip_look(rs.getInt("Trip_look"));
+				 tripVO.setRead_authority(rs.getInt("Read_authority"));
+				 tripVO.setEdit_authority(rs.getInt("Edit_authority"));
+				 tripVO.setTrip_area(rs.getString("Trip_area"));
+				 tripVO.setTrip_start(rs.getDate("Trip_start"));
+				 tripVO.setTrip_end(rs.getDate("Trip_end"));
+				 tripVO.setTrip_name(rs.getString("trip_name"));
+				 tripVO.setTrip_description(rs.getString("trip_description"));
+				 tripVO.setTrip_type(rs.getString("trip_type"));
+				 tripVO.setTrip_tot_cost(rs.getInt("trip_tot_cost"));
+				 tripVO.setPlace_weather(rs.getString("place_weather"));
+	
+			}
+			
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return tripVO;
+	}
 	@Override
 	public void insert(TripVO tripVO) {
 	

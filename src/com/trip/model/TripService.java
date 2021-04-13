@@ -14,6 +14,9 @@ public class TripService {
 		dao = new TripDAO();
 	}
 
+	public TripVO addEmp2(TripVO tripVO) {		
+		return dao.insert2(tripVO);
+	}
 	public TripVO addEmp(Integer users_id, Integer last_editor, Integer trip_state, Integer read_authority, Integer edit_authority,
 			String trip_area, Date trip_start, Date trip_end, String trip_name, String trip_description,
 			String trip_type, Integer trip_tot_cost, String place_weather) {

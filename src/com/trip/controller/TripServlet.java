@@ -1,6 +1,8 @@
 package com.trip.controller;
 
 import java.io.*;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javax.servlet.*;
@@ -10,6 +12,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.json.JSONObject;
 
 import com.team.model.TeamVO;
 import com.trip.model.TripService;
@@ -131,8 +135,11 @@ public class TripServlet extends HttpServlet {
         		tripVO.setTrip_type(trip_type);
         		tripVO.setTrip_tot_cost(trip_tot_cost);
         		tripVO.setPlace_weather(place_weather);
-        		
-        		
+				java.sql.Date date = new java.sql.Date(new Date().getTime());
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				String nowTime = sdf.format(date);
+				Timestamp dates = Timestamp.valueOf(nowTime);
+        		tripVO.setTrip_create_time(dates);
         		// Send the use back to the form, if there were errors
         		if (!errorMsgs.isEmpty()) {
         			req.setAttribute("tripVO", tripVO); // 含有輸入格式錯誤的empVO物件,也存入req
@@ -144,13 +151,17 @@ public class TripServlet extends HttpServlet {
         		
         		/***************************2.開始新增資料***************************************/
         		TripService tripSvc = new TripService();
-        		tripVO = tripSvc.addEmp(users_id,last_editor,trip_state,read_authority,edit_authority,trip_area,trip_start,trip_end,trip_name,trip_description,trip_type,trip_tot_cost,place_weather);
-        		
+        		tripVO = tripSvc.addEmp2(tripVO);
+    			HashMap result = new HashMap();
+    			PrintWriter out = res.getWriter();
+    			result.put("trip_id",tripVO.getTrip_id());
+    			JSONObject resultJSON = new JSONObject(result);
+				out.println(resultJSON);
         		/***************************3.新增完成,準備轉交(Send the Success view)***********/
 //        		String url = "/trip/listAllEmp.jsp";
 //        		RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 //        		successView.forward(req, res);				
-        		System.out.println("trip add ok");
+
         		/***************************其他可能的錯誤處理**********************************/
         	} catch (Exception e) {
         		System.out.println(e);
