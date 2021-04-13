@@ -142,20 +142,43 @@
     <script src="<%=request.getContextPath()%>/front-end/place/assets/js/theme.js"></script>
 
     <!-- 以下是自己新增的js -->
-    <script src="<%=request.getContextPath()%>/front-end/place/myjs/place/googleMap.js"></script>
-    <script src="<%=request.getContextPath()%>/front-end/place/myjs/place/search-bar.js"></script>
-
-<!-- 	載入的地址選單套件 -->
-    <script src="<%=request.getContextPath()%>/front-end/place/tw-city-selector-master/dist/tw-city-selector.js"></script> 
     <script>
-        function init() {
-            new TwCitySelector({
-                // el: '.city-selector',
-                // bootstrapStyle: true
-            });
-        }
-        init();
+    
+    	let x ;
+    	let y ;
+    	let latlng;
+    
+    	let position = [];
+		    <c:forEach var="placeVO" items="${list}"  varStatus="loop">
+			    <c:if test="${(placeVO.place_state == 1 ) ||  (sessionScope.users_id == placeVO.users_id) }">
+			     	x = ${placeVO.place_latitude}
+			     	y = ${placeVO.place_longitude}
+			     	latlng = {lat : x , lng: y}
+			     	position.push(latlng);
+// 			    	position[${loop.index}] = { lat: ${placeVO.place_latitude}, lng: ${placeVO.place_longitude} } ;
+			    </c:if>
+			</c:forEach>
+		
+		
+		
+			
+			
+			
+// 	    let position = [
+// 	        { label: 'A', lat: 25.0336962, lng: 121.5643673 },
+// 	        { label: 'B', lat: 25.0333698, lng: 121.5641564 },
+// 	        { label: 'C', lat: 25.033899, lng: 121.564329 },
+// 	        { label: 'D', lat: 25.0338407, lng: 121.5645269 },
+// 	        { label: 'E', lat: 25.03361, lng: 121.56083 }
+// 	    ];
     </script>
+    
+    
+    <script src="<%=request.getContextPath()%>/front-end/place/myjs/place/googleMap.js"></script>
+    
+    <!-- 	載入的地址選單套件 -->
+    <script src="<%=request.getContextPath()%>/front-end/place/tw-city-selector-master/dist/tw-city-selector.js"></script> 
+    <script src="<%=request.getContextPath()%>/front-end/place/myjs/place/search-bar.js"></script>
     <script src="<%=request.getContextPath()%>/front-end/place/myjs/place/card_container.js"></script>
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAS-fxnvefOMYMXZnlrUlgPIsvgmMcFuY&callback=initMap&libraries=&v=weekly" async></script>

@@ -47,7 +47,20 @@ let currentInfoWindow  // 供DisplayInfoWindow()方法使用
 
 let map;
 let markers = [];
+
 // position陣列改成jsp版時要拉出來放到jsp本體裡,以便初始化時用EL定義
+// let position = [];
+// position[0].lat = 25.0336962;
+// position[0].lng = 121.5643673;
+// position[1].lat = 25.0333698;
+// position[1].lng = 121.5641564;
+
+// let latlng = { lat: 25.0336962, lng: 121.5643673 };
+// position.push(latlng);
+
+
+
+
 let position = [
     { label: 'A', lat: 25.0336962, lng: 121.5643673 },
     { label: 'B', lat: 25.0333698, lng: 121.5641564 },

@@ -1,38 +1,52 @@
 $(function () {
 
-    // 調整看是否能將點擊的該張card貼齊上方?
+    // 每張card高度為416.75, 找出第幾張card後, 將高度貼齊上方
     $(".card").on("click", function () {
 
+        // 因為card會因文字大小而改變大小, offset跟position都沒辦法取到
+        // 合適高度 , 找到第幾張卡後 , 把每個的height()累加後再移動?
 
-        alert("777")
+        // 之後要用經緯度找出第幾張card
+        // let id = $(this).attr("data-id");
+        // console.log(id)
+        let card_index = $(this).index("div.card");
+        console.log("第" + card_index + "個card")
 
-        var id = $(this).attr("data-id");
-        console.log(id)
-
-        // 取得目標區塊的y座標
-        var target_top = $(this).offset().top;
-        console.log(target_top)
-
-
-        // 取得body物件 這種寫法在各瀏覽器上最保險
         let card_container = $("#card-container");
-        // var $body = (window.opera) ? (document.compatMode == "CSS1Compat" ? $('html') : $('body')) : $('html,body');
+        let card_total_height = 0;
 
-        card_container.scrollTop(target_top);
+        for (let i = 0; i < card_index; i++) {
+            card_total_height += $("div.card").eq(i).height();
+        };
+
+        console.log("card距離頂端總長度為" + card_total_height);
+
+
+
         // 移動捲軸無動畫效果
-        //$body.scrollTop(target_top);
+        // card_container.scrollTop((id - 1) * 416.750);
 
         // 移動捲軸有動畫效果
-        // $body.animate({
-        //     scrollTop: target_top
-        // }, 800);
+        card_container.animate({
+            // scrollTop: ((id - 1) * 416.75)
+            scrollTop: card_total_height
+        }, 800);
+
+        // 點擊card時將地圖中心移到該card對應的marker
+        map.panTo(markers[card_index].getPosition());
+
+        // 將當前點擊的索引當作參數呼叫DisplayInfoWindow
+        DisplayInfoWindow(card_index)
 
     })
 
-    // 取消地點詳情 加入收藏點擊時的冒泡事件
+    // 取消"地點詳情" "加入收藏"兩個按鈕點擊時的冒泡事件
     $(".btn.btn-secondary").on("click", function (e) {
         e.stopPropagation();
     })
+
+
+
 
 
 })
