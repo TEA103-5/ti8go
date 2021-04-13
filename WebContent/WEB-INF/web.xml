@@ -218,5 +218,22 @@
     <servlet-name>Trip_detailServlet</servlet-name>
     <url-pattern>/trip_detail/trip_detail.do</url-pattern>
   </servlet-mapping>
+  
+    <servlet>
+    <servlet-name>NoteServlet</servlet-name>
+    <servlet-class>com.note.controller.NoteServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>NoteServlet</servlet-name>
+    <url-pattern>/note/note.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>NoteCServlet</servlet-name>
+    <servlet-class>com.notec.controller.NoteCServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>NoteCServlet</servlet-name>
+    <url-pattern>/notec/notec.do</url-pattern>
+  </servlet-mapping>
 	
 </web-app>
