@@ -145,6 +145,8 @@
 	var vm = new Vue({
 	    el: '#app',
 	    data: {
+	    	theTrip_id:0,
+	    	detailUpdateCount:0,
 	    	tripDetaillist:[],
 	    	tripDetail:{
 	    		trip_day:'1',
@@ -194,7 +196,6 @@
 				console.log(this.addtrip.trip_name);
 			},
 			sendDetailEditToList(){
-				console.log("dfasfds");
 				this.tripDetail.trip_start_time=$('#time1').val();
 				this.tripDetail.trip_end_time=$('#time2').val();
 				this.tripDetaillist[this.tripDetail.indexOfList]=this.tripDetail;
@@ -224,22 +225,27 @@
 		    		place_name:e.place_name,
 		    		indexOfList:0,
 	            });
+	            console.log(this.tripDetaillist.length);
 			},
 			submitTripDetail(){//行程細節送出 目前以submitTrip()觸發
-				this.tripDetail.trip_start_time=$('#time1').val();
-				this.tripDetail.trip_end_time=$('#time2').val();
-				
+				let self=this;
+					
+				console.log(self.detailUpdateCount);
+				if(self.detailUpdateCount>=1){
+					self.detailUpdateCount--;
+					self.tripDetaillist[self.detailUpdateCount].trip_id=self.theTrip_id;
 				$.ajax({
 			        url: "<%=request.getContextPath()%>/trip_detail/trip_detail.do",           // 資料請求的網址
 			        type: "POST",                  // GET | POST | PUT | DELETE | PATCH
 			        async: false,
-			        data: this.tripDetail,               // 傳送資料到指定的 url
+			        data: self.tripDetaillist[self.detailUpdateCount],               // 傳送資料到指定的 url
 			        dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
-			        success: function (data) {      // request 成功取得回應後執行
+			        success: function (data) {      //這裡依照陣列長度(有幾個行程明細)呼叫自己
 			          console.log(data);
-			      	          
+			      	self.submitTripDetail();        
 			        }
 			    });
+				}
 			},
 			submitTrip(){
 				let self=this;
@@ -252,9 +258,11 @@
 			        async: false,
 			        data: this.addtrip,               // 傳送資料到指定的 url
 			        dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
-			        success: function (data) {      // request 成功取得回應後執行
-			          console.log(data);
-			          //self.submitTripDetail();        
+			        success: function (data) {      // 這裡必須得到trip_id
+			          
+			        self.detailUpdateCount=self.tripDetaillist.length;
+			        self.theTrip_id=data.trip_id;
+			        self.submitTripDetail();        
 			        }
 			    });
 			},

@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
+
 import com.trip.model.TripService;
 import com.trip_detail.model.Trip_detailService;
 import com.trip_detail.model.Trip_detailVO;
@@ -127,6 +129,11 @@ public class Trip_detailServlet extends HttpServlet {
 					Trip_detailService trip_detailSvc = new Trip_detailService();
 					trip_detailVO = trip_detailSvc.addEmp(trip_detailVO);
 					System.out.println("tripDetail add ok");
+	    			HashMap result = new HashMap();
+	    			PrintWriter out = res.getWriter();
+	    			result.put("trip_detail",trip_detailVO);
+	    			JSONObject resultJSON = new JSONObject(result);
+					out.println(resultJSON);
 //					trip_id,trip_day,trip_sort,trip_detail_type,trip_content,trip_start_time,trip_end_time,trip_remarks,trip_cost
 					/***************************3.新增完成,準備轉交(Send the Success view)***********/
 //					String url = "/trip_detail/listAllEmp.jsp";
