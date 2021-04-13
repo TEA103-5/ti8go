@@ -401,16 +401,7 @@ System.out.println(requestURL);
 
 				Integer users_id = null;
 				
-System.out.println("users_id 是否為null 5555");
-System.out.println( req.getParameter("users_id") + "在這邊" );
-//				空字串變為數字會變成零
-//				if(new String(req.getParameter("users_id")).equals("")) {
-//					users_id = null ;
-//				}
-//
-//				if(new Integer(req.getParameter("users_id")) == 0) {
-//					users_id = null ;
-//				}else {
+//				getInt碰到null會回傳0
 					try {
 						if(new Integer(req.getParameter("users_id")) == 0) {
 						users_id = null ;
