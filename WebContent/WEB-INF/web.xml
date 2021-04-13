@@ -110,11 +110,11 @@
 	</servlet-mapping>
 
 	<servlet>
-		<servlet-name>DBGifReader4</servlet-name>
+		<servlet-name>DBGifReader4_place</servlet-name>
 		<servlet-class>com.place.controller.DBGifReader4</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>DBGifReader4</servlet-name>
+		<servlet-name>DBGifReader4_place</servlet-name>
 		<url-pattern>/place/DBGifReader4.do</url-pattern>
 	</servlet-mapping>
 
