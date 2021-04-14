@@ -34,6 +34,25 @@ public class SaleService {
 		return saleVO;
 	}
 	
+	
+	public SaleVO addSaleq(String sale_email,String sale_pwd) {
+		SaleVO saleVO=new SaleVO();
+		
+
+		saleVO.setSale_email(sale_email);
+		saleVO.setSale_pwd(sale_pwd);
+//		saleVO.setSale_name(sale_name);
+//		saleVO.setSale_audit_pic(sale_audit_pic);
+//		saleVO.setSale_phone(sale_phone);
+//		saleVO.setSale_nickname(sale_nickname);
+//		saleVO.setSale_rate(sale_rate);
+
+		
+		
+		saleVO=dao.findByPrimaryKey(dao.insertq(saleVO));
+		return saleVO;
+	}
+	
 //		,byte[] sale_audit_pic
 	public SaleVO updateSale(String sale_pwd,Integer sale_audit_status,String sale_name,Integer sale_status,String sale_phone,String sale_nickname,Float sale_rate,Integer sale_id) {
 		SaleVO saleVO=new SaleVO();
@@ -50,6 +69,10 @@ public class SaleService {
 		
 		dao.update(saleVO);
 		return saleVO;
+	}
+	public SaleVO updateSaleVO(SaleVO saleVO) {		
+		dao.update(saleVO);
+		return dao.findByPrimaryKey(saleVO.getSale_id());
 	}
 	public SaleVO updateSaleP(Integer sale_id,byte[] sale_audit_pic) {
 		SaleVO saleVO=new SaleVO();

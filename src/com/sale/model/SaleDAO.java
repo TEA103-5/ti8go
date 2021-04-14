@@ -16,11 +16,7 @@ import javax.sql.DataSource;
 
 import com.product.model.ProductVO;
 
-
-
-
-
-public class SaleDAO implements SaleDAO_interface{
+public class SaleDAO implements SaleDAO_interface {
 	private static DataSource ds = null;
 	static {
 		try {
@@ -30,61 +26,55 @@ public class SaleDAO implements SaleDAO_interface{
 			e.printStackTrace();
 		}
 	}
-	//單獨更新照片
-	private static final String UPDATEP = 
-			"UPDATE sale set sale_audit_pic=? where sale_id = ?";
-	//,sale_audit_pic
-	private static final String INSERT_STMT = 
-			"insert into sale(sale_email,sale_pwd,sale_name,sale_phone,sale_nickname) values (?,?,?,?,?)";
-	//7個問號
-	private static final String DELETE = 
-			"DELETE FROM sale where sale_id = ?";
-	private static final String UPDATE = 
-			"UPDATE sale set sale_pwd=?,sale_audit_status=?,sale_name=?,sale_status=?,sale_phone=?,sale_nickname=?,sale_rate=? where sale_id = ?";
-	//7+1個問號,
-	private static final String GET_ONE_STMT = 
-			"SELECT sale_id,sale_email,sale_pwd,sale_name,sale_audit_status,sale_audit_pic,sale_status,sale_phone,sale_nickname,sale_rate,sale_time_create FROM sale where sale_id = ?";
-	//11個欄位 
-	private static final String GET_ALL_STMT = 
-			"SELECT sale_id,sale_email,sale_pwd,sale_name,sale_audit_status,sale_audit_pic,sale_status,sale_phone,sale_nickname,sale_rate,sale_time_create FROM sale order by sale_id";
-	private static final String GET_Prods_BySaleid_STMT = 
-			"SELECT product_id,product_name,PRODUCT_Status,PRODUCT_Content,PRODUCT_Description,PRODUCT_Categories,PRODUCT_Price,PRODUCT_Stock,sale_id,product_update_time FROM product where sale_id = ? order by product_id";
-	
+	// 單獨更新照片
+	private static final String UPDATEP = "UPDATE sale set sale_audit_pic=? where sale_id = ?";
+	// ,sale_audit_pic
+	private static final String INSERT_STMT = "insert into sale(sale_email,sale_pwd,sale_name,sale_phone,sale_nickname) values (?,?,?,?,?)";
+	private static final String INSERT_STMTq = "insert into sale(sale_email,sale_pwd) values (?,?)";
+	private static final String findIdByMail = "select sale_id from sale where sale_email=?";
+	// 7個問號
+	private static final String DELETE = "DELETE FROM sale where sale_id = ?";
+	private static final String UPDATE = "UPDATE sale set sale_pwd=?,sale_audit_status=?,sale_name=?,sale_status=?,sale_phone=?,sale_nickname=?,sale_rate=? where sale_id = ?";
+	// 7+1個問號,
+	private static final String GET_ONE_STMT = "SELECT sale_id,sale_email,sale_pwd,sale_name,sale_audit_status,sale_audit_pic,sale_status,sale_phone,sale_nickname,sale_rate,sale_time_create FROM sale where sale_id = ?";
+	// 11個欄位
+	private static final String GET_ALL_STMT = "SELECT sale_id,sale_email,sale_pwd,sale_name,sale_audit_status,sale_audit_pic,sale_status,sale_phone,sale_nickname,sale_rate,sale_time_create FROM sale order by sale_id";
+	private static final String GET_Prods_BySaleid_STMT = "SELECT product_id,product_name,PRODUCT_Status,PRODUCT_Content,PRODUCT_Description,PRODUCT_Categories,PRODUCT_Price,PRODUCT_Stock,sale_id,product_update_time FROM product where sale_id = ? order by product_id";
+
 	public Set<ProductVO> getProdsBySaleid(Integer sale_id) {
-	
+
 		Set<ProductVO> set = new LinkedHashSet<ProductVO>();
 		ProductVO productVO = null;
-	
+
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-	
+
 		try {
-	
+
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_Prods_BySaleid_STMT);
 			pstmt.setInt(1, sale_id);
 			rs = pstmt.executeQuery();
-	
+
 			while (rs.next()) {
-			productVO = new ProductVO();
-			productVO.setProduct_id(rs.getInt("product_id"));
-			productVO.setProduct_name(rs.getString("product_name"));
-			productVO.setProduct_status(rs.getInt("PRODUCT_Status"));
+				productVO = new ProductVO();
+				productVO.setProduct_id(rs.getInt("product_id"));
+				productVO.setProduct_name(rs.getString("product_name"));
+				productVO.setProduct_status(rs.getInt("PRODUCT_Status"));
 				productVO.setProduct_content(rs.getString("Product_content"));
 				productVO.setProduct_description(rs.getString("Product_description"));
 				productVO.setProduct_categories(rs.getString("Product_categories"));
 				productVO.setProduct_price(rs.getInt("Product_price"));
 				productVO.setProduct_stock(rs.getInt("Product_stock"));
-			productVO.setSale_id(rs.getInt("sale_id"));
-			productVO.setProduct_update_time(rs.getTimestamp("product_update_time"));
+				productVO.setSale_id(rs.getInt("sale_id"));
+				productVO.setProduct_update_time(rs.getTimestamp("product_update_time"));
 				set.add(productVO); // Store the row in the vector
 			}
-	
+
 			// Handle any SQL errors
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
 			if (rs != null) {
 				try {
@@ -110,19 +100,58 @@ public class SaleDAO implements SaleDAO_interface{
 		}
 		return set;
 	}
-	
-	
-	
+
 	@Override
-	public void insert(SaleVO saleVO) {//新增
+	public Integer insertq(SaleVO saleVO) {// 新增
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		
+		ResultSet rs = null;
+		Integer id = null;
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(INSERT_STMTq);
+			pstmt.setString(1, saleVO.getSale_email());
+			pstmt.setString(2, saleVO.getSale_pwd());
+			pstmt.executeUpdate();
+			pstmt = con.prepareStatement(findIdByMail);
+			pstmt.setString(1, saleVO.getSale_email());
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				id = rs.getInt("sale_id");
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return id;
+	}
+
+	@Override
+	public void insert(SaleVO saleVO) {// 新增
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
-			
-			//sale_email,sale_pwd,sale_name,sale_audit_pic,sale_phone,sale_nickname,sale_rate
+
+			// sale_email,sale_pwd,sale_name,sale_audit_pic,sale_phone,sale_nickname,sale_rate
 			pstmt.setString(1, saleVO.getSale_email());
 			pstmt.setString(2, saleVO.getSale_pwd());
 			pstmt.setString(3, saleVO.getSale_name());
@@ -130,11 +159,10 @@ public class SaleDAO implements SaleDAO_interface{
 			pstmt.setString(5, saleVO.getSale_nickname());
 //			pstmt.setFloat(6, saleVO.getSale_rate());		
 //			pstmt.setBytes(6,saleVO.getSale_audit_pic());
-			
+
 			pstmt.executeUpdate();
-		}catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {
@@ -153,6 +181,7 @@ public class SaleDAO implements SaleDAO_interface{
 			}
 		}
 	}
+
 	@Override
 	public void updatep(SaleVO saleVO) {
 		Connection con = null;
@@ -160,38 +189,38 @@ public class SaleDAO implements SaleDAO_interface{
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATEP);
-			
+
 			pstmt.setBytes(1, saleVO.getSale_audit_pic());
 			pstmt.setInt(2, saleVO.getSale_id());
-			
+
 			pstmt.executeUpdate();
-			}catch (SQLException se) {
-				throw new RuntimeException("A database error occured. "
-						+ se.getMessage());
-				// Clean up JDBC resources
-			} finally {
-				if (pstmt != null) {
-					try {
-						pstmt.close();
-					} catch (SQLException se) {
-						se.printStackTrace(System.err);
-					}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
 				}
-				if (con != null) {
-					try {
-						con.close();
-					} catch (Exception e) {
-						e.printStackTrace(System.err);
-					}
-				}
-				
 			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+
+		}
 	}
+
 	@Override
-	public void update(SaleVO saleVO) {//更新
+	public void update(SaleVO saleVO) {// 更新
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		
+
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
@@ -206,11 +235,10 @@ public class SaleDAO implements SaleDAO_interface{
 //			pstmt.setTimestamp(9, saleVO.getSale_time_create());
 //			pstmt.setBytes(8, saleVO.getSale_audit_pic());
 			pstmt.setInt(8, saleVO.getSale_id());
-			
+
 			pstmt.executeUpdate();
-		}catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {
@@ -229,22 +257,22 @@ public class SaleDAO implements SaleDAO_interface{
 			}
 		}
 	}
+
 	@Override
-	public void delete(Integer sale_id) {//刪除
+	public void delete(Integer sale_id) {// 刪除
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		
+
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(DELETE);
-			
+
 			pstmt.setInt(1, sale_id);
 
 			pstmt.executeUpdate();
-			
-		}catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {
@@ -263,21 +291,22 @@ public class SaleDAO implements SaleDAO_interface{
 			}
 		}
 	}
+
 	@Override
 	public SaleVO findByPrimaryKey(Integer sale_id) {
-		SaleVO saleVO=null;
+		SaleVO saleVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
-			
+
 			pstmt.setInt(1, sale_id);
 
 			rs = pstmt.executeQuery();
-			
+
 			while (rs.next()) {
 				// empVo 也稱為 Domain objects
 				saleVO = new SaleVO();
@@ -286,19 +315,17 @@ public class SaleDAO implements SaleDAO_interface{
 				saleVO.setSale_pwd(rs.getString("sale_pwd"));
 				saleVO.setSale_name(rs.getString("sale_name"));
 				saleVO.setSale_audit_status(rs.getInt("sale_audit_status"));
-				saleVO.setSale_audit_pic(rs.getBytes("sale_audit_pic"));				
+				saleVO.setSale_audit_pic(rs.getBytes("sale_audit_pic"));
 				saleVO.setSale_status(rs.getInt("sale_status"));
 				saleVO.setSale_phone(rs.getString("sale_phone"));
 				saleVO.setSale_nickname(rs.getString("sale_nickname"));
 				saleVO.setSale_rate(rs.getFloat("sale_rate"));
 				saleVO.setSale_time_create(rs.getTimestamp("sale_time_create"));
-				
-			
+
 			}
 
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {
@@ -325,7 +352,7 @@ public class SaleDAO implements SaleDAO_interface{
 		}
 		return saleVO;
 	}
-	
+
 	@Override
 	public List<SaleVO> getAll() {
 		List<SaleVO> list = new ArrayList<SaleVO>();
@@ -334,12 +361,12 @@ public class SaleDAO implements SaleDAO_interface{
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
-			
+
 			while (rs.next()) {
 				// empVo 也稱為 Domain objects
 				saleVO = new SaleVO();
@@ -348,7 +375,7 @@ public class SaleDAO implements SaleDAO_interface{
 				saleVO.setSale_pwd(rs.getString("sale_pwd"));
 				saleVO.setSale_name(rs.getString("sale_name"));
 				saleVO.setSale_audit_status(rs.getInt("sale_audit_status"));
-				saleVO.setSale_audit_pic(rs.getBytes("sale_audit_pic"));				
+				saleVO.setSale_audit_pic(rs.getBytes("sale_audit_pic"));
 				saleVO.setSale_status(rs.getInt("sale_status"));
 				saleVO.setSale_phone(rs.getString("sale_phone"));
 				saleVO.setSale_nickname(rs.getString("sale_nickname"));
@@ -356,10 +383,9 @@ public class SaleDAO implements SaleDAO_interface{
 				saleVO.setSale_time_create(rs.getTimestamp("sale_time_create"));
 				list.add(saleVO);
 			}
-			
+
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {
@@ -384,7 +410,7 @@ public class SaleDAO implements SaleDAO_interface{
 				}
 			}
 		}
-		
+
 		return list;
 	}
 }

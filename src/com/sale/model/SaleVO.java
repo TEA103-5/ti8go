@@ -16,11 +16,18 @@ public class SaleVO implements Serializable{
 	private String sale_nickname;
 	private Float sale_rate;
 	private Timestamp sale_time_create;
+	private Integer sale_money;
 
 
 
-	public SaleVO() {
 
+
+	public Integer getSale_money() {
+		return sale_money;
+	}
+
+	public void setSale_money(Integer sale_money) {
+		this.sale_money = sale_money;
 	}
 
 	public Integer getSale_id() {
