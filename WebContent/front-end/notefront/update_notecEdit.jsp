@@ -131,6 +131,7 @@
         </div>
           <div class="bd pt-5">
           <button type="submit" class="btn btn-primary1" id="btn_submit">送出</button>
+          <button type="text" class="btn btn-primary1" id="btn_submit" name="note_classid" value="0">刪除</button>
           </div>
         
         </div>

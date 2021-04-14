@@ -198,7 +198,8 @@ public class NoteCServlet extends HttpServlet {
 //				noteCVO = noteCSvc.getOneNoteC(note_c_id);
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("noteCVO", noteCVO);
-				String url = "/notec/listOneNoteC.jsp";
+				String url = "/front-end/notefront/listMyNote.jsp";
+//				String url = "/notec/listOneNoteC.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				/*************************** 其他可能的錯誤處理 *************************************/

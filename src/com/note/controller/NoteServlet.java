@@ -216,7 +216,7 @@ public class NoteServlet extends HttpServlet {
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 
 				req.setAttribute("noteVO", noteVO);
-				String url = "/front-end/notefront/update_notecEdit.jsp";
+				String url = "/front-end/notefront/listMyNote.jsp";
 //				String url = "/note/listOneNote.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);

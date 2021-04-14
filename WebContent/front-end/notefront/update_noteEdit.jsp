@@ -109,19 +109,20 @@
           </div>
           <div class="form-group">
             <label for="exampleFormControlInput1">大綱</label>
-            <textarea type="text" name="note_description" class="form-control" id="Input2" value="${noteVO.note_description}"></textarea>
+            <textarea type="text" name="note_description" class="form-control" id="Input2" value="">${noteVO.note_description}</textarea>
           </div>
 		<script type="text/javascript">
  		  $(document).ready(function() {
 		  	  CKEDITOR.replace( 'Input2' );
               var $CKcontent = CKEDITOR.instances.document.Input2.getBody().getText();
+// 		  		 var content = $( 'textarea.form-control' ).val();
 				
 		  }) 
 		</script>
 
           <div class="bd pt-5">
           <button type="submit" class="btn btn-primary1" id="btn_submit">送出</button>
-          <button type="submit" class="btn btn-primary1" id="btn_submit">繼續下頁編輯</button>
+          <button type="text" class="btn btn-primary1" id="btn_submit" name="note_classid" value="0">刪除</button>
           </div>
         
         </div>

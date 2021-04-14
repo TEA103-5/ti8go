@@ -150,10 +150,21 @@ session.setAttribute("users_id", 1);  //  測試用
 			<!-- <a class="navbar-brand">Navbar</a> -->
 			<!-- id="search-bar" 的屬性justify-content: space-between;  均匀排列每个元素
                 首个元素放置于起点，末尾元素放置于终点  -->
-			<div>
-				<a class="nav-link active" href="<%=request.getContextPath()%>/front-end/notefront/noteEdit.jsp">新增遊記</a> <a
-					class="nav-link active disabled" href="<%=request.getContextPath()%>/front-end/notefront/listMyNote.jsp" aria-disabled="true">我的遊記</a>
+			<div style="margin-bottom:50px;">
+<%-- 				<a class="nav-link active" href="<%=request.getContextPath()%>/front-end/notefront/noteEdit.jsp">新增遊記</a> --%>
+ 						<div class="nav-item dropdown" style="padding: 5px; width: 70.7083px;">
+							<a class="dropdown-toggle" aria-expanded="false"
+								data-toggle="dropdown" href="#"
+								style="padding: -64px; width: 0px; height: -8px; margin: -3px; color: #007bff; font-size: 1rem;">新增</a>
+							<div class="dropdown-menu">
+								<a class="nav-link active" href="<%=request.getContextPath()%>/front-end/notefront/noteEdit.jsp">新增遊記</a>
+								<a class="nav-link active" href="<%=request.getContextPath()%>/front-end/notefront/notecEdit.jsp">新增內容</a>
+							</div>
+ 						</div>
+ 				<div  style="margin-top:-38px; padding-left:80px;">	
+				<a class="nav-link active disabled" href="<%=request.getContextPath()%>/front-end/notefront/listMyNote.jsp" aria-disabled="true">我的遊記</a>
 				<a class="nav-link active" href="<%=request.getContextPath()%>/front-end/place_collect/listMyPlace_collect.jsp">我的收藏</a>
+			    </div>
 			</div>
 
 
