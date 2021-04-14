@@ -5,6 +5,7 @@
 <%@page import="java.util.*"%>
 <%@page import="com.place.model.*"%>
 <%@ page import="com.trip.model.*"%>
+<%@ page import="java.net.*" %>
 <jsp:useBean id="pSvc" scope="page" class="com.place.model.PlaceService" />
 <%TripVO tripVO = (TripVO) request.getAttribute("tripVO");%>
 <!DOCTYPE html>
@@ -30,7 +31,9 @@
 <!--      </ul> -->
     
     <main id="app" class="page  glass">
- 
+ <button @click="setCookie('ABA','10',1)">set</button>
+ <button @click="getCookie('peter')">get</button>
+
                 <div class="block-heading">
                     <h2 class="text-info">addtrip</h2>
 					</div>
@@ -190,6 +193,23 @@
 	    	],
 	    },
 	    methods: {
+	    	setCookie(cname,cvalue,exdays){
+	    	    var d = new Date();
+	    	    d.setTime(d.getTime()+(exdays*24*60*60*1000));
+	    	    var expires = "expires="+d.toGMTString();
+	    	    document.cookie = cname+"="+cvalue+"; "+expires;
+	    	},
+	    	getCookie(cname){
+	      		console.log("123")
+	    		console.log(document.cookie)
+	    	    var name = cname + "=";
+	    	    var ca = document.cookie.split(';');
+	    	    for(var i=0; i<ca.length; i++) {
+	    	        var c = ca[i].trim();
+	    	        if (c.indexOf(name)==0) { return c.substring(name.length,c.length); }
+	    	    }
+	    	    return "";
+	    	},
 			checkvalue(){
 				this.addtrip.trip_start=$('#f_date1').val();
 				this.addtrip.trip_end=$('#f_date2').val();

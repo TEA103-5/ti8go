@@ -3,6 +3,7 @@ package com.login.controller;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.net.URLDecoder;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -60,17 +61,30 @@ public class ifLoginServlet extends HttpServlet {
 		failureView.forward(req, res);	
 	}
 	
-	// 1.創帳號 2.登入 3.判斷是否登入
-	//1.的時候要判斷帳號與3個TABLE中的帳號有無重複
-	//2.要判斷登入者的身分 在session中放入資料 並 將其導向各自的網頁
-	//3.若session中沒有對應的資料 將其導向登入頁 3似乎比較適合用doget?
-	
-	//4.資安? 先不考慮
+
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		res.setContentType("application/json ; charset=UTF-8"); 
 		String action = req.getParameter("action");
 		String url=req.getParameter("requestURL");
+		
+		
+		
+		Cookie[] cookies = req.getCookies();
+
+
+		for (int i = 0; i < cookies.length; i++) {
+		    Cookie c = cookies[i];
+		    System.out.println(c.getName() + c.getValue() );
+		      //cookie name
+		     //cookie value
+
+		  }
+		
+		
+		
+		
+		
 		
 		List<String> errorMsgs = new LinkedList<String>();
 		req.setAttribute("errorMsgs", errorMsgs);
@@ -84,20 +98,25 @@ public class ifLoginServlet extends HttpServlet {
 //		JSONObject resultJSON = new JSONObject(result);
 //		out.println(resultJSON);
 		if ("userlogin".equals(action)){
+			   Cookie cookie = new Cookie("auser", "acaterpillar");
+               cookie.setMaxAge(7 * 24 * 60 * 60);
+               res.addCookie(cookie);
 			String uid = req.getParameter("u_id").trim();
 			String pwd = req.getParameter("pwd").trim();
 		
 			
 			SaleVO uVO=null;
-	
 			uVO=lgSrc.usersLogin(uid, pwd);
 			if(uVO!=null) {
+
 				UsersService uSrc=new UsersService();
+
 				result.put("hasVO" , false);
 				result.put("uVO", true);
 				result.put("uid" ,  uVO.getSale_id());
 				req.getSession().invalidate();
 				req.getSession().setAttribute("usersVO", uSrc.getOneusers(uVO.getSale_id()));	
+
 			}else {
 				errorMsgs.add("帳號或密碼有問題");
 			}

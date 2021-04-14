@@ -32,7 +32,7 @@
 		<%@ include file="/sale-end/pages/nav.html"%>
 		<div class="d-flex flex-column" id="content-wrapper">
 			<div id="content">
-				<%@ include file="/sale-end/pages/fnav"%>
+				<%@ include file="/sale-end/pages/fnav.html"%>
 				
 								<div class="container-fluid">
 					<div class="card rounded shadow border-0">

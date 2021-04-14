@@ -331,7 +331,7 @@ public class UsersDAO implements UsersDAO_interface {
 		
 		try {
 			
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_Activities_ByUsers_STMT);
 			pstmt.setInt(1, users_id);
 			rs = pstmt.executeQuery();
@@ -396,7 +396,7 @@ public class UsersDAO implements UsersDAO_interface {
 	
 		try {
 	
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_Team_ByUsers_STMT);
 			pstmt.setInt(1, users_id);
 			rs = pstmt.executeQuery();
@@ -452,7 +452,7 @@ public class UsersDAO implements UsersDAO_interface {
 		
 		try {
 			
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_Applicant_ByUsers_STMT);
 			pstmt.setInt(1, users_id);
 			rs = pstmt.executeQuery();
@@ -506,7 +506,7 @@ public class UsersDAO implements UsersDAO_interface {
 			
 			try {
 				
-				con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+				con = ds.getConnection();
 				pstmt = con.prepareStatement(GET_Trip_ByUsers_STMT);
 				pstmt.setInt(1, users_id);
 				rs = pstmt.executeQuery();
@@ -563,73 +563,4 @@ public class UsersDAO implements UsersDAO_interface {
 			}
 			return set;
 	}
-//	public static void main(String[] args) throws Exception {
-//		UsersJDBCDAO dao = new UsersJDBCDAO();
-//		
-//		//新增
-////		usersVO VO1 = new usersVO();
-////		VO1.setUsers_id(21);
-////		VO1.setUsers_mail("qqaa.com");
-////		VO1.setUsers_pwd("543210");
-////		VO1.setUsers_status(1);
-////		VO1.setUsers_nickname("test");
-////		VO1.setUsers_name("testadd");
-////		VO1.setUesrs_sex(1);
-////		VO1.setUesrs_birthday("20001231");
-////		VO1.setUsers_id_number("A123456789");
-////		VO1.setUser_phone("0909009090");
-////		dao.insert(VO1);
-//		
-//		//修改
-//		UsersVO VO2 = new UsersVO();
-//		VO2.setUsers_id(21);
-//		VO2.setUsers_mail("qqaa.com");
-//		VO2.setUsers_pwd("543210");
-//		VO2.setUsers_status(1);
-//		VO2.setUsers_nickname("test");
-//		VO2.setUsers_name("testadd");
-//		VO2.setUsers_sex(1);
-//		VO2.setUsers_birthday("29991231");
-//		VO2.setUsers_id_number("Z123456789");
-//		VO2.setUsers_phone("0908090808");
-//		dao.update(VO2);
-//
-//		//刪除
-////		dao.delete(4);
-//		
-//		//查詢單行
-////				usersVO users1 = dao.findByPK(21);
-////				System.out.print("-- ");
-////				System.out.print(users1.getUsers_id() + ",");
-////				System.out.print(users1.getUsers_mail() + ",");
-////				System.out.print(users1.getUsers_pwd() + ",");
-////				System.out.print(users1.getUsers_status() + ",");
-////				System.out.print(users1.getUsers_nickname() + ",");
-////				System.out.print(users1.getUsers_name() + ",");
-////				System.out.print(users1.getUesrs_sex() + ",");
-////				System.out.print(users1.getUesrs_birthday() + ",");
-////				System.out.print(users1.getUsers_id_number() + ",");
-////				System.out.print(users1.getUser_phone() + ",");
-////				System.out.println(" --");
-//		//查詢全部
-//				List<UsersVO> list = dao.getAll();
-//				System.out.println("------------------------------------------------------------");
-//				for (UsersVO users2 : list) {
-//					
-//					System.out.print(users2.getUsers_id() + ",");
-//					System.out.print(users2.getUsers_mail() + ",");
-//					System.out.print(users2.getUsers_pwd() + ",");
-//					System.out.print(users2.getUsers_status() + ",");
-//					System.out.print(users2.getUsers_nickname() + ",");
-//					System.out.print(users2.getUsers_name() + ",");
-//					System.out.print(users2.getUsers_sex() + ",");
-//					System.out.print(users2.getUsers_birthday() + ",");
-//					System.out.print(users2.getUsers_id_number() + ",");
-//					System.out.print(users2.getUsers_phone() + ",");
-//					System.out.println();
-//					
-//				}
-//				System.out.print("--------------------------------------------------------------");
-//	}
-
 }

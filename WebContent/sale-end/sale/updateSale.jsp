@@ -15,7 +15,7 @@
 		<%@ include file="/sale-end/pages/nav.html"%>
 		<div class="d-flex flex-column" id="content-wrapper">
 			<div id="content">
-				<%@ include file="/sale-end/pages/fnav"%>
+				<%@ include file="/sale-end/pages/fnav.html"%>
 				<div class="container-fluid">
 					<h3 class="text-dark mb-4">Profile</h3>
 					<div class="row mb-3">
@@ -27,8 +27,8 @@
 										width="160" height="160">
 
 									<form METHOD="post"
-										ACTION="<%=request.getContextPath()%>/sale/sale.do" id="form1"
-										enctype="multipart/form-data">
+										ACTION="<%=request.getContextPath()%>/sale/sale.do" id="form1">
+<!-- 										enctype="multipart/form-data"> -->
 										<div class="mb-3">
 											<button class="btn btn-primary btn-sm" type="button"
 												onclick="$('input[id=file1]').click();">Change
@@ -45,33 +45,41 @@
 
 								</div>
 							</div>
-							<!--                             <div class="card shadow mb-4"> -->
-							<!--                                 <div class="card-header py-3"> -->
-							<!--                                     <h6 class="text-primary font-weight-bold m-0">Projects</h6> -->
-							<!--                                 </div> -->
-							<!--                                 <div class="card-body"> -->
-							<!--                                     <h4 class="small font-weight-bold">Server migration<span class="float-right">20%</span></h4> -->
-							<!--                                     <div class="progress progress-sm mb-3"> -->
-							<!--                                         <div class="progress-bar bg-danger" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%;"><span class="sr-only">20%</span></div> -->
-							<!--                                     </div> -->
-							<!--                                     <h4 class="small font-weight-bold">Sales tracking<span class="float-right">40%</span></h4> -->
-							<!--                                     <div class="progress progress-sm mb-3"> -->
-							<!--                                         <div class="progress-bar bg-warning" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%;"><span class="sr-only">40%</span></div> -->
-							<!--                                     </div> -->
-							<!--                                     <h4 class="small font-weight-bold">Customer Database<span class="float-right">60%</span></h4> -->
-							<!--                                     <div class="progress progress-sm mb-3"> -->
-							<!--                                         <div class="progress-bar bg-primary" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"><span class="sr-only">60%</span></div> -->
-							<!--                                     </div> -->
-							<!--                                     <h4 class="small font-weight-bold">Payout Details<span class="float-right">80%</span></h4> -->
-							<!--                                     <div class="progress progress-sm mb-3"> -->
-							<!--                                         <div class="progress-bar bg-info" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;"><span class="sr-only">80%</span></div> -->
-							<!--                                     </div> -->
-							<!--                                     <h4 class="small font-weight-bold">Account setup<span class="float-right">Complete!</span></h4> -->
-							<!--                                     <div class="progress progress-sm mb-3"> -->
-							<!--                                         <div class="progress-bar bg-success" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"><span class="sr-only">100%</span></div> -->
-							<!--                                     </div> -->
-							<!--                                 </div> -->
-							<!--                             </div> -->
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="text-primary font-weight-bold m-0">Products</h6>
+								</div>
+								<div class="card-body">
+										<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/sale/sale.do" >
+											<h4 class="small font-weight-bold">
+													<input type="submit" value="查詢擁有商品"> <input
+														type="hidden" name="deptno" value="${saleVO.sale_id}">
+													<input type="hidden" name="action"
+														value="listEmps_ByDeptno_B">
+											</h4>
+										</FORM>
+									<!-- 							                                    <div class="progress progress-sm mb-3"> -->
+									<!-- 							                                        <div class="progress-bar bg-danger" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%;"><span class="sr-only">20%</span></div> -->
+									<!-- 							                                    </div> -->
+									<!-- 							                                    <h4 class="small font-weight-bold">Sales tracking<span class="float-right">40%</span></h4> -->
+									<!-- 							                                    <div class="progress progress-sm mb-3"> -->
+									<!-- 							                                        <div class="progress-bar bg-warning" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%;"><span class="sr-only">40%</span></div> -->
+									<!-- 							                                    </div> -->
+									<!-- 							                                    <h4 class="small font-weight-bold">Customer Database<span class="float-right">60%</span></h4> -->
+									<!-- 							                                    <div class="progress progress-sm mb-3"> -->
+									<!-- 							                                        <div class="progress-bar bg-primary" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"><span class="sr-only">60%</span></div> -->
+									<!-- 							                                    </div> -->
+									<!-- 							                                    <h4 class="small font-weight-bold">Payout Details<span class="float-right">80%</span></h4> -->
+									<!-- 							                                    <div class="progress progress-sm mb-3"> -->
+									<!-- 							                                        <div class="progress-bar bg-info" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;"><span class="sr-only">80%</span></div> -->
+									<!-- 							                                    </div> -->
+									<!-- 							                                    <h4 class="small font-weight-bold">Account setup<span class="float-right">Complete!</span></h4> -->
+									<!-- 							                                    <div class="progress progress-sm mb-3"> -->
+									<!-- 							                                        <div class="progress-bar bg-success" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"><span class="sr-only">100%</span></div> -->
+									<!-- 							                                    </div> -->
+								</div>
+							</div>
+
 						</div>
 						<div class="col-lg-8">
 
@@ -225,16 +233,56 @@
 	<script>
 		$("#file1").on('change', function(e) {
 			const file = this.files[0];
-
+			if(file.type.match(/^image\/(png|jpeg)$/)){
+				console.log("gfgdf");
+			}
 			const fr = new FileReader();
+			fr.readAsDataURL(file);
+			let formData = new FormData($("#form1")[0]);
 			fr.onload = function(e) {
-				//         $("#preimg").attr('src', e.target.result);
+				        $("#preimg").attr('src', e.target.result);
+				        $("#preimg1").attr('src', e.target.result);
+					  	let data = {
+					  			"upfile1":file,
+					  			"action": "upload",
+//					            "users_id": login_users
+					  	}	
+				console.log(formData);
+				//alert("");
 				//         $("#pic").val("F");
-				$("#form1").submit();
+				//$("#form1").submit();
+// 			  	let data = {
+// 			  			"action": "ajax_insert_or_delete_PlaceCollect",
+// 			            "place_id": place_id,
+// 			            "users_id": login_users
+// 			  	}		
+	// console.log($(this).parent(".card-body").find(".place_id_value").attr("value"));
+	// console.log($(this).parent(".card-body").find(".users_id_value").attr("value"));
+				
+				$.ajax({
+			        url: "/TEA103G5/sale/sale.do",           // 資料請求的網址
+			        type: "POST",                  // GET | POST | PUT | DELETE | PATCH
+			        data: formData,               // 傳送資料到指定的 url
+			       
+			        cache:false, // 不需要cache
+			        processData: false, // jQuery預設會把data轉為query String, 所以要停用
+			        contentType: false, 
+			        dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
+			        success: function (data) {      // request 成功取得回應後執行
+			          console.log(data);
+			          if(data.result == "insert_succss"){
+			        	  // 新增成功則按鈕改成顯示取消收藏
+// 			        	  that.html("取消收藏")
+			          }else if(data.result == "delete_success"){
+// 			        	  that.html("加入收藏")
+			          }
+			          
+			        }
+			    });
 			};
 
 			// 使用 readAsDataURL 將圖片轉成 Base64
-			fr.readAsDataURL(file);
+// 			fr.readAsDataURL(file);
 		});
 	</script>
 </body>
