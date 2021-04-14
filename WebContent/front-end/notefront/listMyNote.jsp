@@ -1,36 +1,63 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="java.util.*"%>
+<%@page import="com.note.model.*"%>
+<%@page import="com.notec.model.*"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ page import="java.util.*"%>
-<%@ page import="com.notec.model.*"%>
-<%@ page import="com.note.model.*"%>
 
 <%
+
+session.setAttribute("users_id", 1);  //  測試用
+
 	NoteService noteSvc = new NoteService();
 	List<NoteVO> list = noteSvc.getAll();
-	pageContext.setAttribute("list",list);
-
+	pageContext.setAttribute("list", list);
+	
 	NoteCService noteCSvc = new NoteCService();
 	// 	List<NoteCVO> list = noteCSvc.getAll();
 	// 	pageContext.setAttribute("list", list);
 	pageContext.setAttribute("noteCSvc", noteCSvc);
 %>
 
+<!DOCTYPE html>
 <html>
 
 <head>
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-<title>Blog - font-end</title>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/notefront/assets/bootstrap/css/bootstrap.min.css">
+<title>我的遊記 - Tivago</title>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/front-end/notefront/assets/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/notefront/assets/fonts/simple-line-icons.min.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/front-end/notefront/assets/fonts/simple-line-icons.min.css">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/notefront/assets/css/smoothproducts.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/notefront/assets/css/blog-home.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/front-end/notefront/assets/css/smoothproducts.css">
+
+<!-- 以下是自己新增的css -->
+<style>
+.nav-link.active {
+	display: inline-flex;
+}
+
+.card-form {
+	display: inline-block;
+}
+
+#card-container{
+    overflow:scroll;
+    height:90%;
+    width:19rem;
+    display: inline-block;
+}
+
+
+</style>
+
 </head>
 
 <body>
@@ -116,105 +143,85 @@
 			</div>
 		</div>
 	</nav>
+	
+	<main class="page service-page">
 
-			
-	<main class="page blog-post-list">
-		<section class="clean-block clean-blog-list dark">
+		<nav id="search-bar" class="navbar navbar-light bg-light">
+			<!-- <a class="navbar-brand">Navbar</a> -->
+			<!-- id="search-bar" 的屬性justify-content: space-between;  均匀排列每个元素
+                首个元素放置于起点，末尾元素放置于终点  -->
+			<div>
+				<a class="nav-link active" href="<%=request.getContextPath()%>/front-end/notefront/noteEdit.jsp">新增遊記</a> <a
+					class="nav-link active disabled" href="<%=request.getContextPath()%>/front-end/notefront/listMyNote.jsp" aria-disabled="true">我的遊記</a>
+				<a class="nav-link active" href="<%=request.getContextPath()%>/front-end/place_collect/listMyPlace_collect.jsp">我的收藏</a>
+			</div>
+
+
+		</nav>
+
+
+
+
+
+
+
+
+
+		<section class="clean-block clean-services dark">
 			<div class="container">
-				<div class="block-heading"
-					style="background: rgba(133, 134, 127, 0.15); height: 300px;">
-					<h2 class="text-info">遊記列表</h2>
-					<p class="p1 pb-3">熱門遊記 精選 Top</p>
-					<button class="btn btn-outline-primary btn-sm" type="button">
-						<a class="a1" href="#togohere">Read More Note</a>
-					</button>
-					<button class="btn btn-outline-primary btn-sm" type="button">
-						<a class="a1" href="noteEdit.jsp">Create New Note</a>
-					</button>
-					<!-- Search Widget -->
-						<div class="card my-4">
-							<h5 class="card-header">Search</h5>
-							<div class="card-body">
-								<div class="input-group">
-									<input type="text" class="form-control"
-										placeholder="Search for..."> <span
-										class="input-group-append">
-										<button class="btn btn-secondary" type="button">Go!</button>
-									</span>
-								</div>
-							</div>
-						</div>
-				</div>
+				<!-- <div class="block-heading"><iframe allowfullscreen="" frameborder="0"
+                        src="https://cdn.bootstrapstudio.io/placeholders/map.html" width="100%" height="400"></iframe>
+                    <h2 class="text-info">Service Page</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in,
+                        mattis vitae leo.</p>
+                </div> -->
 
-				<div id="togohere" class="block-content">
-					<%@ include file="page1.file"%>
-
-					<c:forEach var="noteVO" items="${list}" begin="<%=pageIndex%>"
-						end="<%=pageIndex+rowsPerPage-1%>">
-						<div class="clean-blog-post">
-							<div class="row">
-								<div class="col-lg-5">
-									<img
+				<div class="row">
+					<c:forEach var="noteVO" items="${list}" varStatus="loop">
+						<c:if test="${sessionScope.users_id == noteVO.users_id}">
+							<div class="col-md-6 col-lg-4">
+								<div class="card" style="width:350px;height:400px;border:3px #cccccc;">
+									<img class="card-img-top w-100 d-block"
 										src="<%=request.getContextPath()%>/DBGifReaderNoteC?note_c_id=${noteCSvc.togetoneNote(noteVO.note_id).note_c_id}"
-										style="max-width: 100%; height: 200px;">
-								</div>
-								<div class="col-lg-7">
-									<h3>${noteCSvc.togetoneNote(noteVO.note_id).note_c_title}</h3>
-									<div class="info">
-										<span class="text-muted"><fmt:formatDate
-												pattern="yyyy-MM-dd" value="${noteVO.note_date}" /> by&nbsp;<a
-											href="#">John Smith</a></span>
+										style="width: 200px; height: 200px;">
+									<div class="card-body">
+										<h5 class="card-title"><b>${noteVO.note_title}</b></h5>
+										<p class="card-text">${noteVO.note_description}</p>
+										<form class="card-form"	action="<%=request.getContextPath()%>/note/note.do"method="post">
+											<input class="note_id_value" type="hidden" name="note_id" value="${noteVO.note_id}"> 
+											<input type="hidden" name="requestURL"value="<%=request.getServletPath()%>"> 
+											<input type="hidden" name="action" value="getOne_For_Display">
+											<button class="btn btn-outline-primary btn-sm" type="submit">更多內容</button>
+										</form>
+										<form class="card-form"	action="<%=request.getContextPath()%>/note/note.do" method="post">
+											<input class="note_id_value" type="hidden" name="note_id" value="${noteVO.note_id}">
+											<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
+											<input type="hidden" name="action" value="getOne_For_Update">
+											<button class="btn btn-outline-primary btn-sm" type="submit">編輯遊記</button>
+										</form>
+										<form class="card-form"	action="<%=request.getContextPath()%>/notec/notec.do" method="post">
+											<input class="note_id_value" type="hidden" name="note_c_id" value="${noteCSvc.togetoneNote(noteVO.note_id).note_c_id}">
+											<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
+											<input type="hidden" name="action" value="getOne_For_Update">
+											<button class="btn btn-outline-primary btn-sm" type="submit">編輯內容</button>
+										</form>
 									</div>
-									<p>${noteCSvc.togetoneNote(noteVO.note_id).note_c_content}</p>
-									<form METHOD="post" ACTION="<%=request.getContextPath()%>/note/note.do" style="margin-bottom: 0px;">
-									<input type="hidden" name="note_id"  value="${noteVO.note_id}">
-									<input type="hidden" name="requestURL"  value="<%=request.getServletPath()%>">
-									<input type="hidden" name="action"  value="getOne_For_Display">
-									<button class="btn btn-outline-primary btn-sm" type="submit">Read More</button>
-									</form>
 								</div>
 							</div>
-						</div>
+						</c:if>
 					</c:forEach>
-
-					<%-- 					<c:forEach var="noteCVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>"> --%>
-					<!-- 						<div class="clean-blog-post"> -->
-					<!-- 							<div class="row"> -->
-					<!-- 								<div class="col-lg-5"> -->
-					<%-- 								  <img src="<%=request.getContextPath()%>/DBGifReaderNoteC?note_c_id=${noteCVO.note_c_id}" style="max-width: 100%; height:200px;"> --%>
-					<!-- 								</div> -->
-					<!-- 								<div class="col-lg-7"> -->
-					<%-- 									<h3>${noteCVO.note_c_title}</h3> --%>
-					<!-- 									<div class="info"> -->
-					<!-- 										<span class="text-muted">Jan 16, 2018 by&nbsp;<a -->
-					<!-- 											href="#">John Smith</a></span> -->
-					<!-- 									</div> -->
-					<%-- 									<p>${noteCVO.note_c_content}</p> --%>
-					<!-- 									<button class="btn btn-outline-primary btn-sm" type="button">Read -->
-					<!-- 										More</button> -->
-					<!-- 								</div> -->
-					<!-- 							</div> -->
-					<!-- 						</div> -->
-					<%-- 					</c:forEach> --%>
-
-
-					<div style="text-align: center;">
-						<%@ include file="page2.file"%>
-					</div>
-					</div>
 				</div>
 		</section>
 	</main>
-
-	<footer class="page-footer dark" style="background: #575D59;">
+	<footer class="page-footer dark">
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-3">
 					<h5>Get started</h5>
 					<ul>
 						<li><a href="#">Home</a></li>
-						<li><a href="#">Sign up</a></li>
-						<li><a href="#">Downloads</a></li>
+						<li><a href="#">註冊</a></li>
+						<li><a href="#">登入</a></li>
 					</ul>
 				</div>
 				<div class="col-sm-3">
@@ -244,15 +251,15 @@
 			</div>
 		</div>
 		<div class="footer-copyright">
-			<p>© 2021 Copyright Text</p>
+			<p>© 2021 Tivago</p>
 		</div>
 	</footer>
-	<script src="<%=request.getContextPath()%>/front-end/notefront/assets/js/jquery.min.js"></script>
-	<script src="<%=request.getContextPath()%>/front-end/notefront/assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
-	<script src="<%=request.getContextPath()%>/front-end/notefront/assets/js/smoothproducts.min.js"></script>
-	<script src="<%=request.getContextPath()%>/front-end/notefront/assets/js/theme.js"></script>
+	<script src="assets/js/smoothproducts.min.js"></script>
+	<script src="assets/js/theme.js"></script>
 </body>
 
 </html>

@@ -67,11 +67,11 @@
 
 <FORM METHOD="post" ACTION="note.do" name="form1">
 <table>
-	<tr>
-		<td>分類編號:</td>
-		<td><input type="TEXT" name="note_classid" size="45" 
-			 value="<%= (noteVO==null)? "2" : noteVO.getNote_classid()%>" /></td>
-	</tr>
+<!-- 	<tr> -->
+<!-- 		<td>分類編號:</td> -->
+<!-- 		<td><input type="TEXT" name="note_classid" size="45"  -->
+<%-- 			 value="<%= (noteVO==null)? "2" : noteVO.getNote_classid()%>" /></td> --%>
+<!-- 	</tr> -->
 	<tr>
 		<td>旅遊日期:</td>
 		<td><input name="travel_start" id="f_date1" type="text"></td>
@@ -106,6 +106,8 @@
 </table>
 <br>
 <input type="hidden" name="action" value="insert">
+<input type="hidden" name="note_classid" value="1"> 
+<!-- classid預設1 -->
 <input type="submit" value="送出新增"></FORM>
 </body>
 

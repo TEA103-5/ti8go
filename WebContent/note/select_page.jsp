@@ -55,6 +55,7 @@
     <FORM METHOD="post" ACTION="note.do" >
         <b>輸入遊記編號 (如1):</b>
         <input type="text" name="note_id">
+        <input type="hidden" name="requestURL"  value="<%=request.getServletPath()%>">
         <input type="hidden" name="action" value="getOne_For_Display">
         <input type="submit" value="送出">
     </FORM>
@@ -70,6 +71,7 @@
           <option value="${noteVO.note_id}">${noteVO.note_id}
          </c:forEach>   
        </select>
+       <input type="hidden" name="requestURL"  value="<%=request.getServletPath()%>">
        <input type="hidden" name="action" value="getOne_For_Display">
        <input type="submit" value="送出">
     </FORM>
@@ -83,6 +85,7 @@
           <option value="${noteVO.note_id}">${noteVO.note_title}
          </c:forEach>   
        </select>
+       <input type="hidden" name="requestURL"  value="<%=request.getServletPath()%>">
        <input type="hidden" name="action" value="getOne_For_Display">
        <input type="submit" value="送出">
      </FORM>

@@ -66,7 +66,7 @@
 	</ul>
 </c:if>
 
-<FORM METHOD="post" ACTION="note.do" name="form1">
+<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/note/note.do" name="form1">
 <table>
 	<tr>
 		<td>遊記序號:<font color=red><b>*</b></font></td>
@@ -106,7 +106,7 @@
 </table>
 <br>
 <input type="hidden" name="action" value="update">
-<input type="hidden" name="note_id" value="${noteVO.getNote_id()}">
+<input type="hidden" name="note_id" value="<%=noteVO.getNote_id()%>">
 <input type="submit" value="送出修改"></FORM>
 </body>
 

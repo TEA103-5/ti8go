@@ -79,7 +79,7 @@
 	</tr>
 	<tr>
 		<td>附加圖片:</td>
-		<td><input type="FILE" class="upload" name="note_c_img" accept=image/*>
+		<td><input type="FILE" class="upload" name="note_c_img" accept=image/* multiple="multiple">
 		  <td><img src="<%=request.getContextPath()%>/DBGifReaderNoteC?note_c_id=${noteCVO.note_c_id}" style="width:120px; height:120px"></td><br>
 	</tr>
 		

@@ -8,11 +8,11 @@
 <%
 	NoteService noteSvc = new NoteService();
 	List<NoteVO> list = noteSvc.getAll();
-	pageContext.setAttribute("list",list);
+	pageContext.setAttribute("list", list);
 
 	NoteCService noteCSvc = new NoteCService();
-	// 	List<NoteCVO> list = noteCSvc.getAll();
-	// 	pageContext.setAttribute("list", list);
+// 	List<NoteCVO> list = noteCSvc.getAll();
+// 	pageContext.setAttribute("list", list);
 	pageContext.setAttribute("noteCSvc", noteCSvc);
 %>
 
@@ -124,13 +124,8 @@
 				<div class="block-heading"
 					style="background: rgba(133, 134, 127, 0.15); height: 300px;">
 					<h2 class="text-info">遊記列表</h2>
-					<p class="p1 pb-3">熱門遊記 精選 Top</p>
-					<button class="btn btn-outline-primary btn-sm" type="button">
-						<a class="a1" href="#togohere">Read More Note</a>
-					</button>
-					<button class="btn btn-outline-primary btn-sm" type="button">
-						<a class="a1" href="noteEdit.jsp">Create New Note</a>
-					</button>
+					<p class="p1 pb-3">更新成功</p>
+				
 					<!-- Search Widget -->
 						<div class="card my-4">
 							<h5 class="card-header">Search</h5>
@@ -147,60 +142,28 @@
 				</div>
 
 				<div id="togohere" class="block-content">
-					<%@ include file="page1.file"%>
 
-					<c:forEach var="noteVO" items="${list}" begin="<%=pageIndex%>"
-						end="<%=pageIndex+rowsPerPage-1%>">
 						<div class="clean-blog-post">
 							<div class="row">
 								<div class="col-lg-5">
 									<img
-										src="<%=request.getContextPath()%>/DBGifReaderNoteC?note_c_id=${noteCSvc.togetoneNote(noteVO.note_id).note_c_id}"
+										src="<%=request.getContextPath()%>/DBGifReaderNoteC?note_id=${noteCSvc.togetoneNote(noteVO.note_id).note_c_id}"
 										style="max-width: 100%; height: 200px;">
 								</div>
 								<div class="col-lg-7">
-									<h3>${noteCSvc.togetoneNote(noteVO.note_id).note_c_title}</h3>
+									<h3>${noteCSvc.togetoneNote(noteVO.note_id).note_title}</h3>
 									<div class="info">
 										<span class="text-muted"><fmt:formatDate
-												pattern="yyyy-MM-dd" value="${noteVO.note_date}" /> by&nbsp;<a
+												pattern="yyyy-MM-dd" value="${noteVO.note_date}" />by&nbsp;<a
 											href="#">John Smith</a></span>
 									</div>
-									<p>${noteCSvc.togetoneNote(noteVO.note_id).note_c_content}</p>
-									<form METHOD="post" ACTION="<%=request.getContextPath()%>/note/note.do" style="margin-bottom: 0px;">
-									<input type="hidden" name="note_id"  value="${noteVO.note_id}">
-									<input type="hidden" name="requestURL"  value="<%=request.getServletPath()%>">
-									<input type="hidden" name="action"  value="getOne_For_Display">
-									<button class="btn btn-outline-primary btn-sm" type="submit">Read More</button>
-									</form>
+									<p>${noteCSvc.togetoneNote(noteVO.note_id).note_description}</p>
+									<button class="btn btn-outline-primary btn-sm" type="button">Read
+										More</button>
 								</div>
 							</div>
 						</div>
-					</c:forEach>
 
-					<%-- 					<c:forEach var="noteCVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>"> --%>
-					<!-- 						<div class="clean-blog-post"> -->
-					<!-- 							<div class="row"> -->
-					<!-- 								<div class="col-lg-5"> -->
-					<%-- 								  <img src="<%=request.getContextPath()%>/DBGifReaderNoteC?note_c_id=${noteCVO.note_c_id}" style="max-width: 100%; height:200px;"> --%>
-					<!-- 								</div> -->
-					<!-- 								<div class="col-lg-7"> -->
-					<%-- 									<h3>${noteCVO.note_c_title}</h3> --%>
-					<!-- 									<div class="info"> -->
-					<!-- 										<span class="text-muted">Jan 16, 2018 by&nbsp;<a -->
-					<!-- 											href="#">John Smith</a></span> -->
-					<!-- 									</div> -->
-					<%-- 									<p>${noteCVO.note_c_content}</p> --%>
-					<!-- 									<button class="btn btn-outline-primary btn-sm" type="button">Read -->
-					<!-- 										More</button> -->
-					<!-- 								</div> -->
-					<!-- 							</div> -->
-					<!-- 						</div> -->
-					<%-- 					</c:forEach> --%>
-
-
-					<div style="text-align: center;">
-						<%@ include file="page2.file"%>
-					</div>
 					</div>
 				</div>
 		</section>

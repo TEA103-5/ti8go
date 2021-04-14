@@ -52,6 +52,10 @@ public class NoteCService {
 	public NoteCVO getOneNoteC(Integer note_c_id) {
 		return dao.findByPrimaryKey(note_c_id);
 	}
+	
+	public NoteCVO togetoneNote(Integer note_id) {
+		return dao.togetoneNote(note_id);
+	}
 
 	public List<NoteCVO> getAll() {
 		return dao.getAll();
@@ -71,5 +75,8 @@ public class NoteCService {
 		fos.flush();
 		fos.close();
 	}
+	 public List<NoteCVO> getAllNoteC(Integer note_id){
+		 return dao.getAllNoteC(note_id);
+	 };
 
 }

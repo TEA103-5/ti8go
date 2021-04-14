@@ -22,6 +22,8 @@ public class NoteCJDBCDAO implements NoteCDAO_interface {
 			"DELETE FROM Note_c where note_c_id = ?";
 		private static final String UPDATE = 
 			"UPDATE Note_c set note_c_title=?, note_c_content=?, note_c_img=?, note_id=? where note_c_id = ?";
+		private static final String TOGETONENOTE =
+			"SELECT note_c_id,note_c_title,note_c_content,note_c_img,note_id FROM Note_c where note_id = ? ";
 
 		@Override
 		public void insert(NoteCVO noteCVO) {
@@ -289,6 +291,143 @@ public class NoteCJDBCDAO implements NoteCDAO_interface {
 			}
 			return list;
 		}
+		
+		@Override
+		public NoteCVO togetoneNote(Integer note_id) {
+
+			NoteCVO noteCVO = null;
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+
+			try {
+
+				Class.forName(driver);
+				con = DriverManager.getConnection(url, userid, passwd);
+				pstmt = con.prepareStatement(TOGETONENOTE);
+
+				pstmt.setInt(1, note_id);
+
+				rs = pstmt.executeQuery();
+
+				while (rs.next()) {
+					// empVo 也稱為 Domain objects
+					
+					noteCVO = new NoteCVO();
+					noteCVO.setNote_c_id(rs.getInt("note_c_id"));
+					noteCVO.setNote_c_title(rs.getString("note_c_title"));
+					noteCVO.setNote_c_content(rs.getString("note_c_content"));
+					noteCVO.setNote_c_img(rs.getBytes("note_c_img"));
+					noteCVO.setNote_id(rs.getInt("note_id"));
+					
+					
+					break;
+				}
+
+				// Handle any driver errors
+			} catch (ClassNotFoundException e) {
+				throw new RuntimeException("Couldn't load database driver. "
+						+ e.getMessage());
+				// Handle any SQL errors
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+				// Clean up JDBC resources
+			} finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			return noteCVO;
+		}
+		@Override
+		public List<NoteCVO> getAllNoteC(Integer note_id) {
+			List<NoteCVO> list = new ArrayList<NoteCVO>();
+			NoteCVO noteCVO = null;
+
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			System.out.println("00000");
+			
+
+			try {
+				System.out.println("00880");
+		
+				Class.forName(driver);
+				
+				con = DriverManager.getConnection(url, userid, passwd);
+				pstmt = con.prepareStatement(TOGETONENOTE);
+				pstmt.setInt(1, note_id);
+				rs = pstmt.executeQuery();
+				System.out.println("0887777700");
+				while (rs.next()) {
+					// empVo 也稱為 Domain objects
+					System.out.println("00666660");
+					noteCVO = new NoteCVO();
+					noteCVO.setNote_c_id(rs.getInt("note_c_id"));
+					noteCVO.setNote_c_title(rs.getString("note_c_title"));
+					noteCVO.setNote_c_content(rs.getString("note_c_content"));
+					noteCVO.setNote_c_img(rs.getBytes("note_c_img"));
+					noteCVO.setNote_id(rs.getInt("note_id"));
+					list.add(noteCVO); // Store the row in the list
+					
+					
+				
+				}
+
+				// Handle any driver errors
+			} catch (ClassNotFoundException e) {
+				throw new RuntimeException("Couldn't load database driver. "
+						+ e.getMessage());
+				// Handle any SQL errors
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+				// Clean up JDBC resources
+			} finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			return list;
+		}
 
 		public static void main(String[] args) throws IOException {
 
@@ -305,13 +444,13 @@ public class NoteCJDBCDAO implements NoteCDAO_interface {
 //			dao.insert(noteCVO1);
 
 			// 修改
-			NoteCVO noteCVO2 = new NoteCVO();
-			noteCVO2.setNote_c_id(3);
-			noteCVO2.setNote_c_title("宜蘭天氣晴");
-			noteCVO2.setNote_c_content("今天好開心,天氣晴朗又好玩!");
-			noteCVO2.setNote_c_img(picture.getPictureByteArray("C:/TEA103_Workspace/TivagoTest/items/2.jpg"));
-			noteCVO2.setNote_id(1);
-			dao.update(noteCVO2);
+//			NoteCVO noteCVO2 = new NoteCVO();
+//			noteCVO2.setNote_c_id(3);
+//			noteCVO2.setNote_c_title("宜蘭天氣晴");
+//			noteCVO2.setNote_c_content("今天好開心,天氣晴朗又好玩!");
+//			noteCVO2.setNote_c_img(picture.getPictureByteArray("C:/TEA103_Workspace/TivagoTest/items/2.jpg"));
+//			noteCVO2.setNote_id(1);
+//			dao.update(noteCVO2);
 
 //			// 刪除
 //			dao.delete(2);
@@ -327,14 +466,33 @@ public class NoteCJDBCDAO implements NoteCDAO_interface {
 //			System.out.println("---------------------");
 //
 //			// 查詢
-//			List<NoteCVO> list = dao.getAll();
-//			for (NoteCVO aNoteC : list) {
-//				System.out.print(aNoteC.getNote_c_id() + ",");
-//				System.out.print(aNoteC.getNote_c_title() + ",");
-//				System.out.print(aNoteC.getNote_c_content() + ",");
-//				System.out.print(aNoteC.getNote_c_img() + ",");
-//				System.out.print(aNoteC.getNote_id() + ",");
-//				System.out.println();
-//			}
+			List<NoteCVO> list = dao.getAll();
+			for (NoteCVO aNoteC : list) {
+				System.out.print(aNoteC.getNote_c_id() + ",");
+				System.out.print(aNoteC.getNote_c_title() + ",");
+				System.out.print(aNoteC.getNote_c_content() + ",");
+				System.out.print(aNoteC.getNote_c_img() + ",");
+				System.out.print(aNoteC.getNote_id() + ",");
+				System.out.println();
+			}
+			
+//			NoteCVO noteCVO4 = dao.togetoneNote(2);
+//			System.out.print(noteCVO4.getNote_c_id() + ",");
+//			System.out.print(noteCVO4.getNote_c_title() + ",");
+//			System.out.print(noteCVO4.getNote_c_content() + ",");
+//			System.out.print(noteCVO4.getNote_c_img() + ",");
+//			System.out.print(noteCVO4.getNote_id() + ",");
+			
+			System.out.println("---------------------");
+			
+			List<NoteCVO> list2 = dao.getAllNoteC(1);
+			for (NoteCVO aNoteC2 : list2) {
+				System.out.print(aNoteC2.getNote_c_id() + ",");
+				System.out.print(aNoteC2.getNote_c_title() + ",");
+				System.out.print(aNoteC2.getNote_c_content() + ",");
+				System.out.print(aNoteC2.getNote_c_img() + ",");
+				System.out.print(aNoteC2.getNote_id() + ",");
+				System.out.println();
+			}
 		}
 }

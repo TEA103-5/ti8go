@@ -30,6 +30,8 @@ import javax.sql.DataSource;
 				"DELETE FROM Note_c where note_c_id = ?";
 			private static final String UPDATE = 
 				"UPDATE Note_c set note_c_title=?, note_c_content=?, note_c_img=?, note_id=? where note_c_id = ?";
+			private static final String TOGETONENOTE =
+					"SELECT note_c_id,note_c_title,note_c_content,note_c_img,note_id FROM Note_c where note_id = ? ";
 
 			@Override
 			public void insert(NoteCVO noteCVO) {
@@ -229,6 +231,125 @@ import javax.sql.DataSource;
 
 					con = ds.getConnection();;
 					pstmt = con.prepareStatement(GET_ALL_STMT);
+					rs = pstmt.executeQuery();
+
+					while (rs.next()) {
+						
+						noteCVO = new NoteCVO();
+						noteCVO.setNote_c_id(rs.getInt("note_c_id"));
+						noteCVO.setNote_c_title(rs.getString("note_c_title"));
+						noteCVO.setNote_c_content(rs.getString("note_c_content"));
+						noteCVO.setNote_c_img(rs.getBytes("note_c_img"));
+						noteCVO.setNote_id(rs.getInt("note_id"));
+						list.add(noteCVO); // Store the row in the list
+					}
+
+				} catch (SQLException se) {
+					throw new RuntimeException("A database error occured. "
+							+ se.getMessage());
+					// Clean up JDBC resources
+				} finally {
+					if (rs != null) {
+						try {
+							rs.close();
+						} catch (SQLException se) {
+							se.printStackTrace(System.err);
+						}
+					}
+					if (pstmt != null) {
+						try {
+							pstmt.close();
+						} catch (SQLException se) {
+							se.printStackTrace(System.err);
+						}
+					}
+					if (con != null) {
+						try {
+							con.close();
+						} catch (Exception e) {
+							e.printStackTrace(System.err);
+						}
+					}
+				}
+				return list;
+			}
+			
+			@Override
+			public NoteCVO togetoneNote(Integer note_id) {
+
+				NoteCVO noteCVO = null;
+				Connection con = null;
+				PreparedStatement pstmt = null;
+				ResultSet rs = null;
+
+				try {
+
+					
+					con = ds.getConnection();
+					pstmt = con.prepareStatement(TOGETONENOTE);
+
+					pstmt.setInt(1, note_id);
+
+					rs = pstmt.executeQuery();
+
+					while (rs.next()) {
+						// empVo 也稱為 Domain objects
+						
+						noteCVO = new NoteCVO();
+						noteCVO.setNote_c_id(rs.getInt("note_c_id"));
+						noteCVO.setNote_c_title(rs.getString("note_c_title"));
+						noteCVO.setNote_c_content(rs.getString("note_c_content"));
+						noteCVO.setNote_c_img(rs.getBytes("note_c_img"));
+						noteCVO.setNote_id(rs.getInt("note_id"));
+						
+						
+						break;
+					}
+
+				
+				} catch (SQLException se) {
+					throw new RuntimeException("A database error occured. "
+							+ se.getMessage());
+					// Clean up JDBC resources
+				} finally {
+					if (rs != null) {
+						try {
+							rs.close();
+						} catch (SQLException se) {
+							se.printStackTrace(System.err);
+						}
+					}
+					if (pstmt != null) {
+						try {
+							pstmt.close();
+						} catch (SQLException se) {
+							se.printStackTrace(System.err);
+						}
+					}
+					if (con != null) {
+						try {
+							con.close();
+						} catch (Exception e) {
+							e.printStackTrace(System.err);
+						}
+					}
+				}
+				return noteCVO;
+			}
+			@Override
+			public List<NoteCVO> getAllNoteC(Integer note_id) {
+				List<NoteCVO> list = new ArrayList<NoteCVO>();
+				NoteCVO noteCVO = null;
+
+				Connection con = null;
+				PreparedStatement pstmt = null;
+				ResultSet rs = null;
+
+				try {
+
+					con = ds.getConnection();;
+					pstmt = con.prepareStatement(TOGETONENOTE);
+					pstmt.setInt(1, note_id);
 					rs = pstmt.executeQuery();
 
 					while (rs.next()) {

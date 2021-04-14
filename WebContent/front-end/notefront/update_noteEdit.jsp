@@ -86,7 +86,7 @@
     <div class="row mt-5 mb-5 ">
   <!-- Title -->
   <div class="col-lg-8">
-    <h1 class="edit">新增遊記</h1>
+    <h1 class="edit">編輯遊記</h1>
   </div>
       <!-- Post Content Column -->
       <div class="col-lg-8 mt-3">
@@ -103,27 +103,25 @@
           
           <div class="form-group">
             <label for="exampleFormControlSelect1">行程</label>
-            <select name="trip_id" class="form-control" id="exampleFormControlSelect1" >
-              <option value="0">0</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-            </select>
+				<select size="1" name="trip_id" readonly class="form-control">
+					<option value="${noteVO.trip_id}"}>${noteVO.trip_id}</option>
+				</select>
           </div>
           <div class="form-group">
             <label for="exampleFormControlInput1">大綱</label>
             <textarea type="text" name="note_description" class="form-control" id="Input2" value="${noteVO.note_description}"></textarea>
           </div>
 		<script type="text/javascript">
-		  $(document).ready(function() {
+ 		  $(document).ready(function() {
 		  	  CKEDITOR.replace( 'Input2' );
-              var $CKcontent = CKEDITOR.instances.Input2.getData();
-		  })
- 		</script>
+              var $CKcontent = CKEDITOR.instances.document.Input2.getBody().getText();
+				
+		  }) 
+		</script>
 
           <div class="bd pt-5">
           <button type="submit" class="btn btn-primary1" id="btn_submit">送出</button>
+          <button type="submit" class="btn btn-primary1" id="btn_submit">繼續下頁編輯</button>
           </div>
         
         </div>
@@ -137,7 +135,8 @@
   </div>
   <!-- /.container -->
   <br>
-<input type="hidden" name="action" value="insert">
+<input type="hidden" name="action" value="update">
+<input type="hidden" name="note_id" value="${noteVO.note_id}">
 <input type="hidden" name="note_classid" value="1">
 <!-- classid預設1 -->
 <input type="hidden" name="users_id" value="1">
@@ -147,15 +146,15 @@
   <script>
   
 
-        $("#btn_submit").on("click", function (e) {
-            let task_text = ($('#exampleFormControlInput1').val()).trim();
-            if (task_text == "") {
-                e.preventDefault();
-                $('#title1').text('*請勿空白');
-            } else {
-                $('#title1').text('')
-            }
-        });
+//         $("#btn_submit").on("click", function (e) {
+//             let task_text = ($('#exampleFormControlInput1').val()).trim();
+//             if (task_text == "") {
+//                 e.preventDefault();
+//                 $('#title1').text('*請勿空白');
+//             } else {
+//                 $('#title1').text('')
+//             }
+//         });
 
         
         $.datetimepicker.setLocale('zh');
@@ -164,7 +163,7 @@
 	       timepicker:false,       //timepicker:true,
 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
-		   value:   new Date()
+		   value: '<%=noteVO.getTravel_start()%>'
           
         });
         // 以下為某一天之後的日期無法選擇

@@ -1,10 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.note.model.*"%>
+<%@ page import="com.notec.model.*"%>
 
 
 <%
-  NoteVO noteVO = (NoteVO) request.getAttribute("noteVO");
+  NoteCVO noteCVO = (NoteCVO) request.getAttribute("noteCVO");
 %>
 
 <html>
@@ -24,7 +24,6 @@
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 	<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
 	<script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
-
 </head>
 <style>
     #preview{
@@ -69,7 +68,6 @@
 <!--             </div> -->
 <!--         </div> -->
 <!--     </nav> -->
-    <!-- Page Content -->
     <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
 	<font class="error pt-5"style="color:red">請修正以下錯誤:</font>
@@ -79,49 +77,58 @@
 		</c:forEach>
 	</ul>
 </c:if>
-
-    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/note/note.do" name="form1">
+    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/notec/notec.do" name="form1" enctype="multipart/form-data">
   <div class="container">
 
     <div class="row mt-5 mb-5 ">
   <!-- Title -->
   <div class="col-lg-8">
-    <h1 class="edit">新增遊記</h1>
+    <h1 class="edit">新增內容</h1>
   </div>
       <!-- Post Content Column -->
       <div class="col-lg-8 mt-3">
-        
-          <div class="form-group">
-            <label for="exampleFormControlInput1">標題</label>
-            <input type="text" name="note_title" class="form-control" id="exampleFormControlInput1" value="${noteVO.note_title}"><span id="title1" style="color:red"></span>
+
+		<tr>
+				<td>遊記序號:</td>
+				<td>
+				<jsp:useBean id="noteCSvc" scope="page"
+						class="com.note.model.NoteService" />
+
+
+					<FORM METHOD="post" ACTION="notec.do">
+						<select class="form-control" size="1" name="note_id">
+							<c:forEach var="noteCVO" items="${noteCSvc.all}">
+								<option value="${noteCVO.note_id}">${noteCVO.note_id}
+							</c:forEach>
+						</select> <input type="hidden" name="action" value="insert">
+					</FORM>
+					</td>
+			</tr>
+			
+          <div class="form-group pt-3">
+            <label for="exampleFormControlInput1">副標題</label>
+            <input type="text" name="note_c_title" class="form-control" id="exampleFormControlInput3"><span id="title3" style="color:red"></span>
           </div>
-          
           <div class="form-group">
-            <label for="exampleFormControlInputdate1">旅遊日期</label>
-            <input name="travel_start" class="form-control" id="f_date1" type="text" value="${noteVO.travel_start}">
+            <label for="exampleFormControlTextarea1">內容簡介</label>
+            <textarea type="text" name="note_c_content" class="form-control" id="Input2"></textarea>
           </div>
-          
-          <div class="form-group">
-            <label for="exampleFormControlSelect1">行程</label>
-            <select name="trip_id" class="form-control" id="exampleFormControlSelect1" >
-              <option value="0">0</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="exampleFormControlInput1">大綱</label>
-            <textarea type="text" name="note_description" class="form-control" id="Input2" value="${noteVO.note_description}"></textarea>
-          </div>
-		<script type="text/javascript">
-		  $(document).ready(function() {
+          <script type="text/javascript">
+		  	$(document).ready(function() {
 		  	  CKEDITOR.replace( 'Input2' );
               var $CKcontent = CKEDITOR.instances.Input2.getData();
-		  })
+		 	 })
  		</script>
+        
+      
 
+          <div class="form-group pt-3">
+            <label for="exampleFormControlFile1">新增相片</label>
+            <input type="file" name="note_c_img" accept="image/*" multiple="multiple" class="form-control-file" id="p_file">
+            <div id="preview">
+            <img src="<%=request.getContextPath()%>/DBGifReaderNoteC?note_c_id=${noteCVO.note_c_id}" style="width:120px; height:120px">
+            </div>
+        </div>
           <div class="bd pt-5">
           <button type="submit" class="btn btn-primary1" id="btn_submit">送出</button>
           </div>
@@ -133,52 +140,44 @@
       </div>
 
     </div>
-    <!-- /.row -->
-  </div>
   <!-- /.container -->
   <br>
 <input type="hidden" name="action" value="insert">
-<input type="hidden" name="note_classid" value="1">
-<!-- classid預設1 -->
-<input type="hidden" name="users_id" value="1">
-<input type="hidden" name="note_like" value="0">
 
   </FORM>
   <script>
-  
+       var the_file_element = document.getElementById("p_file");
+                the_file_element.addEventListener("change", function (e) {
+
+                    var picture_list = document.getElementsByClassName("form-control-file")[0];
+                    picture_list.innerHTML = ""; //清空
+                    
+                    // 跑每個使用者的檔案
+                    for (var i = 0; i < this.files.length; i++) {
+                        let reader = new FileReader(); // 用來讀取檔案的物件
+                        reader.readAsDataURL(this.files[i]); // 讀取檔案
+                        // 檔案讀取完畢時觸發
+                        reader.addEventListener("load", function () {
+
+                            const img = document.createElement('img')
+                            img.setAttribute('id', 'preview_image')
+                            img.setAttribute('src', reader.result)
+                            preview.replaceWith(img)
+
+                        })
+                    }
+                });
 
         $("#btn_submit").on("click", function (e) {
-            let task_text = ($('#exampleFormControlInput1').val()).trim();
+            let task_text = ($('#exampleFormControlInput3').val()).trim();
             if (task_text == "") {
                 e.preventDefault();
-                $('#title1').text('*請勿空白');
+                $('#title3').text('*請勿空白');
             } else {
-                $('#title1').text('')
+                $('#title3').text('')
             }
         });
 
-        
-        $.datetimepicker.setLocale('zh');
-        $('#f_date1').datetimepicker({
-	       theme: '',              //theme: 'dark',
-	       timepicker:false,       //timepicker:true,
-	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
-	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
-		   value:   new Date()
-          
-        });
-        // 以下為某一天之後的日期無法選擇
-             var somedate2 = new Date('2021-04-28');
-             $('#f_date1').datetimepicker({
-                 beforeShowDay: function(date) {
-               	  if (  date.getYear() >  somedate2.getYear() || 
-        		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
-        		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
-                     ) {
-                          return [false, ""]
-                     }
-                     return [true, ""];
-             }});
   </script>
 
     <footer class="page-footer dark" style="background: #575D59;">

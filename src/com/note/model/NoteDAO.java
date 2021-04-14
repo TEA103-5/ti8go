@@ -22,7 +22,7 @@ public class NoteDAO implements NoteDAO_interface {
 	private static final String INSERT_STMT = 
 			"INSERT INTO Note (note_classid,travel_start,note_title,note_description,users_id,trip_id,note_like) VALUES ( ?, ?, ?, ?, ?, ?, ?)";
 		private static final String GET_ALL_STMT = 
-			"SELECT note_id,note_classid,note_date,travel_start,note_title,note_description,note_update,users_id,trip_id,note_like FROM Note order by note_id ";
+			"SELECT note_id,note_classid,note_date,travel_start,note_title,note_description,note_update,users_id,trip_id,note_like FROM Note where note_classid=1 order by note_id ";
 		private static final String GET_ONE_STMT = 
 			"SELECT note_id,note_classid,note_date,travel_start,note_title,note_description,note_update,users_id,trip_id,note_like FROM Note where note_id = ?";
 		private static final String DELETE = 

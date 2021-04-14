@@ -39,7 +39,7 @@ public class DBGifReaderNoteC extends HttpServlet {
 			  try {
 			   Statement stmt = con.createStatement();
 			   String note_c_id = req.getParameter("note_c_id").trim();
-			   ResultSet rs = stmt.executeQuery("SELECT note_c_img FROM note_c where note_id=" + note_c_id);           
+			   ResultSet rs = stmt.executeQuery("SELECT note_c_img FROM note_c where note_c_id=" + note_c_id);           
 			   if (rs.next()) {
 			    BufferedInputStream in = new BufferedInputStream(rs.getBinaryStream("note_c_img"));
 			    byte[] buf = new byte[4 * 1024]; // 4K buffer
@@ -62,7 +62,7 @@ public class DBGifReaderNoteC extends HttpServlet {
 			    rs.close();
 			    stmt.close();
 			   } catch (Exception e) {
-			      InputStream in = getServletContext().getResourceAsStream("/NoData/null2.jpg");
+			      InputStream in = getServletContext().getResourceAsStream("/NoData/3.0.png");
 			    byte[] b = new byte[in.available()];
 			    in.read(b);
 			    out.write(b);
