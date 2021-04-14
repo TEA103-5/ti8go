@@ -14,62 +14,50 @@
 <head>
     <title>addtrip - font-end</title>
      <%@ include file="/front-end/pages/links.html" %> 
-<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/assets/css/productstyles.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/assets/css/tripstyles.css">
 </head>
 
 <body>
     <%@ include file="/front-end/pages/headNav.html" %>
-
+<!--  <button @click="setCookie('ABA','10',1)">set</button> -->
+<!--  <button @click="getCookie('peter')">get</button> -->
     
     <main id="app" class="page  glass">
- <button @click="setCookie('ABA','10',1)">set</button>
- <button @click="getCookie('peter')">get</button>
+    <div id="fade" class="black_overlay" style="display:block; min-height: 100%;">
+    
+						<div id="tripadd" class="white_content glass" style="display:block;">
+				行程名稱:<br/>
+				<input
+				class="" type="text" name="trip_name"
+				placeholder="為你的行程取個名子" v-model="addtrip.trip_name">
+				 <br/>
+				 		開始時間:
+				<input
+							class="" type="text" name="trip_start"
+							id="f_date1">
+							
+				結束時間:
+				<input
+							class="" type="text" name="trip_end"
+							id="f_date2">
+				 <br/>
+				 出遊類型:
+				<input
+				class="" type="text" name="trip_name"
+				v-model="addtrip.trip_type">
+				 <br/>
+				<textarea class="form-control" id="signature" rows="4"
+				placeholder="描述此次行程您最期待的部分"
+												name="signature" v-model="addtrip.trip_description"></textarea>
 
-                <div class="block-heading">
-                    <h2 class="text-info">addtrip</h2>
-					</div>
-            <div class="container-fluid" style="margin:0px;">
-            <div class="row w-100 justify-content-center align-items-center" style="margin-right:0px; margin-left:0px; flex-wrap:wrap;">
-            	
-
-					<div class="col-md-4 col-xl-4 mb-4 conn">
-									<table class="table-users">
-					<tr>
-							<th>
-							 day
-							</th>
-							<th>
-							 行程明細列表
-							</th>
-							<th>
-							 time
-							</th>
-					</tr>
-					<tr v-for="(item, index) in tripDetaillist" >
-						<td>
-						{{item.trip_day}}
-						</td>
-						<td>
-						{{item.place_name}}
-						</td>
-						<td>
-						{{item.trip_start_time}}~{{item.trip_end_time}}
-						</td>
-						<td>
-						<button @click="tripDetailDel(index)">del</button>
-						</td>
-						<td>
-						<button @click="tripDetailEdit(item,index)">edit</button>
-						</td>
-					</tr>
-					</table>
-					</div>
-					
-											 <div class="col-md-3 col-xl-3 mb-3 conn" style="height:500px;">
-<!-- 						  <button class="btnl btn-edit" v-on:click="pagepre()">pre</button> -->
-<!-- 						 第{{px}}/{{Math.ceil(pagemax/n)}}頁 -->
-<!-- 						 <button class="btnl btn-edit" v-on:click="pageadd()">next</button> -->
-					 地點名稱
+					<br/>
+	<button class="btnl btn-cancel"  
+	@click="submitTrip()">確定</button>
+						
+						</div>
+						
+			<div id="choicePlace" class="white_content glass">
+					<input placeholder="搜尋" class="" type="text">
 					<table class=" table   table-place" style="height:470px;" >
 					<tr>
 							<th>
@@ -85,53 +73,110 @@
 						</td>
 					</tr>
 					</table>
-						
-						 </div>
-						 
-					 <div class="col-md-2 col-xl-2 mb-2 conn">
-				 地點:{{tripDetail.place_name}}<br/>
-		
-				開始時間:<input type="time"  id="time1" />
-							<br/>
-				結束時間:<input type="time" id="time2"  />
-					<br/>
-				<input
+					<button onclick="document.getElementById('choicePlace').style.display='none';document.getElementById('fade').style.display='none';">取消</button>
+			</div>			
+			
+			<div id="setTripDetail" class="white_content glass">
+							 				<input
 				class="" type="text" name="trip_name"
 				placeholder="行程內容"
 				v-model="tripDetail.trip_content">
-				 <br/>
-				備註:<input
-				class="" type="text" name="trip_name"
+							 <br/>
+		
+				開始時間:<input type="time"  id="time1" />
+				結束時間:<input type="time" id="time2"  />
+				花費:<input type="text" v-model="tripDetail.trip_cost"/>臺幣
+				
+					<br/>
+				 <br/>	
+				<textarea class="form-control" id="signature" rows="4"
 				placeholder="備註"
-				v-model="tripDetail.trip_remarks">
+												name="signature" v-model="tripDetail.trip_remarks"></textarea>
+				
+				
 				 <br/>
 					<button @click="sendDetailEditToList">確認</button>
+			
+
+					<button onclick="document.getElementById('setTripDetail').style.display='none';document.getElementById('fade').style.display='none';">取消</button>
+			</div>			
+    </div>
+
+            <div class="container-fluid" style="margin:0px;">
+                <div class="block-heading">
+                    <h2 class="text-info">addtrip</h2>
+					</div>
+            <div class="row" style="margin-right:0px; margin-left:0px; flex-wrap:wrap;">
+            	
+
+				 <div class="col-md-2 col-xl-2 mb-2 conn" style="height:500px;">
+				若4/15-4/15為一天
+				<ul v-for="(item,index) in daylist" class="list-group list-group-flush" style="border-radius: 2rem;">
+					<li class="list-group-item">
+							Day{{index+1}}
+							<button class="btnl"  
+	@click="delOneDay(index)">刪除</button>
+					</li>
+				</ul>
+<button class="btnl btn-cancel"  
+	@click="addOneDay">新增一天</button>
+				 </div>
+				 
+				 
+					<div class="col-md-5 col-xl-5 mb-5 conn" style="height:500px;overflow-y: scroll;">
+					<ul v-for="(item,index) in daylist" class="list-group list-group-flush footers" style="border-radius: 2rem;">
+						 <li class="list-group-item footers">
+							<table class="table-users">
+												<tr>				
+										<th>
+										 D{{index+1}}
+										</th>
+								</tr>
+								<tr v-for="(item, inde) in daylist[index].tripDetail" >
+			
+									<td>
+									
+									</td>
+									<td>	
+									{{item.trip_content}}<br/>
+									{{item.trip_start_time}}~{{item.trip_end_time}}<br/>
+									   {{item.trip_remarks}}
+									</td>
+									<td>
+								  
+									</td>
+									
+									<td>
+									<button @click="">插入</button>
+									</td>
+									<td>
+									<button @click="tripDetailEdit(item,inde)">edit</button>
+									</td>
+									<td>
+									<button @click="tripDetailDel(inde)">del</button>
+									</td>
+								</tr>
+					</table>
+					</li>
+						<li class="list-group-item">
+						新增:
+<!-- 						choicePlaceToDetail -->
+						<button @click="choicePlaceToDetail(index)">地點</button>
+						<button onclick="document.getElementById('choicePlace').style.display='block';document.getElementById('fade').style.display='block';">其它</button>
+						</li>
+								  
+					</ul>
+					
+
+					</div>
+					
+
+						 
+					 <div class="col-md-2 col-xl-2 mb-2 conn">
+
 					 </div>	 
 						 
-				 <div class="col-md-2 col-xl-2 mb-2 conn">
-				 行程名稱:<br/>
-				<input
-				class="" type="text" name="trip_name"
-				placeholder="行程名稱" v-model="addtrip.trip_name">
-				 <br/>
-				 行程描述:<br/>
-				<input
-				class="" type="text" name="trip_name"
-				placeholder="行程描述" v-model="addtrip.trip_description">
-				 <br/>
-				開始時間:<br/>
-				<input
-							class="" type="text" name="trip_start"
-							id="f_date1">
-							<br/>
-				結束時間:<br/>
-				<input
-							class="" type="text" name="trip_end"
-							id="f_date2">
 
-					<br/>
-					<button @click="submitTrip">確認</button>
-				 </div>
 						 
             </div>
         
@@ -146,9 +191,38 @@
 	var vm = new Vue({
 	    el: '#app',
 	    data: {
+	    	dayCount:1,
+	    	daylist:[
+ 	    		{
+ 	    			day:1,
+ 	    			tripDetail:[
+// 	    				{
+// 	    		    		trip_day:'1',
+// 	    		    		place_id:'1',
+// 	    		    		trip_id:'1',
+// 	    		    		trip_sort:1,
+// 	    		    		trip_detail_type:'其他',
+// 	    		    		trip_content:'',
+// 	    		    		trip_start_time:'00:00',
+// 	    		    		trip_end_time:'00:00',
+// 	    		    		trip_remarks:'行程描述',
+// 	    		    		trip_cost:'0',
+// 	    		    		action:'insertajax',
+// 	    		    		place_name:'',
+// 	    		    		indexOfList:0,
+// 	    				},
+	    			],
+ 	    		},
+	    	],
 	    	theTrip_id:0,
 	    	detailUpdateCount:0,
-	    	tripDetaillist:[],
+	    	tripDetaillist:[
+	    		{
+	    			day:1,
+
+	    		},
+	    		
+	    	],
 	    	tripDetail:{
 	    		trip_day:'1',
 	    		place_id:'1',
@@ -158,7 +232,7 @@
 	    		trip_content:'',
 	    		trip_start_time:'',
 	    		trip_end_time:'',
-	    		trip_remarks:'無',
+	    		trip_remarks:'',
 	    		trip_cost:'0',
 	    		action:'insertajax',
 	    		place_name:'',
@@ -191,42 +265,101 @@
 	    	],
 	    },
 	    methods: {
-	    	setCookie(cname,cvalue,exdays){
-	    	    var d = new Date();
-	    	    d.setTime(d.getTime()+(exdays*24*60*60*1000));
-	    	    var expires = "expires="+d.toGMTString();
-	    	    document.cookie = cname+"="+cvalue+"; "+expires;
-	    	},
-	    	getCookie(cname){
-	      		console.log("123")
-	    		console.log(document.cookie)
-	    	    var name = cname + "=";
-	    	    var ca = document.cookie.split(';');
-	    	    for(var i=0; i<ca.length; i++) {
-	    	        var c = ca[i].trim();
-	    	        if (c.indexOf(name)==0) { return c.substring(name.length,c.length); }
-	    	    }
-	    	    return "";
-	    	},
-	    	pageadd(){
-	    		if(this.x<Math.ceil(this.pagemax/this.n)){
-	    		this.x++;
-	    		}
-	    	},
-	    	pagepre(){
-	    		if(this.x>1){
-	    		this.x--;    			
-	    		}
-	    	},
-			checkvalue(){
-				this.addtrip.trip_start=$('#f_date1').val();
-				this.addtrip.trip_end=$('#f_date2').val();
-				console.log(this.addtrip.trip_name);
+// 	    	setCookie(cname,cvalue,exdays){
+// 	    	    var d = new Date();
+// 	    	    d.setTime(d.getTime()+(exdays*24*60*60*1000));
+// 	    	    var expires = "expires="+d.toGMTString();
+// 	    	    document.cookie = cname+"="+cvalue+"; "+expires;
+// 	    	},
+// 	    	getCookie(cname){
+// 	      		console.log("123")
+// 	    		console.log(document.cookie)
+// 	    	    var name = cname + "=";
+// 	    	    var ca = document.cookie.split(';');
+// 	    	    for(var i=0; i<ca.length; i++) {
+// 	    	        var c = ca[i].trim();
+// 	    	        if (c.indexOf(name)==0) { return c.substring(name.length,c.length); }
+// 	    	    }
+// 	    	    return "";
+// 	    	},
+// 	    	pageadd(){
+// 	    		if(this.x<Math.ceil(this.pagemax/this.n)){
+// 	    		this.x++;
+// 	    		}
+// 	    	},
+// 	    	pagepre(){
+// 	    		if(this.x>1){
+// 	    		this.x--;    			
+// 	    		}
+// 	    	},
+// 			checkvalue(){
+// 				this.addtrip.trip_start=$('#f_date1').val();
+// 				this.addtrip.trip_end=$('#f_date2').val();
+// 				console.log(this.addtrip.trip_name);
+// 			},
+			choicePlaceToDetail(index){
+				document.getElementById('choicePlace').style.display='block';
+				document.getElementById('fade').style.display='block';
+				this.dayCount=index;//為了知道是第幾天的行程(天實為daylist.index+1)
+			},
+			delOneDay(index){
+				 this.daylist.splice(index, 1);	
+			},
+			addOneDay(){
+	            this.daylist.push({
+	            	day:this.daylist.length+1,
+	            	tripDetail:[],
+	            });
+	           
 			},
 			sendDetailEditToList(){
+				
+				
+				
+				
 				this.tripDetail.trip_start_time=$('#time1').val()+':00';
 				this.tripDetail.trip_end_time=$('#time2').val()+':00';
-				this.tripDetaillist[this.tripDetail.indexOfList]=this.tripDetail;
+			//	this.tripDetaillist[this.tripDetail.indexOfList]=this.tripDetail;
+				
+				
+				this.daylist[this.dayCount].tripDetail.push({
+		    		trip_day:'1',
+		    		trip_id:'1',
+		    		trip_sort:1,
+		    		trip_detail_type:'景點',
+		    		place_id:this.tripDetail.place_id,
+		    		trip_content:this.tripDetail.trip_content,
+		    		trip_start_time:this.tripDetail.trip_start_time,
+		    		trip_end_time:this.tripDetail.trip_end_time,
+		    		trip_remarks:this.tripDetail.trip_remarks,
+		    		trip_cost:this.tripDetail.trip_cost,
+		    		action:'insertajax',
+		    		place_name:this.tripDetail.place_name,
+		    		indexOfList:0,
+				});
+				
+		    	
+		    			this.tripDetail.trip_day='1',
+		    			this.tripDetail.place_id='1',
+		    			this.tripDetail.trip_id='1',
+		    			this.tripDetail.trip_sort=1,
+		    			this.tripDetail.trip_detail_type='其他',
+		    			this.tripDetail.trip_content='',
+		    			this.tripDetail.trip_start_time='',
+		    			this.tripDetail.trip_end_time='',
+		    			$('#time1').val("");
+						$('#time2').val("");
+		    			this.tripDetail.trip_remarks='',
+		    			this.tripDetail.trip_cost='0',
+		    			this.tripDetail.action='insertajax',
+		    		this.tripDetail.place_name='',
+		    		this.tripDetail.indexOfList=0,
+		
+				
+				document.getElementById('setTripDetail').style.display='none';
+				document.getElementById('fade').style.display='none';
+				
+				
 			},
 			tripDetailEdit(item,index){
 				this.tripDetail=item;
@@ -238,22 +371,28 @@
 				this.tripDetaillist.splice(index, 1);
 			},
 			tripDetailAdd(e){
-	            this.tripDetaillist.push({
-		    		trip_day:'1',
-		    		place_id:e.place_id,
-		    		trip_id:'1',
-		    		trip_sort:1,
-		    		trip_detail_type:'其他',
-		    		trip_content:'',
-		    		trip_start_time:'',
-		    		trip_end_time:'',
-		    		trip_remarks:'無',
-		    		trip_cost:'0',
-		    		action:'insertajax',
-		    		place_name:e.place_name,
-		    		indexOfList:0,
-	            });
-	            console.log(this.tripDetaillist.length);
+	            document.getElementById('choicePlace').style.display='none';
+	            document.getElementById('setTripDetail').style.display='block';
+	            document.getElementById('fade').style.display='block';
+	            this.tripDetail.place_name=e.place_name;
+	            this.tripDetail.trip_content=e.place_name;
+	            this.tripDetail.place_id=e.place_id;
+// 	            this.tripDetaillist.push({
+// 		    		trip_day:'1',
+// 		    		place_id:e.place_id,
+// 		    		trip_id:'1',
+// 		    		trip_sort:1,
+// 		    		trip_detail_type:'其他',
+// 		    		trip_content:'',
+// 		    		trip_start_time:'',
+// 		    		trip_end_time:'',
+// 		    		trip_remarks:'無',
+// 		    		trip_cost:'0',
+// 		    		action:'insertajax',
+// 		    		place_name:e.place_name,
+// 		    		indexOfList:0,
+// 	            });
+// 	            console.log(this.tripDetaillist.length);
 			},
 			submitTripDetail(){//行程細節送出 目前以submitTrip()觸發
 				let self=this;
@@ -274,6 +413,7 @@
 			        }
 			    });
 				}
+				
 			},
 			submitTrip(){
 				let self=this;
@@ -290,9 +430,11 @@
 			          
 			        self.detailUpdateCount=self.tripDetaillist.length;
 			        self.theTrip_id=data.trip_id;
-			        self.submitTripDetail();        
+			        //self.submitTripDetail();        
 			        }
 			    });
+				document.getElementById('tripadd').style.display='none';
+				document.getElementById('fade').style.display='none';
 			},
 	    },
 	    computed:{
