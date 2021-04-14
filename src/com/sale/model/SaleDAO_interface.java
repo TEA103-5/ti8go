@@ -9,6 +9,7 @@ import com.product.model.ProductVO;
 
 public interface SaleDAO_interface {
 	public void insert(SaleVO saleVO);
+	public Integer insertq(SaleVO saleVO);
 	public void update(SaleVO saleVO);
 	public void updatep(SaleVO saleVO);
 	public void delete(Integer sale_id);
