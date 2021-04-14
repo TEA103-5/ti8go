@@ -19,16 +19,7 @@
 
 <body>
     <%@ include file="/front-end/pages/headNav.html" %>
-<!--     						    <h2 class="text-info">編輯行程</h2> -->
-<!-- 						 </div> -->
-<!-- 						 <ul> -->
-<!-- 						 		<li> -->
-<!-- 						 			選擇新增行程後.輸入新增行程資料-->新增行程-->編輯行程明細-->新增N筆名細至行程 -->
-<!-- 						 		</li> -->
-<!-- 						 		<li> -->
-<!-- 						 			選擇(搜尋)地點/地點蒐藏 -->
-<!-- 						 		</li> -->
-<!--      </ul> -->
+
     
     <main id="app" class="page  glass">
  <button @click="setCookie('ABA','10',1)">set</button>
@@ -40,24 +31,7 @@
             <div class="container-fluid" style="margin:0px;">
             <div class="row w-100 justify-content-center align-items-center" style="margin-right:0px; margin-left:0px; flex-wrap:wrap;">
             	
-						 <div class="col-md-2 col-xl-2 mb-2 conn">
-					<table class="table-users">
-					<tr>
-							<th>
-							 地點名稱
-							</th>
-					</tr>
-					<tr v-for="(item, index) in placelist" >
-						<td>
-						{{item.place_name}}
-						</td>
-						<td>
-						<button @click="tripDetailAdd(item)">add</button>
-						</td>
-					</tr>
-					</table>
-						
-						 </div>
+
 					<div class="col-md-4 col-xl-4 mb-4 conn">
 									<table class="table-users">
 					<tr>
@@ -89,7 +63,31 @@
 						</td>
 					</tr>
 					</table>
-					</div>	 
+					</div>
+					
+											 <div class="col-md-3 col-xl-3 mb-3 conn" style="height:500px;">
+<!-- 						  <button class="btnl btn-edit" v-on:click="pagepre()">pre</button> -->
+<!-- 						 第{{px}}/{{Math.ceil(pagemax/n)}}頁 -->
+<!-- 						 <button class="btnl btn-edit" v-on:click="pageadd()">next</button> -->
+					 地點名稱
+					<table class=" table   table-place" style="height:470px;" >
+					<tr>
+							<th>
+							
+							</th>
+					</tr>
+					<tr v-for="(item, index) in placelist" >
+						<td>
+						{{item.place_name}}
+						</td>
+						<td>
+						<button @click="tripDetailAdd(item)">add</button>
+						</td>
+					</tr>
+					</table>
+						
+						 </div>
+						 
 					 <div class="col-md-2 col-xl-2 mb-2 conn">
 				 地點:{{tripDetail.place_name}}<br/>
 		
@@ -210,14 +208,24 @@
 	    	    }
 	    	    return "";
 	    	},
+	    	pageadd(){
+	    		if(this.x<Math.ceil(this.pagemax/this.n)){
+	    		this.x++;
+	    		}
+	    	},
+	    	pagepre(){
+	    		if(this.x>1){
+	    		this.x--;    			
+	    		}
+	    	},
 			checkvalue(){
 				this.addtrip.trip_start=$('#f_date1').val();
 				this.addtrip.trip_end=$('#f_date2').val();
 				console.log(this.addtrip.trip_name);
 			},
 			sendDetailEditToList(){
-				this.tripDetail.trip_start_time=$('#time1').val();
-				this.tripDetail.trip_end_time=$('#time2').val();
+				this.tripDetail.trip_start_time=$('#time1').val()+':00';
+				this.tripDetail.trip_end_time=$('#time2').val()+':00';
 				this.tripDetaillist[this.tripDetail.indexOfList]=this.tripDetail;
 			},
 			tripDetailEdit(item,index){
