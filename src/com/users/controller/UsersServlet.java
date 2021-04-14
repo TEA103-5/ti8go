@@ -2,7 +2,7 @@ package com.users.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -32,7 +32,6 @@ public class UsersServlet extends HttpServlet {
 		
 		req.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = res.getWriter();
 		
 		String action = req.getParameter("action");
 		
@@ -89,6 +88,7 @@ public class UsersServlet extends HttpServlet {
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("usersVO", usersVO); // 資料庫取出的empVO物件,存入req
+				req.getSession().setAttribute("usersVO", usersSvc.getOneusers(usersVO.getUsers_id()));
 				String url = (requestUrl + "users/listOneUsers.jsp");
 
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
@@ -247,6 +247,7 @@ public class UsersServlet extends HttpServlet {
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 //				usersVO = usersSvc.getOneusers(users_mail);
 				req.setAttribute("usersVO", usersVO);
+				req.getSession().setAttribute("usersVO", usersSvc.getOneusers(usersVO.getUsers_id()));
 				String url = "/front-end/users/listOneUsers.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);				
@@ -355,12 +356,13 @@ public class UsersServlet extends HttpServlet {
 					}
 					
 					String users_id_number = req.getParameter("users_id_number").trim();
-					String idReg = "/^[A-Za-z][12]\\\\d{8}$/";
+				
 					if (users_id_number == null || users_id_number.trim().length() == 0) {
 						errorMsgs.add("身分證請勿空白");
-					} else if(!users_id_number.trim().matches(idReg)) { //以下練習正則(規)表示式(regular-expression)
-						errorMsgs.add("身分證號碼格式錯誤...");
-			            }
+					} 
+//					else if(!users_id_number.trim().matches(idReg)) { //以下練習正則(規)表示式(regular-expression)
+//						errorMsgs.add("身分證號碼格式錯誤...");
+//			            }
 					
 					String users_phone = req.getParameter("users_phone").trim();
 					if (users_phone == null || users_phone.trim().length() == 0) {
@@ -398,7 +400,7 @@ public class UsersServlet extends HttpServlet {
 					if (!errorMsgs.isEmpty()) {
 						req.setAttribute("usersVO", usersVO); // 含有輸入格式錯誤的empVO物件,也存入req
 						RequestDispatcher failureView = req
-								.getRequestDispatcher("/front-end/users/update_users_input.jsp");
+								.getRequestDispatcher("/front-end/pages/login1.jsp");
 						failureView.forward(req, res);
 						return;
 					}
@@ -407,8 +409,9 @@ public class UsersServlet extends HttpServlet {
 					usersVO = usersSvc.updateusers(users_id, users_mail, users_pwd, users_status, users_nickname, users_name, users_sex, users_birthday, users_id_number, users_users_pic, users_phone);		
 					/***************************3.新增完成,準備轉交(Send the Success view)***********/
 					usersVO = usersSvc.getOneusers(users_id);
+					req.getSession().setAttribute("usersVO", usersSvc.getOneusers(usersVO.getUsers_id()));
 					req.setAttribute("usersVO", usersVO); 
-					String url = "/front-end/users/listOneUsers.jsp";
+					String url = "/front-end/pages/login1.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 					successView.forward(req, res);				
 					
@@ -416,7 +419,7 @@ public class UsersServlet extends HttpServlet {
 				} catch (Exception e) {
 					errorMsgs.add("修改資料失敗:"+e.getMessage());
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front-end/users/update_users_input.jsp");
+							.getRequestDispatcher("/front-end/pages/login1.jsp");
 					failureView.forward(req, res);
 				}
 			}
@@ -448,16 +451,16 @@ public class UsersServlet extends HttpServlet {
 					
 					
 					String users_pwd = req.getParameter("users_pwd").trim();
-					String pwdReg = "/^.*(?=.{6,16})(?=.*\\d)(?=.*[A-Z]{1,})(?=.*[a-z]{1,})(?=.*[!@#$%^&*?\\(\\)]).*$/" ;
+					//String pwdReg = "/^.*(?=.{5,16})(?=.*\\d)(?=.*[A-Z]{1,})(?=.*[a-z]{1,})(?=.*[!@#$%^&*?\\(\\)]).*$/" ;
 					if (users_pwd == null || users_pwd.trim().length() == 0) {
 						errorMsgs.add("密碼請勿空白");
-					}else if(!users_pwd.trim().matches(pwdReg)) { //以下練習正則(規)表示式(regular-expression)
-						errorMsgs.add("最短6位，最長16位 {6,16}\r\n" + 
-										"必須包含1個數字\r\n" + 
-										"必須包含2個小寫字母\r\n" + 
-										"必須包含2個大寫字母\r\n" + 
-										"必須包含1個特殊字符");
-			        }
+					}//else if(!users_pwd.trim().matches(pwdReg)) { //以下練習正則(規)表示式(regular-expression)
+					//	errorMsgs.add("密碼 最短5位，最長16位 {6,16}\r\n" + 
+					//					"必須包含1個數字\r\n" + 
+					//  				"必須包含2個小寫字母\r\n" + 
+					//					"必須包含2個大寫字母\r\n" + 
+					//					"必須包含1個特殊字符");
+			        //}
 
 						
 					Integer users_status = 1 ;
@@ -482,11 +485,14 @@ public class UsersServlet extends HttpServlet {
 
 					/***************************2.開始新增資料***************************************/
 					UsersService usersSvc = new UsersService();
-					usersVO = usersSvc.addusers_new( users_mail, users_pwd, users_status);			
+					usersVO = usersSvc.addusers_new(users_mail, users_pwd, users_status);	
+System.out.println("這裡是getUsers_id" + usersVO.getUsers_id());
+					usersVO = usersSvc.getOneusers(usersVO.getUsers_id());
 					/***************************3.新增完成,準備轉交(Send the Success view)***********/
-//					usersVO = usersSvc.getOneusers(users_mail);
+
 					req.setAttribute("usersVO", usersVO);
-					String url = "/front-end/users/listOneUsers.jsp";
+					req.getSession().setAttribute("usersVO", usersSvc.getOneusers(usersVO.getUsers_id()));
+					String url = "/front-end/pages/login1.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 					successView.forward(req, res);				
 					
@@ -494,7 +500,7 @@ public class UsersServlet extends HttpServlet {
 				} catch (Exception e) {
 					errorMsgs.add(e.getMessage());
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front-end/users/addUsers.jsp");
+							.getRequestDispatcher("/front-end/login.jsp");
 					failureView.forward(req, res);
 				}
 			}

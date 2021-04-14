@@ -22,53 +22,53 @@
   </head>
 <body>
 <!-- 頭段 -->
-	<nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar" style="background: #85867F;color: var(--red);">
-        <div class="container">
-        <a class="navbar-brand logo" href="#">Tivago</a>
-        <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="navbar-toggler-icon"></span></button>
+<!-- 	<nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar" style="background: #85867F;color: var(--red);"> -->
+<!--         <div class="container"> -->
+<!--         <a class="navbar-brand logo" href="#">Tivago</a> -->
+<!--         <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"> -->
+<!--         <span class="sr-only">Toggle navigation</span> -->
+<!--         <span class="navbar-toggler-icon"></span></button> -->
         
-            <div class="collapse navbar-collapse" id="navcol-1">
-                <ul class="navbar-nav ml-auto">
-					<li class="nav-item">
-		              <a class="nav-link active" href="index.html">首頁</a>
-		            </li>
-		            <li class="nav-item">
-		              <a class="nav-link" href="service-page.html">景點</a>
-		            </li>
-		            <li class="nav-item">
-		              <a class="nav-link" href="blog-post-list.html">行程</a>
-		            </li>
-		            <li class="nav-item">
-		              <a class="nav-link" href="blog-post-list.html">活動</a>
-		            </li>
-		            <li class="nav-item">
-		              <a class="nav-link" href="blog-post.html">遊記</a>
-		            </li>
-		            <li class="nav-item">
-		              <a class="nav-link" href="product/listAllProduct.jsp">商城</a>
-		            </li>
-		            <li class="nav-item">
-		              <a class="nav-link" href="shopping-cart.html">購物車</a>
-		            </li>
-		            <li class="nav-item">
-		              <a class="nav-link" href="login.jsp">登入</a>
-		            </li>                   
-                    <li class="nav-item" style="height: 38px;">
-                        <div class="nav-item dropdown" style="padding: 4px;width: 82.7083px;margin: 0px;height: 30px;">
-                        <a class="dropdown-toggle" aria-expanded="false" data-toggle="dropdown" href="#" style="padding: 20px;width: 0px;height: -8px;margin: -3px;color: rgba(0,0,0,0.5);">user</a>
-                            <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">First Item</a>
-                            <a class="dropdown-item" href="#">Second Item</a>
-                            <a class="dropdown-item" href="#">Third Item</a>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+<!--             <div class="collapse navbar-collapse" id="navcol-1"> -->
+<!--                 <ul class="navbar-nav ml-auto"> -->
+<!-- 					<li class="nav-item"> -->
+<!-- 		              <a class="nav-link active" href="index.html">首頁</a> -->
+<!-- 		            </li> -->
+<!-- 		            <li class="nav-item"> -->
+<!-- 		              <a class="nav-link" href="service-page.html">景點</a> -->
+<!-- 		            </li> -->
+<!-- 		            <li class="nav-item"> -->
+<!-- 		              <a class="nav-link" href="blog-post-list.html">行程</a> -->
+<!-- 		            </li> -->
+<!-- 		            <li class="nav-item"> -->
+<!-- 		              <a class="nav-link" href="blog-post-list.html">活動</a> -->
+<!-- 		            </li> -->
+<!-- 		            <li class="nav-item"> -->
+<!-- 		              <a class="nav-link" href="blog-post.html">遊記</a> -->
+<!-- 		            </li> -->
+<!-- 		            <li class="nav-item"> -->
+<!-- 		              <a class="nav-link" href="product/listAllProduct.jsp">商城</a> -->
+<!-- 		            </li> -->
+<!-- 		            <li class="nav-item"> -->
+<!-- 		              <a class="nav-link" href="shopping-cart.html">購物車</a> -->
+<!-- 		            </li> -->
+<!-- 		            <li class="nav-item"> -->
+<!-- 		              <a class="nav-link" href="login.jsp">登入</a> -->
+<!-- 		            </li>                    -->
+<!--                     <li class="nav-item" style="height: 38px;"> -->
+<!--                         <div class="nav-item dropdown" style="padding: 4px;width: 82.7083px;margin: 0px;height: 30px;"> -->
+<!--                         <a class="dropdown-toggle" aria-expanded="false" data-toggle="dropdown" href="#" style="padding: 20px;width: 0px;height: -8px;margin: -3px;color: rgba(0,0,0,0.5);">user</a> -->
+<!--                             <div class="dropdown-menu"> -->
+<!--                             <a class="dropdown-item" href="#">First Item</a> -->
+<!--                             <a class="dropdown-item" href="#">Second Item</a> -->
+<!--                             <a class="dropdown-item" href="#">Third Item</a> -->
+<!--                             </div> -->
+<!--                         </div> -->
+<!--                     </li> -->
+<!--                 </ul> -->
+<!--             </div> -->
+<!--         </div> -->
+<!--     </nav> -->
 <!-- 中段     -->
 	<main class="page landing-page">
 	<div class="mx-auto col-8" style="margin: 100px">
@@ -122,7 +122,7 @@
 
 							<input type="text" class="form-control" id="users_name" name="users_name" size="30"
 								placeholder="請輸入你的姓名..." 
-								value="<%= (usersVO==null)?"":usersVO.getUsers_name()%>">
+								value="${usersVO.users_name}">
 								
 						</div>
 						<div class="col-sm-4">
@@ -144,15 +144,17 @@
 						<div class="col-sm-6">
 							<input type="text" class="form-control" id="users_nickname" name="users_nickname" 
 								size="10" placeholder="請輸入你的暱稱..." 
-								value="<%= (usersVO==null)?"":usersVO.getUsers_nickname()%>">
+								value="${usersVO.users_nickname}">
 						</div>
 					</div>	
 					<div class="form-group form-row">
 						<label for="users_mail" class="col-sm-2">Email</label>
 						<div class="col-sm-6">
-<!-- 							<input type="email" class="form-control" id="users_mail" name="users_mail"  -->
-<!-- 								size="30" placeholder="請輸入你的電子郵件信箱..."  -->
-<%-- 								value="${usersVO.users_mail}"> --%>
+						
+							<input type="hidden" class="form-control" id="users_mail" name="users_mail" 
+								size="30" placeholder="請輸入你的電子郵件信箱..." 
+								value="${usersVO.users_mail}">
+								
 							<p>${usersVO.users_mail}</p>
 						</div>
 					</div>	
@@ -175,7 +177,7 @@
 						<label for="users_birthday" class="col-sm-2">生日</label>
 						<div class="col-sm-6">
 							<input class="form-control" type="date" id="users_birthday" name="users_birthday" 
-								value="<%= (usersVO==null)?"":usersVO.getUsers_birthday()%>">
+								value="${usersVO.users_birthday}">
 						</div>
 					</div>	
 					<div class="form-group form-row">
@@ -183,7 +185,7 @@
 						<div class="col-sm-6">
 							<input class="form-control" type="text" id="users_id_number"
 								placeholder="請輸入你的身分證號碼..." name="users_id_number" size="10"
-								value="<%= (usersVO==null)?"":usersVO.getUsers_id_number()%>">
+								value="${usersVO.users_id_number}">
 						</div>
 					</div>	
 					<div class="form-group form-row">
@@ -191,7 +193,7 @@
 						<div class="col-sm-6">
 							<input class="form-control" type="text" id="users_phone"
 								placeholder="請輸入你的電話號碼..." name="users_phone" size="10" 
-								value="<%= (usersVO==null)?"":usersVO.getUsers_phone()%>">
+								value="${usersVO.users_phone}">
 						</div>
 					</div>	
 					<div class="form-group form-row">

@@ -92,12 +92,7 @@
 			<td>${cardVO.card_date}</td>
 			<td>${cardVO.card_last}</td>
 			<td>${cardVO.card_default}</td> 
-<%-- 			<td><c:forEach var="deptVO" items="${deptSvc.all}"> --%>
-<%--                     <c:if test="${empVO.deptno==deptVO.deptno}"> --%>
-<%-- 	                    ${deptVO.deptno}【${deptVO.dname} - ${deptVO.loc}】 --%>
-<%--                     </c:if> --%>
-<%--                 </c:forEach> --%>
-<%-- 			</td> --%>
+
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/card/card.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="修改">

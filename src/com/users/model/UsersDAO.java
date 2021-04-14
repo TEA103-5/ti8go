@@ -23,6 +23,7 @@ public class UsersDAO implements UsersDAO_interface {
 		}
 	}
 	private static final String INSERT_STMT_NEW = "INSERT INTO users (users_mail, users_pwd, users_identi_status) VALUES (?, ?, ?)";
+	private static final String INSERT_STMT_NEW_1 = "SELECT users_id FROM users where users_mail = ?";
 	private static final String INSERT_STMT = "INSERT INTO users (users_mail, users_pwd, users_identi_status, users_nickname, users_name, users_sex, users_birthday, users_id_number, users_pic, users_phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String UPDATE_STMT = "UPDATE users SET users_mail =?, users_pwd =?, users_identi_status =?, users_nickname =?, users_name =?, users_sex =?, users_birthday =?, users_id_number =?, users_pic =?, users_phone =? where users_id = ?";
 	private static final String DELETE_CARD = "DELETE FROM card WHERE users_id = ?";
@@ -46,28 +47,47 @@ public class UsersDAO implements UsersDAO_interface {
 		return buffer;
 	}
 	
-	public void insert_new(UsersVO usersVO) throws Exception {
+	@SuppressWarnings("resource")
+	public UsersVO insert_new(UsersVO usersVO) throws Exception {
+		UsersVO fBPK = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		
 		try {
 
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(INSERT_STMT_NEW);
 			
-	//		pstmt.setInt(1, usersVO.getUsers_id());
+			pstmt = con.prepareStatement(INSERT_STMT_NEW);
 			pstmt.setString(1, usersVO.getUsers_mail());
 			pstmt.setString(2, usersVO.getUsers_pwd());
 			pstmt.setInt(3, usersVO.getUsers_status());
-		
 			pstmt.executeUpdate();
+	
+	
+			pstmt = con.prepareStatement(INSERT_STMT_NEW_1);
+			pstmt.setString(1, usersVO.getUsers_mail());
+		
+			rs = pstmt.executeQuery();
+			
+			rs.next();
+			fBPK = new UsersVO();
+			fBPK.setUsers_id(rs.getInt("users_id"));
 
+		System.out.println(rs.getInt("users_id"));		
 			// Handle any driver errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
 			// Clean up JDBC resources
 		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -83,7 +103,9 @@ public class UsersDAO implements UsersDAO_interface {
 				}
 			}
 		}
+		return fBPK;
 	}
+	
 	public void insert(UsersVO usersVO) throws Exception {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -256,6 +278,7 @@ public class UsersDAO implements UsersDAO_interface {
 				fBPK.setUsers_phone(rs.getString("users_phone"));
 				fBPK.setCreate_time(rs.getString("create_time"));
 				fBPK.setUpdate_time(rs.getString("update_time"));
+				fBPK.setUsers_users_pic(rs.getBytes("users_pic"));
 			}
 
 		} catch (SQLException se) {

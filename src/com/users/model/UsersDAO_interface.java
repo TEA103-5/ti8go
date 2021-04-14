@@ -4,7 +4,7 @@ import java.util.*;
 
 public interface UsersDAO_interface {
 	public void insert(UsersVO usersVO)throws Exception;
-	public void insert_new(UsersVO usersVO)throws Exception;
+	public UsersVO insert_new(UsersVO usersVO)throws Exception;
 	public void update(UsersVO usersVO)throws Exception;
 	public void delete(Integer users_id);
 	public UsersVO findByPK(Integer users_id);

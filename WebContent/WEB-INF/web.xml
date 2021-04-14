@@ -60,13 +60,9 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>CardServlet</servlet-name>
-    <url-pattern>/front-end/card/card.do</url-pattern>
+    <url-pattern>/card/card.do</url-pattern>
   </servlet-mapping>
-   <servlet-mapping>
-    <servlet-name>CardServlet</servlet-name>
-    <url-pattern>/back-end/card/card.do</url-pattern>
-  </servlet-mapping>
-  
+   
   <servlet>
     <servlet-name>UsersServlet</servlet-name>
     <servlet-class>com.users.controller.UsersServlet</servlet-class>
@@ -83,12 +79,9 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>AdminsServlet</servlet-name>
-    <url-pattern>/front-end/admins/admins.do</url-pattern>
+    <url-pattern>/admins/admins.do</url-pattern>
   </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>AdminsServlet</servlet-name>
-    <url-pattern>/back-end/admins/admins.do</url-pattern>
-  </servlet-mapping>
+  
   
   <servlet>
 		<servlet-name>UsersGetPic</servlet-name>

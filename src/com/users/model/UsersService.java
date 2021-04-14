@@ -23,8 +23,8 @@ public class UsersService {
 	usersVO.setUsers_pwd(users_pwd);
 	usersVO.setUsers_status(users_status);
 		
-	dao.insert_new(usersVO);
-	
+	usersVO = dao.insert_new(usersVO);
+
 	return usersVO;
 	}
 	public UsersVO addusers(String users_mail, String users_pwd, 
