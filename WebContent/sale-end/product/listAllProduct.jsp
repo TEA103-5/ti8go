@@ -47,7 +47,7 @@
 		<%@ include file="/sale-end/pages/nav.html"%>
 		<div class="d-flex flex-column" id="content-wrapper">
 			<div id="content">
-				<%@ include file="/sale-end/pages/fnav"%>
+				<%@ include file="/sale-end/pages/fnav.html"%>
 				<div class="container-fluid">
 					<div class="card rounded shadow border-0">
 						<div class="card-body p-5 bg-white rounded">
@@ -55,7 +55,15 @@
 
 
 
-
+						<%-- 錯誤表列 --%>
+						<c:if test="${not empty errorMsgs}">
+							<font style="color: red">請修正以下錯誤:</font>
+							<ul>
+								<c:forEach var="message" items="${errorMsgs}">
+									<li style="color: red">${message}</li>
+								</c:forEach>
+							</ul>
+						</c:if>
 
 
 								<table id="example" style="width: 100%"

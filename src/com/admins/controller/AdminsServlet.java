@@ -35,6 +35,7 @@ public class AdminsServlet extends HttpServlet {
 
 		
 		String action = req.getParameter("action");
+		String requestURL = req.getParameter("requestURL");
 		
 		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
 	
@@ -85,10 +86,25 @@ public class AdminsServlet extends HttpServlet {
 				}
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
-				req.setAttribute("adminsVO", adminsVO); // 資料庫取出的empVO物件,存入req
-				String url = "/admins/listOneAdmins.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
-				successView.forward(req, res);
+				
+				if(requestURL.equals("/back-end/admins/listAllAdmins.jsp") ) { // 從back-end正式頁面過來
+					req.setAttribute("adminsVO", adminsVO);
+					String url = "/back-end/admins/listOneAdmins.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url);
+					successView.forward(req, res);
+					
+					return;
+					
+				}else {
+					req.setAttribute("adminsVO", adminsVO); // 資料庫取出的empVO物件,存入req
+					String url = "/admins/listOneAdmins.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
+					successView.forward(req, res);
+					
+					return;
+				}
+				
+				
 
 				/***************************其他可能的錯誤處理*************************************/
 			} catch (Exception e) {
@@ -116,10 +132,19 @@ public class AdminsServlet extends HttpServlet {
 				AdminsService adminsSvc = new AdminsService();
 				adminsSvc.deleteadmins(admins_id);
 				System.out.println("DELETE TEST " + admins_id);
-				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
-				String url = "/admins/listAllAdmins.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
-				successView.forward(req, res);
+				/***************************3.刪除完成,準備轉交(Send the Success view)***********/		
+				if(requestURL.equals("/back-end/admins/listAllAdmins.jsp")) {  // 來自back-end正式頁面
+					String url = "/back-end/admins/listAllAdmins.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url); 
+					successView.forward(req, res);		
+					return;
+				}else {
+					String url = "/admins/listAllAdmins.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
+					successView.forward(req, res);
+					return;
+				}
+				
 				
 				/***************************其他可能的錯誤處理**********************************/
 			} catch (Exception e) {
@@ -199,9 +224,19 @@ public class AdminsServlet extends HttpServlet {
 				adminsVO = adminsSvc.addadmins(admins_email, admins_name, admins_password, admins_sex, 
 						admins_authority, admins_position);		
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-				String url = "/admins/listAllAdmins.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
-				successView.forward(req, res);				
+				if(requestURL.equals("/back-end/admins/addAdmins.jsp")) {  // 來自back-end正式頁面
+					String url = "/back-end/admins/listAllAdmins.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url); 
+					successView.forward(req, res);		
+					return;
+				}else {
+					String url = "/admins/listAllAdmins.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+					successView.forward(req, res);				
+					return;
+				}
+				
+				
 				
 				/***************************其他可能的錯誤處理**********************************/
 			} catch (Exception e) {
@@ -209,6 +244,7 @@ public class AdminsServlet extends HttpServlet {
 				RequestDispatcher failureView = req
 						.getRequestDispatcher("/admins/addAdmins.jsp");
 				failureView.forward(req, res);
+				return;
 			}
 		}
 		
@@ -248,7 +284,6 @@ public class AdminsServlet extends HttpServlet {
 				// Store this set in the request scope, in case we need to
 				// send the ErrorPage view.
 				req.setAttribute("errorMsgs", errorMsgs);
-			
 				try {
 					/***************************1.接收請求參數-輸入格式的錯誤處理**********************/
 					String admins_name = req.getParameter("admins_name");
@@ -258,7 +293,7 @@ public class AdminsServlet extends HttpServlet {
 					} else if(!admins_name.trim().matches(nameReg)) { //以下練習正則(規)表示式(regular-expression)
 						errorMsgs.add("管理者姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
 		            }
-					
+
 					String admins_email = req.getParameter("admins_email").trim();
 					if (admins_email == null || admins_email.trim().length() == 0) {
 						errorMsgs.add("Mail請勿空白");
@@ -314,9 +349,27 @@ public class AdminsServlet extends HttpServlet {
 							admins_sex, admins_authority, admins_position);		
 					System.out.println("Admin Test " + admins_id );
 					/***************************3.新增完成,準備轉交(Send the Success view)***********/
-					String url = "/admins/listAllAdmins.jsp";
-					RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
-					successView.forward(req, res);				
+					
+					if( requestURL.equals("/back-end/admins/listOneAdmins.jsp") ) {   // 從back-end 正式頁面來的
+						
+						adminsVO = adminsSvc.getOneadmins(admins_id);
+						
+						req.setAttribute("adminsVO", adminsVO); // 資料庫update成功後,正確的的placeVO物件,存入req
+						String url = "/back-end/admins/listOneAdmins.jsp";
+						RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOnePlace.jsp
+						successView.forward(req, res);
+
+						return;
+					}else {
+						
+						String url = "/admins/listAllAdmins.jsp";
+						RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+						successView.forward(req, res);		
+						
+						return;
+					}
+					
+					
 					
 					/***************************其他可能的錯誤處理*************************************/
 				} catch (Exception e) {

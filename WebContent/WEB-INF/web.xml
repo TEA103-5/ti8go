@@ -82,6 +82,15 @@
   </servlet-mapping>
   
   <servlet>
+    <servlet-name>AdminsAjaxHandler</servlet-name>
+    <servlet-class>com.admins.controller.AdminsAjaxHandler</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminsAjaxHandler</servlet-name>
+    <url-pattern>/admins/adminsAjaxHandler.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
 		<servlet-name>UsersGetPic</servlet-name>
 		<servlet-class>com.users.controller.UsersGetPic</servlet-class>
 
@@ -99,13 +108,22 @@
 		<servlet-name>PlaceServlet</servlet-name>
 		<url-pattern>/place/place.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>PlaceAjaxHandler</servlet-name>
+		<servlet-class>com.place.controller.PlaceAjaxHandler</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PlaceAjaxHandler</servlet-name>
+		<url-pattern>/place/PlaceAjaxHandler.do</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
-		<servlet-name>DBGifReader4</servlet-name>
+		<servlet-name>DBGifReader4_place</servlet-name>
 		<servlet-class>com.place.controller.DBGifReader4</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>DBGifReader4</servlet-name>
+		<servlet-name>DBGifReader4_place</servlet-name>
 		<url-pattern>/place/DBGifReader4.do</url-pattern>
 	</servlet-mapping>
 
@@ -173,5 +191,49 @@
 		<servlet-name>LoginServlet</servlet-name>
 		<url-pattern>/login.do</url-pattern>
 	</servlet-mapping>
+	
+	     <servlet>
+    <servlet-name>OrderServlet</servlet-name>
+    <servlet-class>com.order.controller.OrderServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>OrderServlet</servlet-name>
+    <url-pattern>/Order/Order.do</url-pattern>
+  </servlet-mapping>
+  
+     <servlet>
+    <servlet-name>TripServlet</servlet-name>
+    <servlet-class>com.trip.controller.TripServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TripServlet</servlet-name>
+    <url-pattern>/trip/trip.do</url-pattern>
+  </servlet-mapping>
+  
+     <servlet>
+    <servlet-name>Trip_detailServlet</servlet-name>
+    <servlet-class>com.trip_detail.controller.Trip_detailServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Trip_detailServlet</servlet-name>
+    <url-pattern>/trip_detail/trip_detail.do</url-pattern>
+  </servlet-mapping>
+  
+    <servlet>
+    <servlet-name>NoteServlet</servlet-name>
+    <servlet-class>com.note.controller.NoteServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>NoteServlet</servlet-name>
+    <url-pattern>/note/note.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>NoteCServlet</servlet-name>
+    <servlet-class>com.notec.controller.NoteCServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>NoteCServlet</servlet-name>
+    <url-pattern>/notec/notec.do</url-pattern>
+  </servlet-mapping>
 	
 </web-app>

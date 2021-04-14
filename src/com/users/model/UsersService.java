@@ -1,8 +1,13 @@
 package com.users.model;
 
 import java.util.List;
+import java.util.Set;
 
-import com.users.model.*;
+import com.applicant.model.ApplicantVO;
+import com.group_activities.model.Group_activitiesVO;
+import com.team.model.TeamVO;
+import com.trip.model.TripVO;
+
 
 public class UsersService {
 
@@ -29,12 +34,19 @@ public class UsersService {
 	usersVO.setUsers_sex(users_sex);
 	usersVO.setUsers_birthday(users_birthday);
 	usersVO.setUsers_id_number(users_id_number);
-	usersVO.setUsers_users_pic(users_users_pic);
+//	usersVO.setUsers_users_pic(users_users_pic);
 	usersVO.setUsers_phone(user_phone);
 	
 	dao.insert(usersVO);
 	
 	return usersVO;
+	}
+	public UsersVO addusers(UsersVO usersVO) throws Exception {
+
+		
+		dao.insert(usersVO);
+		
+		return usersVO;
 	}
 	
 	public UsersVO updateusers(Integer users_id, String users_mail, String users_pwd, 
@@ -53,8 +65,14 @@ public class UsersService {
 		usersVO.setUsers_sex(users_sex);
 		usersVO.setUsers_birthday(users_birthday);
 		usersVO.setUsers_id_number(users_id_number);
-		usersVO.setUsers_users_pic(users_users_pic);
+//		usersVO.setUsers_users_pic(users_users_pic);
 		usersVO.setUsers_phone(user_phone);
+		
+		dao.update(usersVO);
+		
+		return usersVO;	
+	}	
+	public UsersVO updateusers(UsersVO usersVO) throws Exception{
 		
 		dao.update(usersVO);
 		
@@ -72,5 +90,19 @@ public class UsersService {
 	public List<UsersVO> getAll() {
 		return dao.getAll();
 	}
+	
+	
+	public Set<Group_activitiesVO> getActivitiesByUsers(Integer users_id){
+		return dao.getActivitiesByUsers(users_id);
+	}
+    public Set<TeamVO> getTeamByUsers(Integer users_id){
+    	return dao.getTeamByUsers(users_id);
+    }
+    public Set<ApplicantVO> getApplicantByUsers(Integer users_id){
+    	return dao.getApplicantByUsers(users_id);
+    }
+    public Set<TripVO> getTripByUsers(Integer users_id){
+    	return dao.getTripByUsers(users_id);
+    }
 
 }

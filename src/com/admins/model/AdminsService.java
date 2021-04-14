@@ -45,7 +45,7 @@ public class AdminsService {
 		
 		dao.update(adminsVO);
 	
-	return adminsVO;	
+		return adminsVO;	
 	}
 	
 	public void deleteadmins(Integer admins_id) {

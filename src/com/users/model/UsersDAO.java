@@ -10,6 +10,11 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.applicant.model.ApplicantVO;
+import com.group_activities.model.Group_activitiesVO;
+import com.team.model.TeamVO;
+import com.trip.model.TripVO;
+
 import util.Util;
 
 public class UsersDAO implements UsersDAO_interface {
@@ -28,6 +33,15 @@ public class UsersDAO implements UsersDAO_interface {
 	private static final String DELETE_USERS = "DELETE FROM users WHERE users_id = ?";
 	private static final String FIND_BY_PK = "SELECT * FROM users WHERE users_id = ?";
 	private static final String GET_ALL = "SELECT * FROM users"; 
+	
+	
+	
+	private static final String GET_Applicant_ByUsers_STMT = "SELECT * FROM applicant where users_id = ? order by registration_time desc";
+	private static final String GET_Team_ByUsers_STMT = "SELECT * FROM team where users_id = ? order by trip_id";
+	private static final String GET_Trip_ByUsers_STMT = "SELECT * FROM trip where users_id = ? order by trip_id";
+	private static final String GET_Activities_ByUsers_STMT = "SELECT * FROM group_activities where users_id = ? order by activities_id";
+	
+
 
 //	static {
 //		try {
@@ -304,73 +318,249 @@ public class UsersDAO implements UsersDAO_interface {
 		return dataList;
 	}
 	
-	public static void main(String[] args) throws Exception {
-		UsersJDBCDAO dao = new UsersJDBCDAO();
+	
+	
+	
+	@Override
+	public Set<Group_activitiesVO> getActivitiesByUsers(Integer users_id) {
+		Set<Group_activitiesVO> set = new LinkedHashSet<Group_activitiesVO>();
+		Group_activitiesVO group_activitiesVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		
-		//新增
-//		usersVO VO1 = new usersVO();
-//		VO1.setUsers_id(21);
-//		VO1.setUsers_mail("qqaa.com");
-//		VO1.setUsers_pwd("543210");
-//		VO1.setUsers_status(1);
-//		VO1.setUsers_nickname("test");
-//		VO1.setUsers_name("testadd");
-//		VO1.setUesrs_sex(1);
-//		VO1.setUesrs_birthday("20001231");
-//		VO1.setUsers_id_number("A123456789");
-//		VO1.setUser_phone("0909009090");
-//		dao.insert(VO1);
-		
-		//修改
-		UsersVO VO2 = new UsersVO();
-		VO2.setUsers_id(21);
-		VO2.setUsers_mail("qqaa.com");
-		VO2.setUsers_pwd("543210");
-		VO2.setUsers_status(1);
-		VO2.setUsers_nickname("test");
-		VO2.setUsers_name("testadd");
-		VO2.setUsers_sex(1);
-		VO2.setUsers_birthday("29991231");
-		VO2.setUsers_id_number("Z123456789");
-		VO2.setUsers_phone("0908090808");
-		dao.update(VO2);
+		try {
+			
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_Activities_ByUsers_STMT);
+			pstmt.setInt(1, users_id);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				group_activitiesVO = new Group_activitiesVO();
+				group_activitiesVO.setActivities_id(rs.getInt("activities_id"));
+				group_activitiesVO.setTrip_id(rs.getInt("trip_id"));
+				group_activitiesVO.setUsers_id(rs.getInt("users_id"));
+				group_activitiesVO.setActivities_create_time(rs.getTimestamp("activities_create_time"));
+				group_activitiesVO.setActivities_state(rs.getInt("activities_state"));
+				group_activitiesVO.setActivities_deadline(rs.getDate("activities_deadline"));
+				group_activitiesVO.setActivities_max_users(rs.getInt("activities_max_users"));
+				group_activitiesVO.setActivities_users_count(rs.getInt("activities_users_count"));
+				group_activitiesVO.setActivities_start(rs.getDate("activities_start"));
+				group_activitiesVO.setActivities_end(rs.getDate("activities_end"));
+				group_activitiesVO.setActivities_name(rs.getString("activities_name"));
+				group_activitiesVO.setActivities_description(rs.getString("activities_description"));
 
-		//刪除
-//		dao.delete(4);
-		
-		//查詢單行
-//				usersVO users1 = dao.findByPK(21);
-//				System.out.print("-- ");
-//				System.out.print(users1.getUsers_id() + ",");
-//				System.out.print(users1.getUsers_mail() + ",");
-//				System.out.print(users1.getUsers_pwd() + ",");
-//				System.out.print(users1.getUsers_status() + ",");
-//				System.out.print(users1.getUsers_nickname() + ",");
-//				System.out.print(users1.getUsers_name() + ",");
-//				System.out.print(users1.getUesrs_sex() + ",");
-//				System.out.print(users1.getUesrs_birthday() + ",");
-//				System.out.print(users1.getUsers_id_number() + ",");
-//				System.out.print(users1.getUser_phone() + ",");
-//				System.out.println(" --");
-		//查詢全部
-				List<UsersVO> list = dao.getAll();
-				System.out.println("------------------------------------------------------------");
-				for (UsersVO users2 : list) {
-					
-					System.out.print(users2.getUsers_id() + ",");
-					System.out.print(users2.getUsers_mail() + ",");
-					System.out.print(users2.getUsers_pwd() + ",");
-					System.out.print(users2.getUsers_status() + ",");
-					System.out.print(users2.getUsers_nickname() + ",");
-					System.out.print(users2.getUsers_name() + ",");
-					System.out.print(users2.getUsers_sex() + ",");
-					System.out.print(users2.getUsers_birthday() + ",");
-					System.out.print(users2.getUsers_id_number() + ",");
-					System.out.print(users2.getUsers_phone() + ",");
-					System.out.println();
-					
+				set.add(group_activitiesVO);
+			}
+			
+		} catch (SQLException se) {
+			se.printStackTrace();
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
 				}
-				System.out.print("--------------------------------------------------------------");
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return set;
 	}
 
+
+	@Override
+	public Set<TeamVO> getTeamByUsers(Integer users_id) {
+		
+		Set<TeamVO> set = new LinkedHashSet<TeamVO>();
+		TeamVO teamVO = null;
+	
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+	
+		try {
+	
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_Team_ByUsers_STMT);
+			pstmt.setInt(1, users_id);
+			rs = pstmt.executeQuery();
+
+	
+			while (rs.next()) {
+				teamVO = new TeamVO();
+				teamVO.setTrip_id(rs.getInt("trip_id"));
+				teamVO.setUsers_id(rs.getInt("users_id"));
+
+				set.add(teamVO); // Store the row in the vector
+			}
+	
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return set;
+	}
+
+
+	@Override
+	public Set<ApplicantVO> getApplicantByUsers(Integer users_id) {
+
+		Set<ApplicantVO> set = new LinkedHashSet<ApplicantVO>();
+		ApplicantVO applicantVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_Applicant_ByUsers_STMT);
+			pstmt.setInt(1, users_id);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				applicantVO = new ApplicantVO();
+				applicantVO.setActivities_id(rs.getInt("activities_id"));
+				applicantVO.setUsers_id(rs.getInt("users_id"));
+				applicantVO.setRegistration_time(rs.getTimestamp("registration_time"));
+
+				set.add(applicantVO);
+			}
+			
+		} catch (SQLException se) {
+			se.printStackTrace();
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return set;
+	}
+
+
+	@Override
+	public Set<TripVO> getTripByUsers(Integer users_id) {
+		 Set<TripVO> set = new LinkedHashSet<TripVO>();
+		 TripVO tripVO = null;
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			try {
+				
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(GET_Trip_ByUsers_STMT);
+				pstmt.setInt(1, users_id);
+				rs = pstmt.executeQuery();
+				
+				while (rs.next()) {
+					tripVO = new TripVO();
+					tripVO.setTrip_id(rs.getInt("trip_id"));
+					 tripVO.setUsers_id(rs.getInt("Users_id"));
+					 tripVO.setTrip_create_time(rs.getTimestamp("Trip_create_time"));
+					 tripVO.setLast_edit_time(rs.getTimestamp("Last_edit_time"));
+					 tripVO.setLast_editor(rs.getInt("Last_editor"));
+					 tripVO.setTrip_state(rs.getInt("Trip_state"));
+					 tripVO.setTrip_like(rs.getInt("Trip_like"));
+					 tripVO.setTrip_look(rs.getInt("Trip_look"));
+					 tripVO.setRead_authority(rs.getInt("Read_authority"));
+					 tripVO.setEdit_authority(rs.getInt("Edit_authority"));
+					 tripVO.setTrip_area(rs.getString("Trip_area"));
+					 tripVO.setTrip_start(rs.getDate("Trip_start"));
+					 tripVO.setTrip_end(rs.getDate("Trip_end"));
+					 tripVO.setTrip_name(rs.getString("trip_name"));
+					 tripVO.setTrip_description(rs.getString("trip_description"));
+					 tripVO.setTrip_type(rs.getString("trip_type"));
+					 tripVO.setTrip_tot_cost(rs.getInt("trip_tot_cost"));
+					 tripVO.setPlace_weather(rs.getString("place_weather"));
+
+					set.add(tripVO);
+				}
+				
+			} catch (SQLException se) {
+				se.printStackTrace();
+				// Clean up JDBC resources
+			} finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			return set;
+	}
 }
