@@ -95,17 +95,75 @@
 				
 				
 				 <br/>
-					<button @click="sendDetailEditToList">確認</button>
+					<button v-if="!editshow&&!DetailSplice" @click="sendDetailEditToList()">確認</button>
+					<button v-if="editshow" @click="sendDetailEditToList2()">編輯</button>
+					<button v-if="DetailSplice" @click="sendDetailSpliceToList()">插入</button>
+
+					<button @click="fadeCancel">取消</button>
+			</div>			
+<!-- 			<div id="setTripDetailOther" class="white_content glass"> -->
+<!-- 							 				<input -->
+<!-- 				class="" type="text" name="trip_name" -->
+<!-- 				placeholder="行程內容" -->
+<!-- 				v-model="tripDetail.trip_content"> -->
+<!-- 							 <br/> -->
+		
+<!-- 				開始時間:<input type="time"  id="time1" /> -->
+<!-- 				結束時間:<input type="time" id="time2"  /> -->
+<!-- 				花費:<input type="text" v-model="tripDetail.trip_cost"/>臺幣 -->
+				
+<!-- 					<br/> -->
+<!-- 				 <br/>	 -->
+<!-- 				<textarea class="form-control" id="signature" rows="4" -->
+<!-- 				placeholder="備註" -->
+<!-- 												name="signature" v-model="tripDetail.trip_remarks"></textarea> -->
+				
+				
+<!-- 				 <br/> -->
+<!-- 					<button @click="sendDetailEditToList">確認</button> -->
 			
 
-					<button onclick="document.getElementById('setTripDetail').style.display='none';document.getElementById('fade').style.display='none';">取消</button>
-			</div>			
+<!-- 					<button @click="fadeCancel">取消</button> -->
+<!-- 			</div>			 -->
+<!-- 			<div id="editTripDetail" class="white_content glass"> -->
+<!-- 							 				<input -->
+<!-- 				class="" type="text" name="trip_name" -->
+<!-- 				placeholder="行程內容" -->
+<!-- 				v-model="tripDetail.trip_content"> -->
+<!-- 							 <br/> -->
+		
+<!-- 				開始時間:<input type="time"  id="time3" /> -->
+<!-- 				結束時間:<input type="time" id="time4"  /> -->
+<!-- 				花費:<input type="text" v-model="tripDetail.trip_cost"/>臺幣 -->
+				
+<!-- 					<br/> -->
+<!-- 				 <br/>	 -->
+<!-- 				<textarea class="form-control" id="signature" rows="4" -->
+<!-- 				placeholder="備註" -->
+<!-- 												name="signature" v-model="tripDetail.trip_remarks"></textarea> -->
+				
+				
+<!-- 				 <br/> -->
+<!-- 					<button @click="sendDetailEditToList()">確認</button> -->
+			
+
+<!-- 					<button @click="fadeCancel">取消</button> -->
+<!-- 			</div>			 -->
     </div>
+
+
+
+
+
+
+
+
 
             <div class="container-fluid" style="margin:0px;">
                 <div class="block-heading">
                     <h2 class="text-info">addtrip</h2>
 					</div>
+
             <div class="row" style="margin-right:0px; margin-left:0px; flex-wrap:wrap;">
             	
 
@@ -123,7 +181,8 @@
 				 </div>
 				 
 				 
-					<div class="col-md-5 col-xl-5 mb-5 conn" style="height:500px;overflow-y: scroll;">
+					<div class="col-md-7 col-xl-7 mb-7 conn" style="height:500px;overflow-y: scroll;">
+					總花費:<br/>
 					<ul v-for="(item,index) in daylist" class="list-group list-group-flush footers" style="border-radius: 2rem;">
 						 <li class="list-group-item footers">
 							<table class="table-users">
@@ -131,29 +190,36 @@
 										<th>
 										 D{{index+1}}
 										</th>
+										<th>
+										      
+										</th>
+										<th>
+										        
+										</th>
 								</tr>
 								<tr v-for="(item, inde) in daylist[index].tripDetail" >
 			
 									<td>
-									
 									</td>
 									<td>	
 									{{item.trip_content}}<br/>
 									{{item.trip_start_time}}~{{item.trip_end_time}}<br/>
-									   {{item.trip_remarks}}
+									{{item.trip_remarks}}
 									</td>
 									<td>
-								  
+								  	花費:{{item.trip_cost}}
 									</td>
 									
 									<td>
-									<button @click="">插入</button>
+									插入:
+									<button @click="choicePlaceToDetailSplice(index,inde)">地點</button>/
+									<button @click="choiceOtherToDetailSplice(index,inde)">其他</button>
 									</td>
 									<td>
-									<button @click="tripDetailEdit(item,inde)">edit</button>
+									<button @click="tripDetailEdit(item,index,inde)">edit</button>
 									</td>
 									<td>
-									<button @click="tripDetailDel(inde)">del</button>
+									<button @click="tripDetailDel(index,inde)">del</button>
 									</td>
 								</tr>
 					</table>
@@ -161,23 +227,14 @@
 						<li class="list-group-item">
 						新增:
 <!-- 						choicePlaceToDetail -->
-						<button @click="choicePlaceToDetail(index)">地點</button>
-						<button onclick="document.getElementById('choicePlace').style.display='block';document.getElementById('fade').style.display='block';">其它</button>
+						<button @click="choicePlaceToDetail(index)">地點</button>/
+						<button @click="choiceOtherToDetail(index)">其它</button>
 						</li>
 								  
 					</ul>
 					
 
 					</div>
-					
-
-						 
-					 <div class="col-md-2 col-xl-2 mb-2 conn">
-
-					 </div>	 
-						 
-
-						 
             </div>
         
     </main>
@@ -191,6 +248,9 @@
 	var vm = new Vue({
 	    el: '#app',
 	    data: {
+	    	DetailSplice:false,
+	    	editshow:false,
+	    	act:1,
 	    	dayCount:1,
 	    	daylist:[
  	    		{
@@ -297,6 +357,27 @@
 // 				this.addtrip.trip_end=$('#f_date2').val();
 // 				console.log(this.addtrip.trip_name);
 // 			},
+				choiceOtherToDetailSplice(index,inde){
+					document.getElementById('setTripDetail').style.display='block';
+					document.getElementById('fade').style.display='block';
+					this.dayCount=index;
+					this.tripDetail.place_id=-1;
+					this.tripDetail.indexOfList=inde;
+					this.DetailSplice=true;
+				},
+			choiceOtherToDetail(index){//-------------------------------------------------------------------3
+				document.getElementById('setTripDetail').style.display='block';
+				document.getElementById('fade').style.display='block';
+				this.dayCount=index;
+				this.tripDetail.place_id=-1;
+			},
+			choicePlaceToDetailSplice(index,inde){
+				document.getElementById('choicePlace').style.display='block';
+				document.getElementById('fade').style.display='block';
+				this.dayCount=index;//為了知道是第幾天的行程(天實為daylist.index+1)
+				this.tripDetail.indexOfList=inde;//其實這幾個可以合在一起,但分開比較直覺
+				this.DetailSplice=true;
+			},
 			choicePlaceToDetail(index){
 				document.getElementById('choicePlace').style.display='block';
 				document.getElementById('fade').style.display='block';
@@ -312,16 +393,57 @@
 	            });
 	           
 			},
-			sendDetailEditToList(){
-				
-				
-				
-				
+			sendDetailSpliceToList(){
 				this.tripDetail.trip_start_time=$('#time1').val()+':00';
 				this.tripDetail.trip_end_time=$('#time2').val()+':00';
-			//	this.tripDetaillist[this.tripDetail.indexOfList]=this.tripDetail;
+				
+				this.daylist[this.dayCount].tripDetail.splice(this.tripDetail.indexOfList,0,{
+		    		trip_day:'1',
+		    		trip_id:'1',
+		    		trip_sort:1,
+		    		trip_detail_type:'景點',
+		    		place_id:this.tripDetail.place_id,
+		    		trip_content:this.tripDetail.trip_content,
+		    		trip_start_time:this.tripDetail.trip_start_time,
+		    		trip_end_time:this.tripDetail.trip_end_time,
+		    		trip_remarks:this.tripDetail.trip_remarks,
+		    		trip_cost:this.tripDetail.trip_cost,
+		    		action:'insertajax',
+		    		place_name:this.tripDetail.place_name,
+		    		indexOfList:0,
+				});
+
 				
 				
+		    			this.tripDetail.trip_day='1',
+		    			this.tripDetail.place_id='1',
+		    			this.tripDetail.trip_id='1',
+		    			this.tripDetail.trip_sort=1,
+		    			this.tripDetail.trip_detail_type='其他',
+		    			this.tripDetail.trip_content='',
+		    			this.tripDetail.trip_start_time='',
+		    			this.tripDetail.trip_end_time='',
+		    			$('#time1').val("");
+						$('#time2').val("");
+		    			this.tripDetail.trip_remarks='',
+		    			this.tripDetail.trip_cost='0',
+		    			this.tripDetail.action='insertajax',
+		    		this.tripDetail.place_name='',
+		    		this.tripDetail.indexOfList=0;
+	
+		    			this.DetailSplice=false;
+				document.getElementById('setTripDetail').style.display='none';
+				document.getElementById('fade').style.display='none';
+			},
+			sendDetailEditToList(){//-------4------兩個交互作用有BUG//push的時候消失了?
+				this.tripDetail.trip_start_time=$('#time1').val()+':00';
+				this.tripDetail.trip_end_time=$('#time2').val()+':00';
+				
+// 				if(this.act==0){
+// 					this.daylist[this.dayCount].tripDetail[this.tripDetail.indexOfList].trip_content=this.tripDetail.trip_content;
+// 					this.daylist[this.dayCount].tripDetail[this.tripDetail.indexOfList].place_name=this.tripDetail.place_name;
+				
+// 				}else if(this.act==1){
 				this.daylist[this.dayCount].tripDetail.push({
 		    		trip_day:'1',
 		    		trip_id:'1',
@@ -338,7 +460,7 @@
 		    		indexOfList:0,
 				});
 				
-		    	
+				
 		    			this.tripDetail.trip_day='1',
 		    			this.tripDetail.place_id='1',
 		    			this.tripDetail.trip_id='1',
@@ -353,24 +475,119 @@
 		    			this.tripDetail.trip_cost='0',
 		    			this.tripDetail.action='insertajax',
 		    		this.tripDetail.place_name='',
-		    		this.tripDetail.indexOfList=0,
-		
-				
+		    		this.tripDetail.indexOfList=0;
+		//		}
+
 				document.getElementById('setTripDetail').style.display='none';
 				document.getElementById('fade').style.display='none';
-				
-				
 			},
-			tripDetailEdit(item,index){
-				this.tripDetail=item;
-				this.tripDetail.indexOfList=index;
+			sendDetailEditToList2(){//-------5
+				
+				this.tripDetail.trip_start_time=$('#time1').val()+':00';
+				this.tripDetail.trip_end_time=$('#time2').val()+':00';			
+					this.daylist[this.dayCount].tripDetail[this.tripDetail.indexOfList].trip_content=this.tripDetail.trip_content;
+					this.daylist[this.dayCount].tripDetail[this.tripDetail.indexOfList].place_name=this.tripDetail.place_name;
+					
+					this.daylist[this.dayCount].tripDetail[this.tripDetail.indexOfList].trip_day=this.tripDetail.trip_day;
+					this.daylist[this.dayCount].tripDetail[this.tripDetail.indexOfList].place_id=this.tripDetail.place_id;
+					this.daylist[this.dayCount].tripDetail[this.tripDetail.indexOfList].trip_id=this.tripDetail.trip_id;
+					this.daylist[this.dayCount].tripDetail[this.tripDetail.indexOfList].trip_sort=this.tripDetail.trip_sort;
+					this.daylist[this.dayCount].tripDetail[this.tripDetail.indexOfList].trip_detail_type=this.tripDetail.trip_detail_type;
+	    
+					this.daylist[this.dayCount].tripDetail[this.tripDetail.indexOfList].trip_start_time=this.tripDetail.trip_start_time;
+					this.daylist[this.dayCount].tripDetail[this.tripDetail.indexOfList].trip_end_time=this.tripDetail.trip_end_time;
+					this.daylist[this.dayCount].tripDetail[this.tripDetail.indexOfList].trip_remarks=this.tripDetail.trip_remarks;
+					this.daylist[this.dayCount].tripDetail[this.tripDetail.indexOfList].trip_cost=this.tripDetail.trip_cost;
+					this.daylist[this.dayCount].tripDetail[this.tripDetail.indexOfList].action=this.tripDetail.action;
+					this.daylist[this.dayCount].tripDetail[this.tripDetail.indexOfList].indexOfList=this.tripDetail.indexOfList;
+					
+	    			$('#time1').val("");
+					$('#time2').val("");
+					
+					
+					
+	    			this.tripDetail.trip_day='1',
+	    			this.tripDetail.place_id='1',
+	    			this.tripDetail.trip_id='1',
+	    			this.tripDetail.trip_sort=1,
+	    			this.tripDetail.trip_detail_type='其他',
+	    			this.tripDetail.trip_content='',
+	    			this.tripDetail.trip_start_time='',
+	    			this.tripDetail.trip_end_time='',
+
+	    			this.tripDetail.trip_remarks='',
+	    			this.tripDetail.trip_cost='0',
+	    			this.tripDetail.action='insertajax',
+	    		this.tripDetail.place_name='',
+	    		this.tripDetail.indexOfList=0;
+
+					console.log(this.daylist[this.dayCount].tripDetail[this.tripDetail.indexOfList].trip_content)
+
+
+				document.getElementById('setTripDetail').style.display='none';
+				document.getElementById('fade').style.display='none';
+				this.editshow=false;
+			},
+			fadeCancel(){
+				$('#time1').val("");
+				$('#time2').val("");
+    			this.tripDetail.trip_day='1',
+    			this.tripDetail.place_id='1',
+    			this.tripDetail.trip_id='1',
+    			this.tripDetail.trip_sort=1,
+    			this.tripDetail.trip_detail_type='其他',
+    			this.tripDetail.trip_content='',
+    			this.tripDetail.trip_start_time='',
+    			this.tripDetail.trip_end_time='',
+		
+    			this.tripDetail.trip_remarks='',
+    			this.tripDetail.trip_cost='0',
+    			this.tripDetail.action='insertajax',
+    		this.tripDetail.place_name='',
+    		this.tripDetail.indexOfList=0;
+	    	//	document.getElementById('editTripDetail').style.display='none';
+		    //	document.getElementById('setTripDetailOther').style.display='none';
+				document.getElementById('setTripDetail').style.display='none';
+				document.getElementById('fade').style.display='none';
+				this.editshow=false;
+				this.DetailSplice=false;
+			},
+			tripDetailEdit(item,index,inde){//--------------------------------------------2...
+				this.editshow=true;
+				this.act=0;//--edit
+					
+				this.tripDetail.trip_content=item.trip_content;		
+				this.tripDetail.place_name=item.place_name;	
+				this.tripDetail.trip_day=item.trip_day;
+				this.tripDetail.trip_id=item.trip_id;
+				this.tripDetail.trip_sort=item.trip_sort;
+				this.tripDetail.trip_detail_type=item.trip_detail_type;
+				this.tripDetail.place_id=item.place_id;
+	    	//	trip_content=item.;this.tripDetail.trip_content,
+	    		this.tripDetail.trip_start_time=item.trip_start_time;
+	    		this.tripDetail.trip_end_time=item.trip_end_time;
+	    		this.tripDetail.trip_remarks=item.trip_remarks;
+	    		this.tripDetail.trip_cost=item.trip_cost;
+	    		this.tripDetail.action=item.action;
+	    	//	place_name=item.;this.tripDetail.place_name,
+	    		this.tripDetail.indexOfList=item.indexOfList;
+				//console.log(this.tripDetail)
+				
+				
+				
+				this.dayCount=index;
+				this.tripDetail.indexOfList=inde;
 				$('#time1').val(item.trip_start_time);
 				$('#time2').val(item.trip_end_time);
+				document.getElementById('setTripDetail').style.display='block';
+				document.getElementById('fade').style.display='block';
 			},
-			tripDetailDel(index){
-				this.tripDetaillist.splice(index, 1);
+			tripDetailDel(inde,index){
+				console.log(inde+" "+index);
+				this.daylist[inde].tripDetail.splice(index, 1);
 			},
-			tripDetailAdd(e){
+			tripDetailAdd(e){ //這裡輸入時間的item1/2 是id 不一起用會有麻煩----------------------1
+				this.act=1;
 	            document.getElementById('choicePlace').style.display='none';
 	            document.getElementById('setTripDetail').style.display='block';
 	            document.getElementById('fade').style.display='block';
