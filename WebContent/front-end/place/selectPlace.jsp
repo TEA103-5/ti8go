@@ -10,6 +10,7 @@
 
 <%
 	pageContext.setAttribute("Google_key", Google_key.key);   // 將util.Google_key的金鑰字串放進pageContext
+	pageContext.setAttribute("weather_key", Google_key.weather_key);
 
 	session.setAttribute("users_id", 1);  //  測試用
 	
@@ -90,6 +91,20 @@
                 <a class="nav-link active" href="<%=request.getContextPath()%>/front-end/place/listMyPlace.jsp">我的地點</a>
                 <a class="nav-link active" href="<%=request.getContextPath()%>/front-end/place_collect/listMyPlace_collect.jsp">我的收藏</a>
             </div>
+            
+            <form class="form-inline">
+                <label class="my-1 mr-2" for="inlineFormCustomSelectPref">點擊地點後選擇交通方式</label>
+                <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+                    <option value="TRANSIT" selected>大眾運輸</option>
+                    <option value="WALKING">走路</option>
+                    <option value="BICYCLING">腳踏車</option>
+                    <option value="DRIVING">開車</option>
+                </select>
+
+                <!-- <input class="form-control mr-sm-2" type="search" name="place_name" placeholder="請輸入地點名稱"
+                    aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜尋路線</button> -->
+            </form>
 
             <form class="form-inline" METHOD="post" ACTION="<%=request.getContextPath()%>/place/place.do">
                 <div class="city-selector" role="tw-city-selector" data-bootstrap-style data-standard-words></div>
@@ -183,6 +198,11 @@
     <script src="<%=request.getContextPath()%>/front-end/place/tw-city-selector-master/dist/tw-city-selector.js"></script> 
     <script src="<%=request.getContextPath()%>/front-end/place/myjs/place/search-bar.js"></script>
     <script src="<%=request.getContextPath()%>/front-end/place/myjs/place/card_container.js"></script>
+
+	<script>
+        let weather_api_key = "${weather_key}";
+    </script>
+
 
     <script src="https://maps.googleapis.com/maps/api/js?key=${Google_key}&callback=initMap&libraries=&v=weekly" async></script>
 	
