@@ -143,14 +143,17 @@
 										        
 										</th>
 								</tr>
-								<tr v-for="(item, inde) in daylist[index].tripDetail" >
-			
+								<tr v-for="(item, inde) in daylist[index].tripDetail" v-bind:key="item" draggable="true"
+								 @dragstart="dragStart($event,index,inde)" @dragover="allowDrop"  @drop="drop2($event,index,inde)">
+							
 									<td>
 									</td>
 									<td>	
+								
 									{{item.trip_content}}<br/>
 									{{item.trip_start_time}}~{{item.trip_end_time}}<br/>
 									{{item.trip_remarks}}
+						
 									</td>
 									<td>
 								  	花費:{{item.trip_cost}}
@@ -160,17 +163,17 @@
 									插入:
 									<button @click="choicePlaceToDetailSplice(index,inde)">地點</button>/
 									<button @click="choiceOtherToDetailSplice(index,inde)">其他</button>
-									</td>
-									<td>
-									<button @click="tripDetailEdit(item,index,inde)">edit</button>
-									</td>
-									<td>
+									<button @click="tripDetailEdit(item,index,inde)">edit</button>	
 									<button @click="tripDetailDel(index,inde)">del</button>
+		
 									</td>
+									
 								</tr>
 					</table>
 					</li>
-						<li class="list-group-item">
+						<li class="list-group-item"
+								 @dragover="allowDrop"  @drop="drop2($event,index,daylist[index].tripDetail.length)">
+							
 						新增:
 						<button @click="choicePlaceToDetail(index)">地點</button>/
 						<button @click="choiceOtherToDetail(index)">其它</button>
@@ -189,10 +192,19 @@
 <script type="text/javascript"
 		src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>
 	<script>
+	function dragstart_handler(ev) {
+		 console.log("dragStart");
+		 // Add the target element's id to the data transfer object
+		 ev.dataTransfer.setData("text/plain", ev.target.id);
+		}
 	
 	var vm = new Vue({
 	    el: '#app',
 	    data: {
+	    	from:{
+	    		index:0,
+	    		inde:0,
+	    	},
 	    	DetailSplice:false,
 	    	editshow:false,
 	    	dayCount:1,
@@ -269,6 +281,68 @@
 	    	],
 	    },
 	    methods: {
+	    	   allowDrop(e){
+	               e.preventDefault();
+	              // console.log(e);
+	           },
+	    	//开始拖动
+	    	dragStart(e, index,inde){
+	    	    e.dataTransfer.setData('Text', index);
+	    	    e.dataTransfer.setData('Text', inde);
+	    	    this.from.index=index;
+	    	    this.from.inde=inde;
+	  
+	    	},
+	    	//放置
+	    	drop2(e, index,inde){
+	    		let self=this;
+	    	    //取消默认行为
+ 	    	    this.allowDrop(e);
+ 	    	   e.dataTransfer.setData('Text', index);
+ 	    	   e.dataTransfer.setData('Text', inde);
+
+ 	 
+
+ 	   		if(parseInt(this.from.index,10)==parseInt(index,10)&&parseInt(inde,10)==0){
+ 	   			let VO=this.daylist[index].tripDetail[inde];
+ 				this.daylist[index].tripDetail.splice(inde,0,this.daylist[this.from.index].tripDetail[this.from.inde]);
+ 				this.daylist[this.from.index].tripDetail.splice(this.from.inde+1, 1);
+ 	   		}else{
+			this.daylist[index].tripDetail.splice(inde,0,this.daylist[this.from.index].tripDetail[this.from.inde]);
+			this.daylist[this.from.index].tripDetail.splice(this.from.inde, 1);
+ 	   		}
+
+// 	    		trip_day:'1',
+// 	    		trip_id:'1',
+// 	    		trip_sort:1,
+// 	    		trip_detail_type:'景點',
+// 	    		place_id:this.tripDetail.place_id,
+// 	    		trip_content:this.tripDetail.trip_content,
+// 	    		trip_start_time:this.tripDetail.trip_start_time,
+// 	    		trip_end_time:this.tripDetail.trip_end_time,
+// 	    		trip_remarks:this.tripDetail.trip_remarks,
+// 	    		trip_cost:this.tripDetail.trip_cost,
+// 	    		action:'insertajax',
+// 	    		place_name:this.tripDetail.place_name,
+// 	    		indexOfList:0,
+		
+ 	   		
+	    	},
+	    	//放置
+	    	drop(e, index){
+	    
+	    	    //取消默认行为
+ 	    	    this.allowDrop(e);
+ 	    	   e.dataTransfer.setData('Text', index);
+ 	   		console.log(index);
+// 	    	    //使用一个新数组重新排序后赋给原变量
+// 	    	    let arr = this.lists.concat([]),
+// 	    	        dragIndex = e.dataTransfer.getData('Text');
+// 	    	        temp = arr.splice(dragIndex, 1);
+	    	    
+// 	    	    arr.splice(index, 0, temp[0]);
+// 	    	    this.lists = arr;
+	    	},
 // 	    	setCookie(cname,cvalue,exdays){
 // 	    	    var d = new Date();
 // 	    	    d.setTime(d.getTime()+(exdays*24*60*60*1000));
@@ -301,6 +375,7 @@
 // 				this.addtrip.trip_end=$('#f_date2').val();
 // 				console.log(this.addtrip.trip_name);
 // 			},
+
 				choiceOtherToDetailSplice(index,inde){
 					document.getElementById('setTripDetail').style.display='block';
 					document.getElementById('fade').style.display='block';
