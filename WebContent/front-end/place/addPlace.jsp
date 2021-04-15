@@ -1,11 +1,14 @@
 <%@page import="java.util.*"%>
 <%@page import="com.place.model.*"%>
 <%@page import="com.place_collect.model.*"%>
+<%@page import="util.Google_key"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
 <% 
+	pageContext.setAttribute("Google_key", Google_key.key);   // 將util.Google_key的金鑰字串放進pageContext
+
 	PlaceVO placeVO = (PlaceVO)request.getAttribute("placeVO");
 %>
 
@@ -78,7 +81,7 @@
             <div class="container">
                 <!-- 使用Google Maps Embed API , q放的是搜尋目標 , 如有明確對象(地址或名稱)marker會標註在此位置 ,  -->
                 <div class="block-heading"><iframe id="map-iframe" allowfullscreen="" frameborder="0"
-                        src="https://www.google.com/maps/embed/v1/search?key=AIzaSyDM_Y61o18dhHK3q-h3n6WRu9oRTuR7fN0&q=緯育TibaMe附設台北職訓中心&zoom=20&center=25.052052,121.543220"
+                        src="https://www.google.com/maps/embed/v1/search?key=${Google_key}&q=緯育TibaMe附設台北職訓中心&zoom=20&center=25.052052,121.543220"
                         width="100%" height="400"></iframe>
                     <h2 class="text-info">新增地點</h2>
                     <p> </p>
@@ -429,7 +432,6 @@
 	</script>
 	<script>
 
-//         const google_api_key = "AIzaSyAjDUYEdEloKExVbhYLVsCg4EqL0KQLSDs";
 
         $(function () {
 
@@ -614,7 +616,7 @@
             })
 
 
-	const google_api_key = "AIzaSyDM_Y61o18dhHK3q-h3n6WRu9oRTuR7fN0";
+	const google_api_key = "${Google_key}";
 
             // let target_address = "台灣台北市萬華區康定路190號"
 

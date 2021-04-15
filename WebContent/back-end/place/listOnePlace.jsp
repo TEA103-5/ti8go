@@ -1,12 +1,15 @@
 <%@page import="java.util.*"%>
 <%@page import="com.place.model.*"%>
 <%@page import="com.place_collect.model.*"%>
+<%@page import="util.Google_key"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
 <% 
+	pageContext.setAttribute("Google_key", Google_key.key);   // 將util.Google_key的金鑰字串放進pageContext
+
 	PlaceVO placeVO = (PlaceVO)request.getAttribute("placeVO");
 	// 以下將place_address字串做處理以便設定地址選單套件的選項
 	String address = placeVO.getPlace_address(); // 
@@ -233,7 +236,7 @@
                     <h3 class="text-dark mb-1">Blank Page</h3>
 	                     <!-- 使用Google Maps Embed API , q放的是搜尋目標 , 如有明確對象(地址或名稱)marker會標註在此位置 ,  -->
 	                <div class="block-heading"><iframe id="map-iframe" allowfullscreen="" frameborder="0"
-	                        src="https://www.google.com/maps/embed/v1/search?key=AIzaSyCQspd49Wmywh3L5LAOftK_jV4qA2i89VQ&q=<%= (placeVO==null)? "" : placeVO.getPlace_address()%>&zoom=20&center=${placeVO.getPlace_latitude()},${placeVO.getPlace_longitude()}"
+	                        src="https://www.google.com/maps/embed/v1/search?key=${Google_key}&q=<%= (placeVO==null)? "" : placeVO.getPlace_address()%>&zoom=20&center=${placeVO.getPlace_latitude()},${placeVO.getPlace_longitude()}"
 	                        width="100%" height="400"></iframe>
 	                    <h2 class="text-info">修改地點</h2>
 	                    <p> </p>
@@ -477,8 +480,6 @@
     
      <!-- 以下是自己新增的js -->
     <script src="<%=request.getContextPath()%>/front-end/place/tw-city-selector-master/dist/tw-city-selector.js"></script> <!-- // 載入的地址選單套件 -->
-<!--     			匯入變數google_api_key   -->
-<%--     <script src="<%=request.getContextPath()%>/front-end/place/google_key/google_key.js"></script> --%>
     <script>
 	    // 這行如果放在下一個script內 , 會導致地址選單還沒初始化就執行了跟地址選單有關的綁定而沒綁定到
 	    let tcs;
@@ -588,8 +589,6 @@
 		});
 	</script>
 	<script>
-
-//         const google_api_key = "AIzaSyAjDUYEdEloKExVbhYLVsCg4EqL0KQLSDs";
 
         $(function () {
 
@@ -789,7 +788,7 @@
 
 
 
-			const google_api_key = "AIzaSyCQspd49Wmywh3L5LAOftK_jV4qA2i89VQ";
+			const google_api_key = "${Google_key}";
             // let target_address = "台灣台北市萬華區康定路190號"
 
             function get_lat_lng() {
