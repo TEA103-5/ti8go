@@ -1,6 +1,7 @@
 <%@page import="java.util.*"%>
 <%@page import="com.place.model.*"%>
 <%@page import="com.place_collect.model.*"%>
+<%@page import="util.Google_key"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
@@ -8,6 +9,8 @@
 
 
 <%
+	pageContext.setAttribute("Google_key", Google_key.key);   // 將util.Google_key的金鑰字串放進pageContext
+
 	session.setAttribute("users_id", 1);  //  測試用
 	
 	if(session.getAttribute("users_id") != null){
@@ -181,7 +184,7 @@
     <script src="<%=request.getContextPath()%>/front-end/place/myjs/place/search-bar.js"></script>
     <script src="<%=request.getContextPath()%>/front-end/place/myjs/place/card_container.js"></script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAS-fxnvefOMYMXZnlrUlgPIsvgmMcFuY&callback=initMap&libraries=&v=weekly" async></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=${Google_key}&callback=initMap&libraries=&v=weekly" async></script>
 	
 	<script>
 		
