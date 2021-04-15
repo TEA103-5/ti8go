@@ -65,6 +65,10 @@
 							</th>
 					</tr>
 					<tr v-for="(item, index) in placelist" >
+					<td>
+					<img class="img" id="preimg"
+									v-bind:src="item.place_pic" />
+					</td>
 						<td>
 						{{item.place_name}}
 						</td>
@@ -77,6 +81,8 @@
 			</div>			
 			
 			<div id="setTripDetail" class="white_content glass">
+					<img class="img" id="preimg"
+									v-bind:src="tripDetail.place_pic" />			 			
 							 				<input
 				class="" type="text" name="trip_name"
 				placeholder="行程內容"
@@ -147,6 +153,8 @@
 								 @dragstart="dragStart($event,index,inde)" @dragover="allowDrop"  @drop="drop2($event,index,inde)">
 							
 									<td>
+								<img class="img" id="preimg"
+									v-bind:src="item.place_pic" />
 									</td>
 									<td>	
 								
@@ -253,6 +261,7 @@
 	    		action:'insertajax',
 	    		place_name:'',
 	    		indexOfList:0,
+	    		place_pic:'',
 	    	},
 	    	addtrip:{
 	    		users_id:${(usersVO==null)?1:usersVO.users_id },
@@ -269,13 +278,14 @@
 	    		trip_tot_cost:'0',
 	    		place_weather:'正常',
 	    		action:'insertajax',
+	    		place:'',
 	    	},
 	    	placelist:[
 	    		<c:forEach var="placeVO" items="${pSvc.all}">
 	    		{
 	    			place_id:'${placeVO.place_id}',
 	    			place_name:'${placeVO.place_name}',
-	    			
+	    			place_pic:'<%=request.getContextPath()%>/place/DBGifReader4.do?place_id=${placeVO.place_id}&place_pic=place_pic1',
 	    		},
 	    		</c:forEach>
 	    	],
@@ -301,48 +311,27 @@
  	    	   e.dataTransfer.setData('Text', index);
  	    	   e.dataTransfer.setData('Text', inde);
 
- 	 
+				if(index> this.from.index){//往下一層
+					this.daylist[index].tripDetail.splice(inde,0,this.daylist[this.from.index].tripDetail[this.from.inde]);
+					this.daylist[this.from.index].tripDetail.splice(this.from.inde, 1);
+				}else if( this.from.index>index){//往上一層
+	 				this.daylist[index].tripDetail.splice(inde,0,this.daylist[this.from.index].tripDetail[this.from.inde]);
+	 				this.daylist[this.from.index].tripDetail.splice(this.from.inde, 1);
+				}else{
+					if(inde>this.from.inde){//往下
+						this.daylist[index].tripDetail.splice(inde+1,0,this.daylist[this.from.index].tripDetail[this.from.inde]);
+						this.daylist[this.from.index].tripDetail.splice(this.from.inde, 1);					
+					}else if(this.from.inde>inde){//往上
+		 				this.daylist[index].tripDetail.splice(inde,0,this.daylist[this.from.index].tripDetail[this.from.inde]);
+		 				this.daylist[this.from.index].tripDetail.splice(this.from.inde+1, 1);
+					}else{
+						
+					}
+					
+				}
 
- 	   		if(parseInt(this.from.index,10)==parseInt(index,10)&&parseInt(inde,10)==0){
- 	   			let VO=this.daylist[index].tripDetail[inde];
- 				this.daylist[index].tripDetail.splice(inde,0,this.daylist[this.from.index].tripDetail[this.from.inde]);
- 				this.daylist[this.from.index].tripDetail.splice(this.from.inde+1, 1);
- 	   		}else{
-			this.daylist[index].tripDetail.splice(inde,0,this.daylist[this.from.index].tripDetail[this.from.inde]);
-			this.daylist[this.from.index].tripDetail.splice(this.from.inde, 1);
- 	   		}
+	    	},
 
-// 	    		trip_day:'1',
-// 	    		trip_id:'1',
-// 	    		trip_sort:1,
-// 	    		trip_detail_type:'景點',
-// 	    		place_id:this.tripDetail.place_id,
-// 	    		trip_content:this.tripDetail.trip_content,
-// 	    		trip_start_time:this.tripDetail.trip_start_time,
-// 	    		trip_end_time:this.tripDetail.trip_end_time,
-// 	    		trip_remarks:this.tripDetail.trip_remarks,
-// 	    		trip_cost:this.tripDetail.trip_cost,
-// 	    		action:'insertajax',
-// 	    		place_name:this.tripDetail.place_name,
-// 	    		indexOfList:0,
-		
- 	   		
-	    	},
-	    	//放置
-	    	drop(e, index){
-	    
-	    	    //取消默认行为
- 	    	    this.allowDrop(e);
- 	    	   e.dataTransfer.setData('Text', index);
- 	   		console.log(index);
-// 	    	    //使用一个新数组重新排序后赋给原变量
-// 	    	    let arr = this.lists.concat([]),
-// 	    	        dragIndex = e.dataTransfer.getData('Text');
-// 	    	        temp = arr.splice(dragIndex, 1);
-	    	    
-// 	    	    arr.splice(index, 0, temp[0]);
-// 	    	    this.lists = arr;
-	    	},
 // 	    	setCookie(cname,cvalue,exdays){
 // 	    	    var d = new Date();
 // 	    	    d.setTime(d.getTime()+(exdays*24*60*60*1000));
@@ -430,10 +419,9 @@
 		    		action:'insertajax',
 		    		place_name:this.tripDetail.place_name,
 		    		indexOfList:0,
+		    		place_pic:this.tripDetail.place_pic,
 				});
 
-				
-				
 		    			this.tripDetail.trip_day='1',
 		    			this.tripDetail.place_id='1',
 		    			this.tripDetail.trip_id='1',
@@ -442,6 +430,7 @@
 		    			this.tripDetail.trip_content='',
 		    			this.tripDetail.trip_start_time='',
 		    			this.tripDetail.trip_end_time='',
+		    			this.tripDetail.place_pic='',
 		    			$('#time1').val("");
 						$('#time2').val("");
 		    			this.tripDetail.trip_remarks='',
@@ -469,11 +458,11 @@
 		    		trip_end_time:this.tripDetail.trip_end_time,
 		    		trip_remarks:this.tripDetail.trip_remarks,
 		    		trip_cost:this.tripDetail.trip_cost,
+		    		place_pic:this.tripDetail.place_pic,
 		    		action:'insertajax',
 		    		place_name:this.tripDetail.place_name,
 		    		indexOfList:0,
 				});
-				
 				
 		    			this.tripDetail.trip_day='1',
 		    			this.tripDetail.place_id='1',
@@ -483,6 +472,7 @@
 		    			this.tripDetail.trip_content='',
 		    			this.tripDetail.trip_start_time='',
 		    			this.tripDetail.trip_end_time='',
+		    			this.tripDetail.place_pic='',
 		    			$('#time1').val("");
 						$('#time2').val("");
 		    			this.tripDetail.trip_remarks='',
@@ -494,9 +484,9 @@
 				document.getElementById('setTripDetail').style.display='none';
 				document.getElementById('fade').style.display='none';
 			},
-			sendDetailEditToList2(){//-------5
+			sendDetailEditToList2(){//-------有遇到一個類似潛層複製的問題 但我也不確定...但這樣似乎沒問題就是了
 				
-				this.tripDetail.trip_start_time=$('#time1').val()+':00';
+				this.tripDetail.trip_start_time=$('#time1').val()+':00';//這個放到後端會比較好看
 				this.tripDetail.trip_end_time=$('#time2').val()+':00';			
 					this.daylist[this.dayCount].tripDetail[this.tripDetail.indexOfList].trip_content=this.tripDetail.trip_content;
 					this.daylist[this.dayCount].tripDetail[this.tripDetail.indexOfList].place_name=this.tripDetail.place_name;
@@ -506,7 +496,7 @@
 					this.daylist[this.dayCount].tripDetail[this.tripDetail.indexOfList].trip_id=this.tripDetail.trip_id;
 					this.daylist[this.dayCount].tripDetail[this.tripDetail.indexOfList].trip_sort=this.tripDetail.trip_sort;
 					this.daylist[this.dayCount].tripDetail[this.tripDetail.indexOfList].trip_detail_type=this.tripDetail.trip_detail_type;
-	    
+					this.daylist[this.dayCount].tripDetail[this.tripDetail.indexOfList].place_pic=this.tripDetail.place_pic;	    
 					this.daylist[this.dayCount].tripDetail[this.tripDetail.indexOfList].trip_start_time=this.tripDetail.trip_start_time;
 					this.daylist[this.dayCount].tripDetail[this.tripDetail.indexOfList].trip_end_time=this.tripDetail.trip_end_time;
 					this.daylist[this.dayCount].tripDetail[this.tripDetail.indexOfList].trip_remarks=this.tripDetail.trip_remarks;
@@ -525,15 +515,12 @@
 	    			this.tripDetail.trip_content='',
 	    			this.tripDetail.trip_start_time='',
 	    			this.tripDetail.trip_end_time='',
-
+	    			this.tripDetail.place_pic='',
 	    			this.tripDetail.trip_remarks='',
 	    			this.tripDetail.trip_cost='0',
 	    			this.tripDetail.action='insertajax',
 	    		this.tripDetail.place_name='',
 	    		this.tripDetail.indexOfList=0;
-
-					console.log(this.daylist[this.dayCount].tripDetail[this.tripDetail.indexOfList].trip_content)
-
 
 				document.getElementById('setTripDetail').style.display='none';
 				document.getElementById('fade').style.display='none';
@@ -550,7 +537,7 @@
     			this.tripDetail.trip_content='',
     			this.tripDetail.trip_start_time='',
     			this.tripDetail.trip_end_time='',
-		
+    			this.tripDetail.place_pic='',
     			this.tripDetail.trip_remarks='',
     			this.tripDetail.trip_cost='0',
     			this.tripDetail.action='insertajax',
@@ -567,6 +554,7 @@
 					
 				this.tripDetail.trip_content=item.trip_content;		
 				this.tripDetail.place_name=item.place_name;	
+				this.tripDetail.place_pic=item.place_pic;	
 				this.tripDetail.trip_day=item.trip_day;
 				this.tripDetail.trip_id=item.trip_id;
 				this.tripDetail.trip_sort=item.trip_sort;
@@ -587,10 +575,9 @@
 				document.getElementById('fade').style.display='block';
 			},
 			tripDetailDel(inde,index){
-				console.log(inde+" "+index);
 				this.daylist[inde].tripDetail.splice(index, 1);
 			},
-			tripDetailAdd(e){ //這裡輸入時間的item1/2 是id 不一起用會有麻煩----------------------1
+			tripDetailAdd(e){ 
 				this.act=1;
 	            document.getElementById('choicePlace').style.display='none';
 	            document.getElementById('setTripDetail').style.display='block';
@@ -598,13 +585,14 @@
 	            this.tripDetail.place_name=e.place_name;
 	            this.tripDetail.trip_content=e.place_name;
 	            this.tripDetail.place_id=e.place_id;
+	            this.tripDetail.place_pic=e.place_pic;
 			},
 			
 			submitTripDetailini(){
 				let self=this;
 				this.daylist.forEach(function(item, i) {
 					  item.tripDetail.forEach(function(jtem, j) {
-						  jtem.trip_day=i+1;//要是這樣送.大概會因為呼叫過快而失敗
+						  jtem.trip_day=i+1;//要是在這裡送.大概會因為呼叫過快而失敗
 						  jtem.trip_id=self.theTrip_id;
 						  jtem.action='insertajax';
 						  jtem.trip_id=self.theTrip_id;
@@ -623,9 +611,6 @@
 			},
 			submitTripDetail(){  //行程細節送出 目前以submitTrip()觸發
 				let self=this;
-					
-
- 
  				if(self.detailUpdateCount>=1){
 					
  					self.detailUpdateCount--;
