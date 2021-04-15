@@ -101,63 +101,8 @@
 
 					<button @click="fadeCancel">取消</button>
 			</div>			
-<!-- 			<div id="setTripDetailOther" class="white_content glass"> -->
-<!-- 							 				<input -->
-<!-- 				class="" type="text" name="trip_name" -->
-<!-- 				placeholder="行程內容" -->
-<!-- 				v-model="tripDetail.trip_content"> -->
-<!-- 							 <br/> -->
-		
-<!-- 				開始時間:<input type="time"  id="time1" /> -->
-<!-- 				結束時間:<input type="time" id="time2"  /> -->
-<!-- 				花費:<input type="text" v-model="tripDetail.trip_cost"/>臺幣 -->
-				
-<!-- 					<br/> -->
-<!-- 				 <br/>	 -->
-<!-- 				<textarea class="form-control" id="signature" rows="4" -->
-<!-- 				placeholder="備註" -->
-<!-- 												name="signature" v-model="tripDetail.trip_remarks"></textarea> -->
-				
-				
-<!-- 				 <br/> -->
-<!-- 					<button @click="sendDetailEditToList">確認</button> -->
-			
 
-<!-- 					<button @click="fadeCancel">取消</button> -->
-<!-- 			</div>			 -->
-<!-- 			<div id="editTripDetail" class="white_content glass"> -->
-<!-- 							 				<input -->
-<!-- 				class="" type="text" name="trip_name" -->
-<!-- 				placeholder="行程內容" -->
-<!-- 				v-model="tripDetail.trip_content"> -->
-<!-- 							 <br/> -->
-		
-<!-- 				開始時間:<input type="time"  id="time3" /> -->
-<!-- 				結束時間:<input type="time" id="time4"  /> -->
-<!-- 				花費:<input type="text" v-model="tripDetail.trip_cost"/>臺幣 -->
-				
-<!-- 					<br/> -->
-<!-- 				 <br/>	 -->
-<!-- 				<textarea class="form-control" id="signature" rows="4" -->
-<!-- 				placeholder="備註" -->
-<!-- 												name="signature" v-model="tripDetail.trip_remarks"></textarea> -->
-				
-				
-<!-- 				 <br/> -->
-<!-- 					<button @click="sendDetailEditToList()">確認</button> -->
-			
-
-<!-- 					<button @click="fadeCancel">取消</button> -->
-<!-- 			</div>			 -->
     </div>
-
-
-
-
-
-
-
-
 
             <div class="container-fluid" style="margin:0px;">
                 <div class="block-heading">
@@ -182,7 +127,8 @@
 				 
 				 
 					<div class="col-md-7 col-xl-7 mb-7 conn" style="height:500px;overflow-y: scroll;">
-					總花費:<br/>
+					<button class="btnl btn-cancel"  @click="submitTripDetailini">建立行程</button>
+					<br/>總花費:
 					<ul v-for="(item,index) in daylist" class="list-group list-group-flush footers" style="border-radius: 2rem;">
 						 <li class="list-group-item footers">
 							<table class="table-users">
@@ -226,7 +172,6 @@
 					</li>
 						<li class="list-group-item">
 						新增:
-<!-- 						choicePlaceToDetail -->
 						<button @click="choicePlaceToDetail(index)">地點</button>/
 						<button @click="choiceOtherToDetail(index)">其它</button>
 						</li>
@@ -250,7 +195,6 @@
 	    data: {
 	    	DetailSplice:false,
 	    	editshow:false,
-	    	act:1,
 	    	dayCount:1,
 	    	daylist:[
  	    		{
@@ -361,7 +305,7 @@
 					document.getElementById('setTripDetail').style.display='block';
 					document.getElementById('fade').style.display='block';
 					this.dayCount=index;
-					this.tripDetail.place_id=-1;
+					this.tripDetail.place_id=1;
 					this.tripDetail.indexOfList=inde;
 					this.DetailSplice=true;
 				},
@@ -369,7 +313,7 @@
 				document.getElementById('setTripDetail').style.display='block';
 				document.getElementById('fade').style.display='block';
 				this.dayCount=index;
-				this.tripDetail.place_id=-1;
+				this.tripDetail.place_id=1;
 			},
 			choicePlaceToDetailSplice(index,inde){
 				document.getElementById('choicePlace').style.display='block';
@@ -435,15 +379,10 @@
 				document.getElementById('setTripDetail').style.display='none';
 				document.getElementById('fade').style.display='none';
 			},
-			sendDetailEditToList(){//-------4------兩個交互作用有BUG//push的時候消失了?
+			sendDetailEditToList(){//-------4------小心潛層複製的問題
 				this.tripDetail.trip_start_time=$('#time1').val()+':00';
 				this.tripDetail.trip_end_time=$('#time2').val()+':00';
-				
-// 				if(this.act==0){
-// 					this.daylist[this.dayCount].tripDetail[this.tripDetail.indexOfList].trip_content=this.tripDetail.trip_content;
-// 					this.daylist[this.dayCount].tripDetail[this.tripDetail.indexOfList].place_name=this.tripDetail.place_name;
-				
-// 				}else if(this.act==1){
+
 				this.daylist[this.dayCount].tripDetail.push({
 		    		trip_day:'1',
 		    		trip_id:'1',
@@ -476,7 +415,6 @@
 		    			this.tripDetail.action='insertajax',
 		    		this.tripDetail.place_name='',
 		    		this.tripDetail.indexOfList=0;
-		//		}
 
 				document.getElementById('setTripDetail').style.display='none';
 				document.getElementById('fade').style.display='none';
@@ -503,9 +441,7 @@
 					
 	    			$('#time1').val("");
 					$('#time2').val("");
-					
-					
-					
+		
 	    			this.tripDetail.trip_day='1',
 	    			this.tripDetail.place_id='1',
 	    			this.tripDetail.trip_id='1',
@@ -545,8 +481,6 @@
     			this.tripDetail.action='insertajax',
     		this.tripDetail.place_name='',
     		this.tripDetail.indexOfList=0;
-	    	//	document.getElementById('editTripDetail').style.display='none';
-		    //	document.getElementById('setTripDetailOther').style.display='none';
 				document.getElementById('setTripDetail').style.display='none';
 				document.getElementById('fade').style.display='none';
 				this.editshow=false;
@@ -563,18 +497,13 @@
 				this.tripDetail.trip_sort=item.trip_sort;
 				this.tripDetail.trip_detail_type=item.trip_detail_type;
 				this.tripDetail.place_id=item.place_id;
-	    	//	trip_content=item.;this.tripDetail.trip_content,
 	    		this.tripDetail.trip_start_time=item.trip_start_time;
 	    		this.tripDetail.trip_end_time=item.trip_end_time;
 	    		this.tripDetail.trip_remarks=item.trip_remarks;
 	    		this.tripDetail.trip_cost=item.trip_cost;
 	    		this.tripDetail.action=item.action;
-	    	//	place_name=item.;this.tripDetail.place_name,
 	    		this.tripDetail.indexOfList=item.indexOfList;
-				//console.log(this.tripDetail)
-				
-				
-				
+
 				this.dayCount=index;
 				this.tripDetail.indexOfList=inde;
 				$('#time1').val(item.trip_start_time);
@@ -594,41 +523,57 @@
 	            this.tripDetail.place_name=e.place_name;
 	            this.tripDetail.trip_content=e.place_name;
 	            this.tripDetail.place_id=e.place_id;
-// 	            this.tripDetaillist.push({
-// 		    		trip_day:'1',
-// 		    		place_id:e.place_id,
-// 		    		trip_id:'1',
-// 		    		trip_sort:1,
-// 		    		trip_detail_type:'其他',
-// 		    		trip_content:'',
-// 		    		trip_start_time:'',
-// 		    		trip_end_time:'',
-// 		    		trip_remarks:'無',
-// 		    		trip_cost:'0',
-// 		    		action:'insertajax',
-// 		    		place_name:e.place_name,
-// 		    		indexOfList:0,
-// 	            });
-// 	            console.log(this.tripDetaillist.length);
 			},
-			submitTripDetail(){//行程細節送出 目前以submitTrip()觸發
+			
+			submitTripDetailini(){
+				let self=this;
+				this.daylist.forEach(function(item, i) {
+					  item.tripDetail.forEach(function(jtem, j) {
+						  jtem.trip_day=i+1;//要是這樣送.大概會因為呼叫過快而失敗
+						  jtem.trip_id=self.theTrip_id;
+						  jtem.action='insertajax';
+						  jtem.trip_id=self.theTrip_id;
+						 // console.log(i+'....'+j);
+					  });
+					});
+				//console.log(this.daylist);
+				this.dayCount=this.daylist.length;
+				this.submitTripDetailj();
+			},
+			submitTripDetailj(){
+				if(this.dayCount>=1){
+				this.detailUpdateCount=this.daylist[this.dayCount-1].tripDetail.length;
+				this.submitTripDetail();
+				}
+			},
+			submitTripDetail(){  //行程細節送出 目前以submitTrip()觸發
 				let self=this;
 					
-				console.log(self.detailUpdateCount);
-				if(self.detailUpdateCount>=1){
-					self.detailUpdateCount--;
-					self.tripDetaillist[self.detailUpdateCount].trip_id=self.theTrip_id;
-				$.ajax({
-			        url: "<%=request.getContextPath()%>/trip_detail/trip_detail.do",           // 資料請求的網址
-			        type: "POST",                  // GET | POST | PUT | DELETE | PATCH
-			        async: false,
-			        data: self.tripDetaillist[self.detailUpdateCount],               // 傳送資料到指定的 url
-			        dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
-			        success: function (data) {      //這裡依照陣列長度(有幾個行程明細)呼叫自己
-			          console.log(data);
-			      	self.submitTripDetail();        
-			        }
-			    });
+
+ 
+ 				if(self.detailUpdateCount>=1){
+					
+ 					self.detailUpdateCount--;
+ 					console.log(self.detailUpdateCount);
+// 					self.tripDetaillist[self.detailUpdateCount].trip_id=self.theTrip_id;
+					let updata=self.daylist[self.dayCount-1].tripDetail[self.detailUpdateCount];
+					console.log(updata);
+ 				$.ajax({
+ 			        url: "<%=request.getContextPath()%>/trip_detail/trip_detail.do",           // 資料請求的網址
+ 			        type: "POST",                  // GET | POST | PUT | DELETE | PATCH
+ 			        async: false,
+ 			        data:updata,               // 傳送資料到指定的 url
+ 			        dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
+ 			        success: function (data) {      //這裡依照陣列長度(有幾個行程明細)呼叫自己
+ 			          console.log(data);
+ 			      	self.submitTripDetail();        
+ 			        }
+ 			    });
+				
+				
+				}else{
+					this.dayCount--;
+					self.submitTripDetailj();       
 				}
 				
 			},
@@ -647,6 +592,7 @@
 			          
 			        self.detailUpdateCount=self.tripDetaillist.length;
 			        self.theTrip_id=data.trip_id;
+			        console.log('trip_id='+self.theTrip_id);
 			        //self.submitTripDetail();        
 			        }
 			    });

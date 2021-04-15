@@ -29,6 +29,8 @@ public class Trip_detailServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		req.setCharacterEncoding("UTF-8");
+		res.setContentType("application/json ; charset=UTF-8");
+
 		String action = req.getParameter("action");
 		
 	    if ("insertajax".equals(action)) { // 來自addEmp.jsp的請求  
@@ -42,7 +44,6 @@ public class Trip_detailServlet extends HttpServlet {
 					/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 					Integer trip_id = new Integer(req.getParameter("trip_id").trim());
 					String trip_detail_type = req.getParameter("trip_detail_type").trim();
-					
 					Integer trip_day = null;
 					try {
 						trip_day = new Integer(req.getParameter("trip_day").trim());
