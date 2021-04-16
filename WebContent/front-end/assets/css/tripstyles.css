@@ -196,9 +196,8 @@ body {
 
 }
 .glass{
-	min-height:100vh;
-
-	background: linear-gradient(to right top,#DBC7B5,#6091AB);
+	min-height:70vh;
+	background: linear-gradient(to right bottom,rgba(200,207,207,0.1),rgba(214,201,188,0.1));
 	padding:2rem 0rem;
 }
 
@@ -219,7 +218,7 @@ body {
 	top: 0%;
 	left: 0%;
 	width: 100%;
-	min-height: 150vh;
+	height: 105vh;
 	background: linear-gradient(to right top,#988E7D,#A2ADAF);
 	z-index: 9999;
 	-moz-opacity: 1;

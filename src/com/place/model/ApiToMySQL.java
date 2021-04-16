@@ -218,7 +218,10 @@ public class ApiToMySQL {
 
 	public static void main(String[] args) throws IOException, JSONException {
 		
-		ApiToMySQL.crawler(1 , 1, "台北市" , "https://www.travel.taipei/open-api/zh-tw/Attractions/All?page=");
+	
+				
+				ApiToMySQL.crawler(15, 15, "台北市", "https://www.travel.taipei/open-api/zh-tw/Attractions/All?page=");
+
 		
 	}
 

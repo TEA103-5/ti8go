@@ -12,7 +12,7 @@
 <html>
 
 <head>
-    <title>addtrip - font-end</title>
+    <title>addTrip</title>
      <%@ include file="/front-end/pages/links.html" %> 
 <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/assets/css/tripstyles.css">
 </head>
@@ -21,8 +21,7 @@
     <%@ include file="/front-end/pages/headNav.html" %>
 <!--  <button @click="setCookie('ABA','10',1)">set</button> -->
 <!--  <button @click="getCookie('peter')">get</button> -->
-    
-    <main id="app" class="page  glass">
+    <main id="app" class="page glass">
     <div id="fade" class="black_overlay" style="display:block; min-height: 100%;">
     
 						<div id="tripadd" class="white_content glass" style="display:block;">
@@ -112,7 +111,7 @@
 
             <div class="container-fluid" style="margin:0px;">
                 <div class="block-heading">
-                    <h2 class="text-info">addtrip</h2>
+                    <h2 class="text-info">{{addtrip.trip_name}}</h2>
                     		<input
 							class="" type="text" name="trip_start" @click="clickdate" @blur="blurdate"
 							id="f_date3">
@@ -121,7 +120,7 @@
             <div class="row" style="margin-right:0px; margin-left:0px; flex-wrap:wrap;">
             	
 
-				 <div class="col-md-2 col-xl-2 mb-2 conn" style="height:500px;">
+				 <div class="col-md-2 col-xl-2 mb-2 conn" style="height:500px;overflow-y: scroll;">
 		
 				<ul v-for="(item,index) in daylist" class="list-group list-group-flush" style="border-radius: 2rem;">
 					<li class="list-group-item">
@@ -135,7 +134,7 @@
 				 </div>
 				 
 				 
-					<div class="col-md-7 col-xl-7 mb-7 conn" style="height:500px;overflow-y: scroll;">
+					<div class="col-md-7 col-xl-7 mb-7 conn" style="height:73vh;overflow-y: scroll;">
 					<button class="btnl btn-cancel"  @click="submitTripDetailini">建立行程</button>
 					<br/>總花費:{{total}}
 					<ul v-for="(item,index) in daylist" class="list-group list-group-flush footers" style="border-radius: 2rem;">
@@ -724,20 +723,20 @@
 						tripDetail:[],
 					});
 				}
-// 				$.ajax({
-<%-- 			        url: "<%=request.getContextPath()%>/trip/trip.do",           // 資料請求的網址 --%>
-// 			        type: "POST",                  // GET | POST | PUT | DELETE | PATCH
-// 			        async: false,
-// 			        data: this.addtrip,               // 傳送資料到指定的 url
-// 			        dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
-// 			        success: function (data) {      // 這裡必須得到trip_id
+				$.ajax({
+ 			        url: "<%=request.getContextPath()%>/trip/trip.do",           // 資料請求的網址 
+			        type: "POST",                  // GET | POST | PUT | DELETE | PATCH
+			        async: false,
+			        data: this.addtrip,               // 傳送資料到指定的 url
+			        dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
+			        success: function (data) {      // 這裡必須得到trip_id
 			          
-// 			        self.detailUpdateCount=self.tripDetaillist.length;
-// 			        self.theTrip_id=data.trip_id;
-// 			        console.log('trip_id='+self.theTrip_id);
-// 			        //self.submitTripDetail();        
-// 			        }
-// 			    });
+			        self.detailUpdateCount=self.tripDetaillist.length;
+			        self.theTrip_id=data.trip_id;
+			        console.log('trip_id='+self.theTrip_id);
+			        //self.submitTripDetail();        
+			        }
+			    });
 
 				document.getElementById('tripadd').style.display='none';
 				document.getElementById('fade').style.display='none';
