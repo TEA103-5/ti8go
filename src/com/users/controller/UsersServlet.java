@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-
+import com.trip.model.TripVO;
 import com.users.model.UsersService;
 import com.users.model.UsersVO;
 
@@ -37,6 +38,36 @@ public class UsersServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		
 		String requestUrl = req.getParameter("requestUrl");
+		
+		if ("listTrip_ByUsers_A".equals(action) || "listTrip_ByUsers_B".equals(action)) {
+
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/*************************** 1.接收請求參數 ****************************************/
+				Integer users_id = new Integer(req.getParameter("users_id"));
+
+				/*************************** 2.開始查詢資料 ****************************************/
+				UsersService usersSvc = new UsersService();
+				Set<TripVO> set = usersSvc.getTripByUsers(users_id);
+
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+				req.setAttribute("listTrip_ByUsers", set);    // 資料庫取出的set物件,存入request
+				String url = null;
+				if ("listTrip_ByUsers_A".equals(action))
+					url = "/front-end/trip/selectTripByUsers.jsp";        // 成功轉交 dept/listEmps_ByDeptno.jsp
+				else if ("listTrip_ByUsers_B".equals(action))
+					url = "/users/listTrip_ByUsers.jsp";              // 成功轉交 dept/listAllDept.jsp
+
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 ***********************************/
+			} catch (Exception e) {
+				throw new ServletException(e);
+			}
+		}
 
 		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
 
