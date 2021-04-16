@@ -33,12 +33,12 @@
 				 <br/>
 				 		開始時間:
 				<input
-							class="" type="text" name="trip_start"
+							class="" type="text" name="trip_start" @click="clickdate" @blur="blurdate"
 							id="f_date1">
 							
 				結束時間:
 				<input
-							class="" type="text" name="trip_end"
+							class="" type="text" name="trip_end" @click="clickdate" @blur="blurdate"
 							id="f_date2">
 				 <br/>
 				 出遊類型:
@@ -113,13 +113,16 @@
             <div class="container-fluid" style="margin:0px;">
                 <div class="block-heading">
                     <h2 class="text-info">addtrip</h2>
+                    		<input
+							class="" type="text" name="trip_start" @click="clickdate" @blur="blurdate"
+							id="f_date3">
 					</div>
 
             <div class="row" style="margin-right:0px; margin-left:0px; flex-wrap:wrap;">
             	
 
 				 <div class="col-md-2 col-xl-2 mb-2 conn" style="height:500px;">
-				若4/15-4/15為一天
+		
 				<ul v-for="(item,index) in daylist" class="list-group list-group-flush" style="border-radius: 2rem;">
 					<li class="list-group-item">
 							Day{{index+1}}
@@ -143,10 +146,10 @@
 										 D{{index+1}}
 										</th>
 										<th>
-										      
+										       {{dayDate(index)}} 
 										</th>
 										<th>
-										        
+										      
 										</th>
 								</tr>
 								<tr v-for="(item, inde) in daylist[index].tripDetail" v-bind:key="item" draggable="true"
@@ -209,6 +212,7 @@
 	var vm = new Vue({
 	    el: '#app',
 	    data: {
+	    	startTime:'',
 	    	from:{
 	    		index:0,
 	    		inde:0,
@@ -217,26 +221,26 @@
 	    	editshow:false,
 	    	dayCount:1,
 	    	daylist:[
- 	    		{
- 	    			day:1,
- 	    			tripDetail:[
-// 	    				{
-// 	    		    		trip_day:'1',
-// 	    		    		place_id:'1',
-// 	    		    		trip_id:'1',
-// 	    		    		trip_sort:1,
-// 	    		    		trip_detail_type:'其他',
-// 	    		    		trip_content:'',
-// 	    		    		trip_start_time:'00:00',
-// 	    		    		trip_end_time:'00:00',
-// 	    		    		trip_remarks:'行程描述',
-// 	    		    		trip_cost:'0',
-// 	    		    		action:'insertajax',
-// 	    		    		place_name:'',
-// 	    		    		indexOfList:0,
-// 	    				},
-	    			],
- 	    		},
+//  	    		{
+//  	    			day:1,
+//  	    			tripDetail:[
+// // 	    				{
+// // 	    		    		trip_day:'1',
+// // 	    		    		place_id:'1',
+// // 	    		    		trip_id:'1',
+// // 	    		    		trip_sort:1,
+// // 	    		    		trip_detail_type:'其他',
+// // 	    		    		trip_content:'',
+// // 	    		    		trip_start_time:'00:00',
+// // 	    		    		trip_end_time:'00:00',
+// // 	    		    		trip_remarks:'行程描述',
+// // 	    		    		trip_cost:'0',
+// // 	    		    		action:'insertajax',
+// // 	    		    		place_name:'',
+// // 	    		    		indexOfList:0,
+// // 	    				},
+// 	    			],
+//  	    		},
 	    	],
 	    	theTrip_id:0,
 	    	detailUpdateCount:0,
@@ -291,6 +295,26 @@
 	    	],
 	    },
 	    methods: {
+	    		blurdate(){//雖然可以做到更改日期,但失焦當作觸發條件還是有點不穩定
+				
+					this.addtrip.trip_end=$('#f_date2').val();
+					//console.log("date1:"+this.addtrip.trip_start+"date2:"+this.addtrip.trip_end);
+	    		},
+	    		clickdate(){//按下去的當下也不能穩定的更改日期
+	    		let somedate2=new Date($('#f_date1').val());
+	    		let somedate1=new Date($('#f_date2').val());
+	    	             $('#f_date2').datetimepicker({
+	    	                 beforeShowDay: function(date) {
+	    	               	  if (  date.getYear() <  somedate2.getYear() || 
+	    	        		           (date.getYear() == somedate2.getYear() && date.getMonth() <  somedate2.getMonth()) || 
+	    	        		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() < somedate2.getDate())
+	    	                     ) {
+	    	                          return [false, ""]
+	    	                     }
+	    	                     return [true, ""];
+	    	             }});
+
+	    		},
 	    	   allowDrop(e){
 	               e.preventDefault();
 	              // console.log(e);
@@ -395,8 +419,24 @@
 				 this.daylist.splice(index, 1);	
 			},
 			addOneDay(){
+				let month = new Array(12);
+				month[0] = "01";
+				month[1] = "02";
+				month[2] = "03";
+				month[3] = "04";
+				month[4] = "05";
+				month[5] = "06";
+				month[6] = "07";
+				month[7] = "08";
+				month[8] = "09";
+				month[9] = "10";
+				month[10] = "11";
+				month[11] = "12";
+				let btime=new Date($('#f_date3').val());
+				let d=btime.getTime()+1000 * 60 * 60 * 24*this.daylist.length;
+				let ctime=new Date(d);			
 	            this.daylist.push({
-	            	day:this.daylist.length+1,
+	            	day:ctime.getFullYear()+'-'+month[ctime.getMonth()]+'-'+ctime.getDate(),
 	            	tripDetail:[],
 	            });
 	           
@@ -639,32 +679,124 @@
 			},
 			submitTrip(){
 				let self=this;
+				$('#f_date3').val($('#f_date1').val())
 				this.addtrip.trip_start=$('#f_date1').val();
 				this.addtrip.trip_end=$('#f_date2').val();
+				let endtime=new Date(this.addtrip.trip_end);
+				let btime=new Date(this.addtrip.trip_start);
+				let tripday=new Date(endtime-btime);
+				let hour=Math.floor(tripday.getTime() / 3600000);
+				let tday=0;
+				if(hour!=0){
+					tday=hour/24;
+				}
+				let month = new Array(12);
+				month[0] = "01";
+				month[1] = "02";
+				month[2] = "03";
+				month[3] = "04";
+				month[4] = "05";
+				month[5] = "06";
+				month[6] = "07";
+				month[7] = "08";
+				month[8] = "09";
+				month[9] = "10";
+				month[10] = "11";
+				month[11] = "12";
 				
-				$.ajax({
-			        url: "<%=request.getContextPath()%>/trip/trip.do",           // 資料請求的網址
-			        type: "POST",                  // GET | POST | PUT | DELETE | PATCH
-			        async: false,
-			        data: this.addtrip,               // 傳送資料到指定的 url
-			        dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
-			        success: function (data) {      // 這裡必須得到trip_id
+	
+				
+			//	console.log(ctime);
+				for(let n=0;n<=tday;n++){
+					let d=btime.getTime()+1000 * 60 * 60 * 24*n;
+					let ctime=new Date(d);
+				self.daylist.push({
+					day:ctime.getFullYear()+'-'+month[ctime.getMonth()]+'-'+ctime.getDate(),
+					tripDetail:[],
+				});
+
+				}
+				//console.log(self.daylist);
+				if(self.daylist.length==0){
+					self.daylist.push({
+						day:$('#f_date1').val(),
+						tripDetail:[],
+					});
+				}
+// 				$.ajax({
+<%-- 			        url: "<%=request.getContextPath()%>/trip/trip.do",           // 資料請求的網址 --%>
+// 			        type: "POST",                  // GET | POST | PUT | DELETE | PATCH
+// 			        async: false,
+// 			        data: this.addtrip,               // 傳送資料到指定的 url
+// 			        dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
+// 			        success: function (data) {      // 這裡必須得到trip_id
 			          
-			        self.detailUpdateCount=self.tripDetaillist.length;
-			        self.theTrip_id=data.trip_id;
-			        console.log('trip_id='+self.theTrip_id);
-			        //self.submitTripDetail();        
-			        }
-			    });
+// 			        self.detailUpdateCount=self.tripDetaillist.length;
+// 			        self.theTrip_id=data.trip_id;
+// 			        console.log('trip_id='+self.theTrip_id);
+// 			        //self.submitTripDetail();        
+// 			        }
+// 			    });
+
 				document.getElementById('tripadd').style.display='none';
 				document.getElementById('fade').style.display='none';
 			},
+			dayDate(index){
+				let month = new Array(12);
+				month[0] = "01";
+				month[1] = "02";
+				month[2] = "03";
+				month[3] = "04";
+				month[4] = "05";
+				month[5] = "06";
+				month[6] = "07";
+				month[7] = "08";
+				month[8] = "09";
+				month[9] = "10";
+				month[10] = "11";
+				month[11] = "12";
+				let btime=new Date($('#f_date3').val());
+				let d=btime.getTime()+1000 * 60 * 60 * 24*index;
+				let ctime=new Date(d);
+				
+				return ctime.getFullYear()+'-'+month[ctime.getMonth()]+'-'+ctime.getDate();
+			},
 	    },
 	    computed:{
-	    	
+				
 	    },
-	    mounted: function(){
-	    	
+	    mounted: function(){//類似ini或onload
+	    	let self=this;
+	    	$(function(){
+	    		$("#f_date1").bind('change',function(){
+	    			$('#f_date3').val($('#f_date1').val());
+	    			self.addtrip.trip_start=$('#f_date1').val();
+	    			
+	    			let endtime=new Date($("#f_date2").val());
+					let btime=new Date($("#f_date1").val());
+					let tripday=new Date(endtime-btime);
+					let hour=Math.floor(tripday.getTime() / 3600000);
+	
+					if(hour<0){
+						$("#f_date2").val($("#f_date1").val());
+					}
+	    		//console.log("e");
+	    		});
+	    		$("#f_date2").bind('change',function(){
+	    			self.addtrip.trip_end=$('#f_date2').val();
+	    		//console.log("e");
+	    		});
+	    		$("#f_date3").bind('change',function(){
+	    			$('#f_date1').val($('#f_date3').val());
+	    			self.addtrip.trip_start=$('#f_date3').val();
+	    			self.daylist.push('1');
+	    			self.daylist.pop();
+	    			
+	    		
+	    			//self.addtrip.trip_end=$('#f_date2').val();
+	    		//console.log("e");
+	    		});
+	    		});
 	    }
 	})
 	</script>
@@ -703,6 +835,8 @@
 </style>
 
 <script>
+
+
         $.datetimepicker.setLocale('zh');
         $('#f_date1').datetimepicker({
 	       theme: '',              //theme: 'dark',
@@ -721,7 +855,21 @@
 	       timepicker:false,       //timepicker:true,
 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
-		   value: '<%=end%>', // value:   new Date(),
+	       value:'',
+<%-- 		   value: '<%=end%>', // value:   new Date(), --%>
+           //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+           //startDate:	            '2017/07/10',  // 起始日
+           //minDate:               '-1970-01-01', // 去除今日(不含)之前
+           //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
+        });
+        $.datetimepicker.setLocale('zh');
+        $('#f_date3').datetimepicker({
+	       theme: '',              //theme: 'dark',
+	       timepicker:false,       //timepicker:true,
+	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
+	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
+	       value:'',
+<%-- 		   value: '<%=end%>', // value:   new Date(), --%>
            //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
            //startDate:	            '2017/07/10',  // 起始日
            //minDate:               '-1970-01-01', // 去除今日(不含)之前
@@ -734,31 +882,52 @@
         // ----------------------------------------------------------以下用來排定無法選擇的日期-----------------------------------------------------------
 
         //      1.以下為某一天之前的日期無法選擇
-        //      var somedate1 = new Date('2017-06-15');
-        //      $('#f_date1').datetimepicker({
-        //          beforeShowDay: function(date) {
-        //        	  if (  date.getYear() <  somedate1.getYear() || 
-        //		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
-        //		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
-        //              ) {
-        //                   return [false, ""]
-        //              }
-        //              return [true, ""];
-        //      }});
+             var somedate1 = new Date();
+             $('#f_date1').datetimepicker({
+                 beforeShowDay: function(date) {
+               	  if (  date.getYear() <  somedate1.getYear() || 
+        		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
+        		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
+                     ) {
+                          return [false, ""]
+                     }
+                     return [true, ""];
+             }});
+             $('#f_date3').datetimepicker({
+                 beforeShowDay: function(date) {
+               	  if (  date.getYear() <  somedate1.getYear() || 
+        		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
+        		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
+                     ) {
+                          return [false, ""]
+                     }
+                     return [true, ""];
+             }});
+//              var somedate2 = new Date();
+//              $('#f_date2').datetimepicker({
+//                  beforeShowDay: function(date) {
+//                	  if (  date.getYear() <  somedate2.getYear() || 
+//         		           (date.getYear() == somedate2.getYear() && date.getMonth() <  somedate2.getMonth()) || 
+//         		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() < somedate2.getDate())
+//                      ) {
+//                           return [false, ""]
+//                      }
+//                      return [true, ""];
+//              }});
 
         
         //      2.以下為某一天之後的日期無法選擇
-        //      var somedate2 = new Date('2017-06-15');
-        //      $('#f_date1').datetimepicker({
-        //          beforeShowDay: function(date) {
-        //        	  if (  date.getYear() >  somedate2.getYear() || 
-        //		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
-        //		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
-        //              ) {
-        //                   return [false, ""]
-        //              }
-        //              return [true, ""];
-        //      }});
+//              var somedate2 = new Date('2017-06-15');
+//              $('#f_date1').datetimepicker({
+//                  beforeShowDay: function(date) {
+//                	  if (  date.getYear() >  somedate2.getYear() || 
+//         		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
+//         		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
+//                      ) {
+//                           return [false, ""]
+//                      }
+//                      return [true, ""];
+//              }});
 
 
         //      3.以下為兩個日期之外的日期無法選擇 (也可按需要換成其他日期)
