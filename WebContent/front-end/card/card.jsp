@@ -2,12 +2,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.card.model.*"%>
+<%@ page import="com.users.model.*"%>
 <%@ page import="com.card.controller.*"%>
 
 <%
 	CardService cardSvc = new CardService();
     List<CardVO> list = cardSvc.getAll();
     pageContext.setAttribute("list",list);
+	
+    UsersVO usersVO = (UsersVO) session.getAttribute("usersVO");
+// 	未登入過，連進此頁，轉去登入頁，避免錯誤	
+	if (usersVO == null) {
+		session.setAttribute("location", request.getRequestURI());
+		response.sendRedirect(request.getContextPath()+"/front-end/login.jsp");   //*工作2 : 請該user去登入網頁(login.html) , 進行登入
+	    return;
+	}
 %>
 
 <!DOCTYPE html>
@@ -93,6 +102,7 @@
 								<td>
 									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/card/card.do" style="margin-bottom: 0px;">
 								     <input type="submit" value="修改">
+								     <input type="hidden" name="requestUrl" value="/front-end/card">
 								     <input type="hidden" name="card_id"  value="${cardVO.card_id}">
 								     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 								</td>
@@ -100,6 +110,7 @@
 									<form METHOD="post" ACTION="<%=request.getContextPath()%>/card/card.do" 
 										style="margin-bottom: 0px;">
 								     <input type="submit" value="刪除">
+								     <input type="hidden" name="requestUrl" value="/front-end/card">
 								     <input type="hidden" name="card_id"  value="${cardVO.card_id}">
 								     <input type="hidden" name="action" value="delete">
 									</form>
@@ -117,7 +128,7 @@
 		<input type ="button" onclick="javascript:location.href='<%=request.getContextPath()%>/front-end/card/newcard.jsp'" value="新增信用卡"></input>
 	</div>			
 	
-
+	</div>
 	</main>
 	<script type="text/javascript">
 // 	var btn_up = document.getElementById("btu_update");

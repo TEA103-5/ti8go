@@ -77,6 +77,7 @@
 								<td>
 										<input type="hidden" name="card_default" value="1">
 										<input type="hidden" name="action" value="update">
+										<input type="hidden" name="requestUrl" value="/front-end/card">
 										<input type="hidden" name="card_id" value="${cardVO.card_id}">
 										<input type="hidden" name="users_id" value="${usersVO.users_id}">
 										<input type="submit" class="card_up_btn" value="送出修改">

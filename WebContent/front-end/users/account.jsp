@@ -145,6 +145,7 @@
 					<div>
 					<div style="margin: 0 auto">
 					<input type="hidden" name="action" value="update">
+					<input type="hidden" name="requestUrl" value="/front-end/users">
 					<input type="hidden" name="users_status" value="1" />
 					<input type="hidden" name="users_id" value="${usersVO.users_id}" />
 					<input type="submit" value="確認新增" >
