@@ -57,14 +57,14 @@
 						</div>
 						
 			<div id="choicePlace" class="white_content glass">
-					<input placeholder="搜尋" class="" type="text">
+					<input placeholder="搜尋" class=""  v-model="searchName" type="text">
 					<table class=" table   table-place" style="height:470px;" >
 					<tr>
 							<th>
 							
 							</th>
 					</tr>
-					<tr v-for="(item, index) in placelist" >
+					<tr v-for="(item, index) in filterlist" >
 					<td>
 					<img class="img" id="preimg"
 									v-bind:src="item.place_pic" />
@@ -137,7 +137,7 @@
 				 
 					<div class="col-md-7 col-xl-7 mb-7 conn" style="height:500px;overflow-y: scroll;">
 					<button class="btnl btn-cancel"  @click="submitTripDetailini">建立行程</button>
-					<br/>總花費:
+					<br/>總花費:{{total}}
 					<ul v-for="(item,index) in daylist" class="list-group list-group-flush footers" style="border-radius: 2rem;">
 						 <li class="list-group-item footers">
 							<table class="table-users">
@@ -212,6 +212,7 @@
 	var vm = new Vue({
 	    el: '#app',
 	    data: {
+	    	searchName:'',
 	    	startTime:'',
 	    	from:{
 	    		index:0,
@@ -763,10 +764,79 @@
 			},
 	    },
 	    computed:{
-				
+	    	filterlist () {
+	    		const {searchName,placelist} = this;
+// 	    		,orderType,x,n,pricemax,pricemin
+	    		let self=this;
+	    		let flist;
+// 	    		let begin=x*n-(n);
+// 	    		let end=x*n;
+//	     		console.log(this.list.slice(1,this.list.length));
+//	     		flist = list.filter(p => true)
+	    		flist = placelist.filter(p => (p.place_name.indexOf(searchName)!==-1
+// 	    				||p.productCategories.indexOf(searchName)!==-1
+	    				)
+	    				);
+// 	    		self.productcount=flist.length;
+	    		
+//	     		flis.forEach(max => (parseInt(max.age)>parseInt(this.priceupbound)){
+//	     			this.priceupbound=parseInt(max.age);
+//	     		});
+// 				if(flist.length==0){
+// 					this.priceupbound=5000;
+// 					this.pricelowbound=0;
+// 				}else{
+					
+// 				this.priceupbound=Math.max(...flist.map(p => p.age));
+// 				this.pricelowbound=Math.min(...flist.map(p => p.age));
+// 				}
+	    		
+// 	    		flist = flist.filter(p =>
+// 	    		parseInt(p.age)<=parseInt(pricemax) &&
+// 				parseInt(p.age)>=parseInt(pricemin)
+// 	    		);
+	    		
+// 	    		self.pagemax=flist.length;
+
+	    		//排序
+// 	    		if(orderType!==0){
+// 	    			flist.sort(function(p1,p2){//如果sort(p1,p2)返回負數,p1在前
+// 	    				//1升2降
+// 	    				if(orderType===2){
+// 	    				return p2.age-p1.age //正數為p2大	
+// 	    				}else{
+// 	    				return p1.age-p2.age //正數為p2大	    					
+// 	    				}
+	    				
+// 	    			})
+// 	    		}
+// 	    		flist =flist.slice(begin,end);
+// 	    		self.fflist=flist.slice();
+//	     		console.log(self.fflist);
+	    		return flist
+	    	},
+	    	total: function(){
+	    		let count=0;
+	    		
+				this.daylist.forEach(function(item, i) {
+					  item.tripDetail.forEach(function(jtem, j) {
+						  count+=parseInt(jtem.trip_cost,10);
+// 						  jtem.trip_day=i+1;//要是在這裡送.大概會因為呼叫過快而失敗
+// 						  jtem.trip_id=self.theTrip_id;
+// 						  jtem.action='insertajax';
+// 						  jtem.trip_id=self.theTrip_id;
+						 // console.log(i+'....'+j);
+					  });
+					});
+	    		
+	    		
+	    		//this.orderdeatillist.forEach(o =>count= o.age*o.count +count);
+	    		return count
+	    	}
 	    },
 	    mounted: function(){//類似ini或onload
 	    	let self=this;
+	    self.placelist=self.placelist.slice(10);
 	    	$(function(){
 	    		$("#f_date1").bind('change',function(){
 	    			$('#f_date3').val($('#f_date1').val());
