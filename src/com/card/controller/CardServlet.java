@@ -102,7 +102,7 @@ public class CardServlet extends HttpServlet {
 				cardSvc.deleteCard(card_id);
 				
 				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
-				String url = "/card/listAllCard.jsp";
+				String url = "/front-end/pages/card.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 				successView.forward(req, res);
 				
@@ -110,7 +110,7 @@ public class CardServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/card/listAllCard.jsp");
+						.getRequestDispatcher("/front-end/pages/card.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -173,7 +173,7 @@ public class CardServlet extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("cardVO", cardVO); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/card/addCard.jsp");
+							.getRequestDispatcher("/front-end/card/newcard.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -184,7 +184,7 @@ public class CardServlet extends HttpServlet {
 				cardVO = cardSvc.addCard(users_id, card_number, card_date, card_last, card_default);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-				String url = "/card/listAllCard.jsp";
+				String url = "/front-end/pages/card.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);				
 				
@@ -212,15 +212,15 @@ public class CardServlet extends HttpServlet {
 					CardService cardSvc = new CardService();
 					CardVO cardVO = cardSvc.getOneCard(card_id);							
 					/***************************3.查詢完成 準備轉交(Send the Success view)************/
-					req.setAttribute("cardVO", cardVO);         // 資料庫取出的empVO物件,存入req
-					String url = "/card/update_card_input.jsp";
+					req.setAttribute("cardVO", cardVO);         // 資料庫取出的empVO物件,存入req				
+					String url = "/front-end/card/card_one_up.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp					
 					successView.forward(req, res);
 							/***************************其他可能的錯誤處理**********************************/
 				} catch (Exception e) {
 					errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/card/listAllCard.jsp");
+							.getRequestDispatcher("/front-end/pages/card.jsp");
 					failureView.forward(req, res);
 				}
 			}
@@ -282,10 +282,11 @@ System.out.println("CARD");
 					}
 						/***************************2.開始修改資料*****************************************/
 						CardService cardSvc = new CardService();
-						cardVO = cardSvc.updateCard(users_id, card_id, card_number, card_date, card_last, card_default);
+						cardVO = cardSvc.updateCard(users_id, card_id, card_number, card_date, card_last,
+								card_default);
 						/***************************3.修改完成.準備轉交(Send the Success view)*************/
 						req.setAttribute("cardVO", cardVO); // 資料庫update成功後,正確的empVO物件,存入req
-						String url = "/card/listOneCard.jsp";
+						String url = "/front-end/pages/card.jsp";
 						RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後.轉交listOneEmp.jsp
 						successView.forward(req, res);
 
@@ -293,7 +294,7 @@ System.out.println("CARD");
 					} catch (Exception e) {
 						errorMsgs.add("修改資料失敗:"+e.getMessage());
 						RequestDispatcher failureView = req
-								.getRequestDispatcher("/card/update_card_input.jsp");
+								.getRequestDispatcher("/front-end/card/card_one_up.jsp");
 						failureView.forward(req, res);
 					}
 				}

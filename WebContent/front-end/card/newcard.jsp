@@ -4,11 +4,7 @@
 <%@ page import="com.card.model.*"%>
 <%@ page import="com.card.controller.*"%>
 
-<%
-	CardService cardSvc = new CardService();
-    List<CardVO> list = cardSvc.getAll();
-    pageContext.setAttribute("list",list);
-%>
+<% CardVO cardVO = (CardVO) request.getAttribute("cardVO"); %>
 
 <!DOCTYPE html>
 <html lang="zh-Hant" dir="ltr">
@@ -51,89 +47,50 @@
 					<table class="table">
 					<thead>
 						<tr>
-							<th>信用卡編號</th>
+						
 							<th>信用卡號碼</th>
 							<th>信用卡日期</th>
 							<th>信用卡後三碼</th>
-							<th></th>
 							<th>修改</th>
-							<th>刪除</th>
+							
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="cardVO" items="${list}" >
-							<c:if test="${usersVO.users_id == cardVO.users_id }">
-				
+					
 							<tr class="card_list">
 								<form METHOD="post" ACTION="<%=request.getContextPath()%>/card/card.do" 
 									style="margin-bottom: 0px;">
-								<td><p class="para">${cardVO.card_id}</p>
+								
+								<td>
+										<input type="text" name="card_number" maxlength="16"
+											 class="card_up" required placeholder="請輸入16位數卡號">
 								</td>
-								<td><p class="para">${cardVO.card_number}</p>
-										<input type="hidden" name="card_number" size="16"
-											value="${cardVO.card_number}" class="card_up">
+								<td>
+										<input name="card_date" id="f_date1" type="text" maxlength="4"
+											 class="card_up" required placeholder="mmyy">
 								</td>
-								<td><p class="para">${cardVO.card_date}</p>
-										<input name="card_date" id="f_date1" type="hidden" size="5"
-											value="${cardVO.card_date}" class="card_up" >
-								</td>
-								<td><p class="para">${cardVO.card_last}</p>
-										<input type="hidden" name="card_last" size="3"
-											value="${cardVO.card_last}" class="card_up">
+								<td>
+										<input type="text" name="card_last" maxlength="3"
+											 class="card_up" required placeholder="卡片後末三碼  CVV">
 								</td>
 								<td>
 										<input type="hidden" name="card_default" value="1">
-										<input type="hidden" name="action" value="update">
+										<input type="hidden" name="action" value="insert">
 										<input type="hidden" name="card_id" value="${cardVO.card_id}">
 										<input type="hidden" name="users_id" value="${usersVO.users_id}">
-										<input type="hidden" class="card_up_btn" value="送出修改">
+										<input type="submit" class="card_up_btn" value="送出新增">
 								</td>
 <!-- 										<input type="submit" class="up_btn" value="送出修改"> -->
 								</form>
-								<td>
-									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/card/card.do" style="margin-bottom: 0px;">
-								     <input type="submit" value="修改">
-								     <input type="hidden" name="card_id"  value="${cardVO.card_id}">
-								     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
-								</td>
-								<td>
-									<form METHOD="post" ACTION="<%=request.getContextPath()%>/card/card.do" 
-										style="margin-bottom: 0px;">
-								     <input type="submit" value="刪除">
-								     <input type="hidden" name="card_id"  value="${cardVO.card_id}">
-								     <input type="hidden" name="action" value="delete">
-									</form>
-								</td>
-							</tr>
-				
 							
-						</c:if>
-					</c:forEach>				
+							</tr>
+					
 				</tbody>
 			</table>	
-		</div>
-	</div>	
-	<div class="card-footer">
-		<input type ="button" onclick="javascript:location.href='<%=request.getContextPath()%>/front-end/card/newcard.jsp'" value="新增信用卡"></input>
-	</div>			
+		</div></div>	
+				
 	
 
 	</main>
-	<script type="text/javascript">
-// 	var btn_up = document.getElementById("btu_update");
-// 	btn_up.onclick = function() {
-// 		console.log("TEST");
-// // 		document.getElementsByClassName("card_td_2").setAttribute("type","text");
-// 		document.getElementsByClassName("card_up1").type = "text";
-// 	};
-	
-	$("#btu_update").on("click", function() {
-		$(".card_up_btn").attr("type", "submit");
-		$("#btu_update").hide();
-		$(".card_up").attr("type" , "text");
-	})
-	</script>
-</body>
-</html>
 					
 					
