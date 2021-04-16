@@ -10,78 +10,16 @@
     />
     <title>Home - Tivago</title>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/assets/bootstrap/css/bootstrap.min.css" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i"
-    />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i" />
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/assets/fonts/simple-line-icons.min.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css"/>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/assets/css/smoothproducts.css" />
 </head>
  <body>
-<<<<<<< HEAD
- 
-    <nav
-      class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar"
-    >
-      <div class="container">
-        <a class="navbar-brand logo" href="#">Tivago</a
-        ><button
-          data-toggle="collapse"
-          class="navbar-toggler"
-          data-target="#navcol-1"
-        >
-          <span class="sr-only">Toggle navigation</span
-          ><span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navcol-1">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link active" href="index.html">首頁</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="service-page.html">景點</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="blog-post-list.html">行程</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="blog-post-list.html">活動</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="blog-post.html">遊記</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="product/listAllProduct.jsp">商城</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="shopping-cart.html">購物車</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="login.jsp">登入</a>
-            </li>
-            <li class="nav-item">
-              <button
-                class="btn btn-primary"
-                type="button"
-                style="color: var(--gray); border-color: white; font-size: 14px"
-              >
-                訊息<span class="badge badge-light">5</span>
-              </button>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-=======
  		
 <!--  		這行是header的nav區塊 -->
  		<%@ include file="/front-end/pages/headNav.html" %>
 
->>>>>>> 52127341715097179cb0b7789127f07772f68669
     <main class="page landing-page">
       <div class="container">
         <div class="block-heading"></div>

@@ -1,8 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<nav
-		class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar"
-		style="background: #85867F; color: var(- -red); height: 60px;">
+<nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar"
+	style="background: #85867F; color: var(- -red); height: 60px;">
 		<div class="container">
 			<a class="navbar-brand logo" href="<%=request.getContextPath()%>/front-end/index.jsp">Tivago</a>
 			<button data-toggle="collapse" class="navbar-toggler"
@@ -72,17 +71,19 @@
 								data-toggle="dropdown" href="#"
 								style="padding: 20px; width: 0px; height: -8px; margin: -3px; color: rgba(0, 0, 0, 0.5);">${(usersVO==null)?'會員':(usersVO.users_mail)}</a>
 							<div class="dropdown-menu">
-								<a class="dropdown-item" href="<%=request.getContextPath()%>/front-end/users/login.jsp">登入</a>
-								<a class="dropdown-item" href="<%=request.getContextPath()%>/login.do?requestURL=<%=request.getServletPath()%>">登出</a>
-									<a class="dropdown-item" href="#">註冊</a>
-									<a class="dropdown-item" href="<%=request.getContextPath()%>/front-end/users/usersHome.jsp">會員中心</a>
+
+								<a class="dropdown-item" href="<%=request.getContextPath()%>/front-end/users/login.jsp">登入/註冊</a>
+
+								<a class="dropdown-item" href="<%=request.getContextPath()%>/login.do?requestURL=<%=request.getServletPath()%>">登出</a>								
+
+									<a class="dropdown-item" href="<%=request.getContextPath()%>/front-end/users/account.jsp">會員資料</a>
 							</div>
 						</div>
 					</li>
 				</ul>
 			</div>
 		</div>
-	</nav>
+</nav>
 
 
 

@@ -36,6 +36,7 @@ public class UsersServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		
 		String requestUrl = req.getParameter("requestUrl");
+		System.out.println("action= " + action + " requestUrl= " + requestUrl);
 
 		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
 
@@ -400,7 +401,7 @@ public class UsersServlet extends HttpServlet {
 					if (!errorMsgs.isEmpty()) {
 						req.setAttribute("usersVO", usersVO); // 含有輸入格式錯誤的empVO物件,也存入req
 						RequestDispatcher failureView = req
-								.getRequestDispatcher("/front-end/pages/login1.jsp");
+								.getRequestDispatcher(requestUrl + "/account.jsp");
 						failureView.forward(req, res);
 						return;
 					}
@@ -411,7 +412,7 @@ public class UsersServlet extends HttpServlet {
 					usersVO = usersSvc.getOneusers(users_id);
 					req.getSession().setAttribute("usersVO", usersSvc.getOneusers(usersVO.getUsers_id()));
 					req.setAttribute("usersVO", usersVO); 
-					String url = "/front-end/pages/login1.jsp";
+					String url = requestUrl + "/account.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 					successView.forward(req, res);				
 					
@@ -419,7 +420,7 @@ public class UsersServlet extends HttpServlet {
 				} catch (Exception e) {
 					errorMsgs.add("修改資料失敗:"+e.getMessage());
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front-end/pages/login1.jsp");
+							.getRequestDispatcher(requestUrl + "/account.jsp");
 					failureView.forward(req, res);
 				}
 			}
@@ -435,6 +436,7 @@ public class UsersServlet extends HttpServlet {
 				try {
 					/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 					String users_mail = req.getParameter("users_mail").trim();
+
 				//	String mailReg = "/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/";
 							//"/^[A-Za-z][12]\\d{8}$/";
 					if (users_mail == null || users_mail.trim().length() == 0) {
@@ -478,7 +480,7 @@ public class UsersServlet extends HttpServlet {
 					if (!errorMsgs.isEmpty()) {
 						req.setAttribute("usersVO", usersVO); // 含有輸入格式錯誤的empVO物件,也存入req
 						RequestDispatcher failureView = req
-								.getRequestDispatcher("/front-end/users/addUsers.jsp");
+								.getRequestDispatcher(requestUrl + "/login.jsp");
 						failureView.forward(req, res);
 						return;
 					}
@@ -486,13 +488,12 @@ public class UsersServlet extends HttpServlet {
 					/***************************2.開始新增資料***************************************/
 					UsersService usersSvc = new UsersService();
 					usersVO = usersSvc.addusers_new(users_mail, users_pwd, users_status);	
-System.out.println("這裡是getUsers_id" + usersVO.getUsers_id());
 					usersVO = usersSvc.getOneusers(usersVO.getUsers_id());
 					/***************************3.新增完成,準備轉交(Send the Success view)***********/
 
 					req.setAttribute("usersVO", usersVO);
 					req.getSession().setAttribute("usersVO", usersSvc.getOneusers(usersVO.getUsers_id()));
-					String url = "/front-end/pages/login1.jsp";
+					String url = requestUrl + "/account.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 					successView.forward(req, res);				
 					
@@ -500,7 +501,7 @@ System.out.println("這裡是getUsers_id" + usersVO.getUsers_id());
 				} catch (Exception e) {
 					errorMsgs.add(e.getMessage());
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front-end/login.jsp");
+							.getRequestDispatcher(requestUrl + "/login.jsp");
 					failureView.forward(req, res);
 				}
 			}
