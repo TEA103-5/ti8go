@@ -352,10 +352,13 @@ function call_weather_api(district) {
                         "\n" + "時間:" + second_interval_startTime + "到" + second_interval_endTime + "\n" + "天氣為" + second_interval_elementValue
 
                     // function async_alert() {
-                    alert(alert_msg);
+                    // alert(alert_msg);
                     // }
 
-                    // setTimeout(async_alert, 0);
+                    // $('#exampleModal').modal({
+                    //     keyboard: false
+                    // })
+                    swal(alert_msg)
                 }
             }
         }
