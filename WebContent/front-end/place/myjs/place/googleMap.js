@@ -350,7 +350,9 @@ function call_weather_api(district) {
                     let alert_msg = target_place + "\n" + "時間:" + first_interval_startTime + "到" + first_interval_endTime + "\n" + "天氣為" + first_interval_elementValue +
                         "\n" + "時間:" + second_interval_startTime + "到" + second_interval_endTime + "\n" + "天氣為" + second_interval_elementValue
 
-                    alert(alert_msg);
+//                    alert(alert_msg);
+                        
+                    swal(alert_msg);
 
                 }
             }

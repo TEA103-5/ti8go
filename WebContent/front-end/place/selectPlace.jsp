@@ -202,7 +202,8 @@
 	<script>
         let weather_api_key = "${weather_key}";
     </script>
-
+	
+	<script src="https://unpkg.com/sweetalert@2.1.2/dist/sweetalert.min.js"></script>
 
     <script src="https://maps.googleapis.com/maps/api/js?key=${Google_key}&callback=initMap&libraries=&v=weekly" async></script>
 	
