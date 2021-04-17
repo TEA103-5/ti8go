@@ -198,6 +198,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
     <script src="<%=request.getContextPath()%>/rock_place/front-place_jsp/assets/js/smoothproducts.min.js"></script>
     <script src="<%=request.getContextPath()%>/rock_place/front-place_jsp/assets/js/theme.js"></script>
+    
+    <!-- 	以下是自己加入的js -->
+	<script src="https://unpkg.com/sweetalert@2.1.2/dist/sweetalert.min.js"></script>
+    
+    <!-- 	此script是將成功訊息印出來 -->
+	<script>
+		<c:if test="${not empty successMsgs}">
+				<c:forEach var="message" items="${successMsgs}" >
+					swal("成功","${message}", "success")
+				</c:forEach>
+		</c:if>
+	</script>
+	
 </body>
 
 </html>

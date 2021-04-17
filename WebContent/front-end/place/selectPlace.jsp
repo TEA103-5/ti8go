@@ -223,7 +223,8 @@
 
 				// 	login_users為null代表未登入, 不執行後續動作	
 				if(login_users == null){
-					alert("登入後才能加入收藏");
+					swal("操作失敗", "登入後才能加入收藏", "error");
+// 					alert("登入後才能加入收藏");
 					return ;
 				}
 				let that = $(this);
@@ -247,9 +248,11 @@
 			          console.log(data);
 			          if(data.result == "insert_succss"){
 	// 		        	  // 新增成功則按鈕改成顯示取消收藏
-			        	  that.html("取消收藏")
+			        	  that.html("取消收藏");
+			        	  swal("加入收藏成功", "已加入地點收藏", "success")
 			          }else if(data.result == "delete_success"){
-			        	  that.html("加入收藏")
+			        	  that.html("加入收藏");
+			        	  swal("移除收藏成功", "已移除地點收藏", "success")
 			          }
 			          
 			        }
