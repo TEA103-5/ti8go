@@ -74,7 +74,9 @@ public class NoteServlet extends HttpServlet {
 				}
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-				if(requestURL.equals("/front-end/notefront/notePostList.jsp")) {
+
+				if(requestURL.equals("/front-end/notefront/notePostList.jsp") || requestURL.equals("/front-end/notefront/listMyNote.jsp")) {
+
 					req.setAttribute("noteVO", noteVO);
 					String url = "/front-end/notefront/notePost.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交
@@ -104,6 +106,9 @@ public class NoteServlet extends HttpServlet {
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 
+			String requestURL =  req.getParameter("requestURL");
+
+
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
 				Integer note_id = new Integer(req.getParameter("note_id"));
@@ -113,10 +118,23 @@ public class NoteServlet extends HttpServlet {
 				NoteVO noteVO = noteSvc.getOneNote(note_id);
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-				req.setAttribute("noteVO", noteVO); // 資料庫取出的noteVO物件,存入req
-				String url = "/note/update_note_input.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_note_input.jsp
-				successView.forward(req, res);
+
+				if(requestURL.equals("/front-end/notefront/listMyNote.jsp")) {
+					req.setAttribute("noteVO", noteVO);
+					String url = "/front-end/notefront/update_noteEdit.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交
+					successView.forward(req, res);
+					
+					return;
+					
+				} else {
+					req.setAttribute("noteVO", noteVO); // 資料庫取出的noteVO物件,存入req
+					String url = "/note/update_note_input.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_note_input.jsp
+					successView.forward(req, res);
+				
+				    return;
+				}
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
@@ -136,7 +154,10 @@ public class NoteServlet extends HttpServlet {
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				Integer note_id = new Integer(req.getParameter("note_id").trim());
-				Integer note_classid = new Integer(1); //當作是上下架狀態0下架 1上架中
+
+				Integer note_classid = new Integer(req.getParameter("note_classid").trim());
+				//Integer note_classid = new Integer(1); //當作是上下架狀態0下架 1上架中
+
 //				Integer note_classid = null;
 //				try {
 //					note_classid = new Integer(req.getParameter("note_classid").trim());
@@ -201,7 +222,10 @@ public class NoteServlet extends HttpServlet {
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 
 				req.setAttribute("noteVO", noteVO);
-				String url = "/note/listOneNote.jsp";
+
+				String url = "/front-end/notefront/listMyNote.jsp";
+//				String url = "/note/listOneNote.jsp";
+
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
@@ -248,9 +272,11 @@ public class NoteServlet extends HttpServlet {
 				if (note_description == null || note_description.trim().length() == 0) {
 					errorMsgs.add("大綱請勿空白");
 				} 
+
 //				else if (!note_description.trim().matches(notedesReg)) { // 以下練習正則(規)表示式(regular-expression)
 //					errorMsgs.add("大綱: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
 //				}
+
 
 				Integer users_id = new Integer(req.getParameter("users_id").trim());
 				Integer trip_id = new Integer(req.getParameter("trip_id").trim());
@@ -290,7 +316,11 @@ public class NoteServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/notefront/noteEdit.jsp");
+
+				//RequestDispatcher failureView = req.getRequestDispatcher("/front-end/notefront/noteEdit.jsp");
+
+				RequestDispatcher failureView = req.getRequestDispatcher("/note/addNote.jsp");
+
 				failureView.forward(req, res);
 			}
 		}

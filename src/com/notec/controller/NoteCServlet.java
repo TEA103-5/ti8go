@@ -108,7 +108,10 @@ public class NoteCServlet extends HttpServlet {
 //				System.out.println(noteCVO);
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("noteCVO", noteCVO); // 資料庫取出的noteVO物件,存入req
-				String url = "/notec/update_noteC_input.jsp";
+
+				String url = "/front-end/notefront/update_notecEdit.jsp";
+//				String url = "/notec/update_noteC_input.jsp";
+
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_note_input.jsp
 				successView.forward(req, res);
 
@@ -197,7 +200,10 @@ public class NoteCServlet extends HttpServlet {
 //				noteCVO = noteCSvc.getOneNoteC(note_c_id);
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("noteCVO", noteCVO);
-				String url = "/notec/listOneNoteC.jsp";
+
+				String url = "/front-end/notefront/listMyNote.jsp";
+//				String url = "/notec/listOneNoteC.jsp";
+
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				/*************************** 其他可能的錯誤處理 *************************************/

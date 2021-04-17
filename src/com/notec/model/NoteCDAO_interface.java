@@ -11,7 +11,6 @@ public interface NoteCDAO_interface {
         public void delete(Integer note_C_id);
         public NoteCVO findByPrimaryKey(Integer note_C_id);
         public List<NoteCVO> getAll();
-        
 
         public NoteCVO togetoneNote(Integer note_id);
         public List<NoteCVO> getAllNoteC(Integer note_id);

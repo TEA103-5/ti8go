@@ -62,7 +62,11 @@ public class DBGifReaderNoteC extends HttpServlet {
 			    rs.close();
 			    stmt.close();
 			   } catch (Exception e) {
+
 			      InputStream in = getServletContext().getResourceAsStream("/NoData/null2.jpg");
+
+//			      InputStream in = getServletContext().getResourceAsStream("/NoData/3.0.png");
+
 			    byte[] b = new byte[in.available()];
 			    in.read(b);
 			    out.write(b);

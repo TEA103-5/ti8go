@@ -14,7 +14,6 @@ public class NoteVO implements java.io.Serializable{
 	private Integer users_id;
 	private Integer trip_id;
 	private Integer note_like;
-	
 
 	public Integer getNote_id() {
 		return note_id;
