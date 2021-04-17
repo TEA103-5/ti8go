@@ -9,7 +9,9 @@ public class NoteJDBCDAO implements NoteDAO_interface {
 	String userid = "David";
 	String passwd = "123456";
 	private static final String INSERT_STMT = 
+
 			"INSERT INTO Note (note_classid,note_date,travel_start,note_title,note_description,note_update,users_id,trip_id,note_like) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
 		private static final String GET_ALL_STMT = 
 			"SELECT note_id,note_classid,note_date,travel_start,note_title,note_description,note_update,users_id,trip_id,note_like FROM Note order by note_id ";
 		private static final String GET_ONE_STMT = 
@@ -18,6 +20,7 @@ public class NoteJDBCDAO implements NoteDAO_interface {
 			"DELETE FROM Note where note_id = ?";
 		private static final String UPDATE = 
 			"UPDATE Note set note_classid=?, note_date=?, travel_start=?, note_title=?, note_description=?, note_update=?, users_id=?, trip_id=?, note_like=?  where note_id = ?";
+
 
 		@Override
 		public void insert(NoteVO noteVO) {
@@ -41,6 +44,7 @@ public class NoteJDBCDAO implements NoteDAO_interface {
 //				pstmt.setInt(8, noteVO.getTrip_id());
 				pstmt.setObject(8,noteVO.getTrip_id(), Types.INTEGER);
 				pstmt.setInt(9,noteVO.getNote_like());
+
 
 				pstmt.executeUpdate();
 
@@ -94,6 +98,7 @@ public class NoteJDBCDAO implements NoteDAO_interface {
 				pstmt.setInt(8, noteVO.getTrip_id());
 				pstmt.setInt(9,noteVO.getNote_like());
 				pstmt.setInt(10, noteVO.getNote_id());
+
 
 				pstmt.executeUpdate();
 

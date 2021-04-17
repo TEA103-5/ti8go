@@ -22,8 +22,10 @@ public class NoteCJDBCDAO implements NoteCDAO_interface {
 			"DELETE FROM Note_c where note_c_id = ?";
 		private static final String UPDATE = 
 			"UPDATE Note_c set note_c_title=?, note_c_content=?, note_c_img=?, note_id=? where note_c_id = ?";
+
 		private static final String TOGETONENOTE =
 			"SELECT note_c_id,note_c_title,note_c_content,note_c_img,note_id FROM Note_c where note_id = ? ";
+
 
 		@Override
 		public void insert(NoteCVO noteCVO) {
@@ -291,6 +293,7 @@ public class NoteCJDBCDAO implements NoteCDAO_interface {
 			}
 			return list;
 		}
+
 		
 		@Override
 		public NoteCVO togetoneNote(Integer note_id) {
@@ -429,6 +432,7 @@ public class NoteCJDBCDAO implements NoteCDAO_interface {
 			return list;
 		}
 
+
 		public static void main(String[] args) throws IOException {
 
 			NoteCJDBCDAO dao = new NoteCJDBCDAO();
@@ -439,13 +443,17 @@ public class NoteCJDBCDAO implements NoteCDAO_interface {
 //			noteCVO1.setNote_c_title("宜蘭遊");
 //			noteCVO1.setNote_c_content("今天天氣晴宜蘭好好玩");
 //			noteCVO1.setNote_c_img(picture.getPictureByteArray("C:/TEA103_Workspace/TivagoTest/items/1.jpg"));
+
 //			noteCVO1.setNote_id(2);
+
 //			
 //			dao.insert(noteCVO1);
 
 			// 修改
 //			NoteCVO noteCVO2 = new NoteCVO();
+
 //			noteCVO2.setNote_c_id(3);
+
 //			noteCVO2.setNote_c_title("宜蘭天氣晴");
 //			noteCVO2.setNote_c_content("今天好開心,天氣晴朗又好玩!");
 //			noteCVO2.setNote_c_img(picture.getPictureByteArray("C:/TEA103_Workspace/TivagoTest/items/2.jpg"));
@@ -475,6 +483,7 @@ public class NoteCJDBCDAO implements NoteCDAO_interface {
 				System.out.print(aNoteC.getNote_id() + ",");
 				System.out.println();
 			}
+
 			
 //			NoteCVO noteCVO4 = dao.togetoneNote(2);
 //			System.out.print(noteCVO4.getNote_c_id() + ",");
@@ -494,5 +503,6 @@ public class NoteCJDBCDAO implements NoteCDAO_interface {
 				System.out.print(aNoteC2.getNote_id() + ",");
 				System.out.println();
 			}
+
 		}
 }

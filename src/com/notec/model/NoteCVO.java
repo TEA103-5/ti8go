@@ -7,6 +7,7 @@ public class NoteCVO implements java.io.Serializable {
 	private byte[] note_c_img;
 	private Integer note_id;
 	
+
 	public NoteCVO() {
 		
 	}
@@ -21,6 +22,7 @@ public class NoteCVO implements java.io.Serializable {
 	}
 
 	
+
 	public Integer getNote_c_id() {
 		return note_c_id;
 	}

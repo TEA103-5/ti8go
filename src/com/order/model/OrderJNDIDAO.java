@@ -6,30 +6,37 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+
 import com.orderDetail.model.OrderDetailVO;
 import com.product.model.ProductVO;
+
 
 public class OrderJNDIDAO implements OrderDAO_Interface{
 	private static DataSource ds = null;
 	static {
 		try {
 			Context ctx = new InitialContext();
+
 			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/David");
+
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
 	
+
 	private static final String INSERT_detail = "INSERT INTO ORDER_DETAIL (Order_Detail_Count,PRODUCT_Id,Order_Id) VALUES (?,?,?)";
 	private static final String INSERT_STMT2 = "insert into order1 (order_date,card_number,users_id,order_address) values (  ?,?, ?, ?)";
 	
@@ -297,6 +304,7 @@ public class OrderJNDIDAO implements OrderDAO_Interface{
 		PreparedStatement pstmt = null;
 
 		try {
+
 			
 			
 			con = ds.getConnection();
@@ -315,6 +323,7 @@ public class OrderJNDIDAO implements OrderDAO_Interface{
 //			pstmt.setString(2, orderVO.getCard_number());
 //			pstmt.setInt(3, orderVO.getUsers_id());
 		//	System.out.println("成功");
+
 			
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -353,6 +362,7 @@ public class OrderJNDIDAO implements OrderDAO_Interface{
 
 			pstmt.executeUpdate();
 			System.out.println("成功");
+
 		} catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
 		} finally {
@@ -445,8 +455,10 @@ public class OrderJNDIDAO implements OrderDAO_Interface{
 				orderVO.setOrder_id(rs.getInt("Order_Id"));
 				orderVO.setCard_number(rs.getString("Card_number"));
 				orderVO.setOrder_status(rs.getInt("Order_status"));
+
 				orderVO.setOrder_date(rs.getTimestamp("Order_date"));
 				orderVO.setUsers_id(rs.getInt("Users_id"));
+
 			}
 		} catch (SQLException e) {
 			throw new RuntimeException("A database error occured. " + e.getMessage());
@@ -496,6 +508,7 @@ public class OrderJNDIDAO implements OrderDAO_Interface{
 				orderVO.setOrder_status(rs.getInt("Order_status"));
 				orderVO.setOrder_date(rs.getTimestamp("Order_date"));
 				orderVO.setUsers_id(rs.getInt("Users_id"));
+
 				list.add(orderVO);
 			}
 
@@ -526,8 +539,6 @@ public class OrderJNDIDAO implements OrderDAO_Interface{
 		}
 		return list;
 	}
-
-	
 }
 
 	

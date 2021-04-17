@@ -5,6 +5,7 @@ public class OrderDetailVO implements java.io.Serializable{
 	private Integer order_detail_count;
 	private Integer product_id;
 	private Integer order_id;
+
 	private Integer order_detail_status;
 	
 
@@ -15,6 +16,7 @@ public class OrderDetailVO implements java.io.Serializable{
 	public void setOrder_detail_status(Integer order_detail_status) {
 		this.order_detail_status = order_detail_status;
 	}
+
 
 	public Integer getOrder_id() {
 		return order_id;

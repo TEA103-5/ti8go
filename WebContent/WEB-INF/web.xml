@@ -15,6 +15,7 @@
     <res-type>javax.sql.DataSource</res-type>
     <res-auth>Container</res-auth>
   </resource-ref>
+  
   <servlet>
     <servlet-name>EmpServlet</servlet-name>
     <servlet-class>com.emp.controller.EmpServlet</servlet-class>
@@ -24,7 +25,6 @@
     <url-pattern>/emp/emp.do</url-pattern>
   </servlet-mapping>
   
-
       <servlet>
     <servlet-name>SaleServlet</servlet-name>
     <servlet-class>com.sale.controller.SaleServlet</servlet-class>
@@ -35,7 +35,7 @@
   </servlet-mapping>
   
   
-       <servlet>
+    <servlet>
     <servlet-name>ProductServlet</servlet-name>
     <servlet-class>com.product.controller.ProductServlet</servlet-class>
   </servlet>
@@ -62,7 +62,7 @@
     <servlet-name>CardServlet</servlet-name>
     <url-pattern>/card/card.do</url-pattern>
   </servlet-mapping>
-  
+   
   <servlet>
     <servlet-name>UsersServlet</servlet-name>
     <servlet-class>com.users.controller.UsersServlet</servlet-class>
@@ -72,6 +72,7 @@
     <url-pattern>/users/users.do</url-pattern>
   </servlet-mapping>
   
+  
   <servlet>
     <servlet-name>AdminsServlet</servlet-name>
     <servlet-class>com.admins.controller.AdminsServlet</servlet-class>
@@ -80,6 +81,7 @@
     <servlet-name>AdminsServlet</servlet-name>
     <url-pattern>/admins/admins.do</url-pattern>
   </servlet-mapping>
+  
   
   <servlet>
     <servlet-name>AdminsAjaxHandler</servlet-name>
@@ -93,7 +95,6 @@
   <servlet>
 		<servlet-name>UsersGetPic</servlet-name>
 		<servlet-class>com.users.controller.UsersGetPic</servlet-class>
-
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>UsersGetPic</servlet-name>
@@ -192,7 +193,11 @@
 		<url-pattern>/login.do</url-pattern>
 	</servlet-mapping>
 	
-	     <servlet>
+
+<!--     <url-pattern>/Product/Product.do</url-pattern> -->
+<!--   </servlet-mapping> -->
+  
+   <servlet>
     <servlet-name>OrderServlet</servlet-name>
     <servlet-class>com.order.controller.OrderServlet</servlet-class>
   </servlet>
@@ -201,6 +206,7 @@
     <url-pattern>/Order/Order.do</url-pattern>
   </servlet-mapping>
   
+
      <servlet>
     <servlet-name>TripServlet</servlet-name>
     <servlet-class>com.trip.controller.TripServlet</servlet-class>
@@ -236,4 +242,28 @@
     <url-pattern>/notec/notec.do</url-pattern>
   </servlet-mapping>
 	
+
+   <servlet>
+    <servlet-name>OrderDetailServlet</servlet-name>
+    <servlet-class>com.orderDetail.controller.OrderDetailServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>OrderDetailServlet</servlet-name>
+    <url-pattern>/OrderDetail/OrderDetail.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+		<servlet-name>BLOB_Reader</servlet-name>
+		<servlet-class>com.product.model.BLOB_Reader</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>BLOB_Reader</servlet-name>
+		<url-pattern>/BLOB_Reader</url-pattern>
+	</servlet-mapping>
+	
+  
 </web-app>
+  
+ 
+

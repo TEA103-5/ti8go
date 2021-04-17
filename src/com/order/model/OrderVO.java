@@ -17,6 +17,7 @@ public class OrderVO implements java.io.Serializable{
 		this.order_address = order_address;
 	}
 
+
 	public Integer getOrder_id() {
 		return order_id;
 	}
@@ -42,6 +43,7 @@ public class OrderVO implements java.io.Serializable{
 	}
 
 
+
 	public String getCard_number() {
 		return card_number;
 	}
@@ -50,11 +52,13 @@ public class OrderVO implements java.io.Serializable{
 		this.card_number = card_number;
 	}
 
+
 	public Integer getUsers_id() {
 		return users_id;
 	}
 
 	public void setUsers_id(Integer users_id) {
 		this.users_id = users_id;
+
 	}
 }

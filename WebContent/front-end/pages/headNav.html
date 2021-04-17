@@ -66,8 +66,8 @@
 								style="padding: -64px; width: 0px; height: -8px; margin: -3px; color: rgba(0, 0, 0, 0.5);">商城</a>
 							<div class="dropdown-menu">
 								<a class="dropdown-item" href="<%=request.getContextPath()%>/front-end/order/addOrder.jsp">普通購物區</a>
-								<a class="dropdown-item" href="#">俊偉PRO購物區</a>
 								<a class="dropdown-item" href="#">Third Item</a>
+<!-- 								<a class="dropdown-item" href="#">俊偉PRO購物區</a> -->
 							</div>
 						</div>
 					</li>
@@ -78,10 +78,18 @@
 								data-toggle="dropdown" href="#"
 								style="padding: 20px; width: 0px; height: -8px; margin: -3px; color: rgba(0, 0, 0, 0.5);">${(usersVO==null)?'會員':(usersVO.users_mail)}</a>
 							<div class="dropdown-menu">
-								<a class="dropdown-item" href="<%=request.getContextPath()%>/front-end/users/login.jsp">登入</a>
-								<a class="dropdown-item" href="<%=request.getContextPath()%>/login.do?requestURL=<%=request.getServletPath()%>">登出</a>
-									<a class="dropdown-item" href="#">註冊</a>
-									<a class="dropdown-item" href="<%=request.getContextPath()%>/front-end/users/usersHome.jsp">會員中心</a>
+					
+
+
+									
+								<a class="dropdown-item" href="<%=request.getContextPath()%>/front-end/users/login.jsp">登入/註冊</a>
+
+								<a class="dropdown-item" href="<%=request.getContextPath()%>/login.do?requestURL=<%=request.getServletPath()%>">登出</a>								
+
+									<a class="dropdown-item" href="<%=request.getContextPath()%>/front-end/users/account.jsp">會員資料</a>
+									
+<!-- 									<a class="dropdown-item" href="<%=request.getContextPath()%>/front-end/users/usersHome.jsp">會員中心</a> -->
+									
 							</div>
 						</div>
 					</li>
@@ -89,7 +97,6 @@
 			</div>
 		</div>
 	</nav>
-
 
 
 

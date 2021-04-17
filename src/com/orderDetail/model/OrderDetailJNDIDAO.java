@@ -6,9 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+
+
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -16,6 +19,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 
+import com.order.model.OrderDAO;
 import com.order.model.OrderDAO_Interface;
 import com.order.model.OrderVO;
 
@@ -30,6 +34,7 @@ public class OrderDetailJNDIDAO implements OrderDetailDAO_interface {
 		}
 	}
 	
+
 
 	
 	private static final String INSERT_STMT = "INSERT INTO ORDER_DETAIL (Order_Detail_Count,PRODUCT_Id ,order_detail_status,Order_Id) VALUES (?,?,?,?)";
@@ -95,7 +100,7 @@ public class OrderDetailJNDIDAO implements OrderDetailDAO_interface {
 		return set;
 	}
 	
-	
+
 	public void insert(OrderDetailVO orderDetailVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -109,6 +114,7 @@ public class OrderDetailJNDIDAO implements OrderDetailDAO_interface {
 			pstmt.setInt(2, orderDetailVO.getProduct_id());
 			pstmt.setInt(3, orderDetailVO.getOrder_detail_status());
 			pstmt.setInt(4, orderDetailVO.getOrder_id());
+
 			System.out.println("成功");
 			pstmt.executeUpdate();
 			
@@ -152,6 +158,7 @@ public class OrderDetailJNDIDAO implements OrderDetailDAO_interface {
 			
 			pstmt.executeUpdate();
 			System.out.println("成功");
+
 
 		
 		} catch (SQLException e) {
@@ -239,6 +246,7 @@ public class OrderDetailJNDIDAO implements OrderDetailDAO_interface {
 				orderDetailVO.setOrder_detail_count(rs.getInt("Order_detail_count"));
 				orderDetailVO.setProduct_id(rs.getInt("product_id"));
 				orderDetailVO.setOrder_detail_status(rs.getInt("order_detail_status"));
+
 				orderDetailVO.setOrder_id(rs.getInt("order_id"));
 			}
 
@@ -292,6 +300,7 @@ public class OrderDetailJNDIDAO implements OrderDetailDAO_interface {
 				orderDetailVO.setOrder_detail_count(rs.getInt("Order_detail_count"));
 				orderDetailVO.setProduct_id(rs.getInt("product_id"));
 				orderDetailVO.setOrder_detail_status(rs.getInt("order_detail_status"));
+
 				orderDetailVO.setOrder_id(rs.getInt("order_id"));
 				list.add(orderDetailVO);
 			}

@@ -78,14 +78,14 @@ public class UsersVO implements java.io.Serializable{
 	public Integer getUsers_sex() {
 		return users_sex;
 	}
-	public void setUsers_sex(Integer uesrs_sex) {
-		this.users_sex = uesrs_sex;
+	public void setUsers_sex(Integer users_sex) {
+		this.users_sex = users_sex;
 	}
 	public String getUsers_birthday() {
 		return users_birthday;
 	}
-	public void setUsers_birthday(String uesrs_birthday) {
-		this.users_birthday = uesrs_birthday;
+	public void setUsers_birthday(String users_birthday) {
+		this.users_birthday = users_birthday;
 	}
 	public String getUsers_id_number() {
 		return users_id_number;
@@ -102,10 +102,8 @@ public class UsersVO implements java.io.Serializable{
 	public String getUsers_phone() {
 		return users_phone;
 	}
-	public void setUsers_phone(String user_phone) {
-		this.users_phone = user_phone;
+	public void setUsers_phone(String users_phone) {
+		this.users_phone = users_phone;
 	}
-	
-	
 	
 }
