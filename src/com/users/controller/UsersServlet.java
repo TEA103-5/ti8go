@@ -280,7 +280,7 @@ public class UsersServlet extends HttpServlet {
 									
 					/***************************3.查詢完成 準備轉交(Send the Success view)************/
 					req.setAttribute("usersVO", usersVO);         // 資料庫取出的empVO物件,存入req
-					String url = "/front-end/users/update_users_input.jsp";
+					String url = requestUrl + "/account.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
 					successView.forward(req, res);
 
@@ -288,7 +288,84 @@ public class UsersServlet extends HttpServlet {
 				} catch (Exception e) {
 					errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front-end/users/listAllUsers.jsp");
+							.getRequestDispatcher(requestUrl + "/tables.jsp");
+					failureView.forward(req, res);
+				}
+			}
+			
+			if ("deactivate".equals(action)) { //來自listAllEmp.jsp的請求
+				
+				List<String> errorMsgs = new LinkedList<String>();
+				// Store this set in the request scope, in case we need to
+				// send the ErrorPage view.
+				req.setAttribute("errorMsgs", errorMsgs);
+				
+				UsersService usersSvc = new UsersService();
+				
+				try {
+					/***************************1.接收請求參數****************************************/
+					Integer users_id = new Integer(req.getParameter("users_id"));
+					
+					/*除接收ID外，將狀態修改成停用，其他取回原參數*/
+					Integer users_status = 0 ;
+
+					String users_name = usersSvc.getOneusers(users_id).getUsers_name();
+					
+					String users_mail = usersSvc.getOneusers(users_id).getUsers_mail();
+										
+					String users_pwd = usersSvc.getOneusers(users_id).getUsers_pwd();
+					
+					String users_nickname = usersSvc.getOneusers(users_id).getUsers_nickname();
+						
+					Integer users_sex = usersSvc.getOneusers(users_id).getUsers_sex();
+								
+					String users_birthday = usersSvc.getOneusers(users_id).getUsers_birthday();
+							
+					String users_id_number = usersSvc.getOneusers(users_id).getUsers_id_number();	
+					
+					String users_phone = usersSvc.getOneusers(users_id).getUsers_phone();
+			
+					byte[] users_users_pic = usersSvc.getOneusers(users_id).getUsers_users_pic();
+							
+					UsersVO usersVO = new UsersVO();
+					usersVO.setUsers_mail(users_mail);
+					usersVO.setUsers_pwd(users_pwd);
+					usersVO.setUsers_status(users_status);
+					usersVO.setUsers_nickname(users_nickname);
+					usersVO.setUsers_name(users_name);
+					usersVO.setUsers_sex(users_sex);
+					usersVO.setUsers_birthday(users_birthday);
+					usersVO.setUsers_id_number(users_id_number);
+					usersVO.setUsers_users_pic(users_users_pic);
+					usersVO.setUsers_phone(users_phone);
+					usersVO.setUsers_id(users_id);
+
+					// Send the use back to the form, if there were errors
+					if (!errorMsgs.isEmpty()) {
+						req.setAttribute("usersVO", usersVO); // 含有輸入格式錯誤的empVO物件,也存入req
+						RequestDispatcher failureView = req
+								.getRequestDispatcher(requestUrl + "/tables.jsp");
+						failureView.forward(req, res);
+						return;
+					}
+					
+					/***************************2.開始新增資料***************************************/
+					usersVO = usersSvc.updateusers(users_id, users_mail, users_pwd, users_status,
+							users_nickname, users_name, users_sex, users_birthday, users_id_number, 
+							users_users_pic, users_phone);		
+					/***************************3.新增完成,準備轉交(Send the Success view)***********/
+					usersVO = usersSvc.getOneusers(users_id);
+					req.getSession().setAttribute("usersVO", usersSvc.getOneusers(usersVO.getUsers_id()));
+					req.setAttribute("usersVO", usersVO); 
+					String url = requestUrl + "/tables.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+					successView.forward(req, res);				
+					
+					/***************************其他可能的錯誤處理*************************************/
+				} catch (Exception e) {
+					errorMsgs.add("修改資料失敗:"+e.getMessage());
+					RequestDispatcher failureView = req
+							.getRequestDispatcher(requestUrl + "/tables.jsp");
 					failureView.forward(req, res);
 				}
 			}
@@ -343,14 +420,7 @@ public class UsersServlet extends HttpServlet {
 					} catch (Exception e) {
 						errorMsgs.add("性別請填數字.");
 					}
-//					java.sql.Date hiredate = null;
-//					try {
-//						hiredate = java.sql.Date.valueOf(req.getParameter("hiredate").trim());
-//					} catch (IllegalArgumentException e) {
-//						hiredate=new java.sql.Date(System.currentTimeMillis());
-//						errorMsgs.add("請輸入日期!");
-//					}
-					
+								
 					String users_birthday = req.getParameter("users_birthday").trim();
 					if (users_birthday == null || users_birthday.trim().length() == 0) {
 						errorMsgs.add("生日請勿空白");
@@ -412,7 +482,15 @@ public class UsersServlet extends HttpServlet {
 					usersVO = usersSvc.getOneusers(users_id);
 					req.getSession().setAttribute("usersVO", usersSvc.getOneusers(usersVO.getUsers_id()));
 					req.setAttribute("usersVO", usersVO); 
-					String url = requestUrl + "/account.jsp";
+					String url ;
+					
+					if (requestUrl == "/front-end/users") { 
+						url = requestUrl + "/account.jsp"; 
+					} else	{		
+						url = requestUrl + "/tables.jsp";
+					}
+		System.out.println("url= " + url);			
+					
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 					successView.forward(req, res);				
 					

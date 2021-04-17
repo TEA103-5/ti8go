@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
     :root {
         /* COLORS */
         --white: #e9e9e9;
@@ -217,7 +218,7 @@
             z-index: 5;
         }
     }
-    
+</style>
 </head>
 <body>
     <div class="container right-panel-active">
