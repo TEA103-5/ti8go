@@ -248,8 +248,10 @@
 			          if(data.result == "insert_succss"){
 	// 		        	  // 新增成功則按鈕改成顯示取消收藏
 			        	  that.html("取消收藏")
+			        	  swal("加入收藏成功", "已加入地點收藏", "success")
 			          }else if(data.result == "delete_success"){
 			        	  that.html("加入收藏")
+			        	  swal("移除收藏成功", "已移除地點收藏", "success")
 			          }
 			          
 			        }
