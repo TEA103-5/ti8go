@@ -193,7 +193,7 @@
 	<script>
 		<c:if test="${not empty successMsgs}">
 				<c:forEach var="message" items="${successMsgs}" >
-					swal("${message}","已加入我的地點", "success")
+					swal("成功","${message}", "success")
 				</c:forEach>
 		</c:if>
 	</script>
