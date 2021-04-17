@@ -13,7 +13,9 @@ public class TripService {
 	public TripService() {
 		dao = new TripDAO();
 	}
-
+	public void delT(Integer trip_id) {
+		dao.delT(trip_id);
+	}
 	public TripVO addEmp2(TripVO tripVO) {		
 		return dao.insert2(tripVO);
 	}
@@ -70,6 +72,9 @@ public class TripService {
 
 	public void deleteEmp(Integer trip_id) {
 		dao.delete(trip_id);
+	}
+	public void updateDay(String day,Integer trip_id) {
+		dao.updateDay(day,trip_id);
 	}
 
 	public TripVO getOneEmp(Integer trip_id) {

@@ -34,6 +34,20 @@ public class TripServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		
+		
+		
+		if("delAjax".equals(action)) {
+			Integer trip_id = new Integer(req.getParameter("trip_id").trim());
+			TripService tripSvc = new TripService();
+			tripSvc.delT(trip_id);
+		}
+		if("updateDay".equals(action)) {
+			String day = req.getParameter("day");
+    		Integer trip_id = new Integer(req.getParameter("trip_id").trim());
+    		TripService tripSvc = new TripService();
+    		tripSvc.updateDay(day, trip_id);
+		}
+		
         if ("insertajax".equals(action)) { // 來自addEmp.jsp的請求  
         	
         	List<String> errorMsgs = new LinkedList<String>();

@@ -38,7 +38,7 @@ public class UsersDAO implements UsersDAO_interface {
 	
 	private static final String GET_Applicant_ByUsers_STMT = "SELECT * FROM applicant where users_id = ? order by registration_time desc";
 	private static final String GET_Team_ByUsers_STMT = "SELECT * FROM team where users_id = ? order by trip_id";
-	private static final String GET_Trip_ByUsers_STMT = "SELECT * FROM trip where users_id = ? order by trip_id";
+	private static final String GET_Trip_ByUsers_STMT = "SELECT * FROM trip where users_id = ? and trip_state=1 order by trip_id";
 	private static final String GET_Activities_ByUsers_STMT = "SELECT * FROM group_activities where users_id = ? order by activities_id";
 	
 

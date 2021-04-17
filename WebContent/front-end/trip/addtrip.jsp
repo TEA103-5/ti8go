@@ -202,12 +202,7 @@
 <script type="text/javascript"
 		src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>
 	<script>
-	function dragstart_handler(ev) {
-		 console.log("dragStart");
-		 // Add the target element's id to the data transfer object
-		 ev.dataTransfer.setData("text/plain", ev.target.id);
-		}
-	
+
 	var vm = new Vue({
 	    el: '#app',
 	    data: {
@@ -628,8 +623,27 @@
 	            this.tripDetail.place_pic=e.place_pic;
 			},
 			
-			submitTripDetailini(){
+			submitTripDetailini(){//---------------------------------------------在這邊更新天數
 				let self=this;
+			
+				let data={
+						action:'updateDay',
+						day:self.daylist.length+1,
+						trip_id:self.theTrip_id,
+				}
+			
+ 				$.ajax({
+ 			        url: "<%=request.getContextPath()%>/trip/trip.do",           // 資料請求的網址
+ 			        type: "POST",                  // GET | POST | PUT | DELETE | PATCH
+ 			        async: false,
+ 			        data:data,               // 傳送資料到指定的 url
+ 			        dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
+ 			        success: function (data) {      //這裡依照陣列長度(有幾個行程明細)呼叫自己      
+ 			        }
+ 			    });
+			
+			
+			
 				this.daylist.forEach(function(item, i) {
 					  item.tripDetail.forEach(function(jtem, j) {
 						  jtem.trip_day=i+1;//要是在這裡送.大概會因為呼叫過快而失敗
@@ -678,18 +692,6 @@
 				
 			},
 			submitTrip(){
-				let self=this;
-				$('#f_date3').val($('#f_date1').val())
-				this.addtrip.trip_start=$('#f_date1').val();
-				this.addtrip.trip_end=$('#f_date2').val();
-				let endtime=new Date(this.addtrip.trip_end);
-				let btime=new Date(this.addtrip.trip_start);
-				let tripday=new Date(endtime-btime);
-				let hour=Math.floor(tripday.getTime() / 3600000);
-				let tday=0;
-				if(hour!=0){
-					tday=hour/24;
-				}
 				let month = new Array(12);
 				month[0] = "01";
 				month[1] = "02";
@@ -703,6 +705,28 @@
 				month[9] = "10";
 				month[10] = "11";
 				month[11] = "12";
+				let self=this;
+				$('#f_date3').val($('#f_date1').val())
+				this.addtrip.trip_start=$('#f_date1').val();
+			if($('#f_date2').val()==''){
+				let lctime=new Date();
+				this.addtrip.trip_end=lctime.getFullYear()+'-'+month[lctime.getMonth()]+'-'+lctime.getDate()
+			}else{
+				this.addtrip.trip_end=$('#f_date2').val();
+				
+			}
+				
+				let endtime=new Date(this.addtrip.trip_end);
+
+				let btime=new Date(this.addtrip.trip_start);
+				let tripday=new Date(endtime-btime);
+				let hour=Math.floor(tripday.getTime() / 3600000);
+
+				let tday=0;
+				if(hour!=0){
+					tday=hour/24;
+				}
+
 				
 	
 				
