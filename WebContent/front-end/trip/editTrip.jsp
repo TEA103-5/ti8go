@@ -12,7 +12,7 @@
 <html>
 
 <head>
-    <title>addTrip</title>
+    <title>editTrip</title>
      <%@ include file="/front-end/pages/links.html" %> 
 <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/assets/css/tripstyles.css">
 </head>
@@ -22,9 +22,9 @@
 <!--  <button @click="setCookie('ABA','10',1)">set</button> -->
 <!--  <button @click="getCookie('peter')">get</button> -->
     <main id="app" class="page glass">
-    <div id="fade" class="black_overlay" style="display:block; min-height: 100%;">
+    <div id="fade" class="black_overlay" style="display:none; min-height: 100%;">
     
-						<div id="tripadd" class="white_content glass" style="display:block;">
+						<div id="tripadd" class="white_content glass" style="display:none;">
 				行程名稱:<br/>
 				<input
 				class="" type="text" name="trip_name"
@@ -112,20 +112,15 @@
             <div class="container-fluid" style="margin:0px;">
                 <div class="block-heading">
                     <h2 class="text-info">{{addtrip.trip_name}}</h2>
-                    <header>
-                    
                     		<input
 							class="" type="text" name="trip_start" @click="clickdate" @blur="blurdate"
 							id="f_date3">
-					總花費:{{total}}
-								<button class="btnl btn-cancel"  @click="submitTripDetailini">建立行程</button>
-                    </header>
 					</div>
 
             <div class="row" style="margin-right:0px; margin-left:0px; flex-wrap:wrap;">
             	
 
-				 <div class="col-md-1 col-xl-1 mb-1 conn" style="height:500px;overflow-y: scroll;">
+				 <div class="col-md-2 col-xl-2 mb-2 conn" style="height:500px;overflow-y: scroll;">
 		
 				<ul v-for="(item,index) in daylist" class="list-group list-group-flush" style="border-radius: 2rem;">
 					<li class="list-group-item">
@@ -139,8 +134,9 @@
 				 </div>
 				 
 				 
-					<div class="col-md-5 col-xl-5 mb-5 conn" style="height:73vh;overflow-y: scroll;">
-				
+					<div class="col-md-7 col-xl-7 mb-7 conn" style="height:73vh;overflow-y: scroll;">
+					<button class="btnl btn-cancel"  @click="submitTripDetailini">結束編輯</button>
+					<br/>總花費:{{total}}
 					<ul v-for="(item,index) in daylist" class="list-group list-group-flush footers" style="border-radius: 2rem;">
 						 <li class="list-group-item footers">
 							<table class="table-users">
@@ -210,6 +206,23 @@
 	var vm = new Vue({
 	    el: '#app',
 	    data: {
+	    	tripDetailList:[
+	    		<c:forEach var="trip_detailVO" items="${listDetail_ByTrip}" >
+					{
+						trip_detail_id:'${trip_detailVO.trip_detail_id}',
+						trip_day:'${trip_detailVO.trip_day}',
+						trip_sort:'${trip_detailVO.trip_sort}',
+						trip_detail_type:'${trip_detailVO.trip_detail_type}',
+						trip_content:'${trip_detailVO.trip_content}',
+						place_id:'${trip_detailVO.place_id}',
+						trip_start_time:'${trip_detailVO.trip_start_time}',
+						trip_end_time:'${trip_detailVO.trip_end_time}',
+						trip_remarks:'${trip_detailVO.trip_remarks}',
+						trip_cost:'${trip_detailVO.trip_cost}',
+						place_pic:'<%=request.getContextPath()%>/place/DBGifReader4.do?place_id=${trip_detailVO.place_id}&place_pic=place_pic1',
+					},
+					</c:forEach>
+	    	],
 	    	show:0,
 	    	searchName:'',
 	    	startTime:'',
@@ -221,26 +234,6 @@
 	    	editshow:false,
 	    	dayCount:1,
 	    	daylist:[
-//  	    		{
-//  	    			day:1,
-//  	    			tripDetail:[
-// // 	    				{
-// // 	    		    		trip_day:'1',
-// // 	    		    		place_id:'1',
-// // 	    		    		trip_id:'1',
-// // 	    		    		trip_sort:1,
-// // 	    		    		trip_detail_type:'其他',
-// // 	    		    		trip_content:'',
-// // 	    		    		trip_start_time:'00:00',
-// // 	    		    		trip_end_time:'00:00',
-// // 	    		    		trip_remarks:'行程描述',
-// // 	    		    		trip_cost:'0',
-// // 	    		    		action:'insertajax',
-// // 	    		    		place_name:'',
-// // 	    		    		indexOfList:0,
-// // 	    				},
-// 	    			],
-//  	    		},
 	    	],
 	    	theTrip_id:0,
 	    	detailUpdateCount:0,
@@ -254,7 +247,7 @@
 	    	tripDetail:{
 	    		trip_day:'1',
 	    		place_id:'1',
-	    		trip_id:'1',
+	    		trip_id:'${tripVO.trip_id}',
 	    		trip_sort:1,
 	    		trip_detail_type:'其他',
 	    		trip_content:'',
@@ -268,21 +261,21 @@
 	    		place_pic:'',
 	    	},
 	    	addtrip:{
-	    		users_id:${(usersVO==null)?1:usersVO.users_id },
-	    		last_editor:${(usersVO==null)?1:usersVO.users_id },
-	    		trip_start:'',
-	    		trip_end:'',
-	    		trip_name:'',
-	    		trip_state:'1',
-	    		read_authority:'1',
-	    		edit_authority:'1',
-	    		trip_area:'台北',
-	    		trip_description:'行程描述',
-	    		trip_type:'未設定',
-	    		trip_tot_cost:'0',
-	    		place_weather:'正常',
-	    		action:'insertajax',
-	    		place:'',
+	    		users_id:'${tripVO.users_id}',
+	    		last_editor:'${usersVO.users_id}',
+	    		trip_start:'${tripVO.trip_start}',
+	    		trip_end:'${tripVO.trip_end}',
+	    		trip_name:'${tripVO.trip_name}',
+	    		trip_state:'${tripVO.trip_state}',
+	    		read_authority:'${tripVO.read_authority}',
+	    		edit_authority:'${tripVO.edit_authority}',
+	    		trip_area:'${tripVO.trip_area}',
+	    		trip_description:'${tripVO.trip_description}',
+	    		trip_type:'${tripVO.trip_type}',
+	    		trip_tot_cost:'${tripVO.trip_tot_cost}',
+	    		place_weather:'${tripVO.place_weather}',
+	    		action:'updateAjax',
+	    		trip_id:'${tripVO.trip_id}',
 	    	},
 	    	placelist:[
 	    		<c:forEach var="placeVO" items="${pSvc.all}">
@@ -646,21 +639,43 @@
  			        success: function (data) {      //這裡依照陣列長度(有幾個行程明細)呼叫自己      
  			        }
  			    });
-			
+	
 			
 			
 				this.daylist.forEach(function(item, i) {
 					  item.tripDetail.forEach(function(jtem, j) {
 						  jtem.trip_day=i;//要是在這裡送.大概會因為呼叫過快而失敗
 						  jtem.trip_sort=j;
+						  jtem.trip_id=self.addtrip.trip_id;
 						  jtem.action='insertajax';
-						  jtem.trip_id=self.theTrip_id;
+					
 						 // console.log(i+'....'+j);
 					  });
 					});
 				//console.log(this.daylist);
 				this.dayCount=this.daylist.length;
-				this.submitTripDetailj();
+				
+				
+				let data2={
+						action:'delTDbyTid',
+						trip_id:self.addtrip.trip_id,
+				}
+			
+ 				$.ajax({
+ 			        url: "<%=request.getContextPath()%>/trip/trip.do",           // 資料請求的網址
+ 			        type: "POST",                  // GET | POST | PUT | DELETE | PATCH
+ 			        async: false,
+ 			        data:data2,               // 傳送資料到指定的 url
+ 			        dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
+ 			        success: function (data) {      //這裡依照陣列長度(有幾個行程明細)呼叫自己 
+ 			        	console.log(data);
+ 			        	self.submitTripDetailj();
+ 			        }
+ 			    });	
+				
+				
+				
+				
 			},
 			submitTripDetailj(){
 				if(this.dayCount>=1){
@@ -862,8 +877,31 @@
 	    		return count
 	    	}
 	    },
-	    mounted: function(){//類似ini或onload
+	    mounted: function(){//類似ini或onload	
 	    	let self=this;
+	    	$('#f_date3').val(this.addtrip.trip_start);
+	    for(let n=0;n<this.addtrip.place_weather;n++){
+	    	self.daylist.push(
+	    	{
+	    		day:n,
+	    		tripDetail:[],
+	    	},		
+	    	);
+	    let List=this.tripDetailList.filter(p =>
+	    		p.trip_day==n
+	    		);
+	    if(List.length!=0){
+	    	//console.log(List);
+	    	List.forEach(p=> self.daylist[n].tripDetail.push(p)
+	    			);
+	    }
+//	    	flist = flist.filter(p =>
+// 	    		parseInt(p.age)<=parseInt(pricemax) &&
+// 				parseInt(p.age)>=parseInt(pricemin)
+// 	    		);
+	    }
+	    
+	    
 	    self.placelist=self.placelist.slice(10);
 	    	$(function(){
 	    		$("#f_date1").bind('change',function(){
@@ -897,6 +935,9 @@
 	    		});
 	    }
 	})
+	
+	
+//	console.log(vm.addtrip.place_weather);
 	</script>
 
 </body>

@@ -35,10 +35,30 @@
                                 
                                     <div v-for="(item,index) in tripList" class="col-12 col-md-6 col-lg-4">
                                         <div class="clean-product-item">
-                                            <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src="<%=request.getContextPath()%>/front-end/assets/img/tech/image2.jpg"></a></div>
-                                            <div class="product-name"><a href="#"><h5>{{item.trip_name}}</h5></a></div>
+                                            <div class="image"><a href="#" onclick="document.getElementById('from2').submit()"><img class="img-fluid d-block mx-auto" src="<%=request.getContextPath()%>/front-end/assets/img/tech/image2.jpg"></a></div>
+                                            
+                                            <div class="product-name"><a href="#" onclick="document.getElementById('from2').submit()"><h5>{{item.trip_name}}</h5></a>
+                                          <FORM id="from2" METHOD="post" ACTION="<%=request.getContextPath()%>/trip/trip.do" style="margin-bottom: 0px;">
+                                          
+                                  
+			  								<input type="hidden" name="trip_id" v-model="item.trip_id">
+			    							<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
+			     							<input type="hidden" name="action" value="listDetail_ByTrip_A">
+			     							
+			     							</FORM>
+                                            </div>
+                                            
+                                            
                                             <div class="product-name"><h10>出發日期:{{item.trip_start}}/天數:{{item.trip_day}}</h10></div>
-                                            <div class="product-name"><button>編輯</button><button @click="delTrip(index,item.trip_id)">刪除</button></div>
+                                            <div class="product-name">
+                                            			  <FORM id="from1" METHOD="post" ACTION="<%=request.getContextPath()%>/trip/trip.do" style="margin-bottom: 0px;">
+                                            <button onclick="document.getElementById('from1').submit()">編輯</button>
+			  								<input type="hidden" name="trip_id" v-model="item.trip_id">
+			    							<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
+			     							<input type="hidden" name="action" value="listDetail_ByTrip_B"></FORM>
+                                            
+                                            <button @click="delTrip(index,item.trip_id)">刪除</button>  
+											</div>                                          
                                             <div class="about">
                                                 <div class="price">
                                                     <h10>瀏覽次數:{{item.trip_look}}</h10>
@@ -87,6 +107,7 @@
 	    },
 	    methods: {
 	    	delTrip(index,trip_id){
+	    	
 	    		this.tripList.splice(index, 1);	
 				let data={
 						action:'delAjax',

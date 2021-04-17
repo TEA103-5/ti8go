@@ -58,6 +58,9 @@ public class Trip_detailService {
 		return trip_detailVO;
 	}
 
+	public void deleteT(Integer trip_detail_id) {
+		dao.deleteT(trip_detail_id);
+	}
 	public void deleteEmp(Integer trip_detail_id) {
 		dao.delete(trip_detail_id);
 	}

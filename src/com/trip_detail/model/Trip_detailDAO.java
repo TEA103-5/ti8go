@@ -29,6 +29,8 @@ public class Trip_detailDAO implements Trip_detailDAO_interface{
 			"SELECT * FROM trip_detail order by trip_detail_id";
 		private static final String GET_ONE_STMT = 
 			"SELECT * FROM trip_detail where trip_detail_id = ?";
+		private static final String DELETEbyTid = 
+				"DELETE FROM trip_detail where trip_id = ?";
 		private static final String DELETE = 
 			"DELETE FROM trip_detail where trip_detail_id = ?";
 		private static final String UPDATE = 
@@ -131,6 +133,44 @@ public class Trip_detailDAO implements Trip_detailDAO_interface{
 
 	}
 
+
+	public void deleteT(Integer trip_detail_id) {
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(DELETEbyTid);
+			
+			pstmt.setInt(1, trip_detail_id);
+			
+			pstmt.executeUpdate();
+			
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+	}
 	@Override
 	public void delete(Integer trip_detail_id) {
 

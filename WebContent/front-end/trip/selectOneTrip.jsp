@@ -7,12 +7,13 @@
 <%@ page import="com.trip.model.*"%>
 <%@ page import="java.net.*" %>
 <jsp:useBean id="pSvc" scope="page" class="com.place.model.PlaceService" />
+<jsp:useBean id="usersSvc" scope="page" class="com.users.model.UsersService" />
 <%TripVO tripVO = (TripVO) request.getAttribute("tripVO");%>
 <!DOCTYPE html>
 <html>
 
 <head>
-    <title>addTrip</title>
+    <title>selectOneTrip</title>
      <%@ include file="/front-end/pages/links.html" %> 
 <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/assets/css/tripstyles.css">
 </head>
@@ -22,125 +23,126 @@
 <!--  <button @click="setCookie('ABA','10',1)">set</button> -->
 <!--  <button @click="getCookie('peter')">get</button> -->
     <main id="app" class="page glass">
-    <div id="fade" class="black_overlay" style="display:block; min-height: 100%;">
+<!--     <div id="fade" class="black_overlay" style="display:none; min-height: 100%;"> -->
     
-						<div id="tripadd" class="white_content glass" style="display:block;">
-				行程名稱:<br/>
-				<input
-				class="" type="text" name="trip_name"
-				placeholder="為你的行程取個名子" v-model="addtrip.trip_name">
-				 <br/>
-				 		開始時間:
-				<input
-							class="" type="text" name="trip_start" @click="clickdate" @blur="blurdate"
-							id="f_date1">
+<!-- 						<div id="tripadd" class="white_content glass" style="display:none;"> -->
+<!-- 				行程名稱:<br/> -->
+<!-- 				<input -->
+<!-- 				class="" type="text" name="trip_name" -->
+<!-- 				placeholder="為你的行程取個名子" v-model="addtrip.trip_name"> -->
+<!-- 				 <br/> -->
+<!-- 				 		開始時間: -->
+<!-- 				<input -->
+<!-- 							class="" type="text" name="trip_start" @click="clickdate" @blur="blurdate" -->
+<!-- 							id="f_date1"> -->
 							
-				結束時間:
-				<input
-							class="" type="text" name="trip_end" @click="clickdate" @blur="blurdate"
-							id="f_date2">
-				 <br/>
-				 出遊類型:
-				<input
-				class="" type="text" name="trip_name"
-				v-model="addtrip.trip_type">
-				 <br/>
-				<textarea class="form-control" id="signature" rows="4"
-				placeholder="描述此次行程您最期待的部分"
-												name="signature" v-model="addtrip.trip_description"></textarea>
+<!-- 				結束時間: -->
+<!-- 				<input -->
+<!-- 							class="" type="text" name="trip_end" @click="clickdate" @blur="blurdate" -->
+<!-- 							id="f_date2"> -->
+<!-- 				 <br/> -->
+<!-- 				 出遊類型: -->
+<!-- 				<input -->
+<!-- 				class="" type="text" name="trip_name" -->
+<!-- 				v-model="addtrip.trip_type"> -->
+<!-- 				 <br/> -->
+<!-- 				<textarea class="form-control" id="signature" rows="4" -->
+<!-- 				placeholder="描述此次行程您最期待的部分" -->
+<!-- 												name="signature" v-model="addtrip.trip_description"></textarea> -->
 
-					<br/>
-	<button class="btnl btn-cancel"  
-	@click="submitTrip()">確定</button>
+<!-- 					<br/> -->
+<!-- 	<button class="btnl btn-cancel"   -->
+<!-- 	@click="submitTrip()">確定</button> -->
 						
-						</div>
+<!-- 						</div> -->
 						
-			<div id="choicePlace" class="white_content glass">
-					<input placeholder="搜尋" class=""  v-model="searchName" type="text">
-					<table class=" table   table-place" style="height:470px;" >
-					<tr>
-							<th>
+<!-- 			<div id="choicePlace" class="white_content glass"> -->
+<!-- 					<input placeholder="搜尋" class=""  v-model="searchName" type="text"> -->
+<!-- 					<table class=" table   table-place" style="height:470px;" > -->
+<!-- 					<tr> -->
+<!-- 							<th> -->
 							
-							</th>
-					</tr>
-					<tr v-for="(item, index) in filterlist" >
-					<td>
-					<img class="img" id="preimg"
-									v-bind:src="item.place_pic" />
-					</td>
-						<td>
-						{{item.place_name}}
-						</td>
-						<td>
-						<button @click="tripDetailAdd(item)">add</button>
-						</td>
-					</tr>
-					</table>
-					<button onclick="document.getElementById('choicePlace').style.display='none';document.getElementById('fade').style.display='none';">取消</button>
-			</div>			
+<!-- 							</th> -->
+<!-- 					</tr> -->
+<!-- 					<tr v-for="(item, index) in filterlist" > -->
+<!-- 					<td> -->
+<!-- 					<img class="img" id="preimg" -->
+<!-- 									v-bind:src="item.place_pic" /> -->
+<!-- 					</td> -->
+<!-- 						<td> -->
+<!-- 						{{item.place_name}} -->
+<!-- 						</td> -->
+<!-- 						<td> -->
+<!-- 						<button @click="tripDetailAdd(item)">add</button> -->
+<!-- 						</td> -->
+<!-- 					</tr> -->
+<!-- 					</table> -->
+<!-- 					<button onclick="document.getElementById('choicePlace').style.display='none';document.getElementById('fade').style.display='none';">取消</button> -->
+<!-- 			</div>			 -->
 			
-			<div id="setTripDetail" class="white_content glass">
-					<img class="img" id="preimg"
-									v-bind:src="tripDetail.place_pic" />			 			
-							 				<input
-				class="" type="text" name="trip_name"
-				placeholder="行程內容"
-				v-model="tripDetail.trip_content">
-							 <br/>
+<!-- 			<div id="setTripDetail" class="white_content glass"> -->
+<!-- 					<img class="img" id="preimg" -->
+<!-- 									v-bind:src="tripDetail.place_pic" />			 			 -->
+<!-- 							 				<input -->
+<!-- 				class="" type="text" name="trip_name" -->
+<!-- 				placeholder="行程內容" -->
+<!-- 				v-model="tripDetail.trip_content"> -->
+<!-- 							 <br/> -->
 		
-				開始時間:<input type="time"  id="time1" />
-				結束時間:<input type="time" id="time2"  />
-				花費:<input type="text" v-model="tripDetail.trip_cost"/>臺幣
+<!-- 				開始時間:<input type="time"  id="time1" /> -->
+<!-- 				結束時間:<input type="time" id="time2"  /> -->
+<!-- 				花費:<input type="text" v-model="tripDetail.trip_cost"/>臺幣 -->
 				
-					<br/>
-				 <br/>	
-				<textarea class="form-control" id="signature" rows="4"
-				placeholder="備註"
-												name="signature" v-model="tripDetail.trip_remarks"></textarea>
+<!-- 					<br/> -->
+<!-- 				 <br/>	 -->
+<!-- 				<textarea class="form-control" id="signature" rows="4" -->
+<!-- 				placeholder="備註" -->
+<!-- 												name="signature" v-model="tripDetail.trip_remarks"></textarea> -->
 				
 				
-				 <br/>
-					<button v-if="!editshow&&!DetailSplice" @click="sendDetailEditToList()">確認</button>
-					<button v-if="editshow" @click="sendDetailEditToList2()">編輯</button>
-					<button v-if="DetailSplice" @click="sendDetailSpliceToList()">插入</button>
+<!-- 				 <br/> -->
+<!-- 					<button v-if="!editshow&&!DetailSplice" @click="sendDetailEditToList()">確認</button> -->
+<!-- 					<button v-if="editshow" @click="sendDetailEditToList2()">編輯</button> -->
+<!-- 					<button v-if="DetailSplice" @click="sendDetailSpliceToList()">插入</button> -->
 
-					<button @click="fadeCancel">取消</button>
-			</div>			
+<!-- 					<button @click="fadeCancel">取消</button> -->
+<!-- 			</div>			 -->
 
-    </div>
+<!--     </div> -->
 
             <div class="container-fluid" style="margin:0px;">
                 <div class="block-heading">
-                    <h2 class="text-info">{{addtrip.trip_name}}</h2>
-                    <header>
-                    
-                    		<input
-							class="" type="text" name="trip_start" @click="clickdate" @blur="blurdate"
-							id="f_date3">
-					總花費:{{total}}
-								<button class="btnl btn-cancel"  @click="submitTripDetailini">建立行程</button>
-                    </header>
+                    <h1 class="text-info">{{addtrip.trip_name}}</h1>
+                    <h10>{{addtrip.trip_username}}</h10><br/>
+                    {{addtrip.last_edit_time}}更新<br/>
+                   
+<!--                     		<input -->
+<!-- 							class="" type="text" name="trip_start" @click="clickdate" @blur="blurdate" -->
+<!-- 							id="f_date3"> -->
 					</div>
-
+					<input type="hidden" id="f_date3" value="addtrip.trip_start"/>
             <div class="row" style="margin-right:0px; margin-left:0px; flex-wrap:wrap;">
-            	
+            	 
 
-				 <div class="col-md-1 col-xl-1 mb-1 conn" style="height:500px;overflow-y: scroll;">
+<!-- 				 <div class="col-md-2 col-xl-2 mb-2 conn" style="height:500px;overflow-y: scroll;"> -->
 		
-				<ul v-for="(item,index) in daylist" class="list-group list-group-flush" style="border-radius: 2rem;">
-					<li class="list-group-item">
-							Day{{index+1}}
-							<button class="btnl"  
-	@click="delOneDay(index)">刪除</button>
-					</li>
-				</ul>
-<button class="btnl btn-cancel"  
-	@click="addOneDay">新增一天</button>
-				 </div>
+<!-- 				<ul v-for="(item,index) in daylist" class="list-group list-group-flush" style="border-radius: 2rem;"> -->
+<!-- 					<li class="list-group-item"> -->
+<!-- 							Day{{index+1}} -->
+<!-- 							<button class="btnl"   -->
+<!-- 	@click="delOneDay(index)">刪除</button> -->
+<!-- 					</li> -->
+<!-- 				</ul> -->
+<!-- <button class="btnl btn-cancel"   -->
+<!-- 	@click="addOneDay">新增一天</button> -->
+<!-- 				 </div> -->
 				 
 				 
-					<div class="col-md-5 col-xl-5 mb-5 conn" style="height:73vh;overflow-y: scroll;">
-				
+					<div class="col-md-7 col-xl-7 mb-7 conn" style="height:100%;">
+					<h3>行程描述</h3>
+					{{addtrip.trip_description}}
+					<br/>共{{addtrip.place_weather}}天<br/>總花費:{{total}}<br/>
+					<h3>行程內容</h3>
 					<ul v-for="(item,index) in daylist" class="list-group list-group-flush footers" style="border-radius: 2rem;">
 						 <li class="list-group-item footers">
 							<table class="table-users">
@@ -173,25 +175,25 @@
 								  	花費:{{item.trip_cost}}
 									</td>
 									
-									<td>
-									插入:
-									<button @click="choicePlaceToDetailSplice(index,inde)">地點</button>/
-									<button @click="choiceOtherToDetailSplice(index,inde)">其他</button>
-									<button @click="tripDetailEdit(item,index,inde)">edit</button>	
-									<button @click="tripDetailDel(index,inde)">del</button>
+<!-- 									<td> -->
+<!-- 									插入: -->
+<!-- 									<button @click="choicePlaceToDetailSplice(index,inde)">地點</button>/ -->
+<!-- 									<button @click="choiceOtherToDetailSplice(index,inde)">其他</button> -->
+<!-- 									<button @click="tripDetailEdit(item,index,inde)">edit</button>	 -->
+<!-- 									<button @click="tripDetailDel(index,inde)">del</button> -->
 		
-									</td>
+<!-- 									</td> -->
 									
 								</tr>
 					</table>
 					</li>
-						<li class="list-group-item"
-								 @dragover="allowDrop"  @drop="drop2($event,index,daylist[index].tripDetail.length)">
+<!-- 						<li class="list-group-item" -->
+<!-- 								 @dragover="allowDrop"  @drop="drop2($event,index,daylist[index].tripDetail.length)"> -->
 							
-						新增:
-						<button @click="choicePlaceToDetail(index)">地點</button>/
-						<button @click="choiceOtherToDetail(index)">其它</button>
-						</li>
+<!-- 						新增: -->
+<!-- 						<button @click="choicePlaceToDetail(index)">地點</button>/ -->
+<!-- 						<button @click="choiceOtherToDetail(index)">其它</button> -->
+<!-- 						</li> -->
 								  
 					</ul>
 					
@@ -210,6 +212,23 @@
 	var vm = new Vue({
 	    el: '#app',
 	    data: {
+	    	tripDetailList:[
+	    		<c:forEach var="trip_detailVO" items="${listDetail_ByTrip}" >
+					{
+						trip_detail_id:'${trip_detailVO.trip_detail_id}',
+						trip_day:'${trip_detailVO.trip_day}',
+						trip_sort:'${trip_detailVO.trip_sort}',
+						trip_detail_type:'${trip_detailVO.trip_detail_type}',
+						trip_content:'${trip_detailVO.trip_content}',
+						place_id:'${trip_detailVO.place_id}',
+						trip_start_time:'${trip_detailVO.trip_start_time}',
+						trip_end_time:'${trip_detailVO.trip_end_time}',
+						trip_remarks:'${trip_detailVO.trip_remarks}',
+						trip_cost:'${trip_detailVO.trip_cost}',
+						place_pic:'<%=request.getContextPath()%>/place/DBGifReader4.do?place_id=${trip_detailVO.place_id}&place_pic=place_pic1',
+					},
+					</c:forEach>
+	    	],
 	    	show:0,
 	    	searchName:'',
 	    	startTime:'',
@@ -221,26 +240,6 @@
 	    	editshow:false,
 	    	dayCount:1,
 	    	daylist:[
-//  	    		{
-//  	    			day:1,
-//  	    			tripDetail:[
-// // 	    				{
-// // 	    		    		trip_day:'1',
-// // 	    		    		place_id:'1',
-// // 	    		    		trip_id:'1',
-// // 	    		    		trip_sort:1,
-// // 	    		    		trip_detail_type:'其他',
-// // 	    		    		trip_content:'',
-// // 	    		    		trip_start_time:'00:00',
-// // 	    		    		trip_end_time:'00:00',
-// // 	    		    		trip_remarks:'行程描述',
-// // 	    		    		trip_cost:'0',
-// // 	    		    		action:'insertajax',
-// // 	    		    		place_name:'',
-// // 	    		    		indexOfList:0,
-// // 	    				},
-// 	    			],
-//  	    		},
 	    	],
 	    	theTrip_id:0,
 	    	detailUpdateCount:0,
@@ -254,7 +253,7 @@
 	    	tripDetail:{
 	    		trip_day:'1',
 	    		place_id:'1',
-	    		trip_id:'1',
+	    		trip_id:'${tripVO.trip_id}',
 	    		trip_sort:1,
 	    		trip_detail_type:'其他',
 	    		trip_content:'',
@@ -268,21 +267,24 @@
 	    		place_pic:'',
 	    	},
 	    	addtrip:{
-	    		users_id:${(usersVO==null)?1:usersVO.users_id },
-	    		last_editor:${(usersVO==null)?1:usersVO.users_id },
-	    		trip_start:'',
-	    		trip_end:'',
-	    		trip_name:'',
-	    		trip_state:'1',
-	    		read_authority:'1',
-	    		edit_authority:'1',
-	    		trip_area:'台北',
-	    		trip_description:'行程描述',
-	    		trip_type:'未設定',
-	    		trip_tot_cost:'0',
-	    		place_weather:'正常',
-	    		action:'insertajax',
-	    		place:'',
+	    		users_id:'${tripVO.users_id}',
+	    		last_editor:'${usersVO.users_id}',
+	    		trip_start:'${tripVO.trip_start}',
+	    		trip_end:'${tripVO.trip_end}',
+	    		trip_name:'${tripVO.trip_name}',
+	    		trip_state:'${tripVO.trip_state}',
+	    		read_authority:'${tripVO.read_authority}',
+	    		edit_authority:'${tripVO.edit_authority}',
+	    		trip_area:'${tripVO.trip_area}',
+	    		trip_description:'${tripVO.trip_description}',
+	    		trip_type:'${tripVO.trip_type}',
+	    		trip_tot_cost:'${tripVO.trip_tot_cost}',
+	    		place_weather:'${tripVO.place_weather}',
+	    		action:'updateAjax',
+	    		trip_id:'${tripVO.trip_id}',
+	    		last_edit_time:'<fmt:formatDate value="${tripVO.last_edit_time}"
+				pattern="yyyy-MM-dd" />',
+				trip_username:'${usersSvc.getOneusers(tripVO.users_id).users_name}',
 	    	},
 	    	placelist:[
 	    		<c:forEach var="placeVO" items="${pSvc.all}">
@@ -646,21 +648,43 @@
  			        success: function (data) {      //這裡依照陣列長度(有幾個行程明細)呼叫自己      
  			        }
  			    });
-			
+	
 			
 			
 				this.daylist.forEach(function(item, i) {
 					  item.tripDetail.forEach(function(jtem, j) {
 						  jtem.trip_day=i;//要是在這裡送.大概會因為呼叫過快而失敗
 						  jtem.trip_sort=j;
+						  jtem.trip_id=self.addtrip.trip_id;
 						  jtem.action='insertajax';
-						  jtem.trip_id=self.theTrip_id;
+					
 						 // console.log(i+'....'+j);
 					  });
 					});
 				//console.log(this.daylist);
 				this.dayCount=this.daylist.length;
-				this.submitTripDetailj();
+				
+				
+				let data2={
+						action:'delTDbyTid',
+						trip_id:self.addtrip.trip_id,
+				}
+			
+ 				$.ajax({
+ 			        url: "<%=request.getContextPath()%>/trip/trip.do",           // 資料請求的網址
+ 			        type: "POST",                  // GET | POST | PUT | DELETE | PATCH
+ 			        async: false,
+ 			        data:data2,               // 傳送資料到指定的 url
+ 			        dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
+ 			        success: function (data) {      //這裡依照陣列長度(有幾個行程明細)呼叫自己 
+ 			        	console.log(data);
+ 			        	self.submitTripDetailj();
+ 			        }
+ 			    });	
+				
+				
+				
+				
 			},
 			submitTripDetailj(){
 				if(this.dayCount>=1){
@@ -862,8 +886,31 @@
 	    		return count
 	    	}
 	    },
-	    mounted: function(){//類似ini或onload
+	    mounted: function(){//類似ini或onload	
 	    	let self=this;
+	    	$('#f_date3').val(this.addtrip.trip_start);
+	    for(let n=0;n<this.addtrip.place_weather;n++){
+	    	self.daylist.push(
+	    	{
+	    		day:n,
+	    		tripDetail:[],
+	    	},		
+	    	);
+	    let List=this.tripDetailList.filter(p =>
+	    		p.trip_day==n
+	    		);
+	    if(List.length!=0){
+	    	//console.log(List);
+	    	List.forEach(p=> self.daylist[n].tripDetail.push(p)
+	    			);
+	    }
+//	    	flist = flist.filter(p =>
+// 	    		parseInt(p.age)<=parseInt(pricemax) &&
+// 				parseInt(p.age)>=parseInt(pricemin)
+// 	    		);
+	    }
+	    
+	    
 	    self.placelist=self.placelist.slice(10);
 	    	$(function(){
 	    		$("#f_date1").bind('change',function(){
@@ -897,6 +944,9 @@
 	    		});
 	    }
 	})
+	
+	
+//	console.log(vm.addtrip.place_weather);
 	</script>
 
 </body>
