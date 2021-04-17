@@ -14,7 +14,7 @@
 <% 
   AdminsVO adminsVO = (AdminsVO) session.getAttribute("adminsVO");
   UsersVO usersVO = (UsersVO) session.getAttribute("usersVO");
-  SaleVO saleVO = (SaleVO) session.getAttribute("saleVO");
+
 // 	未登入過，連進此頁，轉去登入頁，避免錯誤	
 	if (adminsVO == null) {
 		session.setAttribute("location", request.getRequestURI());
