@@ -3,9 +3,8 @@ package com.place.model;
 import java.math.BigDecimal;
 import java.util.List;
 
-import com.emp.model.EmpDAO;
-import com.emp.model.EmpDAO_interface;
-import com.emp.model.EmpService;
+
+
 
 public class PlaceService {
 

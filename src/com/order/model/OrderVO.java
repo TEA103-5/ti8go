@@ -8,7 +8,8 @@ public class OrderVO implements java.io.Serializable{
 	private String card_number;
 	private Integer users_id;
 	private String order_address;
-
+	
+	
 	public String getOrder_address() {
 		return order_address;
 	}

@@ -130,7 +130,7 @@
 						let pwd=this.password;
  						console.log(uid);
 					  	let data = {
-				  			"action": "check",
+				  			"action": "userlogin",
 				  			"pwd": pwd,
 	 			            "u_id":uid 
 //	 			            "users_id": login_users

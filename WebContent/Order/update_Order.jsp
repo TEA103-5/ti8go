@@ -79,7 +79,7 @@ OrderVO orderVO = (OrderVO) request.getAttribute("OrderVO"); //EmpServlet.java (
 	
 	<tr>
 		<td>°â«áµû»ù:</td>
-		<td><input type="TEXT" name=Order_rate size="45"	value="<%=orderVO.getOrder_rate()%>" /></td>
+<%-- 		<td><input type="TEXT" name=Order_rate size="45"	value="<%=orderVO.getOrder_rate()%>" /></td> --%>
 	</tr>
 	
 	<tr>

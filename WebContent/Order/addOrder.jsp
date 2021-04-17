@@ -74,8 +74,8 @@ OrderVO orderVO = (OrderVO) request.getAttribute("OrderVO");
 	</tr>
 	<tr>
 		<td>評價分數:</td>
-		<td><input type="TEXT" name="order_rate" size="45"
-			 value="<%= (orderVO==null)? "" : orderVO.getOrder_rate()%>" /></td>
+<!-- 		<td><input type="TEXT" name="order_rate" size="45" -->
+<%-- 			 value="<%= (orderVO==null)? "" : orderVO.getOrder_rate()%>" /></td> --%>
 	</tr>
 	<tr>
 		<td>信用卡號:</td>
