@@ -659,7 +659,12 @@ req.setAttribute("tripVO", tripVO); // 含有輸入格式錯誤的empVO物件,�
 
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
-				Integer trip_id = new Integer(req.getParameter("trip_id"));
+				Integer trip_id=null;
+
+					
+				 trip_id = new Integer(req.getParameter("trip_id"));
+		
+				System.out.println(trip_id);
 				/*************************** 2.開始查詢資料 ****************************************/
 				TripService tripSvc = new TripService();
 				Set<Trip_detailVO> set = tripSvc.getDetailByTrip(trip_id);

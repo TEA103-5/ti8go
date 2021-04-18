@@ -35,18 +35,20 @@
                                 
                                     <div v-for="(item,index) in tripList" class="col-12 col-md-6 col-lg-4">
                                         <div class="clean-product-item">
-                                            <div class="image"><a href="#" onclick="document.getElementById('from2').submit()"><img class="img-fluid d-block mx-auto" 
-                                            v-bind:src="item.trip_pic"></a></div>
+                                            <div class="image"><img class="img-fluid d-block mx-auto"
+                                            v-bind:src="item.trip_pic"></div>
                                             
-                                            <div class="product-name"><a href="#" onclick="document.getElementById('from2').submit()"><h5>{{item.trip_name}}</h5></a>
-                                          <FORM id="from2" METHOD="post" ACTION="<%=request.getContextPath()%>/trip/trip.do" style="margin-bottom: 0px;">
-                                          
-                                  
+                                            <div class="product-name">
+                                                      <FORM id="from2" METHOD="post" ACTION="<%=request.getContextPath()%>/trip/trip.do" style="margin-bottom: 0px;">
 			  								<input type="hidden" name="trip_id" v-model="item.trip_id">
 			    							<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
 			     							<input type="hidden" name="action" value="listDetail_ByTrip_A">
 			     							
+                                            <h5>{{item.trip_name}}</h5>
+                                            <button onclick="document.getElementById('from2').submit()">查看</button>
 			     							</FORM>
+                                            
+                               
                                             </div>
                                             
                                             
@@ -56,9 +58,10 @@
                                             <button onclick="document.getElementById('from1').submit()">編輯</button>
 			  								<input type="hidden" name="trip_id" v-model="item.trip_id">
 			    							<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
-			     							<input type="hidden" name="action" value="listDetail_ByTrip_B"></FORM>
-                                            
+			     							<input type="hidden" name="action" v-model="action"></FORM>
+                                  
                                             <button @click="delTrip(index,item.trip_id)">刪除</button>  
+                                            
 											</div>                                          
                                             <div class="about">
                                                 <div class="price">
@@ -92,10 +95,11 @@
 	var vm = new Vue({
 	    el: '#app',
 	    data: {
+	    	action:'listDetail_ByTrip_B',
 	    	tripList:[
 	    		<c:forEach var="tripVO" items="${listTrip_ByUsers}" >
 					{
-						trip_id:${tripVO.trip_id},
+						trip_id:'${tripVO.trip_id}',
 						trip_name:'${tripVO.trip_name}',
 						trip_start:'${tripVO.trip_start}',
 						trip_day:'${tripVO.place_weather}',						

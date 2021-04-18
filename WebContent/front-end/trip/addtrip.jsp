@@ -29,6 +29,10 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 <!--  <button @click="setCookie('ABA','10',1)">set</button> -->
 <!--  <button @click="getCookie('peter')">get</button> -->
     <main id="app" class="page glass">
+        <FORM id="from1" METHOD="post" ACTION="<%=request.getContextPath()%>/users/users.do" > 							       
+									       <input type="hidden" name="users_id" value="${usersVO.users_id}">
+									       <input type="hidden" name="action" value="listTrip_ByUsers_A">
+									     </FORM>
     <div id="fade" class="black_overlay" style="display:block; min-height: 100%;">
     
 						<div id="tripadd" class="white_content glass" style="display:block;">
@@ -741,6 +745,8 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 				if(this.dayCount>=1){
 				this.detailUpdateCount=this.daylist[this.dayCount-1].tripDetail.length;
 				this.submitTripDetail();
+				}else{
+					document.getElementById('from1').submit();
 				}
 			},
 			submitTripDetail(){  //行程細節送出 目前以submitTrip()觸發

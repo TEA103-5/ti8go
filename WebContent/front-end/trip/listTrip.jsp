@@ -40,17 +40,17 @@
                                 
                                     <div v-for="(item,index) in tripList" class="col-12 col-md-6 col-lg-4">
                                         <div class="clean-product-item">
-                                            <div class="image"><a href="#" @click="chose(item)"><img class="img-fluid d-block mx-auto" 
-                                           v-bind:src="item.trip_pic"></a></div>
+                                            <div class="image"><img class="img-fluid d-block mx-auto" 
+                                           v-bind:src="item.trip_pic"></div>
                                             
-                                            <div class="product-name"><a href="#" @click="chose(item)"><h5>{{item.trip_name}}</h5></a>
+                                            <div class="product-name"><h5>{{item.trip_name}}</h5>
                                           <FORM id="from2" METHOD="post" ACTION="<%=request.getContextPath()%>/trip/trip.do" style="margin-bottom: 0px;">
                                           
                                   
 			  								<input type="hidden" name="trip_id" v-model="item.trip_id">
 			    							<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
 			     							<input type="hidden" name="action" value="listDetail_ByTrip_A">
-			     							
+			     							<button @click="chose(item)">查看</button>
 			     							</FORM>
                                             </div>
                                             
