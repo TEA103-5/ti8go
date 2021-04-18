@@ -268,8 +268,8 @@
 	    		place_pic:'',
 	    	},
 	    	addtrip:{
-	    		users_id:${(usersVO==null)?1:usersVO.users_id },
-	    		last_editor:${(usersVO==null)?1:usersVO.users_id },
+	    		users_id:'${(usersVO==null)?1:usersVO.users_id}',
+	    		last_editor:'${(usersVO==null)?1:usersVO.users_id}',
 	    		trip_start:'',
 	    		trip_end:'',
 	    		trip_name:'',

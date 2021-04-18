@@ -547,7 +547,7 @@ public class UsersServlet extends HttpServlet {
 			}
 	
 			if ("insertUsers".equals(action)) { // 來自addEmp.jsp的請求  
-				
+			
 				List<String> errorMsgs = new LinkedList<String>();
 				// Store this set in the request scope, in case we need to
 				// send the ErrorPage view.
@@ -605,21 +605,25 @@ public class UsersServlet extends HttpServlet {
 						failureView.forward(req, res);
 						return;
 					}
-
 					/***************************2.開始新增資料***************************************/
 					UsersService usersSvc = new UsersService();
 					usersVO = usersSvc.addusers_new(users_mail, users_pwd, users_status);	
-					usersVO = usersSvc.getOneusers(usersVO.getUsers_id());
+					System.out.println(usersVO.getUsers_id());
+					//usersVO = usersSvc.getOneusers(usersVO.getUsers_id());
+
 					/***************************3.新增完成,準備轉交(Send the Success view)***********/
 
-					req.setAttribute("usersVO", usersVO);
-					req.getSession().setAttribute("usersVO", usersSvc.getOneusers(usersVO.getUsers_id()));
-					String url = requestUrl + "/account.jsp";
+					//req.setAttribute("usersVO", usersVO);
+					//req.getSession().invalidate();
+					
+					req.getSession().setAttribute("usersVO", usersVO);
+					String url = "/front-end/";
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 					successView.forward(req, res);				
 					
 					/***************************其他可能的錯誤處理**********************************/
 				} catch (Exception e) {
+					System.out.println(e);
 					errorMsgs.add(e.getMessage());
 					RequestDispatcher failureView = req
 							.getRequestDispatcher(requestUrl + "/login.jsp");

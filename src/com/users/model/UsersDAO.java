@@ -84,11 +84,25 @@ public class UsersDAO implements UsersDAO_interface {
 		
 			rs = pstmt.executeQuery();
 			
-			rs.next();
-			fBPK = new UsersVO();
-			fBPK.setUsers_id(rs.getInt("users_id"));
+			while (rs.next()) {
+				fBPK = new UsersVO();
+				fBPK.setUsers_id(rs.getInt("users_id"));
+//				fBPK.setUsers_mail(rs.getString("users_mail"));
+//				fBPK.setUsers_pwd(rs.getString("users_pwd"));
+//				fBPK.setUsers_status(rs.getInt("users_identi_status"));
+//				fBPK.setUsers_nickname(rs.getString("users_nickname"));
+//				fBPK.setUsers_name(rs.getString("users_name"));
+//				fBPK.setUsers_sex(rs.getInt("users_sex"));
+//				fBPK.setUsers_birthday(rs.getString("users_birthday"));
+//				fBPK.setUsers_id_number(rs.getString("users_id_number"));
+//				fBPK.setUsers_phone(rs.getString("users_phone"));
+//				fBPK.setCreate_time(rs.getString("create_time"));
+//				fBPK.setUpdate_time(rs.getString("update_time"));
+//				fBPK.setUsers_users_pic(rs.getBytes("users_pic"));
+			}
 
-		System.out.println(rs.getInt("users_id"));		
+
+	//	System.out.println(rs.getInt("users_id"));		
 			// Handle any driver errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "

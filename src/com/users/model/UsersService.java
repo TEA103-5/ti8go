@@ -35,9 +35,9 @@ public class UsersService {
 //	usersVO.setUsers_users_pic(users_users_pic);
 //	usersVO.setUsers_phone(user_phone);
 	
-	dao.insert(usersVO);
 	
-	return usersVO;
+	
+	return dao.insert_new(usersVO);
 	}
 	public UsersVO addusers(UsersVO usersVO) throws Exception {		
 		
