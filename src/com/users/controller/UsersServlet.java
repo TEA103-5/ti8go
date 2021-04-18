@@ -530,9 +530,9 @@ public class UsersServlet extends HttpServlet {
 					if (requestUrl == "/front-end/users") { 
 						url = requestUrl + "/account.jsp"; 
 					} else	{		
-						url = requestUrl + "/tables.jsp";
+						url = requestUrl + "/usersHome.jsp";
 					}
-		System.out.println("url= " + url);			
+		//System.out.println("url= " + url);			
 					
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 					successView.forward(req, res);				
@@ -609,15 +609,15 @@ public class UsersServlet extends HttpServlet {
 					UsersService usersSvc = new UsersService();
 					usersVO = usersSvc.addusers_new(users_mail, users_pwd, users_status);	
 					System.out.println(usersVO.getUsers_id());
-					//usersVO = usersSvc.getOneusers(usersVO.getUsers_id());
+					usersVO = usersSvc.getOneusers(usersVO.getUsers_id());
 
 					/***************************3.新增完成,準備轉交(Send the Success view)***********/
 
 					//req.setAttribute("usersVO", usersVO);
-					//req.getSession().invalidate();
+					req.getSession().invalidate();
 					
 					req.getSession().setAttribute("usersVO", usersVO);
-					String url = "/front-end/";
+					String url = "/front-end/users/account.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 					successView.forward(req, res);				
 					

@@ -65,13 +65,13 @@
 						<div class="col-sm-4">
 							<label>性別 : </label>
 							<div class="form-check-inline">
-								<input type="radio" name="users_sex" id="sexF" value="0">
-<%-- 									<%= usersVO.getUsers_sex()==0 ? "checked" : ""%> > --%>
+								<input type="radio" name="users_sex" id="sexF" value="0"
+									<%= usersVO.getUsers_sex()==0 ? "checked" : ""%> >
 								<label for="sexF"> 女</label>
 							</div>
 							<div class="form-check-inline">
-								<input type="radio" name="users_sex" id="sexM" value="1">
-<%-- 									<%= usersVO.getUsers_sex()==1 ? "checked" : ""%>> --%>
+								<input type="radio" name="users_sex" id="sexM" value="1"
+									<%= usersVO.getUsers_sex()==1 ? "checked" : ""%>>
 								<label for="sexM"> 男</label>
 							</div>
 						</div>
