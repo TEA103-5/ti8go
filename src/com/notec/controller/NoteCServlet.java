@@ -111,7 +111,7 @@ public class NoteCServlet extends HttpServlet {
 				req.setAttribute("noteCVO", noteCVO); // 資料庫取出的noteVO物件,存入req
 
 				String url = "/front-end/notefront/update_notecEdit.jsp";
-//				String url = "/notec/update_noteC_input.jsp";
+			//	String url = "/notec/update_noteC_input.jsp";
 
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_note_input.jsp
 				successView.forward(req, res);
