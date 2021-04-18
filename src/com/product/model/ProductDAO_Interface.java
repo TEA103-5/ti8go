@@ -2,6 +2,7 @@ package com.product.model;
 
 
 
+import java.sql.Timestamp;
 import java.util.List;
 
 
@@ -13,4 +14,5 @@ public interface ProductDAO_Interface {
      public void delete(Integer product_id);
      public ProductVO findByPrimaryKey(Integer product_id);
      public List<ProductVO> getAll();
+     public ProductVO findByt(Timestamp t);
 }

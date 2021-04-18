@@ -68,7 +68,40 @@ public class AdminsAjaxHandler extends HttpServlet {
 				out.println(resultJSON);
 
 		}
+		
+		if ("admins_login".equals(action)) {
+			
+			
+			HashMap result = new HashMap();
+			
+			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+			String admins_email = req.getParameter("admins_email").trim();
+			
+			String admins_password = req.getParameter("admins_password").trim();
+			/*************************** 2.開始查詢資料 *****************************************/
+			AdminsService adminsSvc = new AdminsService();
+			AdminsVO adminsVO = null;
+			List<AdminsVO> list = adminsSvc.getAll();
+			
+			
+			for(AdminsVO oneAdminsVO : list) {
+				if(oneAdminsVO.getAdmins_email().equals(admins_email) && oneAdminsVO.getAdmins_password().equals(admins_password) ) {
+					req.getSession().setAttribute("adminsVO" , oneAdminsVO);
+					result.put("result" , "login_success");
+					JSONObject resultJSON = new JSONObject(result);
+					out.println(resultJSON);
+					return;
+				}
+				
+			}
+			
+			result.put("result" , "login_failure");
+			
 
+			/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+			JSONObject resultJSON = new JSONObject(result);
+			out.println(resultJSON);
+		}
 		
 		
 	}

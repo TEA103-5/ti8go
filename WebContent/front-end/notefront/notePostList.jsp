@@ -6,10 +6,14 @@
 <%@ page import="com.note.model.*"%>
 
 <%
+    List<NoteVO> list = null;
+	if (request.getAttribute("list") != null) {
+		list = (List<NoteVO>)request.getAttribute("list");
+	} else {
 	NoteService noteSvc = new NoteService();
-	List<NoteVO> list = noteSvc.getAll();
-	pageContext.setAttribute("list", list);
-
+	list = noteSvc.getAll();
+	}
+	pageContext.setAttribute("list",list);
 	NoteCService noteCSvc = new NoteCService();
 	// 	List<NoteCVO> list = noteCSvc.getAll();
 	// 	pageContext.setAttribute("list", list);
@@ -34,7 +38,92 @@
 </head>
 
 <body>
+
 <%@ include file="/front-end/pages/headNav.html" %>
+
+<!-- 	<nav -->
+<!-- 		class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar" -->
+<!-- 		style="background: #85867F; color: var(- -red); height: 60px;"> -->
+<!-- 		<div class="container"> -->
+<!-- 			<a class="navbar-brand logo" href="#">font-end</a> -->
+<!-- 			<button data-toggle="collapse" class="navbar-toggler" -->
+<!-- 				data-target="#navcol-1"> -->
+<!-- 				<span class="sr-only">Toggle navigation</span><span -->
+<!-- 					class="navbar-toggler-icon"></span> -->
+<!-- 			</button> -->
+<!-- 			<div class="collapse navbar-collapse" id="navcol-1"> -->
+<!-- 				<ul class="navbar-nav ml-auto"> -->
+<!-- 					<li class="nav-item" style="height: 11.6667px;"> -->
+<!-- 						<div class="nav-item dropdown" -->
+<!-- 							style="padding: 5px; width: 70.7083px;"> -->
+<!-- 							<a class="dropdown-toggle" aria-expanded="false" -->
+<!-- 								data-toggle="dropdown" href="#" -->
+<!-- 								style="padding: -71px; width: 0px; height: -8px; margin: -5px; color: rgba(0, 0, 0, 0.5);">place&nbsp;</a> -->
+<!-- 							<div class="dropdown-menu" -->
+<!-- 								style="margin: -5px 0px 0px; padding: 3px 0px; height: 99px; width: 144px;"> -->
+<!-- 								<a class="dropdown-item" href="#">First Item</a><a -->
+<!-- 									class="dropdown-item" href="#">Second Item</a><a -->
+<!-- 									class="dropdown-item" href="#">Third Item</a> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</li> -->
+<!-- 					<li class="nav-item"> -->
+<!-- 						<div class="nav-item dropdown" -->
+<!-- 							style="padding: 5px; width: 70.7083px;"> -->
+<!-- 							<a class="dropdown-toggle" aria-expanded="false" -->
+<!-- 								data-toggle="dropdown" href="#" -->
+<!-- 								style="padding: -54px; width: 0px; height: -8px; margin: -1px; color: rgba(0, 0, 0, 0.5);">trip&nbsp;</a> -->
+<!-- 							<div class="dropdown-menu"> -->
+<!-- 								<a class="dropdown-item" href="#">First Item</a><a -->
+<!-- 									class="dropdown-item" href="#">Second Item</a><a -->
+<!-- 									class="dropdown-item" href="#">Third Item</a> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</li> -->
+<!-- 					<li class="nav-item"> -->
+<!-- 						<div class="nav-item dropdown" -->
+<!-- 							style="padding: 5px; width: 70.7083px;"> -->
+<!-- 							<a class="dropdown-toggle" aria-expanded="false" -->
+<!-- 								data-toggle="dropdown" href="#" -->
+<!-- 								style="padding: -64px; width: 0px; height: -8px; margin: -3px; color: rgba(0, 0, 0, 0.5);">note</a> -->
+<!-- 							<div class="dropdown-menu"> -->
+<!-- 								<a class="dropdown-item" href="#">First Item</a><a -->
+<!-- 									class="dropdown-item" href="#">Second Item</a><a -->
+<!-- 									class="dropdown-item" href="#">Third Item</a> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</li> -->
+<!-- 					<li class="nav-item"> -->
+<!-- 						<div class="nav-item dropdown" -->
+<!-- 							style="padding: 5px; width: 70.7083px;"> -->
+<!-- 							<a class="dropdown-toggle" aria-expanded="false" -->
+<!-- 								data-toggle="dropdown" href="#" -->
+<!-- 								style="padding: -64px; width: 0px; height: -8px; margin: -3px; color: rgba(0, 0, 0, 0.5);">product</a> -->
+<!-- 							<div class="dropdown-menu"> -->
+<!-- 								<a class="dropdown-item" href="#">First Item</a><a -->
+<!-- 									class="dropdown-item" href="#">Second Item</a><a -->
+<!-- 									class="dropdown-item" href="#">Third Item</a> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</li> -->
+<!-- 					<li class="nav-item" style="height: 38px;"> -->
+<!-- 						<div class="nav-item dropdown" -->
+<!-- 							style="padding: 4px; width: 82.7083px; margin: 0px; height: 30px;"> -->
+<!-- 							<a class="dropdown-toggle" aria-expanded="false" -->
+<!-- 								data-toggle="dropdown" href="#" -->
+<!-- 								style="padding: 20px; width: 0px; height: -8px; margin: -3px; color: rgba(0, 0, 0, 0.5);">user</a> -->
+<!-- 							<div class="dropdown-menu"> -->
+<!-- 								<a class="dropdown-item" href="#">First Item</a><a -->
+<!-- 									class="dropdown-item" href="#">Second Item</a><a -->
+<!-- 									class="dropdown-item" href="#">Third Item</a> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</li> -->
+<!-- 				</ul> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 	</nav> -->
+
 
 			
 	<main class="page blog-post-list">
@@ -51,18 +140,22 @@
 						<a class="a1" href="noteEdit.jsp">Create New Note</a>
 					</button>
 					<!-- Search Widget -->
-						<div class="card my-4">
-							<h5 class="card-header">Search</h5>
-							<div class="card-body">
-								<div class="input-group">
-									<input type="text" class="form-control"
-										placeholder="Search for..."> <span
-										class="input-group-append">
-										<button class="btn btn-secondary" type="button">Go!</button>
-									</span>
+					
+                <div class="city-selector" role="tw-city-selector" data-bootstrap-style data-standard-words></div>
+        	
+            	<form METHOD="post" ACTION="<%=request.getContextPath()%>/note/note.do">
+				  <div class="card my-4">
+					<h5 class="card-header">Search</h5>
+					  <div class="card-body">
+						<div class="input-group">
+						  <input type="search" class="form-control" name="note_title" placeholder="Search for...">
+							<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>"> 
+                			<input type="hidden" name="action" value="getMyGo">
+							<button class="btn btn-secondary" type="submit">Go!</button>
 								</div>
 							</div>
 						</div>
+				</form>		
 				</div>
 
 				<div id="togohere" class="block-content">
@@ -78,13 +171,14 @@
 										style="max-width: 100%; height: 200px;">
 								</div>
 								<div class="col-lg-7">
-									<h3>${noteCSvc.togetoneNote(noteVO.note_id).note_c_title}</h3>
+									<h3>${noteVO.note_title}</h3>
 									<div class="info">
 										<span class="text-muted"><fmt:formatDate
 												pattern="yyyy-MM-dd" value="${noteVO.note_date}" /> by&nbsp;<a
-											href="#">John Smith</a></span>
+											href="#">${noteVO.users_id}</a></span>
 									</div>
-									<p>${noteCSvc.togetoneNote(noteVO.note_id).note_c_content}</p>
+									<p>${noteVO.note_description}</p>
+<!-- 									.substring(0,15) -->
 									<form METHOD="post" ACTION="<%=request.getContextPath()%>/note/note.do" style="margin-bottom: 0px;">
 									<input type="hidden" name="note_id"  value="${noteVO.note_id}">
 									<input type="hidden" name="requestURL"  value="<%=request.getServletPath()%>">

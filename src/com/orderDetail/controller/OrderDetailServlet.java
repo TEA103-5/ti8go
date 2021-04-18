@@ -3,7 +3,9 @@ package com.orderDetail.controller;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+
 import java.util.Set;
+
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -27,6 +29,7 @@ public class OrderDetailServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
+
 
 		if ("listAllOrderDetail_A".equals(action) 
 //				|| "listEmps_ByDeptno_B".equals(action)
@@ -62,6 +65,7 @@ public class OrderDetailServlet extends HttpServlet{
 				throw new ServletException(e);
 			}
 		}
+
 		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -141,14 +145,18 @@ public class OrderDetailServlet extends HttpServlet{
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("OrderDetailVO", empVO); // 資料庫取出的empVO物件,存入req
+
 				String url = "/sale-end/orderDetail/update_OrderDetail.jsp";
+
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
+
 				RequestDispatcher failureView = req.getRequestDispatcher("/sale-end/orderDetail/listAllOrderDetail.jsp");
+
 				failureView.forward(req, res);
 			}
 		}
@@ -173,6 +181,7 @@ Integer empno = new Integer(req.getParameter("empno").trim());
 					errorMsgs.add("數量請填數字.");
 				}
 			
+
 //				Integer detail_id = null;
 //				try {
 //					detail_id = new Integer(req.getParameter("detail_id").trim());
@@ -180,6 +189,7 @@ Integer empno = new Integer(req.getParameter("empno").trim());
 //					detail_id = 0;
 //					errorMsgs.add("明細編號請填數字.");
 //				}
+
 				
 				Integer order_id = null;
 				try {
@@ -197,6 +207,7 @@ Integer empno = new Integer(req.getParameter("empno").trim());
 					errorMsgs.add("商品編號請填數字.");
 				}
 				
+
 				Integer detail_status = null;
 				try {
 					detail_status = new Integer(req.getParameter("detail_status").trim());
@@ -206,21 +217,26 @@ Integer empno = new Integer(req.getParameter("empno").trim());
 				}
 				
 
+
 			//	Integer User_id = new Integer(req.getParameter("User_id").trim());
 			
 
 				OrderDetailVO empVO = new OrderDetailVO();
 				empVO.setOrder_detail_count(count);
+
 				empVO.setOrder_detail_id(empno);
 				empVO.setOrder_id(order_id);
 				empVO.setProduct_id(product_id);
 				empVO.setOrder_detail_status(detail_status);
+
 				
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("OrderDetailVO", empVO); // 含有輸入格式錯誤的empVO物件,也存入req
+
 					RequestDispatcher failureView = req.getRequestDispatcher("/sale-end/orderDetail/update_OrderDetail.jsp");
+
 					failureView.forward(req, res);
 					return;
 				}
@@ -230,17 +246,21 @@ Integer empno = new Integer(req.getParameter("empno").trim());
 				//empVO = empSvc.addProduct(pname,status,time,content,description,categories,price,sale_id);
 			 	empVO = empSvc.updateDetail(empVO);
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
+
 			 	System.out.println(empVO);
 			 	req.setAttribute("ordtVO", empVO);
 			 	System.out.println(empVO);
 			 	String url = "/sale-end/orderDetail/listOneOrderDetail.jsp";
+
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
+
 						.getRequestDispatcher("/sale-end/orderDetail/update_OrderDetail.jsp");
+
 				failureView.forward(req, res);
 			}
 		} 
@@ -286,6 +306,7 @@ Integer empno = new Integer(req.getParameter("empno").trim());
 					errorMsgs.add("商品編號請填數字.");
 				}
 				
+
 				Integer detail_status = null;
 				try {
 					detail_status = new Integer(req.getParameter("detail_status").trim());
@@ -294,17 +315,22 @@ Integer empno = new Integer(req.getParameter("empno").trim());
 					errorMsgs.add("明細狀態請填數字.");
 				}
 
+
 				OrderDetailVO empVO = new OrderDetailVO();
 				empVO.setOrder_detail_count(count);
 				empVO.setOrder_detail_id(detail_id);
 				empVO.setOrder_id(order_id);
 				empVO.setProduct_id(product_id);
+
 				empVO.setOrder_detail_status(detail_status);
+
 				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("OrderDetailVO", empVO); // 含有輸入格式錯誤的empVO物件,也存入req
+
 					RequestDispatcher failureView = req.getRequestDispatcher("/sale-end/orderDetail/addOrderDetail.jsp");
+
 					failureView.forward(req, res);
 					return;
 				}
@@ -314,13 +340,17 @@ Integer empno = new Integer(req.getParameter("empno").trim());
 				//empVO = empSvc.addProduct(pname,status,time,content,description,categories,price,sale_id);
 			 	empVO = empSvc.addDetail(empVO);
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
+
 				String url = "/sale-end/orderDetail/listAllOrderDetail.jsp";
+
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
+
 				RequestDispatcher failureView = req.getRequestDispatcher("/sale-end/orderDetail/addOrderDetail.jsp");
+
 				failureView.forward(req, res);
 			}
 		}  
@@ -341,7 +371,9 @@ Integer empno = new Integer(req.getParameter("empno").trim());
 				empSvc.deleteOrderDetail(empno);
 				
 				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
+
 				String url = "/sale-end/orderDetail/listAllOrderDetail.jsp";
+
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 				successView.forward(req, res);
 				
@@ -349,7 +381,9 @@ Integer empno = new Integer(req.getParameter("empno").trim());
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
+
 						.getRequestDispatcher("/sale-end/orderDetail/listAllOrderDetail.jsp");
+
 				failureView.forward(req, res);
 			}
 		}

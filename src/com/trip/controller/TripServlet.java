@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import com.team.model.TeamVO;
 import com.trip.model.TripService;
 import com.trip.model.TripVO;
+import com.trip_detail.model.Trip_detailService;
 import com.trip_detail.model.Trip_detailVO;
 import com.users.model.UsersService;
 
@@ -32,7 +33,24 @@ public class TripServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		req.setCharacterEncoding("UTF-8");
+		res.setContentType("application/json ; charset=UTF-8");
 		String action = req.getParameter("action");
+		
+		
+		
+		if("delAjax".equals(action)) {
+			Integer trip_id = new Integer(req.getParameter("trip_id").trim());
+			TripService tripSvc = new TripService();
+			tripSvc.delT(trip_id);
+		}
+		if("updateDay".equals(action)) {
+			String day = req.getParameter("day");
+    		Integer trip_id = new Integer(req.getParameter("trip_id").trim());
+    		TripService tripSvc = new TripService();
+    		tripSvc.updateDay(day, trip_id);
+    		
+    		
+		}
 		
         if ("insertajax".equals(action)) { // 來自addEmp.jsp的請求  
         	
@@ -556,6 +574,40 @@ req.setAttribute("tripVO", tripVO); // 含有輸入格式錯誤的empVO物件,�
 		}
 		
 		
+        if ("delTDbyTid".equals(action)) { // 來自listAllEmp.jsp
+        	
+        	List<String> errorMsgs = new LinkedList<String>();
+        	// Store this set in the request scope, in case we need to
+        	// send the ErrorPage view.
+        	req.setAttribute("errorMsgs", errorMsgs);
+        	
+        	try {
+        		/***************************1.接收請求參數***************************************/
+        		Integer trip_id = new Integer(req.getParameter("trip_id"));
+        		
+        		/***************************2.開始刪除資料***************************************/
+        		Trip_detailService tripSvc = new Trip_detailService();
+        		tripSvc.deleteT(trip_id);
+   
+        		/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
+//        		String url = "/trip/listAllEmp.jsp";
+//        		RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
+//        		successView.forward(req, res);
+    			HashMap result = new HashMap();
+    			PrintWriter out = res.getWriter();
+    			result.put("d", "succ");
+    			JSONObject resultJSON = new JSONObject(result);
+				out.println(resultJSON);
+    		
+        		/***************************其他可能的錯誤處理**********************************/
+        	} catch (Exception e) {
+        		System.out.println(e);
+//        		errorMsgs.add("刪除資料失敗:"+e.getMessage());
+//        		RequestDispatcher failureView = req
+//        				.getRequestDispatcher("/trip/listAllEmp.jsp");
+//        		failureView.forward(req, res);
+        	}
+        }
 		if ("delete".equals(action)) { // 來自listAllEmp.jsp
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -593,19 +645,21 @@ req.setAttribute("tripVO", tripVO); // 含有輸入格式錯誤的empVO物件,�
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
 				Integer trip_id = new Integer(req.getParameter("trip_id"));
-
 				/*************************** 2.開始查詢資料 ****************************************/
 				TripService tripSvc = new TripService();
 				Set<Trip_detailVO> set = tripSvc.getDetailByTrip(trip_id);
+				TripVO tvo =tripSvc.getOneEmp(trip_id);
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+				
+				req.setAttribute("tripVO", tvo);    // 資料庫取出的set物件,存入request
 				req.setAttribute("listDetail_ByTrip", set);    // 資料庫取出的set物件,存入request
 
 				String url = null;
 				if ("listDetail_ByTrip_A".equals(action))
-					url = "/trip/listDetail_ByTrip.jsp";        // 成功轉交 dept/listEmps_ByDeptno.jsp
+					url = "/front-end/trip/selectOneTrip.jsp";        // 成功轉交 dept/listEmps_ByDeptno.jsp
 				else if ("listDetail_ByTrip_B".equals(action))
-					url = "/trip/listAllEmp.jsp";              // 成功轉交 dept/listAllDept.jsp
+					url = "/front-end/trip/editTrip.jsp";              // 成功轉交 dept/listAllDept.jsp
 
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);

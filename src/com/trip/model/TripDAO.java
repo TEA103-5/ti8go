@@ -37,6 +37,8 @@ public class TripDAO implements TripDAO_interface {
 	private static final String GET_ALL_STMT = "SELECT * FROM trip order by trip_id";
 	private static final String GET_ONE_STMT =  "SELECT * FROM trip where trip_id = ?";
 	private static final String DELETE =  "DELETE FROM trip where trip_id = ?";
+	private static final String UPDATEs="update trip set trip_state = 0 where trip_id = ?";
+	private static final String UPDATED="update trip set place_weather = ? where trip_id = ?";
 	private static final String UPDATE =  "UPDATE trip set users_id= ?,last_editor= ?,trip_state= ?,read_authority= ?,"
 	+ "edit_authority= ?,trip_area= ?,trip_start= ?,trip_end= ?,trip_name= ?,trip_description= ?,"
 	+ " trip_type= ?,trip_tot_cost= ?,place_weather= ? where trip_id = ?";
@@ -45,6 +47,8 @@ public class TripDAO implements TripDAO_interface {
 	private static final String GET_Detail_ByTrip_STMT = "SELECT * FROM trip_detail where trip_id = ? order by trip_day,trip_sort";
 	private static final String GET_Team_ByTrip_STMT = "SELECT * FROM team where trip_id = ? order by users_id";
 //	private static final String GET_Activities_ByTrip_STMT = "SELECT * FROM group_activities where trip_id = ? order by activities_id";
+	
+	
 	
 	public TripVO insert2(TripVO tripVO) {
 		TripVO tvo=new TripVO();
@@ -176,6 +180,83 @@ public class TripDAO implements TripDAO_interface {
 	
 	}
 	
+	@Override
+	public void delT(Integer trip_id) {
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATEs);
+			
+			pstmt.setInt(1, trip_id);
+			
+			pstmt.executeUpdate();
+			
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+	}
+	@Override
+	public void updateDay(String day,Integer trip_id) {
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATED);
+			
+			pstmt.setString(1, day);
+			pstmt.setInt(2, trip_id);
+			
+			pstmt.executeUpdate();
+			
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+	}
 	@Override
 	public void update(TripVO tripVO) {
 	

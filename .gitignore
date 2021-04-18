@@ -9,3 +9,6 @@ target/
 .settings/
 .classpath
 .project
+src/util/Google_key.java
+src/資料庫表格建立/LinS02.sql
+src/資料庫表格建立/mysql全部整合版 (1).sql

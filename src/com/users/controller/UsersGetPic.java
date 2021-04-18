@@ -21,7 +21,7 @@ public class UsersGetPic extends HttpServlet {
 		ServletOutputStream out = res.getOutputStream();
 		try {
 			Statement stmt = con.createStatement();
-			System.out.println("測試用");
+//			System.out.println("測試用");
 			String id = req.getParameter("id").trim();  //trim
 			ResultSet rs = stmt.executeQuery("SELECT users_pic FROM users where users_id =" + id);
 			
@@ -47,7 +47,6 @@ public class UsersGetPic extends HttpServlet {
 			rs.close();
 			stmt.close();
 		} catch (Exception e) {
-			System.out.println(e);
 			InputStream in = getServletContext().getResourceAsStream("/NoData/null.jpg");
 			byte[] b = new byte[in.available()];
 			in.read(b);
@@ -87,7 +86,7 @@ public class UsersGetPic extends HttpServlet {
 		try {
 			if (con != null) con.close();
 		} catch (SQLException e) {
-			System.out.println(e);
+//			System.out.println(e);
 		}
 	}
 

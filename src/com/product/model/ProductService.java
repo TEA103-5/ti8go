@@ -45,7 +45,8 @@ public class ProductService {
 	}
 	public ProductVO addProduct(ProductVO productVO) {
 		dao.insert(productVO);
-		return productVO;
+	
+		return 	dao.findByt(productVO.getProduct_update_time());
 	}
 	
 	

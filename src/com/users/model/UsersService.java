@@ -17,42 +17,62 @@ public class UsersService {
 		dao = new UsersDAO();
 	}
 	
-	public UsersVO addusers(Integer users_id, String users_mail, String users_pwd, 
-			Integer users_status, String users_nickname, String users_name, 
-			Integer users_sex, String users_birthday, String users_id_number, 
-			Byte[] users_users_pic, String user_phone) throws Exception {
-		
+	public UsersVO addusers_new(String users_mail, String users_pwd, 
+			Integer users_status) throws Exception {
+//System.out.println("有到這裡");	
 	UsersVO usersVO = new UsersVO();
 	
 //	usersVO.setusers_id(users_id);
-	usersVO.setUsers_id(users_id);
+
 	usersVO.setUsers_mail(users_mail);
 	usersVO.setUsers_pwd(users_pwd);
 	usersVO.setUsers_status(users_status);
-	usersVO.setUsers_nickname(users_nickname);
-	usersVO.setUsers_name(users_name);
-	usersVO.setUsers_sex(users_sex);
-	usersVO.setUsers_birthday(users_birthday);
-	usersVO.setUsers_id_number(users_id_number);
+//	usersVO.setUsers_nickname(users_nickname);
+//	usersVO.setUsers_name(users_name);
+//	usersVO.setUsers_sex(users_sex);
+//	usersVO.setUsers_birthday(users_birthday);
+//	usersVO.setUsers_id_number(users_id_number);
 //	usersVO.setUsers_users_pic(users_users_pic);
-	usersVO.setUsers_phone(user_phone);
+//	usersVO.setUsers_phone(user_phone);
 	
-	dao.insert(usersVO);
 	
+	
+	return dao.insert_new(usersVO);
+	}
+	public UsersVO addusers(UsersVO usersVO) throws Exception {		
+		
+		usersVO=dao.insert_new(usersVO);
+
 	return usersVO;
 	}
-	public UsersVO addusers(UsersVO usersVO) throws Exception {
-
+	
+	public UsersVO addusers(String users_mail, String users_pwd, 
+			Integer users_status, String users_nickname, String users_name, 
+			Integer users_sex, String users_birthday, String users_id_number, 
+			byte[] users_users_pic, String users_phone) throws Exception {
 		
+		UsersVO usersVO = new UsersVO();
+		
+//	usersVO.setusers_id(users_id);
+		
+		usersVO.setUsers_mail(users_mail);
+		usersVO.setUsers_pwd(users_pwd);
+		usersVO.setUsers_status(users_status);
+		usersVO.setUsers_nickname(users_nickname);
+		usersVO.setUsers_name(users_name);
+		usersVO.setUsers_sex(users_sex);
+		usersVO.setUsers_birthday(users_birthday);
+		usersVO.setUsers_id_number(users_id_number);
+		usersVO.setUsers_users_pic(users_users_pic);
+		usersVO.setUsers_phone(users_phone);		
 		dao.insert(usersVO);
-		
 		return usersVO;
 	}
 	
 	public UsersVO updateusers(Integer users_id, String users_mail, String users_pwd, 
 			Integer users_status, String users_nickname, String users_name, 
 			Integer users_sex, String users_birthday, String users_id_number, 
-			Byte[] users_users_pic, String user_phone) throws Exception{
+			byte[] users_users_pic, String users_phone) throws Exception{
 		
 		UsersVO usersVO = new UsersVO();
 		
@@ -65,9 +85,12 @@ public class UsersService {
 		usersVO.setUsers_sex(users_sex);
 		usersVO.setUsers_birthday(users_birthday);
 		usersVO.setUsers_id_number(users_id_number);
-//		usersVO.setUsers_users_pic(users_users_pic);
-		usersVO.setUsers_phone(user_phone);
-		
+
+
+
+		usersVO.setUsers_users_pic(users_users_pic);
+		usersVO.setUsers_phone(users_phone);
+	
 		dao.update(usersVO);
 		
 		return usersVO;	
@@ -84,6 +107,7 @@ public class UsersService {
 	}
 	
 	public UsersVO getOneusers(Integer users_id) {
+
 		return dao.findByPK(users_id);
 	}
 	

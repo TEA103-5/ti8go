@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <nav
 		class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar"
 		style="background: #85867F; color: var(- -red); height: 60px;">
@@ -20,7 +20,7 @@
 								style="padding: -71px; width: 0px; height: -8px; margin: -5px; color: rgba(0, 0, 0, 0.5);">地點&nbsp;</a>
 							<div class="dropdown-menu"
 								style="margin: -5px 0px 0px; padding: 3px 0px; height: 99px; width: 144px;">
-								<a class="dropdown-item" href="#">First Item</a><a
+								<a class="dropdown-item" href="<%=request.getContextPath()%>/front-end/place/selectPlace.jsp">搜尋地點</a><a
 									class="dropdown-item" href="#">Second Item</a><a
 									class="dropdown-item" href="#">Third Item</a>
 							</div>
@@ -33,9 +33,15 @@
 								data-toggle="dropdown" href="#"
 								style="padding: -54px; width: 0px; height: -8px; margin: -1px; color: rgba(0, 0, 0, 0.5);">行程&nbsp;</a>
 							<div class="dropdown-menu">
-								<a class="dropdown-item" href="<%=request.getContextPath()%>/front-end/trip/addtrip.jsp">新增行程</a>
-								<a class="dropdown-item" href="#">Second Item</a><a
-									class="dropdown-item" href="#">Third Item</a>
+								<a class="dropdown-item" href="<%=request.getContextPath()%>/front-end/trip/addtrip.jsp">建立行程</a>
+								<c:if test="${not empty usersVO}">								
+								<a class="dropdown-item" href="#" onclick="document.getElementById('from1').submit()">我的行程</a>
+								     <FORM id="from1" METHOD="post" ACTION="<%=request.getContextPath()%>/users/users.do" > 							       
+									       <input type="hidden" name="users_id" value="${usersVO.users_id}">
+									       <input type="hidden" name="action" value="listTrip_ByUsers_A">
+									     </FORM>
+								</c:if>
+								<a class="dropdown-item" href="#">Third Item</a>
 							</div>
 						</div>
 					</li>
@@ -46,8 +52,8 @@
 								data-toggle="dropdown" href="#"
 								style="padding: -64px; width: 0px; height: -8px; margin: -3px; color: rgba(0, 0, 0, 0.5);">遊記</a>
 							<div class="dropdown-menu">
-								<a class="dropdown-item" href="#">First Item</a><a
-									class="dropdown-item" href="#">Second Item</a><a
+								<a class="dropdown-item" href="<%=request.getContextPath()%>/front-end/notefront/listMyNote.jsp">我的遊記</a><a
+									class="dropdown-item" href="<%=request.getContextPath()%>/front-end/notefront/notePostList.jsp">所有遊記</a><a
 									class="dropdown-item" href="#">Third Item</a>
 							</div>
 						</div>
@@ -60,8 +66,8 @@
 								style="padding: -64px; width: 0px; height: -8px; margin: -3px; color: rgba(0, 0, 0, 0.5);">商城</a>
 							<div class="dropdown-menu">
 								<a class="dropdown-item" href="<%=request.getContextPath()%>/front-end/order/addOrder.jsp">普通購物區</a>
-								<a class="dropdown-item" href="#">俊偉PRO購物區</a>
 								<a class="dropdown-item" href="#">Third Item</a>
+<!-- 								<a class="dropdown-item" href="#">俊偉PRO購物區</a> -->
 							</div>
 						</div>
 					</li>
@@ -72,10 +78,18 @@
 								data-toggle="dropdown" href="#"
 								style="padding: 20px; width: 0px; height: -8px; margin: -3px; color: rgba(0, 0, 0, 0.5);">${(usersVO==null)?'會員':(usersVO.users_mail)}</a>
 							<div class="dropdown-menu">
-								<a class="dropdown-item" href="<%=request.getContextPath()%>/front-end/users/login.jsp">登入</a>
-								<a class="dropdown-item" href="<%=request.getContextPath()%>/login.do?requestURL=<%=request.getServletPath()%>">登出</a>
-									<a class="dropdown-item" href="#">註冊</a>
-									<a class="dropdown-item" href="<%=request.getContextPath()%>/front-end/users/usersHome.jsp">會員中心</a>
+					
+
+
+									
+								<a class="dropdown-item" href="<%=request.getContextPath()%>/front-end/users/login.jsp">登入/註冊</a>
+
+								<a class="dropdown-item" href="<%=request.getContextPath()%>/login.do?requestURL=<%=request.getServletPath()%>">登出</a>								
+
+									<a class="dropdown-item" href="<%=request.getContextPath()%>/front-end/users/account.jsp">會員資料</a>
+									
+<!-- 									<a class="dropdown-item" href="<%=request.getContextPath()%>/front-end/users/usersHome.jsp">會員中心</a> -->
+									
 							</div>
 						</div>
 					</li>
@@ -83,7 +97,6 @@
 			</div>
 		</div>
 	</nav>
-
 
 
 

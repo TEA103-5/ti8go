@@ -38,6 +38,17 @@ $(function () {
         // 將當前點擊的索引當作參數呼叫DisplayInfoWindow
         DisplayInfoWindow(card_index)
 
+        // 取得點擊的marker座標 , 並繪製路線
+        route_destination = markers[card_index].getPosition()
+        addDirectionsRoute(route_origin, route_destination)
+
+        // 先處理地址字串, 取出區的部分, 再呼叫天氣api ,
+        let district_index = $(".card").eq(card_index).find(".card-text").text().indexOf("區")
+        // console.log("district_index" + district_index)
+        let district = $(".card").eq(card_index).find(".card-text").text().substring(district_index - 2, district_index + 1)
+        // console.log("district" + district)
+        call_weather_api(district);
+
     })
 
     // 取消"地點詳情" "加入收藏"兩個按鈕點擊時的冒泡事件

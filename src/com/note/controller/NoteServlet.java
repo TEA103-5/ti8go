@@ -14,6 +14,7 @@ import com.note.model.NoteVO;
 import com.notec.model.NoteCService;
 import com.notec.model.NoteCVO;
 
+
 public class NoteServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -74,7 +75,10 @@ public class NoteServlet extends HttpServlet {
 				}
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-				if(requestURL.equals("/front-end/notefront/notePostList.jsp")) {
+
+				if(requestURL.equals("/front-end/notefront/notePostList.jsp") || requestURL.equals("/front-end/notefront/listMyNote.jsp")
+						|| requestURL.equals("/front-end/notefront/listMyNote_collect.jsp")) {
+
 					req.setAttribute("noteVO", noteVO);
 					String url = "/front-end/notefront/notePost.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交
@@ -104,6 +108,9 @@ public class NoteServlet extends HttpServlet {
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 
+			String requestURL =  req.getParameter("requestURL");
+
+
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
 				Integer note_id = new Integer(req.getParameter("note_id"));
@@ -113,15 +120,29 @@ public class NoteServlet extends HttpServlet {
 				NoteVO noteVO = noteSvc.getOneNote(note_id);
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-				req.setAttribute("noteVO", noteVO); // 資料庫取出的noteVO物件,存入req
-				String url = "/note/update_note_input.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_note_input.jsp
-				successView.forward(req, res);
+
+				if(requestURL.equals("/front-end/notefront/listMyNote.jsp")) {
+					req.setAttribute("noteVO", noteVO);
+					String url = "/front-end/notefront/update_noteEdit.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交
+					successView.forward(req, res);
+					
+					return;
+					
+				} else {
+					req.setAttribute("noteVO", noteVO); // 資料庫取出的noteVO物件,存入req
+					String url = "/note/update_note_input.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_note_input.jsp
+					successView.forward(req, res);
+				
+				    return;
+				}
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/note/listAllNote.jsp");
+//				RequestDispatcher failureView = req.getRequestDispatcher("/note/listAllNote.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/notefront/listMyNote.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -136,7 +157,10 @@ public class NoteServlet extends HttpServlet {
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				Integer note_id = new Integer(req.getParameter("note_id").trim());
-				Integer note_classid = new Integer(1); //當作是上下架狀態0下架 1上架中
+
+				Integer note_classid = new Integer(req.getParameter("note_classid").trim());
+				//Integer note_classid = new Integer(1); //當作是上下架狀態0下架 1上架中
+
 //				Integer note_classid = null;
 //				try {
 //					note_classid = new Integer(req.getParameter("note_classid").trim());
@@ -153,11 +177,11 @@ public class NoteServlet extends HttpServlet {
 					errorMsgs.add("請輸入日期!");
 				}
 				String note_title = req.getParameter("note_title");
-				String notetitleReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_.//!?~)]{2,10}$";
+				String notetitleReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_.//!?~)]{2,20}$";
 				if (note_title == null || note_title.trim().length() == 0) {
 					errorMsgs.add("遊記標題: 請勿空白");
 				} else if (!note_title.trim().matches(notetitleReg)) { // 以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("遊記標題: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
+					errorMsgs.add("遊記標題: 只能是中、英文字母、數字和_ , 且長度必需在2到20之間");
 				}
 
 				String note_description = req.getParameter("note_description").trim();
@@ -188,7 +212,8 @@ public class NoteServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("noteVO", noteVO); // 含有輸入格式錯誤的empVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/note/update_note_input.jsp");
+//					RequestDispatcher failureView = req.getRequestDispatcher("/note/update_note_input.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/notefront/update_noteEdit.jsp");
 					failureView.forward(req, res);
 					return; // 程式中斷
 				}
@@ -201,7 +226,10 @@ public class NoteServlet extends HttpServlet {
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 
 				req.setAttribute("noteVO", noteVO);
-				String url = "/note/listOneNote.jsp";
+
+				String url = "/front-end/notefront/listMyNote.jsp";
+//				String url = "/note/listOneNote.jsp";
+
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
@@ -211,7 +239,8 @@ public class NoteServlet extends HttpServlet {
 //				NoteDAO dao = new NoteDAO();
 //				NoteVO noteVO = dao.findByPrimaryKey(note_id);
 //				req.setAttribute("noteVO", noteVO);
-				RequestDispatcher failureView = req.getRequestDispatcher("/note/update_note_input.jsp");
+//				RequestDispatcher failureView = req.getRequestDispatcher("/note/update_note_input.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/notefront/update_noteEdit.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -236,11 +265,11 @@ public class NoteServlet extends HttpServlet {
 					errorMsgs.add("請輸入日期!");
 				}
 				String note_title = req.getParameter("note_title");
-				String notetitleReg = "^[(\\u4e00-\\u9fa5)(a-zA-Z0-9_.//!?~)]{2,10}$";
+				String notetitleReg = "^[(\\u4e00-\\u9fa5)(a-zA-Z0-9_.//!?~)]{2,20}$";
 				if (note_title == null || note_title.trim().length() == 0) {
 					errorMsgs.add("遊記標題: 請勿空白");
 				} else if (!note_title.trim().matches(notetitleReg)) { // 以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("遊記標題: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
+					errorMsgs.add("遊記標題: 只能是中、英文字母、數字和_ , 且長度必需在2到20之間");
 				}
 
 				String note_description = req.getParameter("note_description");
@@ -248,9 +277,11 @@ public class NoteServlet extends HttpServlet {
 				if (note_description == null || note_description.trim().length() == 0) {
 					errorMsgs.add("大綱請勿空白");
 				} 
+
 //				else if (!note_description.trim().matches(notedesReg)) { // 以下練習正則(規)表示式(regular-expression)
 //					errorMsgs.add("大綱: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
 //				}
+
 
 				Integer users_id = new Integer(req.getParameter("users_id").trim());
 				Integer trip_id = new Integer(req.getParameter("trip_id").trim());
@@ -283,14 +314,17 @@ public class NoteServlet extends HttpServlet {
 
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				String url = "/front-end/notefront/notePostList.jsp";
+				String url = "/front-end/notefront/listMyNote.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
+
+//				RequestDispatcher failureView = req.getRequestDispatcher("/note/addNote.jsp");
 				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/notefront/noteEdit.jsp");
+
 				failureView.forward(req, res);
 			}
 		}
@@ -322,6 +356,75 @@ public class NoteServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
+		
+		if ("getMyGo".equals(action)) {// 來自select_page.jsp的請求
 
-	}
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			String requestURL = req.getParameter("requestURL"); 
+System.out.println(requestURL);
+
+//			try {
+				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+
+				// 因為是用來模糊查詢, 所以只能是中英文字母
+				String note_title = req.getParameter("note_title");
+				String notetitleReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_.//!?~)]{2,10}$";
+				if (note_title == null || note_title.trim().length() == 0) {
+					note_title= "";
+				} else if (!note_title.trim().matches(notetitleReg)) { // 以下練習正則(規)表示式(regular-expression)
+					errorMsgs.add("遊記標題: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
+				}
+
+				String note_description = note_title;
+				/*************************** 2.開始查詢資料 *****************************************/
+				NoteService noteSvc = new NoteService();
+				List<NoteVO> list = noteSvc.getMyGo(note_title, note_description);
+				if (list == null) {
+					errorMsgs.add("查無資料");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					if(requestURL.equals("/note-end/notefront/notePostList.jsp")) {    // 將錯誤訊息傳回去
+						RequestDispatcher failureView = req.getRequestDispatcher("/note-end/notefront/notePostList.jsp");
+						failureView.forward(req, res);
+						return;// 程式中斷
+					}else {
+						
+						RequestDispatcher failureView = req.getRequestDispatcher("/note/select_page.jsp");
+						failureView.forward(req, res);
+						return;// 程式中斷
+					}
+				}
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+				
+				if(requestURL.equals("/note/select_page.jsp")) { // 從0201來的請求
+					req.setAttribute("list", list);
+					String url = requestURL;
+					RequestDispatcher successView = req.getRequestDispatcher(url);
+					successView.forward(req, res);
+					return;
+				}
+				
+				if(requestURL.equals("/front-end/notefront/notePostList.jsp")) { // 從正式結構頁面來的請求
+					req.setAttribute("list", list);
+					String url = requestURL;
+					RequestDispatcher successView = req.getRequestDispatcher(url);
+					successView.forward(req, res);
+					return;
+				  }
+				
+				
+				/*************************** 其他可能的錯誤處理 *************************************/
+//				} catch (Exception e) {
+//				errorMsgs.add("無法取得資料:" + e.getMessage());
+//				RequestDispatcher failureView = req.getRequestDispatcher("/note/select_page.jsp");
+//				failureView.forward(req, res);
+//			}
+		}
+
+	}	
 }

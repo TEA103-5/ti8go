@@ -35,7 +35,9 @@
   }
 </style>
 <body>
-<%@ include file="/front-end/pages/headNav.html" %>
+
+ <%@ include file="/front-end/pages/headNav.html" %> 
+
 <!--     <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar" style="background: #85867F;color: var(--red); height: 60px;"> -->
 <!--         <div class="container"><a class="navbar-brand logo" href="#">font-end</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button> -->
 <!--             <div class="collapse navbar-collapse" id="navcol-1">  -->
@@ -84,7 +86,9 @@
     <div class="row mt-5 mb-5 ">
   <!-- Title -->
   <div class="col-lg-8">
-    <h1 class="edit">編輯內容</h1>
+
+    <h1 class="edit">新增內容</h1>
+
   </div>
       <!-- Post Content Column -->
       <div class="col-lg-8 mt-3">
@@ -108,11 +112,11 @@
 			
           <div class="form-group pt-3">
             <label for="exampleFormControlInput1">副標題</label>
-            <input type="text" name="note_c_title" class="form-control" id="exampleFormControlInput3"><span id="title3" style="color:red"></span>
+            <input type="text" name="note_c_title" class="form-control" id="exampleFormControlInput3"><span id="title3" style="color:red" value="${noteCVO.note_c_title}"></span>
           </div>
           <div class="form-group">
             <label for="exampleFormControlTextarea1">內容簡介</label>
-            <textarea type="text" name="note_c_content" class="form-control" id="Input2"></textarea>
+            <textarea type="text" name="note_c_content" class="form-control" id="Input2">${noteCVO.note_c_content}</textarea>
           </div>
           <script type="text/javascript">
 		  	$(document).ready(function() {

@@ -1,6 +1,7 @@
 <%@page import="java.util.*"%>
 <%@page import="com.place.model.*"%>
 <%@page import="com.place_collect.model.*"%>
+<%@page import="util.Google_key"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
@@ -8,6 +9,9 @@
 
 
 <%
+	pageContext.setAttribute("Google_key", Google_key.key);   // 將util.Google_key的金鑰字串放進pageContext
+	pageContext.setAttribute("weather_key", Google_key.weather_key);
+
 	session.setAttribute("users_id", 1);  //  測試用
 	
 	if(session.getAttribute("users_id") != null){
@@ -87,6 +91,20 @@
                 <a class="nav-link active" href="<%=request.getContextPath()%>/front-end/place/listMyPlace.jsp">我的地點</a>
                 <a class="nav-link active" href="<%=request.getContextPath()%>/front-end/place_collect/listMyPlace_collect.jsp">我的收藏</a>
             </div>
+            
+            <form class="form-inline">
+                <label class="my-1 mr-2" for="inlineFormCustomSelectPref">點擊地點後選擇交通方式</label>
+                <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+                    <option value="TRANSIT" selected>大眾運輸</option>
+                    <option value="WALKING">走路</option>
+                    <option value="BICYCLING">腳踏車</option>
+                    <option value="DRIVING">開車</option>
+                </select>
+
+                <!-- <input class="form-control mr-sm-2" type="search" name="place_name" placeholder="請輸入地點名稱"
+                    aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜尋路線</button> -->
+            </form>
 
             <form class="form-inline" METHOD="post" ACTION="<%=request.getContextPath()%>/place/place.do">
                 <div class="city-selector" role="tw-city-selector" data-bootstrap-style data-standard-words></div>
@@ -181,7 +199,13 @@
     <script src="<%=request.getContextPath()%>/front-end/place/myjs/place/search-bar.js"></script>
     <script src="<%=request.getContextPath()%>/front-end/place/myjs/place/card_container.js"></script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAS-fxnvefOMYMXZnlrUlgPIsvgmMcFuY&callback=initMap&libraries=&v=weekly" async></script>
+	<script>
+        let weather_api_key = "${weather_key}";
+    </script>
+	
+	<script src="https://unpkg.com/sweetalert@2.1.2/dist/sweetalert.min.js"></script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=${Google_key}&callback=initMap&libraries=&v=weekly" async></script>
 	
 	<script>
 		
@@ -199,7 +223,8 @@
 
 				// 	login_users為null代表未登入, 不執行後續動作	
 				if(login_users == null){
-					alert("登入後才能加入收藏");
+					swal("操作失敗", "登入後才能加入收藏", "error");
+// 					alert("登入後才能加入收藏");
 					return ;
 				}
 				let that = $(this);
@@ -223,9 +248,11 @@
 			          console.log(data);
 			          if(data.result == "insert_succss"){
 	// 		        	  // 新增成功則按鈕改成顯示取消收藏
-			        	  that.html("取消收藏")
+			        	  that.html("取消收藏");
+			        	  swal("加入收藏成功", "已加入地點收藏", "success")
 			          }else if(data.result == "delete_success"){
-			        	  that.html("加入收藏")
+			        	  that.html("加入收藏");
+			        	  swal("移除收藏成功", "已移除地點收藏", "success")
 			          }
 			          
 			        }

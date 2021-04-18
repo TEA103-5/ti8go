@@ -199,6 +199,9 @@ System.out.println(requestURL);
 			req.setAttribute("errorMsgs", errorMsgs);
 			String requestURL = req.getParameter("requestURL");
 			
+			List<String> successMsgs = new LinkedList<String>();
+			req.setAttribute("successMsgs", successMsgs);
+			
 //			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				Integer place_id = new Integer(req.getParameter("place_id").trim());
@@ -460,6 +463,9 @@ System.out.println(requestURL);
 				placeVO = placeSvc.updatePlace(place_id, place_name, place_address, place_longitude, place_latitude,
 						place_tel, place_region, place_type, place_index, place_pic1, place_pic2, place_pic3,
 						place_state, users_id, business_time);
+				
+				// 加入成功訊息
+				successMsgs.add("地點修改成功");
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				
@@ -517,6 +523,9 @@ System.out.println(requestURL);
 			req.setAttribute("errorMsgs", errorMsgs);
 			String requestURL = req.getParameter("requestURL"); // 
 System.out.println("requestURL = " + requestURL);
+
+			List<String> successMsgs = new LinkedList<String>();
+			req.setAttribute("successMsgs", successMsgs);
 
 			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
@@ -759,6 +768,9 @@ System.out.println("requestURL = " + requestURL);
 				placeVO = placeSvc.addPlace(place_name, place_address, place_longitude, place_latitude, place_tel,
 						place_region, place_type, place_index, place_pic1, place_pic2, place_pic3, place_state,
 						users_id, business_time);
+				
+				// 新增完成,放入成功訊息
+				successMsgs.add("新增地點成功");
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				if(requestURL.equals("/front-end/place/addPlace.jsp")) {  // 來自前台正式頁面, 預計導向我的地點

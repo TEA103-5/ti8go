@@ -74,6 +74,11 @@ body {
 	border-collapse: collapse;
 	border-radius:50%;
 }
+.table-place {
+  display:block;
+  height : 500px;
+  overflow-y : scroll;
+}
 .table-users th, .table-users td {
 	text-align: left;
 	border-top: .1px solid #ddd;

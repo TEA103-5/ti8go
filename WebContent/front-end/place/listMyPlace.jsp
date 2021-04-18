@@ -44,39 +44,40 @@
 </head>
 
 <body>
-	<nav
-		class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
-		<div class="container">
-			<a class="navbar-brand logo" href="#">Tivago</a>
-			<button data-toggle="collapse" class="navbar-toggler"
-				data-target="#navcol-1">
-				<span class="sr-only">Toggle navigation</span><span
-					class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navcol-1">
-				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a class="nav-link" href="index.html">首頁</a></li>
-					<li class="nav-item"><a class="nav-link active"
-						href="service-page.html">景點</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="blog-post-list.html">行程</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="blog-post-list.html">活動</a></li>
-					<li class="nav-item"><a class="nav-link" href="blog-post.html">遊記</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="catalog-page.html">商城</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="shopping-cart.html">購物車</a></li>
-					<li class="nav-item"><a class="nav-link" href="login.html">登入</a></li>
-					<li class="nav-item"><button class="btn btn-primary"
-							type="button"
-							style="color: var(- -gray); border-color: white; font-size: 14px;">
-							訊息<span class="badge badge-light">5</span>
-						</button></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
+<%@ include file="/front-end/pages/headNav.html" %>
+<!-- 	<nav -->
+<!-- 		class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar"> -->
+<!-- 		<div class="container"> -->
+<!-- 			<a class="navbar-brand logo" href="#">Tivago</a> -->
+<!-- 			<button data-toggle="collapse" class="navbar-toggler" -->
+<!-- 				data-target="#navcol-1"> -->
+<!-- 				<span class="sr-only">Toggle navigation</span><span -->
+<!-- 					class="navbar-toggler-icon"></span> -->
+<!-- 			</button> -->
+<!-- 			<div class="collapse navbar-collapse" id="navcol-1"> -->
+<!-- 				<ul class="navbar-nav ml-auto"> -->
+<!-- 					<li class="nav-item"><a class="nav-link" href="index.html">首頁</a></li> -->
+<!-- 					<li class="nav-item"><a class="nav-link active" -->
+<!-- 						href="service-page.html">景點</a></li> -->
+<!-- 					<li class="nav-item"><a class="nav-link" -->
+<!-- 						href="blog-post-list.html">行程</a></li> -->
+<!-- 					<li class="nav-item"><a class="nav-link" -->
+<!-- 						href="blog-post-list.html">活動</a></li> -->
+<!-- 					<li class="nav-item"><a class="nav-link" href="blog-post.html">遊記</a></li> -->
+<!-- 					<li class="nav-item"><a class="nav-link" -->
+<!-- 						href="catalog-page.html">商城</a></li> -->
+<!-- 					<li class="nav-item"><a class="nav-link" -->
+<!-- 						href="shopping-cart.html">購物車</a></li> -->
+<!-- 					<li class="nav-item"><a class="nav-link" href="login.html">登入</a></li> -->
+<!-- 					<li class="nav-item"><button class="btn btn-primary" -->
+<!-- 							type="button" -->
+<!-- 							style="color: var(- -gray); border-color: white; font-size: 14px;"> -->
+<!-- 							訊息<span class="badge badge-light">5</span> -->
+<!-- 						</button></li> -->
+<!-- 				</ul> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 	</nav> -->
 	<main class="page service-page">
 
 		<nav id="search-bar" class="navbar navbar-light bg-light">
@@ -180,12 +181,25 @@
 			<p>© 2021 Tivago</p>
 		</div>
 	</footer>
-	<script src="assets/js/jquery.min.js"></script>
-	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
-	<script src="assets/js/smoothproducts.min.js"></script>
-	<script src="assets/js/theme.js"></script>
+    <script src="<%=request.getContextPath()%>/front-end/place/assets/js/jquery.min.js"></script>
+    <script src="<%=request.getContextPath()%>/front-end/place/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
+    <script src="<%=request.getContextPath()%>/front-end/place/assets/js/smoothproducts.min.js"></script>
+    <script src="<%=request.getContextPath()%>/front-end/place/assets/js/theme.js"></script>
+	
+<!-- 	以下是自己加入的js -->
+	<script src="https://unpkg.com/sweetalert@2.1.2/dist/sweetalert.min.js"></script>
+	
+<!-- 	此script是將成功訊息印出來 -->
+	<script>
+		<c:if test="${not empty successMsgs}">
+				<c:forEach var="message" items="${successMsgs}" >
+					swal("成功","${message}", "success")
+				</c:forEach>
+		</c:if>
+	</script>
+	
+	
 </body>
 
 </html>

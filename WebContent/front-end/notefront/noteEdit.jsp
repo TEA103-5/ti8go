@@ -36,7 +36,9 @@
   }
 </style>
 <body>
+
 <%@ include file="/front-end/pages/headNav.html" %>
+
 <!--     <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar" style="background: #85867F;color: var(--red); height: 60px;"> -->
 <!--         <div class="container"><a class="navbar-brand logo" href="#">font-end</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button> -->
 <!--             <div class="collapse navbar-collapse" id="navcol-1">  -->
@@ -114,7 +116,7 @@
           </div>
           <div class="form-group">
             <label for="exampleFormControlInput1">大綱</label>
-            <textarea type="text" name="note_description" class="form-control" id="Input2" value="${noteVO.note_description}"></textarea>
+            <textarea type="text" name="note_description" class="form-control" id="Input2" value="">${noteVO.note_description}</textarea>
           </div>
 		<script type="text/javascript">
 		  $(document).ready(function() {

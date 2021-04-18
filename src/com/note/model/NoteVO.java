@@ -14,8 +14,7 @@ public class NoteVO implements java.io.Serializable{
 	private Integer users_id;
 	private Integer trip_id;
 	private Integer note_like;
-	
-	
+
 	public Integer getNote_id() {
 		return note_id;
 	}
@@ -70,10 +69,12 @@ public class NoteVO implements java.io.Serializable{
 	public void setTrip_id(Integer trip_id) {
 		this.trip_id = trip_id;
 	}
+
 	public Integer getNote_like() {
 		return note_like;
 	}
 	public void setNote_like(Integer note_like) {
 		this.note_like = note_like;
 	}
+
 }

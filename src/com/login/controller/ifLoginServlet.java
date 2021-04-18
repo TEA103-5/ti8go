@@ -29,7 +29,7 @@ import com.orderDetail.model.OrderDetailVO;
 import com.sale.model.SaleService;
 import com.sale.model.SaleVO;
 import com.users.model.UsersService;
-import com.users.model.UsersVO;
+
 
 
 
@@ -70,16 +70,16 @@ public class ifLoginServlet extends HttpServlet {
 		
 		
 		
-		Cookie[] cookies = req.getCookies();
-
-
-		for (int i = 0; i < cookies.length; i++) {
-		    Cookie c = cookies[i];
-		    System.out.println(c.getName() + c.getValue() );
+//		Cookie[] cookies = req.getCookies();
+//
+//
+//		for (int i = 0; i < cookies.length; i++) {
+//		    Cookie c = cookies[i];
+//		    System.out.println(c.getName() + c.getValue() );
 		      //cookie name
 		     //cookie value
 
-		  }
+//		  }
 		
 		
 		
@@ -109,6 +109,7 @@ public class ifLoginServlet extends HttpServlet {
 			uVO=lgSrc.usersLogin(uid, pwd);
 			if(uVO!=null) {
 
+		
 				UsersService uSrc=new UsersService();
 
 				result.put("hasVO" , false);
@@ -116,7 +117,6 @@ public class ifLoginServlet extends HttpServlet {
 				result.put("uid" ,  uVO.getSale_id());
 				req.getSession().invalidate();
 				req.getSession().setAttribute("usersVO", uSrc.getOneusers(uVO.getSale_id()));	
-
 			}else {
 				errorMsgs.add("帳號或密碼有問題");
 			}
@@ -198,34 +198,39 @@ public class ifLoginServlet extends HttpServlet {
 		String pwd = req.getParameter("pwd");
 		
 		SaleVO uVO=null;
-		uVO=lgSrc.checkIdType(id,pwd);
+
+		uVO=lgSrc.usersLogin(id, pwd);
 		if(uVO!=null) {
 			
-			if("users".equals(uVO.getSale_name())) {
+//			if("users".equals(uVO.getSale_name())) {
+
 				UsersService uSrc=new UsersService();
-				req.getSession().setAttribute("usersVO", uSrc.getOneusers(uVO.getSale_id()));
-			if("/front-end/order/addOrder.jsp".equals(url)) {
-					
-				}else {
-					url="/front-end/index.jsp";
-				}
-			}else if("sale".equals(uVO.getSale_name())) {
-				SaleService sSrc=new SaleService();
-				req.getSession().setAttribute("saleVO",sSrc.getOneSale(uVO.getSale_id()));
 	
-				url="/sale-end/saleEndIndex.jsp";
-			}else if("admins".equals(uVO.getSale_name())) {
-				AdminsService adminsSrc = new AdminsService();
-				req.getSession().setAttribute("adminsVO",adminsSrc.getOneadmins(uVO.getSale_id()));
-				url="/back-end/backindex.jsp";
-			}
+				//req.getSession().setAttribute("usersVO", uSrc.getOneusers(uVO.getSale_id()));
+				
+				
+//			if("/front-end/order/addOrder.jsp".equals(url)) {
+//					
+//				}else {
+//					url="/front-end/index.jsp";
+//				}
+//			}else if("sale".equals(uVO.getSale_name())) {
+//				SaleService sSrc=new SaleService();
+//				req.getSession().setAttribute("saleVO",sSrc.getOneSale(uVO.getSale_id()));
+//	
+//				url="/sale-end/saleEndIndex.jsp";
+//			}else if("admins".equals(uVO.getSale_name())) {
+//				AdminsService adminsSrc = new AdminsService();
+//				req.getSession().setAttribute("adminsVO",adminsSrc.getOneadmins(uVO.getSale_id()));
+//				url="/back-end/backindex.jsp";
+//			}
 		}else {
 			//System.out.println(uVO);
 			errorMsgs.add("帳號或密碼有問題");
 		}
 		
 		RequestDispatcher failureView = req
-				.getRequestDispatcher(url);
+				.getRequestDispatcher("/front-end/index.jsp");
 		failureView.forward(req, res);	
 		}
 		

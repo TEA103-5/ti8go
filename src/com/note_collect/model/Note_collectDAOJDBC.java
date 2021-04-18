@@ -8,8 +8,8 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
+import com.note_collect.model.Note_collectVO;
 
-import com.place_collect.model.Place_collectVO;
 
 public class Note_collectDAOJDBC implements Note_collectDAO_interface {
 

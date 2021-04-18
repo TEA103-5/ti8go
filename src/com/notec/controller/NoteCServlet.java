@@ -26,9 +26,12 @@ public class NoteCServlet extends HttpServlet {
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-
 		req.setCharacterEncoding("UTF-8");
+		System.out.println("12312312312");
 		String action = req.getParameter("action");
+		System.out.println(action);
+		//System.out.println(action);
+		//action="insert";
 
 		if ("getOne_For_Display".equals(action)) {
 
@@ -108,14 +111,17 @@ public class NoteCServlet extends HttpServlet {
 //				System.out.println(noteCVO);
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("noteCVO", noteCVO); // 資料庫取出的noteVO物件,存入req
-				String url = "/notec/update_noteC_input.jsp";
+
+				String url = "/front-end/notefront/update_notecEdit.jsp";
+			//	String url = "/notec/update_noteC_input.jsp";
+
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_note_input.jsp
 				successView.forward(req, res);
-
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/notec/listAllNoteC.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/notefront/listMyNote.jsp");
+//				RequestDispatcher failureView = req.getRequestDispatcher("/notec/listAllNoteC.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -136,16 +142,14 @@ public class NoteCServlet extends HttpServlet {
 				if (note_c_title == null || note_c_title.trim().length() == 0) {
 					errorMsgs.add("遊記標題: 請勿空白");
 				} else if (!note_c_title.trim().matches(notectitleReg)) { // 以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("遊記標題: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
+					errorMsgs.add("遊記標題: 只能是中、英文字母、數字和_ , 且長度必需在2到20之間");
 				}
 				
 				String note_c_content = req.getParameter("note_c_content");
-				String noteccontentReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_.//!?~)]{2,10}$";
+//				String noteccontentReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_.//!?~)]{2,20}$";
 				if (note_c_content == null || note_c_content.trim().length() == 0) {
 					errorMsgs.add("內容請勿空白");
-				} else if (!note_c_content.trim().matches(noteccontentReg)) { // 以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("遊記標題: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
-				}
+				} 
 
 				Integer note_id = new Integer(req.getParameter("note_id").trim());
 
@@ -197,7 +201,10 @@ public class NoteCServlet extends HttpServlet {
 //				noteCVO = noteCSvc.getOneNoteC(note_c_id);
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("noteCVO", noteCVO);
-				String url = "/notec/listOneNoteC.jsp";
+
+				String url = "/front-end/notefront/listMyNote.jsp";
+//				String url = "/notec/listOneNoteC.jsp";
+
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				/*************************** 其他可能的錯誤處理 *************************************/
@@ -209,7 +216,7 @@ public class NoteCServlet extends HttpServlet {
 		}
 		// 新增
 		if ("insert".equals(action)) { // 來自addEmp.jsp的請求
-
+			System.out.println("fdsfsfsfsedfesfesf");
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
@@ -218,28 +225,25 @@ public class NoteCServlet extends HttpServlet {
 			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 				String note_c_title = req.getParameter("note_c_title");
-				String notectitleReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_.//!?~)]{2,10}$";
+				String notectitleReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_.//!?~)]{2,20}$";
 				if (note_c_title == null || note_c_title.trim().length() == 0) {
 					errorMsgs.add("遊記標題: 請勿空白");
 				} else if (!note_c_title.trim().matches(notectitleReg)) { // 以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("遊記標題: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
+					errorMsgs.add("遊記標題: 只能是中、英文字母、數字和_ , 且長度必需在2到20之間");
 				}
 
 				String note_c_content = req.getParameter("note_c_content");
-//				String noteccontentReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_.//!?~)]{2,10}$";
 				if (note_c_content == null || note_c_content.trim().length() == 0) {
 					errorMsgs.add("內容請勿空白");
 				} 
-//				else if (!note_c_content.trim().matches(noteccontentReg)) { // 以下練習正則(規)表示式(regular-expression)
-//					errorMsgs.add("內容: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
-//				}
+
 
 				Integer note_id = new Integer(req.getParameter("note_id").trim());
 
 
 				byte[] note_c_img = null;
 				Part part = req.getPart("note_c_img");
-				System.out.println("size="+part.getSize());
+//				System.out.println("size="+part.getSize());
 				
 				if(part.getSize()!=0) {
 					InputStream is = part.getInputStream();
@@ -247,16 +251,6 @@ public class NoteCServlet extends HttpServlet {
 					is.read(note_c_img);
 					is.close();
 				} 
-				
-//				try {
-//					InputStream is = part.getInputStream();
-//					note_c_img = new byte[is.available()];
-//					is.read(note_c_img);
-//					is.close();
-//					part.write(part.getSubmittedFileName());
-//				} catch (IOException e) {
-//					e.printStackTrace(System.err);
-//				}
 				
 
 				NoteCVO noteCVO = new NoteCVO();
@@ -278,7 +272,7 @@ public class NoteCServlet extends HttpServlet {
 				noteCVO = noteCSvc.addNoteC(note_c_title, note_c_content, note_c_img, note_id);
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				String url = "/front-end/notefront/notePostList.jsp";
+				String url = "/front-end/notefront/listMyNote.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
