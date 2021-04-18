@@ -11,11 +11,232 @@
   </welcome-file-list>
   <resource-ref>
     <description>DB Connection</description>
-    <res-ref-name>jdbc/TestDB</res-ref-name>
+    <res-ref-name>jdbc/David</res-ref-name>
     <res-type>javax.sql.DataSource</res-type>
     <res-auth>Container</res-auth>
   </resource-ref>
   <servlet>
+    <servlet-name>EmpServlet</servlet-name>
+    <servlet-class>com.emp.controller.EmpServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EmpServlet</servlet-name>
+    <url-pattern>/emp/emp.do</url-pattern>
+  </servlet-mapping>
+  
+
+      <servlet>
+    <servlet-name>SaleServlet</servlet-name>
+    <servlet-class>com.sale.controller.SaleServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SaleServlet</servlet-name>
+    <url-pattern>/sale/sale.do</url-pattern>
+  </servlet-mapping>
+  
+  
+       <servlet>
+    <servlet-name>ProductServlet</servlet-name>
+    <servlet-class>com.product.controller.ProductServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProductServlet</servlet-name>
+    <url-pattern>/product/prod.do</url-pattern>
+  </servlet-mapping>
+  
+   		<servlet>
+		<servlet-name>DBGifReader4_1</servlet-name>
+		<servlet-class>com.sale.controller.DBGifReader4_1</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DBGifReader4_1</servlet-name>
+		<url-pattern>/DBGifReader4_1</url-pattern>
+	</servlet-mapping>
+
+
+  <servlet>
+    <servlet-name>CardServlet</servlet-name>
+    <servlet-class>com.card.controller.CardServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CardServlet</servlet-name>
+    <url-pattern>/card/card.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>UsersServlet</servlet-name>
+    <servlet-class>com.users.controller.UsersServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UsersServlet</servlet-name>
+    <url-pattern>/users/users.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>AdminsServlet</servlet-name>
+    <servlet-class>com.admins.controller.AdminsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminsServlet</servlet-name>
+    <url-pattern>/admins/admins.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>AdminsAjaxHandler</servlet-name>
+    <servlet-class>com.admins.controller.AdminsAjaxHandler</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminsAjaxHandler</servlet-name>
+    <url-pattern>/admins/adminsAjaxHandler.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+		<servlet-name>UsersGetPic</servlet-name>
+		<servlet-class>com.users.controller.UsersGetPic</servlet-class>
+
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UsersGetPic</servlet-name>
+		<url-pattern>/UsersGetPic</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>PlaceServlet</servlet-name>
+		<servlet-class>com.place.controller.PlaceServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PlaceServlet</servlet-name>
+		<url-pattern>/place/place.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>PlaceAjaxHandler</servlet-name>
+		<servlet-class>com.place.controller.PlaceAjaxHandler</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PlaceAjaxHandler</servlet-name>
+		<url-pattern>/place/PlaceAjaxHandler.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>DBGifReader4_place</servlet-name>
+		<servlet-class>com.place.controller.DBGifReader4</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DBGifReader4_place</servlet-name>
+		<url-pattern>/place/DBGifReader4.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>UploadTest_Servlet3</servlet-name>
+		<servlet-class>com.place.controller.UploadTest_Servlet3</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UploadTest_Servlet3</servlet-name>
+		<url-pattern>/place/uploadServlet3.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>Place_collectServlet</servlet-name>
+		<servlet-class>com.place_collect.controller.Place_collectServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Place_collectServlet</servlet-name>
+		<url-pattern>/place_collect/place_collect.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>Place_collectAjaxHandler</servlet-name>
+		<servlet-class>com.place_collect.controller.Place_collectAjaxHandler</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Place_collectAjaxHandler</servlet-name>
+		<url-pattern>/place_collect/Place_collectAjaxHandler.do</url-pattern>
+	</servlet-mapping>
+
+
+
+	<servlet>
+		<servlet-name>Product_collectServlet</servlet-name>
+		<servlet-class>com.product_collect.controller.Product_collectServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Product_collectServlet</servlet-name>
+		<url-pattern>/product_collect/product_collect.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>Trip_collectServlet</servlet-name>
+		<servlet-class>com.trip_collect.controller.Trip_collectServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Trip_collectServlet</servlet-name>
+		<url-pattern>/trip_collect/trip_collect.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>Note_collectServlet</servlet-name>
+		<servlet-class>com.note_collect.controller.Note_collectServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Note_collectServlet</servlet-name>
+		<url-pattern>/note_collect/note_collect.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>Note_collectAjaxHandler</servlet-name>
+		<servlet-class>com.note_collect.controller.Note_collectAjaxHandler</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Note_collectAjaxHandler</servlet-name>
+		<url-pattern>/note_collect/Note_collectAjaxHandler.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>NoteAjaxHandler</servlet-name>
+		<servlet-class>com.note.controller.NoteAjaxHandler</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>NoteAjaxHandler</servlet-name>
+		<url-pattern>/note/NoteAjaxHandler.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>LoginServlet</servlet-name>
+		<servlet-class>com.login.controller.ifLoginServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LoginServlet</servlet-name>
+		<url-pattern>/login.do</url-pattern>
+	</servlet-mapping>
+	
+	     <servlet>
+    <servlet-name>OrderServlet</servlet-name>
+    <servlet-class>com.order.controller.OrderServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>OrderServlet</servlet-name>
+    <url-pattern>/Order/Order.do</url-pattern>
+  </servlet-mapping>
+  
+     <servlet>
+    <servlet-name>TripServlet</servlet-name>
+    <servlet-class>com.trip.controller.TripServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TripServlet</servlet-name>
+    <url-pattern>/trip/trip.do</url-pattern>
+  </servlet-mapping>
+  
+     <servlet>
+    <servlet-name>Trip_detailServlet</servlet-name>
+    <servlet-class>com.trip_detail.controller.Trip_detailServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Trip_detailServlet</servlet-name>
+    <url-pattern>/trip_detail/trip_detail.do</url-pattern>
+  </servlet-mapping>
+  
+    <servlet>
     <servlet-name>NoteServlet</servlet-name>
     <servlet-class>com.note.controller.NoteServlet</servlet-class>
   </servlet>
@@ -31,5 +252,5 @@
     <servlet-name>NoteCServlet</servlet-name>
     <url-pattern>/notec/notec.do</url-pattern>
   </servlet-mapping>
-
+	
 </web-app>

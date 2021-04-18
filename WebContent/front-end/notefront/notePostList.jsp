@@ -6,10 +6,15 @@
 <%@ page import="com.note.model.*"%>
 
 <%
+    List<NoteVO> list = null;
+	if (request.getAttribute("list") != null) {
+		list = (List<NoteVO>)request.getAttribute("list");
+	} else {
 	NoteService noteSvc = new NoteService();
-	List<NoteVO> list = noteSvc.getAll();
+	list = noteSvc.getAll();
+	}
 	pageContext.setAttribute("list",list);
-
+	
 	NoteCService noteCSvc = new NoteCService();
 	// 	List<NoteCVO> list = noteCSvc.getAll();
 	// 	pageContext.setAttribute("list", list);
@@ -132,18 +137,22 @@
 						<a class="a1" href="noteEdit.jsp">Create New Note</a>
 					</button>
 					<!-- Search Widget -->
-						<div class="card my-4">
-							<h5 class="card-header">Search</h5>
-							<div class="card-body">
-								<div class="input-group">
-									<input type="text" class="form-control"
-										placeholder="Search for..."> <span
-										class="input-group-append">
-										<button class="btn btn-secondary" type="button">Go!</button>
-									</span>
+					
+                <div class="city-selector" role="tw-city-selector" data-bootstrap-style data-standard-words></div>
+        	
+            	<form METHOD="post" ACTION="<%=request.getContextPath()%>/note/note.do">
+				  <div class="card my-4">
+					<h5 class="card-header">Search</h5>
+					  <div class="card-body">
+						<div class="input-group">
+						  <input type="search" class="form-control" name="note_title" placeholder="Search for...">
+							<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>"> 
+                			<input type="hidden" name="action" value="getMyGo">
+							<button class="btn btn-secondary" type="submit">Go!</button>
 								</div>
 							</div>
 						</div>
+				</form>		
 				</div>
 
 				<div id="togohere" class="block-content">
@@ -159,13 +168,13 @@
 										style="max-width: 100%; height: 200px;">
 								</div>
 								<div class="col-lg-7">
-									<h3>${noteCSvc.togetoneNote(noteVO.note_id).note_c_title}</h3>
+									<h3>${noteVO.note_title}</h3>
 									<div class="info">
 										<span class="text-muted"><fmt:formatDate
 												pattern="yyyy-MM-dd" value="${noteVO.note_date}" /> by&nbsp;<a
-											href="#">John Smith</a></span>
+											href="#">${noteVO.users_id}</a></span>
 									</div>
-									<p>${noteCSvc.togetoneNote(noteVO.note_id).note_c_content}</p>
+									<p>${noteVO.note_description.substring(0,15)}</p>
 									<form METHOD="post" ACTION="<%=request.getContextPath()%>/note/note.do" style="margin-bottom: 0px;">
 									<input type="hidden" name="note_id"  value="${noteVO.note_id}">
 									<input type="hidden" name="requestURL"  value="<%=request.getServletPath()%>">

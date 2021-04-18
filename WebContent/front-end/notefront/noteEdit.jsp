@@ -113,7 +113,7 @@
           </div>
           <div class="form-group">
             <label for="exampleFormControlInput1">大綱</label>
-            <textarea type="text" name="note_description" class="form-control" id="Input2" value="${noteVO.note_description}"></textarea>
+            <textarea type="text" name="note_description" class="form-control" id="Input2" value="">${noteVO.note_description}</textarea>
           </div>
 		<script type="text/javascript">
 		  $(document).ready(function() {

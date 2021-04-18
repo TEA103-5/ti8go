@@ -8,6 +8,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.note.model.NoteVO;
+
 public class NoteDAO implements NoteDAO_interface {
 	
 	private static DataSource ds = null;
@@ -29,7 +31,11 @@ public class NoteDAO implements NoteDAO_interface {
 			"DELETE FROM Note where note_id = ?";
 		private static final String UPDATE = 
 			"UPDATE Note set note_classid=?, travel_start=?, note_title=?, note_description=?, users_id=?, trip_id=?, note_like=?  where note_id = ?";
-
+		
+		// 利用條件篩選搜尋找出要放在畫面CARD內的資料
+		private static final String GET_BY_TITLE_AND_DESCRIPTION = 
+			"SELECT note_id,note_classid,note_date,travel_start,note_title,note_description,note_update,users_id,trip_id,note_like FROM Note where note_title like ? or note_description like ? ";
+		
 		@Override
 		public void insert(NoteVO noteVO) {
 
@@ -289,6 +295,68 @@ public class NoteDAO implements NoteDAO_interface {
 					}
 				}
 			}
+			return list;
+		}
+		
+		@Override
+		public List<NoteVO> getMyGo(String note_title, String note_description) {
+			List<NoteVO> list = new ArrayList<NoteVO>();
+			NoteVO noteVO = null;
+
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+
+			try {
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(GET_BY_TITLE_AND_DESCRIPTION);
+				pstmt.setString(1, "%" + note_title + "%");
+				pstmt.setString(2, "%" + note_description + "%");
+				rs = pstmt.executeQuery();
+
+				while (rs.next()) {
+
+					noteVO = new NoteVO();
+					noteVO.setNote_id(rs.getInt("note_id"));
+					noteVO.setNote_classid(rs.getInt("note_classid"));
+					noteVO.setNote_date(rs.getTimestamp("note_date"));
+					noteVO.setTravel_start(rs.getDate("travel_start"));
+					noteVO.setNote_title(rs.getString("note_title"));
+					noteVO.setNote_description(rs.getString("note_description"));
+					noteVO.setNote_update(rs.getTimestamp("note_update"));
+					noteVO.setUsers_id(rs.getInt("users_id"));
+					noteVO.setTrip_id(rs.getInt("trip_id"));
+					noteVO.setNote_like(rs.getInt("note_like"));
+
+					list.add(noteVO);
+
+				}
+			} catch (SQLException e) {
+				throw new RuntimeException("A database error occured. " + e.getMessage());
+			} finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+
 			return list;
 		}
 		

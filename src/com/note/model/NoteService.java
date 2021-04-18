@@ -3,6 +3,8 @@ package com.note.model;
 import java.sql.Date;
 import java.util.List;
 
+import com.note.model.NoteVO;
+
 public class NoteService {
 	
 	private NoteDAO_interface dao;
@@ -60,6 +62,10 @@ public class NoteService {
 
 	public List<NoteVO> getAll() {
 		return dao.getAll();
+	}
+	
+	public List<NoteVO> getMyGo(String note_title, String note_description) {
+		return dao.getMyGo(note_title, note_description);
 	}
 
 }
