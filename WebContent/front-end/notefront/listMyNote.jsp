@@ -198,7 +198,8 @@ session.setAttribute("users_id", 1);  //  測試用
 										style="width: 200px; height: 200px;">
 									<div class="card-body">
 										<h5 class="card-title"><b>${noteVO.note_title}</b></h5>
-										<p class="card-text">${noteVO.note_description.substring(0,15)}</p>
+										<p class="card-text">${noteVO.note_description}</p>
+<!-- 										.substring(0,15) -->
 										<form class="card-form"	action="<%=request.getContextPath()%>/note/note.do"method="post">
 											<input class="note_id_value" type="hidden" name="note_id" value="${noteVO.note_id}"> 
 											<input type="hidden" name="requestURL"value="<%=request.getServletPath()%>"> 

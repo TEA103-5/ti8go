@@ -27,7 +27,9 @@ public class NoteCServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
+		System.out.println("12312312312");
 		String action = req.getParameter("action");
+		System.out.println(action);
 		//System.out.println(action);
 		//action="insert";
 

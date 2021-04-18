@@ -177,7 +177,8 @@
 												pattern="yyyy-MM-dd" value="${noteVO.note_date}" /> by&nbsp;<a
 											href="#">${noteVO.users_id}</a></span>
 									</div>
-									<p>${noteVO.note_description.substring(0,15)}</p>
+									<p>${noteVO.note_description}</p>
+<!-- 									.substring(0,15) -->
 									<form METHOD="post" ACTION="<%=request.getContextPath()%>/note/note.do" style="margin-bottom: 0px;">
 									<input type="hidden" name="note_id"  value="${noteVO.note_id}">
 									<input type="hidden" name="requestURL"  value="<%=request.getServletPath()%>">
