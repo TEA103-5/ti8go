@@ -26,9 +26,10 @@ public class NoteCServlet extends HttpServlet {
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
+		//System.out.println(action);
+		//action="insert";
 
 		if ("getOne_For_Display".equals(action)) {
 
@@ -215,7 +216,7 @@ public class NoteCServlet extends HttpServlet {
 		}
 		// 新增
 		if ("insert".equals(action)) { // 來自addEmp.jsp的請求
-
+			System.out.println("fdsfsfsfsedfesfesf");
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.

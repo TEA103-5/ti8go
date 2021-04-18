@@ -203,7 +203,7 @@ public class ifLoginServlet extends HttpServlet {
 		if(uVO!=null) {
 			
 //			if("users".equals(uVO.getSale_name())) {
-			System.out.println(uVO);
+
 				UsersService uSrc=new UsersService();
 	
 				//req.getSession().setAttribute("usersVO", uSrc.getOneusers(uVO.getSale_id()));
