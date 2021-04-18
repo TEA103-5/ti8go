@@ -33,15 +33,15 @@
 								data-toggle="dropdown" href="#"
 								style="padding: -54px; width: 0px; height: -8px; margin: -1px; color: rgba(0, 0, 0, 0.5);">行程&nbsp;</a>
 							<div class="dropdown-menu">
-								<a class="dropdown-item" href="<%=request.getContextPath()%>/front-end/trip/addtrip.jsp">建立行程</a>
 								<c:if test="${not empty usersVO}">								
+								<a class="dropdown-item" href="<%=request.getContextPath()%>/front-end/trip/addtrip.jsp">建立行程</a>
 								<a class="dropdown-item" href="#" onclick="document.getElementById('from1').submit()">我的行程</a>
 								     <FORM id="from1" METHOD="post" ACTION="<%=request.getContextPath()%>/users/users.do" > 							       
 									       <input type="hidden" name="users_id" value="${usersVO.users_id}">
 									       <input type="hidden" name="action" value="listTrip_ByUsers_A">
 									     </FORM>
 								</c:if>
-								<a class="dropdown-item" href="#">Third Item</a>
+								<a class="dropdown-item" href="<%=request.getContextPath()%>/front-end/trip/listTrip.jsp">所有行程</a>
 							</div>
 						</div>
 					</li>

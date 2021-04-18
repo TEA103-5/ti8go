@@ -46,10 +46,25 @@ public class TripServlet extends HttpServlet {
 		if("updateDay".equals(action)) {
 			String day = req.getParameter("day");
     		Integer trip_id = new Integer(req.getParameter("trip_id").trim());
+      		Integer read_authority  = new Integer(req.getParameter("read_authority").trim());
+      		System.out.println(trip_id);
+    	
     		TripService tripSvc = new TripService();
-    		tripSvc.updateDay(day, trip_id);
+    		tripSvc.updateDay(day, trip_id,read_authority);
     		
     		
+		}
+		if("updateLook".equals(action)) {
+
+			Integer trip_id = new Integer(req.getParameter("trip_id").trim());
+			Integer trip_look  = new Integer(req.getParameter("trip_look").trim());
+			trip_look++;
+//System.out.println(trip_id);
+			
+			TripService tripSvc = new TripService();
+			tripSvc.updateLook(trip_id,trip_look);
+			
+			
 		}
 		
         if ("insertajax".equals(action)) { // 來自addEmp.jsp的請求  

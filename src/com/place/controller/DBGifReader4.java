@@ -44,7 +44,7 @@ public class DBGifReader4 extends HttpServlet {
 				in.close();
 			} else {
 //				res.sendError(HttpServletResponse.SC_NOT_FOUND);
-				InputStream in = getServletContext().getResourceAsStream("/NoData/none.jpg");
+				InputStream in = getServletContext().getResourceAsStream("/NoData/3.0.png");
 				byte[] b = new byte[in.available() ];
 				in.read(b);
 				out.write(b);
@@ -54,7 +54,7 @@ public class DBGifReader4 extends HttpServlet {
 			stmt.close();
 		} catch (Exception e) {
 //			System.out.println(e);
-			InputStream in = getServletContext().getResourceAsStream("/NoData/null.jpg");
+			InputStream in = getServletContext().getResourceAsStream("/NoData/3.0.png");
 			byte[] b = new byte[in.available()];
 			in.read(b);
 			out.write(b);

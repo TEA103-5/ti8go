@@ -2,11 +2,16 @@
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     <%@ page import="com.trip_detail.model.*"%>
-    <jsp:useBean id="listTrip_ByUsers" scope="request" type="java.util.Set<Trip_detailVO>" />
+    <%@ page import="java.util.*"%>
+<%@ page import="com.trip.model.*"%>
+
     <jsp:useBean id="tripSvc" scope="page" class="com.trip.model.TripService" />
 <jsp:useBean id="usersSvc" scope="page" class="com.users.model.UsersService" />
     
-    
+    <%
+    List<TripVO> list = tripSvc.getAll();
+    pageContext.setAttribute("list",list);
+%>
 <!DOCTYPE html>
 <html>
 
@@ -35,10 +40,10 @@
                                 
                                     <div v-for="(item,index) in tripList" class="col-12 col-md-6 col-lg-4">
                                         <div class="clean-product-item">
-                                            <div class="image"><a href="#" onclick="document.getElementById('from2').submit()"><img class="img-fluid d-block mx-auto" 
-                                            v-bind:src="item.trip_pic"></a></div>
+                                            <div class="image"><a href="#" @click="chose(item)"><img class="img-fluid d-block mx-auto" 
+                                           v-bind:src="item.trip_pic"></a></div>
                                             
-                                            <div class="product-name"><a href="#" onclick="document.getElementById('from2').submit()"><h5>{{item.trip_name}}</h5></a>
+                                            <div class="product-name"><a href="#" @click="chose(item)"><h5>{{item.trip_name}}</h5></a>
                                           <FORM id="from2" METHOD="post" ACTION="<%=request.getContextPath()%>/trip/trip.do" style="margin-bottom: 0px;">
                                           
                                   
@@ -53,12 +58,12 @@
                                             <div class="product-name"><h10>出發日期:{{item.trip_start}}/天數:{{item.trip_day}}</h10></div>
                                             <div class="product-name">
                                             			  <FORM id="from1" METHOD="post" ACTION="<%=request.getContextPath()%>/trip/trip.do" style="margin-bottom: 0px;">
-                                            <button onclick="document.getElementById('from1').submit()">編輯</button>
+<!--                                             <button onclick="document.getElementById('from1').submit()">編輯</button> -->
 			  								<input type="hidden" name="trip_id" v-model="item.trip_id">
 			    							<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
 			     							<input type="hidden" name="action" value="listDetail_ByTrip_B"></FORM>
                                             
-                                            <button @click="delTrip(index,item.trip_id)">刪除</button>  
+<!--                                             <button @click="delTrip(index,item.trip_id)">刪除</button>   -->
 											</div>                                          
                                             <div class="about">
                                                 <div class="price">
@@ -92,22 +97,42 @@
 	var vm = new Vue({
 	    el: '#app',
 	    data: {
+	    	userid:'${usersVO.users_id}',
 	    	tripList:[
-	    		<c:forEach var="tripVO" items="${listTrip_ByUsers}" >
+	    		<c:forEach var="tripVO" items="${list}" >
 					{
-						trip_id:${tripVO.trip_id},
+						trip_id:'${tripVO.trip_id}',
 						trip_name:'${tripVO.trip_name}',
 						trip_start:'${tripVO.trip_start}',
 						trip_day:'${tripVO.place_weather}',						
 						trip_look:${tripVO.trip_look},						
 						trip_username:'${usersSvc.getOneusers(tripVO.users_id).users_name}',
-						trip_state:${tripVO.trip_state},
+						trip_state:'${tripVO.trip_state}',
 						trip_pic:'<%=request.getContextPath()%>/place/DBGifReader4.do?place_id=${tripVO.read_authority}&place_pic=place_pic2',
+						users_id:'${tripVO.users_id}',
+						last_editor:'${tripVO.last_editor}',
+						action:'updateLook',
 					},
 					</c:forEach>
 	    	],
 	    },
 	    methods: {
+	    	chose(item){
+	    		if(this.userid!=item.users_id){
+	    			console.log(item.trip_id);
+	    		
+	    			$.ajax({
+	  			        url: "<%=request.getContextPath()%>/trip/trip.do",           // 資料請求的網址 --%>
+	 			        type: "POST",                  // GET | POST | PUT | DELETE | PATCH
+	 			        async: false,
+	 			        data:item,               // 傳送資料到指定的 url
+	 			        dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
+	 			        success: function (data) {      //這裡依照陣列長度(有幾個行程明細)呼叫自己      
+	 			        }
+	 			    });
+	    		}
+	    		document.getElementById('from2').submit();
+	    	},
 	    	delTrip(index,trip_id){
 	    	
 	    		this.tripList.splice(index, 1);	

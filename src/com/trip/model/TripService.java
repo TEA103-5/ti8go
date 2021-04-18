@@ -73,10 +73,12 @@ public class TripService {
 	public void deleteEmp(Integer trip_id) {
 		dao.delete(trip_id);
 	}
-	public void updateDay(String day,Integer trip_id) {
-		dao.updateDay(day,trip_id);
+	public void updateDay(String day,Integer trip_id,Integer read_authority) {
+		dao.updateDay(day,trip_id,read_authority);
 	}
-
+	public void updateLook(Integer trip_id,Integer look) {
+		dao.updateLook(trip_id,look);
+	}
 	public TripVO getOneEmp(Integer trip_id) {
 		return dao.findByPrimaryKey(trip_id);
 	}

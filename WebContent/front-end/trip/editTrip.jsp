@@ -619,6 +619,7 @@
 	            this.tripDetail.trip_content=e.place_name;
 	            this.tripDetail.place_id=e.place_id;
 	            this.tripDetail.place_pic=e.place_pic;
+	            this.addtrip.read_authority=e.place_id;
 			},
 			
 			submitTripDetailini(){//---------------------------------------------在這邊更新天數
@@ -627,7 +628,8 @@
 				let data={
 						action:'updateDay',
 						day:self.daylist.length+1,
-						trip_id:self.theTrip_id,
+						trip_id:self.addtrip.trip_id,
+						read_authority:self.addtrip.read_authority,
 				}
 			
  				$.ajax({

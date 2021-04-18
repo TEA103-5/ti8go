@@ -48,10 +48,10 @@ public class ifLoginServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
-		String url="/front-end/order/addOrder.jsp";
+		String url="/front-end/";
 				if(req.getParameter("requestURL")!=null) {
 					
-					url=req.getParameter("requestURL");
+				//	url=req.getParameter("requestURL");
 				}
 		
 		req.getSession().invalidate();

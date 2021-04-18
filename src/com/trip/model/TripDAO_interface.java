@@ -11,7 +11,8 @@ public interface TripDAO_interface {
 	public TripVO insert2(TripVO tripVO);
     public void insert(TripVO tripVO);
     public void update(TripVO tripVO);
-    public void updateDay(String day,Integer trip_id);
+    public void updateLook(Integer trip_id,Integer look);
+    public void updateDay(String day,Integer trip_id,Integer read_authority);
     public void delT(Integer trip_id);
     public void delete(Integer trip_id);
     public TripVO findByPrimaryKey(Integer trip_id);
