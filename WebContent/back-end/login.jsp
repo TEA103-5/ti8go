@@ -132,7 +132,13 @@
                         dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
                         success: function (data) {      // request 成功取得回應後執行
                             console.log(data);
-                        	let redirect_target = "<%=request.getContextPath()%>/back-end/admins/listAllAdmins.jsp" ;
+                            let redirect_target;
+                            // 如果Session裡有loction並回傳回來, 則導向至該處 , 如沒有則導向到listAllAdmins.jsp
+                            if(data.location){
+                            	redirect_target = data.location ;
+                            }else{
+                        		redirect_target = "<%=request.getContextPath()%>/back-end/admins/listAllAdmins.jsp" ;
+                            }
                             if (data.result == "login_success") {
 
                                 let timer = 3, // timer in seconds

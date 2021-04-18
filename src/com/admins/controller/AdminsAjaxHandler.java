@@ -88,6 +88,11 @@ public class AdminsAjaxHandler extends HttpServlet {
 				if(oneAdminsVO.getAdmins_email().equals(admins_email) && oneAdminsVO.getAdmins_password().equals(admins_password) ) {
 					req.getSession().setAttribute("adminsVO" , oneAdminsVO);
 					result.put("result" , "login_success");
+					
+					if(req.getSession().getAttribute("location") != null) {
+						result.put("location", req.getSession().getAttribute("location").toString() );
+					}
+					
 					JSONObject resultJSON = new JSONObject(result);
 					out.println(resultJSON);
 					return;
