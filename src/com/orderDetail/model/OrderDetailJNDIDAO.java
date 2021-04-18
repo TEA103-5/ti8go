@@ -19,9 +19,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 
-import com.order.model.OrderDAO;
-import com.order.model.OrderDAO_Interface;
-import com.order.model.OrderVO;
+
 
 public class OrderDetailJNDIDAO implements OrderDetailDAO_interface {
 	private static DataSource ds = null;

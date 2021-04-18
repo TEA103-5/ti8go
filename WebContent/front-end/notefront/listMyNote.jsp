@@ -164,7 +164,7 @@ session.setAttribute("users_id", 1);  //  測試用
  						</div>
  				<div  style="margin-top:-38px; padding-left:80px;">	
 				<a class="nav-link active disabled" href="<%=request.getContextPath()%>/front-end/notefront/listMyNote.jsp" aria-disabled="true">我的遊記</a>
-				<a class="nav-link active" href="<%=request.getContextPath()%>/front-end/place_collect/listMyPlace_collect.jsp">我的收藏</a>
+				<a class="nav-link active" href="<%=request.getContextPath()%>/front-end/notefront/listMyNote_collect.jsp">我的收藏</a>
 			    </div>
 			</div>
 
@@ -198,7 +198,7 @@ session.setAttribute("users_id", 1);  //  測試用
 										style="width: 200px; height: 200px;">
 									<div class="card-body">
 										<h5 class="card-title"><b>${noteVO.note_title}</b></h5>
-										<p class="card-text">${noteVO.note_description}</p>
+										<p class="card-text">${noteVO.note_description.substring(0,15)}</p>
 										<form class="card-form"	action="<%=request.getContextPath()%>/note/note.do"method="post">
 											<input class="note_id_value" type="hidden" name="note_id" value="${noteVO.note_id}"> 
 											<input type="hidden" name="requestURL"value="<%=request.getServletPath()%>"> 
@@ -215,6 +215,7 @@ session.setAttribute("users_id", 1);  //  測試用
 											<input class="note_id_value" type="hidden" name="note_c_id" value="${noteCSvc.togetoneNote(noteVO.note_id).note_c_id}">
 											<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
 											<input type="hidden" name="action" value="getOne_For_Update">
+											<input type="hidden" name="note_id" value="${noteVO.note_id}">
 											<button class="btn btn-outline-primary btn-sm" type="submit">編輯內容</button>
 										</form>
 									</div>
@@ -266,6 +267,9 @@ session.setAttribute("users_id", 1);  //  測試用
 			<p>© 2021 Tivago</p>
 		</div>
 	</footer>
+	<script>
+		
+	</script>
 	<script src="assets/js/jquery.min.js"></script>
 	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
 	<script

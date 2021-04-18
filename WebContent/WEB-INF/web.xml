@@ -55,6 +55,7 @@
   </servlet-mapping>
    
   <servlet>
+
     <servlet-name>UsersServlet</servlet-name>
     <servlet-class>com.users.controller.UsersServlet</servlet-class>
   </servlet>
@@ -62,8 +63,7 @@
     <servlet-name>UsersServlet</servlet-name>
     <url-pattern>/users/users.do</url-pattern>
   </servlet-mapping>
-  
-  
+
   <servlet>
     <servlet-name>AdminsServlet</servlet-name>
     <servlet-class>com.admins.controller.AdminsServlet</servlet-class>
@@ -72,8 +72,7 @@
     <servlet-name>AdminsServlet</servlet-name>
     <url-pattern>/admins/admins.do</url-pattern>
   </servlet-mapping>
-  
-  
+
   <servlet>
     <servlet-name>AdminsAjaxHandler</servlet-name>
     <servlet-class>com.admins.controller.AdminsAjaxHandler</servlet-class>
@@ -174,6 +173,25 @@
 		<servlet-name>Note_collectServlet</servlet-name>
 		<url-pattern>/note_collect/note_collect.do</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>Note_collectAjaxHandler</servlet-name>
+		<servlet-class>com.note_collect.controller.Note_collectAjaxHandler</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Note_collectAjaxHandler</servlet-name>
+		<url-pattern>/note_collect/Note_collectAjaxHandler.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>NoteAjaxHandler</servlet-name>
+		<servlet-class>com.note.controller.NoteAjaxHandler</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>NoteAjaxHandler</servlet-name>
+		<url-pattern>/note/NoteAjaxHandler.do</url-pattern>
+	</servlet-mapping>
+
 	
 	<servlet>
 		<servlet-name>LoginServlet</servlet-name>
@@ -184,11 +202,10 @@
 		<url-pattern>/login.do</url-pattern>
 	</servlet-mapping>
 	
-
-<!--     <url-pattern>/Product/Product.do</url-pattern> -->
-<!--   </servlet-mapping> -->
   
-   <servlet>
+
+	<servlet>
+
     <servlet-name>OrderServlet</servlet-name>
     <servlet-class>com.order.controller.OrderServlet</servlet-class>
   </servlet>
@@ -197,7 +214,6 @@
     <url-pattern>/Order/Order.do</url-pattern>
   </servlet-mapping>
   
-
      <servlet>
     <servlet-name>TripServlet</servlet-name>
     <servlet-class>com.trip.controller.TripServlet</servlet-class>
@@ -233,6 +249,7 @@
     <servlet-name>NoteCServlet</servlet-name>
     <url-pattern>/notec/notec.do</url-pattern>
   </servlet-mapping>
+
 
 	
 

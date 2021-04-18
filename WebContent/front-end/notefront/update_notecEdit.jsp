@@ -97,10 +97,10 @@
 
 					<FORM METHOD="post" ACTION="notec.do">
 						<select class="form-control" size="1" name="note_id">
-							<c:forEach var="noteCVO" items="${noteCSvc.all}">
+<%-- 							<c:forEach var="noteCVO" items="${noteCSvc.all}"> --%>
 								<option value="${noteCVO.note_id}">${noteCVO.note_id}
-							</c:forEach>
-						</select> <input type="hidden" name="action" value="insert">
+<%-- 							</c:forEach> --%>
+						</select>
 					</FORM>
 					</td>
 			</tr>
@@ -111,7 +111,7 @@
           </div>
           <div class="form-group">
             <label for="exampleFormControlTextarea1">內容簡介</label>
-            <textarea type="text" name="note_c_content" class="form-control" id="Input2" value="${noteCVO.note_c_title}"></textarea>
+            <textarea type="text" name="note_c_content" class="form-control" id="Input2">${noteCVO.note_c_content}</textarea>
           </div>
           <script type="text/javascript">
 		  	$(document).ready(function() {
@@ -144,6 +144,7 @@
   <!-- /.container -->
   <br>
 <input type="hidden" name="action" value="update">
+<input type="hidden" name="note_id" value="${noteVO.note_id}">
 
   </FORM>
   <script>

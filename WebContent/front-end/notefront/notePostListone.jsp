@@ -158,8 +158,8 @@
 									<h3>${noteCSvc.togetoneNote(noteVO.note_id).note_title}</h3>
 									<div class="info">
 										<span class="text-muted"><fmt:formatDate
-												pattern="yyyy-MM-dd" value="${noteVO.note_date}" />by&nbsp;<a
-											href="#">John Smith</a></span>
+												pattern="yyyy-MM-dd" value="${noteVO.travel_start}" />by&nbsp;<a
+											href="#">${noteVO.users_id}</a></span>
 									</div>
 									<p>${noteCSvc.togetoneNote(noteVO.note_id).note_description}</p>
 									<button class="btn btn-outline-primary btn-sm" type="button">Read

@@ -134,13 +134,13 @@
           </div>
           <div class="form-group">
             <label for="exampleFormControlInput1">大綱</label>
-            <textarea type="text" name="note_description" class="form-control" id="Input2" value="">${noteVO.note_description}</textarea>
+            <textarea type="text" name="note_description" class="form-control" id="Input2">${noteVO.note_description}</textarea>
           </div>
 		<script type="text/javascript">
  		  $(document).ready(function() {
 		  	  CKEDITOR.replace( 'Input2' );
-              var $CKcontent = CKEDITOR.instances.document.Input2.getBody().getText();
-// 		  		 var content = $( 'textarea.form-control' ).val();
+//               var $CKcontent = CKEDITOR.instances.document.Input2.getBody().getText();
+		  		 var content = $( 'textarea.form-control' ).val();
 				
 		  }) 
 		</script>

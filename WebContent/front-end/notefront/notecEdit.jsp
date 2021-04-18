@@ -112,11 +112,11 @@
 			
           <div class="form-group pt-3">
             <label for="exampleFormControlInput1">副標題</label>
-            <input type="text" name="note_c_title" class="form-control" id="exampleFormControlInput3"><span id="title3" style="color:red"></span>
+            <input type="text" name="note_c_title" class="form-control" id="exampleFormControlInput3"><span id="title3" style="color:red" value="${noteCVO.note_c_title}"></span>
           </div>
           <div class="form-group">
             <label for="exampleFormControlTextarea1">內容簡介</label>
-            <textarea type="text" name="note_c_content" class="form-control" id="Input2"></textarea>
+            <textarea type="text" name="note_c_content" class="form-control" id="Input2">${noteCVO.note_c_content}</textarea>
           </div>
           <script type="text/javascript">
 		  	$(document).ready(function() {
