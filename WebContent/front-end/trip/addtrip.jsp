@@ -6,8 +6,15 @@
 <%@page import="com.place.model.*"%>
 <%@ page import="com.trip.model.*"%>
 <%@ page import="java.net.*" %>
+<%@page import="com.place_collect.model.*"%>
+<%@page import="util.Google_key"%>
 <jsp:useBean id="pSvc" scope="page" class="com.place.model.PlaceService" />
-<%TripVO tripVO = (TripVO) request.getAttribute("tripVO");%>
+<%TripVO tripVO = (TripVO) request.getAttribute("tripVO");
+
+pageContext.setAttribute("Google_key", Google_key.key);   // 將util.Google_key的金鑰字串放進pageContext
+pageContext.setAttribute("weather_key", Google_key.weather_key);
+
+%>
 <!DOCTYPE html>
 <html>
 
@@ -139,7 +146,7 @@
 				 </div>
 				 
 				 
-					<div class="col-md-5 col-xl-5 mb-5 conn" style="height:73vh;overflow-y: scroll;">
+					<div class="col-md-4 col-xl-4 mb-4 conn" style="height:73vh;overflow-y: scroll;">
 				
 					<ul v-for="(item,index) in daylist" class="list-group list-group-flush footers" style="border-radius: 2rem;">
 						 <li class="list-group-item footers">
@@ -197,6 +204,27 @@
 					
 
 					</div>
+					
+
+					
+					<div class="col-md-1 col-xl-1 mb-1 conn" style="height:530px;overflow-y: scroll;width:150px;">
+									<ul v-for="(item, index) in filterlist" class="list-group list-group-flush" style="border-radius: 2rem;">
+					<li class="list-group-item" draggable="true"
+								 @dragstart="dragStart($event,-1,index,item)" @dragover="allowDrop" >
+								<img class="img" id="preimg" @click="change(item)" data-toggle="tooltip" data-placement="top" v-bind:title="item.place_name"
+									v-bind:src="item.place_pic" />
+					</li>
+				</ul>
+					</div>
+					<div class="col-md-5 col-xl-5 mb-5 conn">
+					           <div class="block-heading">
+					   <iframe id="map-iframe" allowfullscreen="" frameborder="0"
+                       v-bind:src="placename"
+                        width="100%" height="500px"></iframe>
+                </div>
+
+                
+					</div>
             </div>
         
     </main>
@@ -206,10 +234,15 @@
 <script type="text/javascript"
 		src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>
 	<script>
-
+	  let weather_api_key = "${weather_key}";
+	
+	
+	
 	var vm = new Vue({
 	    el: '#app',
 	    data: {
+	    	placename:'https://www.google.com/maps/embed/v1/search?key=${Google_key}&q=緯育TibaMe附設台北職訓中心&zoom=15&center=25.052052,121.543220',
+	    	
 	    	show:0,
 	    	searchName:'',
 	    	startTime:'',
@@ -290,11 +323,16 @@
 	    			place_id:'${placeVO.place_id}',
 	    			place_name:'${placeVO.place_name}',
 	    			place_pic:'<%=request.getContextPath()%>/place/DBGifReader4.do?place_id=${placeVO.place_id}&place_pic=place_pic1',
+	    			place_lon:'${placeVO.place_longitude}',
+	    			place_lat:'${placeVO.place_latitude}',
 	    		},
 	    		</c:forEach>
 	    	],
 	    },
 	    methods: {
+	    	change(item){
+	    		this.placename='https://www.google.com/maps/embed/v1/search?key=${Google_key}&q='+item.place_name+'&zoom=15&center='+item.place_lat+','+item.place_lon;
+	    	},
 	    		blurdate(){//雖然可以做到更改日期,但失焦當作觸發條件還是有點不穩定
 				
 					this.addtrip.trip_end=$('#f_date2').val();
@@ -320,11 +358,15 @@
 	              // console.log(e);
 	           },
 	    	//开始拖动
-	    	dragStart(e, index,inde){
+	    	dragStart(e, index,inde,item){
+	        	   if(index==-1){
+	        		   this.tripDetailAddb(item);
+	        	   }
 	    	    e.dataTransfer.setData('Text', index);
 	    	    e.dataTransfer.setData('Text', inde);
 	    	    this.from.index=index;
 	    	    this.from.inde=inde;
+	        
 	  
 	    	},
 	    	//放置
@@ -334,7 +376,10 @@
  	    	    this.allowDrop(e);
  	    	   e.dataTransfer.setData('Text', index);
  	    	   e.dataTransfer.setData('Text', inde);
-
+				console.log(index,inde);
+				
+				
+				if(this.from.index!=-1){
 				if(index> this.from.index){//往下一層
 					this.daylist[index].tripDetail.splice(inde,0,this.daylist[this.from.index].tripDetail[this.from.inde]);
 					this.daylist[this.from.index].tripDetail.splice(this.from.inde, 1);
@@ -353,7 +398,26 @@
 					}
 					
 				}
+					
+				}else{
+					if(this.daylist[index].tripDetail.length==inde){//新增
+						console.log('新增')
+						this.dayCount=index;
+			            document.getElementById('setTripDetail').style.display='block';
+			            document.getElementById('fade').style.display='block';
+					}else{//插入
+						console.log('擦入')
+						this.DetailSplice=true;
+			            document.getElementById('setTripDetail').style.display='block';
+			            document.getElementById('fade').style.display='block';
+			            this.dayCount=index;//為了知道是第幾天的行程(天實為daylist.index+1)
+						this.tripDetail.indexOfList=inde;//其
+					}
+				}
+				
 
+				
+				
 	    	},
 
 // 	    	setCookie(cname,cvalue,exdays){
@@ -483,7 +547,7 @@
 				document.getElementById('setTripDetail').style.display='none';
 				document.getElementById('fade').style.display='none';
 			},
-			sendDetailEditToList(){//-------4------小心潛層複製的問題
+			sendDetailEditToList(){//-------4------小心潛層複製的問題---------------------------------------------------------------
 				this.tripDetail.trip_start_time=$('#time1').val()+':00';
 				this.tripDetail.trip_end_time=$('#time2').val()+':00';
 
@@ -625,6 +689,16 @@
 	            this.tripDetail.place_name=e.place_name;
 	            this.tripDetail.trip_content=e.place_name;
 	            this.tripDetail.place_id=e.place_id;
+	            this.addtrip.read_authority=e.place_id;
+	            this.tripDetail.place_pic=e.place_pic;
+			},
+			tripDetailAddb(e){ 
+				this.act=1;
+	
+	            this.tripDetail.place_name=e.place_name;
+	            this.tripDetail.trip_content=e.place_name;
+	            this.tripDetail.place_id=e.place_id;
+	            this.addtrip.read_authority=e.place_id;
 	            this.tripDetail.place_pic=e.place_pic;
 			},
 			
@@ -635,6 +709,7 @@
 						action:'updateDay',
 						day:self.daylist.length+1,
 						trip_id:self.theTrip_id,
+						read_authority:self.addtrip.read_authority,
 				}
 			
  				$.ajax({
@@ -863,6 +938,7 @@
 	    	}
 	    },
 	    mounted: function(){//類似ini或onload
+	    
 	    	let self=this;
 	    self.placelist=self.placelist.slice(10);
 	    	$(function(){
@@ -894,9 +970,12 @@
 	    			//self.addtrip.trip_end=$('#f_date2').val();
 	    		//console.log("e");
 	    		});
+	    		
+	   	 $('[data-toggle="tooltip"]').tooltip();
 	    		});
 	    }
 	})
+
 	</script>
 
 </body>
