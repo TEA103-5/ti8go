@@ -144,7 +144,7 @@
   <!-- /.container -->
   <br>
 <input type="hidden" name="action" value="update">
-<input type="hidden" name="note_id" value="${noteVO.note_id}">
+<input type="hidden" name="note_c_id" value="${noteCVO.note_c_id}">
 
   </FORM>
   <script>

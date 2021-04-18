@@ -47,6 +47,18 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/front-end/notefront/assets/css/smoothproducts.css">
+
+<style type="text/css">
+ 	.like_btn{ 
+ 	font-size:66px;
+ 	width:fit-content;  
+ 	color:#ccc; 
+ 	cursor:pointer;
+ 	} 
+	.cs{color:#f00;}
+
+</style>
+
 </head>
 
 <body>
@@ -139,19 +151,14 @@
 					<div class="post-image"
 						style="background-image:url(&quot;<%=request.getContextPath()%>/front-end/notefront/assets/img/scenery/image1.jpg&quot;);"></div>
 					<div class="post-body">
+					
+					<p class="like_btn">&#10084;</p>
 						<form class="card-form"
 							action="<%=request.getContextPath()%>/note/note.do" method="post"
 							style="padding-bottom: 30px;">
-							<input class="note_id_value" type="hidden" name="note_id"
-								value="${noteVO.note_id}"> <input type="hidden"
-								name="requestURL" value="<%=request.getServletPath()%>">
+							<input class="note_id_value" type="hidden" name="note_id" value="${noteVO.note_id}"> 
+							<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
 							<input type="hidden" name="action" value="getOne_For_Display">
-							<c:if test="${noteVO.note_like += 1}">
-								<input class="like_btn btn btn-secondary" type="button" value="收回">
-							</c:if>
-							<c:if test="${noteVO.note_like += -1 }">
-								<input class="like_btn btn btn-secondary" type="button" value="讚">
-							</c:if>
 							<c:if
 								test="${note_collectSvc.getOneNote_collect(noteVO.note_id,users_id) == null}">
 								<button type="button" class="collect_btn btn btn-secondary">加入收藏</button>
@@ -161,15 +168,6 @@
 								<button type="button" class="collect_btn btn btn-secondary">取消收藏</button>
 							</c:if>
 						</form>
-<%-- 						<FORM class="card-form" METHOD="post" ACTION="<%=request.getContextPath()%>/note/note.do" style="margin-bottom: 0px;"> --%>
-<%-- 							<c:if test="${noteVO.note_like += 1}"> --%>
-<!-- 								<input class="like_btn btn btn-secondary" type="button" value="讚"> -->
-<%-- 							</c:if> --%>
-<%-- 							<c:if test="${noteVO.note_like == 0}"> --%>
-<!-- 								<input class="like_btn btn btn-secondary" type="button" value="收回"> -->
-<%-- 							</c:if> --%>
-<%-- 							<input class="note_like_value" type="hidden" name="note_id" value="${noteVO.note_id}"> --%>
-<!-- 						</FORM> -->
 						<h3>
 							<font size="7">${noteVO.note_title}</font>
 						</h3>
@@ -292,7 +290,7 @@
 			  			"action": "ajax_insert_or_delete_NoteCollect",
 			            "note_id": note_id,
 			            "users_id": login_users
-			  	}		
+			  	}
 				
 				$.ajax({
 			        url: "<%=request.getContextPath()%>/note_collect/Note_collectAjaxHandler.do",           // 資料請求的網址
@@ -304,6 +302,7 @@
 			          if(data.result == "insert_succss"){
 	// 		        	  // 新增成功則按鈕改成顯示取消收藏
 			        	  that.html("取消收藏")
+
 			          }else if(data.result == "delete_success"){
 			        	  that.html("加入收藏")
 			          }
@@ -316,39 +315,50 @@
 	</script>
 
 	<script>
-	<c:if test="${not empty sessionScope.users_id}">
-	let login_users = ${sessionScope.users_id} ;
-	</c:if>
-	<c:if test="${empty sessionScope.users_id}">
-	let login_users = null ;
-	</c:if>
+// 	<c:if test="${not empty sessionScope.users_id}">
+// 	let login_users = ${sessionScope.users_id} ;
+// 	</c:if>
+// 	<c:if test="${empty sessionScope.users_id}">
+// 	let login_users = null ;
+// 	</c:if>
     
-    	$(".like_btn").on("click",function(e){
-    		let that = $(this);
+//     	$(".like_btn").on("click",function(e){
+//     		alert('like');
+//     		let that = $(this);
     		
-    		let note_id_value = that.closest(".post-body").find(".note_id_value").attr("value")
+//     		let note_id_value = that.closest(".post-body").find(".note_id_value").attr("value")
     		
-		  	let data = {
-		  			"action": "update_note_like",
-		            "note_id": note_id_value,
-		  	}		
+// 		  	let data = {
+// 		  			"action": "update_note_like",
+// 		            "note_id": note_id_value
+
+			
+            $(function () {            
+            $(".like_btn").on("click" , function(e) {
+                $(this).toggleClass('cs');                
+            })
+        })
+
+        
+
+		  			
     		
-			$.ajax({
-		        url: "<%=request.getContextPath()%>/note/NoteAjaxHandler.do",           // 資料請求的網址
-		        type: "POST",                  // GET | POST | PUT | DELETE | PATCH
-		        data: data,               // 傳送資料到指定的 url
-		        dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
-		        success: function (data) {      // request 成功取得回應後執行
-//console.log(data);
-		          if(data.result == "like_yet"){
-		        	  that.val("讚")
-		          }else if(data.result == "like_add"){
-		        	  that.val("收回")
-		          }
+// 			$.ajax({
+<%-- 		        url: "<%=request.getContextPath()%>/note/NoteAjaxHandler.do",           // 資料請求的網址 --%>
+// 		        type: "POST",                  // GET | POST | PUT | DELETE | PATCH
+// 		        data: data,               // 傳送資料到指定的 url
+// 		        dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
+// 		        success: function (data) {      // request 成功取得回應後執行
+// //console.log(data);
+// 		          if(data.result == "like_yet"){
+// 		        	  that.html("讚")
+// 		          }else if(data.result == "like_add"){
+// 		        	  that.html("收回")
+// 		          }
 		          
-		        }
-		    });
-    	})
+// 		        }
+// 		    });
+//     	})
     </script>
 
 </body>

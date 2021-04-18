@@ -58,10 +58,10 @@ public class NoteAjaxHandler extends HttpServlet {
 
 					note_like = 0 ;
 					result.put("result" , "like_add");
-				}else if(noteVO.getNote_like()== 0) {
+				} else if(noteVO.getNote_like()== 0) {
 
-					note_like = note_like + 1 ;
-					result.put("result" , "like_add");
+					note_like = 1 ;
+					result.put("result" , "like_yet");
 				}
 				
 				// 不知為何如果資料庫中users_id = null , 從資料庫中取出會變為零 , 放入0會導致沒有對應的users_id , 所以做處理改為null 

@@ -165,7 +165,9 @@
                 <div class="row">
                     <c:forEach var="note_collectVO" items="${list}"  varStatus="loop">
 	                    <div class="col-md-6 col-lg-4">
-	                        <div class="card"><img class="card-img-top w-100 d-block" src="<%=request.getContextPath()%>/DBGifReaderNoteC?note_c_id=${noteCSvc.togetoneNote(note_collectVO.note_id).note_c_id}">
+	                        <div class="card" style="width:350px;height:400px;border:3px #cccccc;">
+	                        <img class="card-img-top w-100 d-block" src="<%=request.getContextPath()%>/DBGifReaderNoteC?note_c_id=${noteCSvc.togetoneNote(note_collectVO.note_id).note_c_id}" 
+	                        style="width: 200px; height: 200px;">
 	                            <div class="card-body">
 	                                <h5 class="card-title">${noteSvc.getOneNote(note_collectVO.note_id).note_title}</h5>
 	                                <p class="card-text">${noteSvc.getOneNote(note_collectVO.note_id).note_description.substring(0,15)}</p>
@@ -236,7 +238,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
     <script src="<%=request.getContextPath()%>/front-end/notefront/assets/js/smoothproducts.min.js"></script>
     <script src="<%=request.getContextPath()%>/front-end/notefront/assets/js/theme.js"></script>
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js" type="text/javascript"></script>
 
 	<script>
 		
