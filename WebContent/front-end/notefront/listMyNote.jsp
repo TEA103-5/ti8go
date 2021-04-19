@@ -55,6 +55,17 @@ session.setAttribute("users_id", 1);  //  測試用
     display: inline-block;
 }
 
+.card-title{
+overflow:hidden;
+white-space: nowrap;
+text-overflow: ellipsis;
+}
+
+.card-text{
+overflow:hidden;
+white-space: nowrap;
+text-overflow: ellipsis;
+}
 
 </style>
 
@@ -197,7 +208,7 @@ session.setAttribute("users_id", 1);  //  測試用
 										style="width: 200px; height: 200px;">
 									<div class="card-body">
 										<h5 class="card-title"><b>${noteVO.note_title}</b></h5>
-										<p class="card-text">${noteVO.note_description.substring(0,15)}</p>
+										<p class="card-text">${noteVO.note_description.substring(0,20)}</p>
 										<form class="card-form"	action="<%=request.getContextPath()%>/note/note.do"method="post">
 											<input class="note_id_value" type="hidden" name="note_id" value="${noteVO.note_id}"> 
 											<input type="hidden" name="requestURL"value="<%=request.getServletPath()%>"> 
@@ -269,12 +280,12 @@ session.setAttribute("users_id", 1);  //  測試用
 	<script>
 		
 	</script>
-	<script src="assets/js/jquery.min.js"></script>
-	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="<%=request.getContextPath()%>/front-end/notefront/assets/js/jquery.min.js"></script>
+	<script src="<%=request.getContextPath()%>/front-end/notefront/assets/bootstrap/js/bootstrap.min.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
-	<script src="assets/js/smoothproducts.min.js"></script>
-	<script src="assets/js/theme.js"></script>
+	<script src="<%=request.getContextPath()%>/front-end/notefront/assets/js/smoothproducts.min.js"></script>
+	<script src="<%=request.getContextPath()%>/front-end/notefront/assets/js/theme.js"></script>
 </body>
 
 </html>

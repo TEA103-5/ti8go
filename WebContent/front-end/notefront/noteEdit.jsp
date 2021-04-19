@@ -228,6 +228,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
     <script src="<%=request.getContextPath()%>/front-end/notefront/assets/js/smoothproducts.min.js"></script>
     <script src="<%=request.getContextPath()%>/front-end/notefront/assets/js/theme.js"></script>
+
+    
 </body>
 
 </html>

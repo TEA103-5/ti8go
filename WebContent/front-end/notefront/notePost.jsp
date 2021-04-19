@@ -263,6 +263,7 @@
 		src="<%=request.getContextPath()%>/front-end/notefront/assets/js/smoothproducts.min.js"></script>
 	<script
 		src="<%=request.getContextPath()%>/front-end/notefront/assets/js/theme.js"></script>
+	<script src="https://unpkg.com/sweetalert@2.1.2/dist/sweetalert.min.js"></script>
 	<script>
 		
 	$(function () {
@@ -279,7 +280,8 @@
 
 				// 	login_users為null代表未登入, 不執行後續動作	
 				if(login_users == null){
-					alert("登入後才能加入收藏");
+// 					alert("登入後才能加入收藏");
+					swal("尚未登入會員!", "請前去登入會員", "error");
 					return ;
 				}
 				let that = $(this);
@@ -300,11 +302,12 @@
 			        success: function (data) {      // request 成功取得回應後執行
 			          console.log(data);
 			          if(data.result == "insert_succss"){
-	// 		        	  // 新增成功則按鈕改成顯示取消收藏
-			        	  that.html("取消收藏")
-
+// 		        	  // 新增成功則按鈕改成顯示取消收藏
+			             that.html("取消收藏");
+			        	 swal("加入收藏", "成功加入收藏", "success")
 			          }else if(data.result == "delete_success"){
-			        	  that.html("加入收藏")
+			        	 that.html("加入收藏");
+			        	 swal("取消收藏", "成功取消收藏", "success")
 			          }
 			          
 			        }
