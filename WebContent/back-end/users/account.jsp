@@ -2,14 +2,18 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.users.model.*"%>
+<%@ page import="com.admins.model.*"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.users.controller.*"%>
+<%@ page import="com.admins.controller.*"%>
 
 
 <%
-  UsersVO usersVO = (UsersVO) session.getAttribute("usersVO");
-// 	未登入過，連進此頁，轉去登入頁，避免錯誤	
-	if (usersVO == null) {
+AdminsVO adminsVO = (AdminsVO) session.getAttribute("adminsVO");
+UsersVO usersVO = (UsersVO) request.getAttribute("usersVO");
+
+//	未登入過，連進此頁，轉去登入頁，避免錯誤	
+	if (adminsVO == null) {
 		session.setAttribute("location", request.getRequestURI());
 		response.sendRedirect(request.getContextPath()+"/front-end/login.jsp");   //*工作2 : 請該user去登入網頁(login.html) , 進行登入
 	    return;

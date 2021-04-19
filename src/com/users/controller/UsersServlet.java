@@ -18,6 +18,8 @@ import javax.servlet.http.Part;
 import com.users.model.UsersService;
 import com.users.model.UsersVO;
 
+import jdk.nashorn.internal.ir.RuntimeNode.Request;
+
 @MultipartConfig(fileSizeThreshold=1024*1024, maxFileSize=5*1024*1024*1024, maxRequestSize=5*5*1024*1024*1024)
 public class UsersServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -273,7 +275,6 @@ public class UsersServlet extends HttpServlet {
 				try {
 					/***************************1.接收請求參數****************************************/
 					Integer users_id = new Integer(req.getParameter("users_id"));
-					
 					/***************************2.開始查詢資料****************************************/
 					UsersService usersSvc = new UsersService();
 					UsersVO usersVO = usersSvc.getOneusers(users_id);
@@ -282,7 +283,10 @@ public class UsersServlet extends HttpServlet {
 					req.setAttribute("usersVO", usersVO);         // 資料庫取出的empVO物件,存入req
 					String url = requestUrl + "/account.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
+				System.out.println("TEST_1 " + action + " users_id " + users_id + " url " + url);				
 					successView.forward(req, res);
+					return;
+//				System.out.println("TEST_2 " + action + " users_id " + users_id + " url " + url);				
 
 					/***************************其他可能的錯誤處理**********************************/
 				} catch (Exception e) {
@@ -484,7 +488,7 @@ public class UsersServlet extends HttpServlet {
 					req.setAttribute("usersVO", usersVO); 
 					String url ;
 					
-					if (requestUrl == "/front-end/users") { 
+					if ("/front-end/users".equals(requestUrl)) { 
 						url = requestUrl + "/account.jsp"; 
 					} else	{		
 						url = requestUrl + "/tables.jsp";
