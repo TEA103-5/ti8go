@@ -16,8 +16,8 @@ session.setAttribute("users_id" , (  ( (UsersVO)session.getAttribute("usersVO"))
 	pageContext.setAttribute("list", list);
 	
 	NoteCService noteCSvc = new NoteCService();
-	// 	List<NoteCVO> list = noteCSvc.getAll();
-	// 	pageContext.setAttribute("list", list);
+// 		List<NoteCVO> list = noteCSvc.getAllNoteC();
+// 		pageContext.setAttribute("list", list);
 	pageContext.setAttribute("noteCSvc", noteCSvc);
 %>
 
@@ -56,6 +56,18 @@ session.setAttribute("users_id" , (  ( (UsersVO)session.getAttribute("usersVO"))
     width:19rem;
     display: inline-block;
 }
+.card-title{
+overflow:hidden;
+white-space: nowrap;
+text-overflow: ellipsis;
+}
+
+.card-text{
+overflow:hidden;
+white-space: nowrap;
+text-overflow: ellipsis;
+}
+
 
 
 </style>
@@ -217,7 +229,7 @@ session.setAttribute("users_id" , (  ( (UsersVO)session.getAttribute("usersVO"))
 										<form class="card-form"	action="<%=request.getContextPath()%>/notec/notec.do" method="post">
 											<input class="note_id_value" type="hidden" name="note_c_id" value="${noteCSvc.togetoneNote(noteVO.note_id).note_c_id}">
 											<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
-											<input type="hidden" name="action" value="getOne_For_Update">
+											<input type="hidden" name="action" value="getOne_For_Display">
 											<input type="hidden" name="note_id" value="${noteVO.note_id}">
 											<button class="btn btn-outline-primary btn-sm" type="submit">編輯內容</button>
 										</form>

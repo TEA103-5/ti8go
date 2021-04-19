@@ -128,8 +128,8 @@
 	<main class="page blog-post-list">
 		<section class="clean-block clean-blog-list dark">
 			<div class="container">
-				<div class="block-heading"
-					style="background: rgba(133, 134, 127, 0.15); height: 300px;">
+				<div id="div1" class="block-heading"
+					style="background-image:url(&quot;<%=request.getContextPath()%>/front-end/notefront/assets/img/scenery/image1.jpg&quot;);">
 					<h2 class="text-info">遊記列表</h2>
 					<p class="p1 pb-3">熱門遊記 精選 Top</p>
 					<button class="btn btn-outline-primary btn-sm" type="button">
@@ -264,6 +264,15 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
 	<script src="<%=request.getContextPath()%>/front-end/notefront/assets/js/smoothproducts.min.js"></script>
 	<script src="<%=request.getContextPath()%>/front-end/notefront/assets/js/theme.js"></script>
+	
+	<script>
+	$(document).ready(function(){
+	    $("#div1").mouseover(function(){
+	    $("#togohere").slideDown(1000);
+	         });
+	  
+	});
+	</script>
 </body>
 
 </html>
