@@ -31,6 +31,24 @@
     <dispatcher>ERROR</dispatcher>
     <dispatcher>ASYNC</dispatcher>
   </filter-mapping>
+  
+  <filter>
+    <filter-name>UsersFilter</filter-name>
+    <filter-class>com.users.filter.UsersFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>UsersFilter</filter-name>
+    <url-pattern>/front-end/place/addPlace.jsp</url-pattern>
+    <url-pattern>/front-end/place/listMyPlace.jsp</url-pattern>
+    <url-pattern>/front-end/place/place_add.html</url-pattern>
+    <url-pattern>/front-end/place/update_place_input.jsp</url-pattern>
+    <url-pattern>/front-end/place_collect/listMyPlace_collect.jsp</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>INCLUDE</dispatcher>
+    <dispatcher>ERROR</dispatcher>
+    <dispatcher>ASYNC</dispatcher>
+  </filter-mapping>
     
       <servlet>
     <servlet-name>SaleServlet</servlet-name>
