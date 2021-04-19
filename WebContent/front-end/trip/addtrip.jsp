@@ -6,10 +6,21 @@
 <%@page import="com.place.model.*"%>
 <%@ page import="com.trip.model.*"%>
 <%@ page import="java.net.*" %>
+<%@ page import="com.users.model.*"%>
 <%@page import="com.place_collect.model.*"%>
 <%@page import="util.Google_key"%>
 <jsp:useBean id="pSvc" scope="page" class="com.place.model.PlaceService" />
-<%TripVO tripVO = (TripVO) request.getAttribute("tripVO");
+<%
+
+UsersVO usersVO = (UsersVO) session.getAttribute("usersVO");
+//	未登入過，連進此頁，轉去登入頁，避免錯誤	
+	if (usersVO == null) {
+		session.setAttribute("location", request.getRequestURI());
+		response.sendRedirect(request.getContextPath()+"/front-end/login.jsp");   //*工作2 : 請該user去登入網頁(login.html) , 進行登入
+	    return;
+	}
+
+TripVO tripVO = (TripVO) request.getAttribute("tripVO");
 
 pageContext.setAttribute("Google_key", Google_key.key);   // 將util.Google_key的金鑰字串放進pageContext
 pageContext.setAttribute("weather_key", Google_key.weather_key);
@@ -868,22 +879,24 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 				let btime=new Date(this.addtrip.trip_start);
 				let tripday=new Date(endtime-btime);
 				let hour=Math.floor(tripday.getTime() / 3600000);
-
+//console.log(hour)
 				let tday=0;
 				if(hour!=0){
 					tday=hour/24;
+					
+					for(let n=0;n<=tday;n++){
+						let d=btime.getTime()+1000 * 60 * 60 * 24*n;
+						let ctime=new Date(d);
+					self.daylist.push({
+						day:ctime.getFullYear()+'-'+month[ctime.getMonth()]+'-'+ctime.getDate(),
+						tripDetail:[],
+					});
+
+					}
 				}
 
-			//	console.log(ctime);
-				for(let n=0;n<=tday;n++){
-					let d=btime.getTime()+1000 * 60 * 60 * 24*n;
-					let ctime=new Date(d);
-				self.daylist.push({
-					day:ctime.getFullYear()+'-'+month[ctime.getMonth()]+'-'+ctime.getDate(),
-					tripDetail:[],
-				});
+		
 
-				}
 				//console.log(self.daylist);
 				if(self.daylist.length==0){
 					self.daylist.push({
@@ -891,6 +904,8 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 						tripDetail:[],
 					});
 				}
+				
+				
 				$.ajax({
  			        url: "<%=request.getContextPath()%>/trip/trip.do",           // 資料請求的網址 
 			        type: "POST",                  // GET | POST | PUT | DELETE | PATCH
@@ -915,7 +930,8 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 			        
 			        //self.submitTripDetail();        
 			        }
-			    });
+			    });	
+
 
 			},
 			dayDate(index){
