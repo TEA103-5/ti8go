@@ -98,7 +98,9 @@
 					<FORM METHOD="post" ACTION="notec.do">
 						<select class="form-control" size="1" name="note_id">
 							<c:forEach var="noteVO" items="${noteSvc.all}">
+							<c:if test="${sessionScope.users_id == noteVO.users_id}">
 								<option value="${noteVO.note_id}">${noteVO.note_title}
+							</c:if>	
 							</c:forEach>
 						</select> <input type="hidden" name="action" value="insert">
 					</FORM>
