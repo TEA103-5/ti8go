@@ -106,17 +106,17 @@
             <input name="travel_start" class="form-control" id="f_date1" type="text" value="${noteVO.travel_start}">
           </div>
           
-          <div class="form-group">
-            <label for="exampleFormControlSelect1">行程</label>
+<!--           <div class="form-group"> -->
+<!--             <label for="exampleFormControlSelect1">行程</label> -->
 
-            <select name="trip_id" class="form-control" id="exampleFormControlSelect1" >
-              <option value="0">0</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-            </select>
-          </div>
+<!--             <select name="trip_id" class="form-control" id="exampleFormControlSelect1" > -->
+<!--               <option value="0">0</option> -->
+<!--               <option value="1">1</option> -->
+<!--               <option value="2">2</option> -->
+<!--               <option value="3">3</option> -->
+<!--               <option value="4">4</option> -->
+<!--             </select> -->
+<!--           </div> -->
 <!--           <div class="form-group"> -->
 <!--             <label for="exampleFormControlInput1">大綱</label> -->
 <%--             <textarea type="text" name="note_description" class="form-control" id="Input2" value="${noteVO.note_description}"></textarea> --%>
@@ -166,6 +166,8 @@
   <!-- /.container -->
   <br>
 
+
+<input type="hidden" name="trip_id" value="1">
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="note_id" value="${noteVO.note_id}">
 
