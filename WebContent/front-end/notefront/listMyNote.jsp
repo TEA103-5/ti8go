@@ -1,13 +1,15 @@
 <%@page import="java.util.*"%>
 <%@page import="com.note.model.*"%>
 <%@page import="com.notec.model.*"%>
+<%@page import="com.users.model.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%
+session.setAttribute("users_id" , (  ( (UsersVO)session.getAttribute("usersVO")).getUsers_id() ));
 
-session.setAttribute("users_id", 1);  //  測試用
+// session.setAttribute("users_id", 1);  //  測試用
 
 	NoteService noteSvc = new NoteService();
 	List<NoteVO> list = noteSvc.getAll();
@@ -198,7 +200,7 @@ session.setAttribute("users_id", 1);  //  測試用
 										style="width: 200px; height: 200px;">
 									<div class="card-body">
 										<h5 class="card-title"><b>${noteVO.note_title}</b></h5>
-										<p class="card-text">${noteVO.note_description}</p>
+										<p class="card-text">${noteVO.note_description.substring(0,20)}</p>
 <!-- 										.substring(0,15) -->
 										<form class="card-form"	action="<%=request.getContextPath()%>/note/note.do"method="post">
 											<input class="note_id_value" type="hidden" name="note_id" value="${noteVO.note_id}"> 
