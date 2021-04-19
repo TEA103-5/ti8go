@@ -2,6 +2,7 @@ package com.note_collect.model;
 
 import java.util.List;
 
+
 import com.note_collect.model.Note_collectVO;
 
 public interface Note_collectDAO_interface {
