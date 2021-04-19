@@ -14,6 +14,7 @@
 	list = noteSvc.getAll();
 	}
 	pageContext.setAttribute("list",list);
+	
 	NoteCService noteCSvc = new NoteCService();
 	// 	List<NoteCVO> list = noteCSvc.getAll();
 	// 	pageContext.setAttribute("list", list);
@@ -35,12 +36,11 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/notefront/assets/css/smoothproducts.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/notefront/assets/css/blog-home.css">
+
 </head>
 
 <body>
-
 <%@ include file="/front-end/pages/headNav.html" %>
-
 <!-- 	<nav -->
 <!-- 		class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar" -->
 <!-- 		style="background: #85867F; color: var(- -red); height: 60px;"> -->
@@ -124,7 +124,6 @@
 <!-- 		</div> -->
 <!-- 	</nav> -->
 
-
 			
 	<main class="page blog-post-list">
 		<section class="clean-block clean-blog-list dark">
@@ -177,8 +176,7 @@
 												pattern="yyyy-MM-dd" value="${noteVO.note_date}" /> by&nbsp;<a
 											href="#">${noteVO.users_id}</a></span>
 									</div>
-									<p>${noteVO.note_description}</p>
-<!-- 									.substring(0,15) -->
+									<p>${noteVO.note_description.substring(0,20)}</p>
 									<form METHOD="post" ACTION="<%=request.getContextPath()%>/note/note.do" style="margin-bottom: 0px;">
 									<input type="hidden" name="note_id"  value="${noteVO.note_id}">
 									<input type="hidden" name="requestURL"  value="<%=request.getServletPath()%>">

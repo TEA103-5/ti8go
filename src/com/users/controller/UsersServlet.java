@@ -519,20 +519,21 @@ public class UsersServlet extends HttpServlet {
 					}
 					
 					/***************************2.開始新增資料***************************************/
-					usersVO = usersSvc.updateusers(usersVO);		
-//					usersVO = usersSvc.updateusers(users_id, users_mail, users_pwd, users_status, users_nickname, users_name, users_sex, users_birthday, users_id_number, users_users_pic, users_phone);		
+					usersVO = usersSvc.updateusers(users_id, users_mail, users_pwd, users_status, 
+							users_nickname, users_name, users_sex, users_birthday, 
+							users_id_number, users_users_pic, users_phone);		
+					//					usersVO = usersSvc.updateusers(usersVO);		
 					/***************************3.新增完成,準備轉交(Send the Success view)***********/
 					usersVO = usersSvc.getOneusers(users_id);
 					req.getSession().setAttribute("usersVO", usersSvc.getOneusers(usersVO.getUsers_id()));
 					req.setAttribute("usersVO", usersVO); 
 					String url ;
 					
-					if (requestUrl == "/front-end/users") { 
+					if ("/front-end/users".equals(requestUrl)) { 
 						url = requestUrl + "/account.jsp"; 
 					} else	{		
-						url = requestUrl + "/usersHome.jsp";
-					}
-		//System.out.println("url= " + url);			
+						url = requestUrl + "/tables.jsp";
+					}		
 					
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 					successView.forward(req, res);				
@@ -554,25 +555,30 @@ public class UsersServlet extends HttpServlet {
 				req.setAttribute("errorMsgs", errorMsgs);
 			
 				
+				UsersService usersSvc = new UsersService();
 				try {
 					/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 					String users_mail = req.getParameter("users_mail").trim();
 
 				//	String mailReg = "/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/";
 							//"/^[A-Za-z][12]\\d{8}$/";
+					String regex = "^\\w{1,63}@[a-zA-Z0-9]{2,63}\\.[a-zA-Z]{2,63}(\\.[a-zA-Z]{2,63})?$";
 					if (users_mail == null || users_mail.trim().length() == 0) {
 						errorMsgs.add("Mail請勿空白");
-					} 
+					} else { 
+						if(!users_mail.trim().matches(regex)) {
+							errorMsgs.add("Mail 格式錯誤");
+						}
+					}
 					
-//					String users_name = req.getParameter("users_name");
-//					String nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
-//					if (users_name == null || users_name.trim().length() == 0) {
-//						errorMsgs.add("會員姓名: 請勿空白");
-//					} else if(!users_name.trim().matches(nameReg)) { //以下練習正則(規)表示式(regular-expression)
-//						errorMsgs.add("會員姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
-//		            }
+					List<UsersVO> list = usersSvc.getAll();	
+					for (UsersVO users : list) {	
+						if (users_mail.equals(users.getUsers_mail())) {
+						errorMsgs.add("Mail重複，請換一組Mail");
+						}
+					}
 					
-					
+														
 					String users_pwd = req.getParameter("users_pwd").trim();
 					//String pwdReg = "/^.*(?=.{5,16})(?=.*\\d)(?=.*[A-Z]{1,})(?=.*[a-z]{1,})(?=.*[!@#$%^&*?\\(\\)]).*$/" ;
 					if (users_pwd == null || users_pwd.trim().length() == 0) {
@@ -599,25 +605,20 @@ public class UsersServlet extends HttpServlet {
 
 					// Send the use back to the form, if there were errors
 					if (!errorMsgs.isEmpty()) {
-						req.setAttribute("usersVO", usersVO); // 含有輸入格式錯誤的empVO物件,也存入req
+//						req.setAttribute("usersVO", usersVO); // 含有輸入格式錯誤的empVO物件,也存入req
 						RequestDispatcher failureView = req
 								.getRequestDispatcher(requestUrl + "/login.jsp");
 						failureView.forward(req, res);
 						return;
 					}
 					/***************************2.開始新增資料***************************************/
-					UsersService usersSvc = new UsersService();
 					usersVO = usersSvc.addusers_new(users_mail, users_pwd, users_status);	
-					System.out.println(usersVO.getUsers_id());
 					usersVO = usersSvc.getOneusers(usersVO.getUsers_id());
 
 					/***************************3.新增完成,準備轉交(Send the Success view)***********/
-
-					//req.setAttribute("usersVO", usersVO);
-					req.getSession().invalidate();
-					
+					req.getSession().invalidate();		
 					req.getSession().setAttribute("usersVO", usersVO);
-					String url = "/front-end/users/account.jsp";
+					String url = requestUrl + "/account.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 					successView.forward(req, res);				
 					

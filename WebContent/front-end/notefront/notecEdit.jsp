@@ -35,9 +35,6 @@
   }
 </style>
 <body>
-
- <%@ include file="/front-end/pages/headNav.html" %> 
-
 <!--     <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar" style="background: #85867F;color: var(--red); height: 60px;"> -->
 <!--         <div class="container"><a class="navbar-brand logo" href="#">font-end</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button> -->
 <!--             <div class="collapse navbar-collapse" id="navcol-1">  -->
@@ -86,27 +83,25 @@
     <div class="row mt-5 mb-5 ">
   <!-- Title -->
   <div class="col-lg-8">
-
     <h1 class="edit">新增內容</h1>
-
   </div>
       <!-- Post Content Column -->
       <div class="col-lg-8 mt-3">
 
 		<tr>
-				<td>遊記序號:</td>
+				<td>選擇主標題 :</td>
 				<td>
-				<jsp:useBean id="noteCSvc" scope="page"
+				<jsp:useBean id="noteSvc" scope="page"
 						class="com.note.model.NoteService" />
 
 
-<!-- 					<FORM METHOD="post" ACTION="notec.do"> -->
+					<FORM METHOD="post" ACTION="notec.do">
 						<select class="form-control" size="1" name="note_id">
 							<c:forEach var="noteVO" items="${noteSvc.all}">
 								<option value="${noteVO.note_id}">${noteVO.note_title}
 							</c:forEach>
 						</select> <input type="hidden" name="action" value="insert">
-<!-- 					</FORM> -->
+					</FORM>
 					</td>
 			</tr>
 			
@@ -147,6 +142,7 @@
     </div>
   <!-- /.container -->
   <br>
+
 <input type="hidden" name="action" value="insert">
 
   </FORM>

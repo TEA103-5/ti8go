@@ -165,9 +165,11 @@
                 <div class="row">
                     <c:forEach var="note_collectVO" items="${list}"  varStatus="loop">
 	                    <div class="col-md-6 col-lg-4">
-	                        <div class="card"><img class="card-img-top w-100 d-block" src="<%=request.getContextPath()%>/DBGifReaderNoteC?note_c_id=${noteCSvc.togetoneNote(note_collectVO.note_id).note_c_id}">
+	                        <div class="card" style="width:350px;height:400px;border:3px #cccccc;">
+	                        <img class="card-img-top w-100 d-block" src="<%=request.getContextPath()%>/DBGifReaderNoteC?note_c_id=${noteCSvc.togetoneNote(note_collectVO.note_id).note_c_id}" 
+	                        style="width: 200px; height: 200px;">
 	                            <div class="card-body">
-	                                <h5 class="card-title">${noteSvc.getOneNote(note_collectVO.note_id).note_title}</h5>
+	                                <h5 class="card-title">${noteSvc.getOneNote(note_collectVO.note_id).note_title.substring(0,12)}</h5>
 	                                <p class="card-text">${noteSvc.getOneNote(note_collectVO.note_id).note_description.substring(0,15)}</p>
 		                            <form class="card-form" action="<%=request.getContextPath()%>/note/note.do" method="post">
 				                    	<input class="note_id_value" type="hidden" name="note_id" value="${(note_collectVO.note_id)}"> 
@@ -236,7 +238,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
     <script src="<%=request.getContextPath()%>/front-end/notefront/assets/js/smoothproducts.min.js"></script>
     <script src="<%=request.getContextPath()%>/front-end/notefront/assets/js/theme.js"></script>
-
+	<script src="https://unpkg.com/sweetalert@2.1.2/dist/sweetalert.min.js"></script>
 
 	<script>
 		
@@ -281,10 +283,13 @@
 			          if(data.result == "insert_succss"){
 	// 		        	  // 新增成功則按鈕改成顯示取消收藏
 			        	  that.html("取消收藏")
+			        	  swal("加入收藏", "成功加入收藏", "success")
 			          }else if(data.result == "delete_success"){
 			        	  // 在此頁刪除成功則從畫面上移除
 			        	  that.closest(".col-md-6.col-lg-4").fadeOut(300, function(){ $(this).remove();});
 			        	  that.html("加入收藏")
+			        	  swal("取消收藏", "成功取消收藏", "success")
+			        	  
 
 			          }
 			          
