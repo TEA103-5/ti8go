@@ -95,13 +95,13 @@
 						class="com.note.model.NoteService" />
 
 
-					<FORM METHOD="post" ACTION="notec.do">
+<!-- 					<FORM METHOD="post" ACTION="notec.do"> -->
 						<select class="form-control" size="1" name="note_id">
 <%-- 							<c:forEach var="noteCVO" items="${noteCSvc.all}"> --%>
 								<option value="${noteCVO.note_id}">${noteCVO.note_id}
 <%-- 							</c:forEach> --%>
 						</select>
-					</FORM>
+<!-- 					</FORM> -->
 					</td>
 			</tr>
 			
