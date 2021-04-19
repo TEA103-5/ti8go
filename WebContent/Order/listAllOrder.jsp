@@ -1,10 +1,10 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.order.model.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 
 <%
-	OrderService ordSvc = new OrderService(); //¤£»İ­n¿ù»~ÅçÃÒ,ª½±µ©I¥sService
+	OrderService ordSvc = new OrderService(); //ä¸éœ€è¦éŒ¯èª¤é©—è­‰,ç›´æ¥å‘¼å«Service
 	List<OrderVO> list = ordSvc.getAll();
 	pageContext.setAttribute("list", list);
 %>
@@ -13,7 +13,7 @@
 
 <html>
 <head>
-<title>©Ò¦³°Ó«~¸ê®Æ - listAllEmp.jsp</title>
+<title>æ‰€æœ‰å•†å“è³‡æ–™ - listAllOrser.jsp</title>
 
 <style>
 table#table-1 {
@@ -55,22 +55,22 @@ th, td {
 </head>
 <body bgcolor='white'>
 
-	<h4>¦¹­¶½m²ß±Ä¥Î EL ªº¼gªk¨ú­È:</h4>
+	<h4>æ­¤é ç·´ç¿’æ¡ç”¨ EL çš„å¯«æ³•å–å€¼:</h4>
 	<table id="table-1">
 		<tr>
 			<td>
-				<h3>©Ò¦³­û¤u¸ê®Æ - listAllEmp.jsp</h3>
+				<h3>æ‰€æœ‰å“¡å·¥è³‡æ–™ - listAllOrder.jsp</h3>
 				<h4>
 					<a href="<%=request.getContextPath()%>/selectOrder.jsp"><img
-						src="images/back1.gif" width="100" height="32" border="0">¦^­º­¶</a>
+						src="images/back1.gif" width="100" height="32" border="0">å›é¦–é </a>
 				</h4>
 			</td>
 		</tr>
 	</table>
 
-	<%-- ¿ù»~ªí¦C --%>
+	<%-- éŒ¯èª¤è¡¨åˆ— --%>
 	<c:if test="${not empty errorMsgs}">
-		<font style="color: red">½Ğ­×¥¿¥H¤U¿ù»~:</font>
+		<font style="color: red">è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:</font>
 		<ul>
 			<c:forEach var="message" items="${errorMsgs}">
 				<li style="color: red">${message}</li>
@@ -80,12 +80,12 @@ th, td {
 
 	<table>
 		<tr>
-			<th>­q³æ½s¸¹</th>
-			<th>­q³æ¦¨¥ß®É¶¡</th>
-			<th>­q³æª¬ºA</th>
-			<th>°â«áµû»ù¤À¼Æ</th>
-			<th>«H¥Î¥d¸¹</th>
-			<th>ÁÊ¶RªÌ</th>
+			<th>è¨‚å–®ç·¨è™Ÿ</th>
+			<th>è¨‚å–®æˆç«‹æ™‚é–“</th>
+			<th>è¨‚å–®ç‹€æ…‹</th>
+			<th>å”®å¾Œè©•åƒ¹åˆ†æ•¸</th>
+			<th>ä¿¡ç”¨å¡è™Ÿ</th>
+			<th>è³¼è²·è€…</th>
 		</tr>
 		<%@ include file="pages/page1.file"%>
 		<c:forEach var="orderVO" items="${list}" begin="<%=pageIndex%>"
@@ -97,13 +97,13 @@ th, td {
 				<td>${orderVO.order_status}</td>
 				<td>${orderVO.order_rate}</td>
 				<td>${orderVO.card_number}</td>
-				<td>${orderVO.user_id}</td>
+				<td>${orderVO.users_id}</td>
 				<td>
 
 					<FORM METHOD="post"
 						ACTION="<%=request.getContextPath()%>/Order/Order.do"
 						style="margin-bottom: 0px;">
-						<input type="submit" value="­×§ï"> <input type="hidden"
+						<input type="submit" value="ä¿®æ”¹"> <input type="hidden"
 							name="empno" value="${orderVO.order_id}"> <input
 							type="hidden" name="action" value="getOne_For_Update">
 					</FORM>
@@ -112,7 +112,7 @@ th, td {
 					<FORM METHOD="post"
 						ACTION="<%=request.getContextPath()%>/Order/Order.do"
 						style="margin-bottom: 0px;">
-						<input type="submit" value="§R°£"> <input type="hidden"
+						<input type="submit" value="åˆªé™¤"> <input type="hidden"
 							name="empno" value="${orderVO.order_id}"> <input
 							type="hidden" name="action" value="delete">
 					</FORM>

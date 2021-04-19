@@ -6,7 +6,7 @@
 <head>
 <title>Detail - listOneEmp.jsp</title>
 
-${not empty ordtVO} 
+
 
 <style>
   table#table-1 {

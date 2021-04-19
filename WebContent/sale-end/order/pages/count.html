@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+
+<body>
+<input type="button" value="+1" id="countButton" /> 
+	 
+<p>Order <span id="displayCount">0</span> times.</p>
+
+<script type="text/javascript">
+var count = 0; 
+ 
+var button = document.getElementById("countButton"); 
+ 
+var display = document.getElementById("displayCount"); 
+ 
+// Line commented out as SO does not allow it 
+ 
+// window.localStorage.setItem("on_load_counter", count); 
+ 
+button.onclick = function() { 
+ 
+    count++; 
+ 
+    display.innerHTML = count; 
+ 
+}
+	</script>
+
+</body>
+</html>

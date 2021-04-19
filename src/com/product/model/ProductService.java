@@ -9,8 +9,8 @@ import com.orderDetail.model.OrderDetailService;
 
 public class ProductService {
 	private ProductDAO_Interface dao;
-	//private OrderDetailDAO_interface dao2;
-	//private OrderDetailService OrdSvc;
+	//public OrderDetailDAO_interface dao2;
+	//public OrderDetailService OrdSvc;
 	
 	public ProductService() {
 		dao = new ProductJNDIDAO();

@@ -1,15 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="BIG5"%>
+pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.order.model.*"%>
+<%@ page import="com.users.model.*"%>
+<%@ page import="com.product.model.*"%>
+<%@ page import="java.util.*"%>
 <!DOCTYPE html>
 <%
 OrderVO orderVO = (OrderVO) request.getAttribute("OrderVO");
+// ProductService proSvc = new ProductService(); //ä¸éœ€è¦éŒ¯èª¤é©—è­‰,ç›´æ¥å‘¼å«Service
+// List<ProductVO> list = proSvc.getAll();
+// pageContext.setAttribute("list", list);
 %>
+
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>­q³æ¸ê®Æ·s¼W</title>
+<title>è¨‚å–®è³‡æ–™æ–°å¢</title>
 
 <style>
   table#table-1 {
@@ -48,16 +55,16 @@ OrderVO orderVO = (OrderVO) request.getAttribute("OrderVO");
 
 <table id="table-1">
 	<tr><td>
-		 <h3>­q³æ¸ê®Æ·s¼W </h3></td><td>
-		 <h4><a href="<%=request.getContextPath()%>/selectOrder.jsp"><img src="images/tomcat.png" width="100" height="100" border="0">¦^­º­¶</a></h4>
+		 <h3>è¨‚å–®è³‡æ–™æ–°å¢ </h3></td><td>
+		 <h4><a href="<%=request.getContextPath()%>/selectOrder.jsp"><img src="images/tomcat.png" width="100" height="100" border="0">å›é¦–é </a></h4>
 	</td></tr>
 </table>
 
-<h3>¸ê®Æ·s¼W:</h3>
+<h3>è³‡æ–™æ–°å¢:</h3>
 
-<%-- ¿ù»~ªí¦C --%>
+<%-- éŒ¯èª¤è¡¨åˆ— --%>
 <c:if test="${not empty errorMsgs}">
-	<font style="color:red">½Ğ­×¥¿¥H¤U¿ù»~:</font>
+	<font style="color:red">è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:</font>
 	<ul>
 		<c:forEach var="message" items="${errorMsgs}">
 			<li style="color:red">${message}</li>
@@ -68,39 +75,42 @@ OrderVO orderVO = (OrderVO) request.getAttribute("OrderVO");
 <FORM METHOD="post" ACTION="Order.do" name="form1">
 <table>
 	<tr>
-		<td>ª¬ºA:</td>
+		<td>ç‹€æ…‹:</td>
 		<td><input type="TEXT" name="order_status" size="45" 
 			 value="<%= (orderVO==null)? "" : orderVO.getOrder_status()%>" /></td>
 	</tr>
+<!-- 	<tr> -->
+<!-- 		<td>è©•åƒ¹åˆ†æ•¸:</td> -->
+<!-- 		<td><input type="TEXT" name="order_rate" size="45" -->
+<%-- 			 value="<%= (orderVO==null)? "" : orderVO.getOrder_rate()%>" /></td> --%>
+<!-- 	</tr> -->
 	<tr>
-		<td>µû»ù¤À¼Æ:</td>
-		<td><input type="TEXT" name="order_rate" size="45"
-			 value="<%= (orderVO==null)? "" : orderVO.getOrder_rate()%>" /></td>
-	</tr>
-	<tr>
-		<td>«H¥Î¥d¸¹:</td>
+		<td>ä¿¡ç”¨å¡è™Ÿ:</td>
 		<td><input type="TEXT" name="card_number" size="45"
 			 value="<%= (orderVO==null)? "" : orderVO.getCard_number()%>" /></td>
 	</tr>
 <!-- 	<tr> -->
-<!-- 		<td>¨Ï¥ÎªÌID:</td> -->
-<!-- 		<td><input type="TEXT" name="user_id" size="45" -->
-<%-- 			 value="<%= (orderVO==null)? "" : orderVO.getUser_id()%>" /></td> --%>
+<!-- 		<td>ä½¿ç”¨è€…ID:</td> -->
+<!-- 		<td><input type="TEXT" name="users_id" size="45" -->
+<%-- 			 value="<%= (orderVO==null)? "" : orderVO.getUsers_id()%>" /></td> --%>
 <!-- 	</tr> -->
-
-	<jsp:useBean id="deptSvc" scope="page" class="com.orderDetail.model.OrderDetailService" />
+	
+	<jsp:useBean id="dptSvc" scope="page" class="com.users.model.UsersService" />
+<%-- 	<c:forEach var="ProductVO" items="${list}"> --%>
 	<tr>
-		<td>©ú²Ó:<font color=red><b>*</b></font></td>
-		<td><select size="1" name="order_id">
-			<c:forEach var="deptVO" items="${deptSvc.all}">
-				<option value="${deptVO.order_detail_id}" ${(orderVO.order_id==deptVO.order_id)? 'selected':'' } >${deptVO.order_detail_id}
+		<td>ä½¿ç”¨è€…ID:<font color=red><b>*</b></font></td>
+		<td><select size="1" name="users_id">
+			<c:forEach var="dptVO" items="${dptSvc.all}">
+				<option value="${dptVO.users_id}"${(orderVO.users_id==deptVO.users_id)? 'selected':'' }>${dptVO.users_id}
 			</c:forEach>
 		</select></td>
 	</tr>
-	
+<%-- 	</c:forEach> --%>
+
+
 </table>
 <br>
 <input type="hidden" name="action" value="insert">
-<input type="submit" value="°e¥X·s¼W"></FORM>
+<input type="submit" value="é€å‡ºæ–°å¢"></FORM>
 </body>
 </html>

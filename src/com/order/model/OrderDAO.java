@@ -13,12 +13,12 @@ public class OrderDAO implements OrderDAO_Interface{
 	String userid = "David";
 	String passwd = "123456";
 
-	private static final String INSERT_STMT = "INSERT INTO ORDER1 (Order_Status,Card_Number,Order_Rate) VALUES (?, ? ,? )";
-	private static final String UPDATE = "UPDATE ORDER1 set Order_Status=?,Card_Number=?,Order_Rate=? where Order_Id = ?";
+	private static final String INSERT_STMT = "INSERT INTO ORDER1 (Order_Status,Card_Number,users_id) VALUES ( ? , ? , ? )";
+	private static final String UPDATE = "UPDATE ORDER1 set Order_Status=?,Card_Number=? where Order_Id = ?";
 	private static final String DELETE_OI = "DELETE FROM ORDER1 where Order_Id = ?";
 	private static final String DELETE_ODI = "DELETE FROM ORDER_DETAIL where Order_Id = ?";
-	private static final String GET_ONE_STMT = "SELECT Order_Id ,Card_Number,Order_Status,Order_Rate,Order_Date FROM ORDER1 where Order_Id = ? ";
-	private static final String GET_ALL_STMT = "SELECT Order_Id,Card_Number,Order_Status,Order_Rate,Order_Date FROM ORDER1";
+	private static final String GET_ONE_STMT = "SELECT Order_Id ,Card_Number,Order_Status,Order_Date,users_id FROM ORDER1 where Order_Id = ? ";
+	private static final String GET_ALL_STMT = "SELECT Order_Id,Card_Number,Order_Status,Order_Date,users_id FROM ORDER1";
 
 	
 	
@@ -34,7 +34,8 @@ public class OrderDAO implements OrderDAO_Interface{
 
 			pstmt.setInt(1, orderVO.getOrder_status());
 			pstmt.setString(2, orderVO.getCard_number());
-			pstmt.setInt(3, orderVO.getOrder_rate());
+			pstmt.setInt(3, orderVO.getUsers_id());
+			
 			System.out.println("成功");
 			
 			pstmt.executeUpdate();
@@ -72,8 +73,7 @@ public class OrderDAO implements OrderDAO_Interface{
 
 			pstmt.setInt(1, orderVO.getOrder_status());
 			pstmt.setString(2, orderVO.getCard_number());
-			pstmt.setInt(3, orderVO.getOrder_rate());
-			pstmt.setInt(4, orderVO.getOrder_id());
+			pstmt.setInt(3, orderVO.getOrder_id());
 			System.out.println("成功");
 
 			pstmt.executeUpdate();
@@ -173,11 +173,12 @@ public class OrderDAO implements OrderDAO_Interface{
 
 			while (rs.next()) {
 				orderVO = new OrderVO();
-				orderVO.setOrder_id(rs.getInt("Order_Id"));
+				
 				orderVO.setCard_number(rs.getString("Card_number"));
 				orderVO.setOrder_status(rs.getInt("Order_status"));
-				orderVO.setOrder_rate(rs.getInt("Order_rate"));
 				orderVO.setOrder_date(rs.getTimestamp("Order_date"));
+				orderVO.setUsers_id(rs.getInt("users_id"));
+				orderVO.setOrder_id(rs.getInt("Order_Id"));
 			}
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
@@ -228,8 +229,8 @@ public class OrderDAO implements OrderDAO_Interface{
 				orderVO.setOrder_id(rs.getInt("Order_Id"));
 				orderVO.setCard_number(rs.getString("Card_number"));
 				orderVO.setOrder_status(rs.getInt("Order_status"));
-				orderVO.setOrder_rate(rs.getInt("Order_rate"));
 				orderVO.setOrder_date(rs.getTimestamp("Order_date"));
+				orderVO.setUsers_id(rs.getInt("Users_id"));
 				list.add(orderVO);
 			}
 
@@ -266,12 +267,12 @@ public class OrderDAO implements OrderDAO_Interface{
 	public static void main(String[] args) {
 		OrderDAO od = new OrderDAO();
 		// 新增
-		OrderVO vo = new OrderVO();
-		vo.setCard_number("1234567891012345");
-		vo.setOrder_status(2);
-		vo.setOrder_rate(4);
-		
-		od.insert(vo);
+//		OrderVO vo = new OrderVO();
+//		vo.setCard_number("1234567891012345");
+//		vo.setOrder_status(2);
+//		vo.setOrder_rate(4);
+//		
+//		od.insert(vo);
 
 		//修改
 //		OrderVO vo = new OrderVO();
@@ -288,22 +289,24 @@ public class OrderDAO implements OrderDAO_Interface{
 //		OrderVO deptVO3 = od.findByPrimaryKey(1);
 //		System.out.print(deptVO3.getOrder_id() + ",");
 //		System.out.print(deptVO3.getCard_number() + ",");
-//		System.out.println(deptVO3.getOrder_status());
-//		System.out.println(deptVO3.getOrder_rate());
-//		System.out.println(deptVO3.getOrder_date());
+//		System.out.println(deptVO3.getOrder_status()+ ",");
+//		System.out.println(deptVO3.getOrder_rate()+ ",");
+//		System.out.println(deptVO3.getOrder_date()+ ",");
+//		System.out.println(deptVO3.getUser_id());
 //		System.out.println("---------------------");
 //		
 //		//查全部
-//		List<OrderVO> list = od.getAll();
-//		for (OrderVO aDept : list) {
-//		System.out.print(aDept.getOrder_id() + ",");
-//		System.out.print(aDept.getCard_number() + ",");
-//		System.out.print(aDept.getOrder_status() + ","	);
-//		System.out.println(aDept.getOrder_rate() + ",");
-//		System.out.println(aDept.getOrder_date());
-//		System.out.println();
-////			
-//	}
+		List<OrderVO> list = od.getAll();
+		for (OrderVO aDept : list) {
+		System.out.print(aDept.getOrder_id() + ",");
+		System.out.print(aDept.getCard_number() + ",");
+		System.out.print(aDept.getOrder_status() + ","	);
+		System.out.println(aDept.getOrder_date()+ ",");
+		System.out.println(aDept.getUsers_id());
+		
+		System.out.println();
+//////			
+	}
 		
 }
 }

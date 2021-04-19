@@ -5,8 +5,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -22,19 +25,78 @@ public class OrderDetailJNDIDAO implements OrderDetailDAO_interface {
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TEA05");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/David");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
 	
 
-	private static final String INSERT_STMT = "INSERT INTO ORDER_DETAIL (Order_Detail_Count,PRODUCT_Id ,Order_Id) VALUES (?,?,?)";
-	private static final String UPDATE = "UPDATE ORDER_DETAIL set Order_Detail_Count=?,product_id=?,order_id=? where Order_Detail_Id = ?";
+	private static final String INSERT_STMT = "INSERT INTO ORDER_DETAIL (Order_Detail_Count,PRODUCT_Id ,order_detail_status,Order_Id) VALUES (?,?,?,?)";
+	private static final String UPDATE = "UPDATE ORDER_DETAIL set Order_Detail_Count=?,product_id=?,order_detail_status=?,order_id=? where Order_Detail_Id = ?";
 	private static final String DELETE_ODI = "DELETE FROM ORDER_DETAIL where Order_Detail_Id = ?";
-	private static final String GET_ONE_STMT = "SELECT Order_Detail_Id,Order_Detail_Count,Product_id,order_id FROM ORDER_DETAIL where Order_Detail_Id = ? ";
-	private static final String GET_ALL_STMT = "SELECT Order_Detail_Id,Order_Detail_Count,product_id,order_id FROM ORDER_DETAIL";
+	private static final String GET_ONE_STMT = "SELECT Order_Detail_Id,Order_Detail_Count,Product_id,order_detail_status,order_id FROM ORDER_DETAIL where Order_Detail_Id = ? ";
+	private static final String GET_ALL_STMT = "SELECT Order_Detail_Id,Order_Detail_Count,product_id,order_detail_status,order_id FROM ORDER_DETAIL";
 
+	private static final String GET_ORDER_ByORDERDETAIL_STMT = "SELECT Order_Detail_Id,Order_Detail_Count,Product_id,order_detail_status,order_id FROM ORDER_DETAIL where Order_Id = ? order by Order_Detail_Id";
+	
+	private static final String INSERT_DetailSTMT = "INSERT INTO ORDER_DETAIL (Order_Detail_Count,PRODUCT_Id ,order_detail_status,Order_Id) VALUES (?,?,?,?)";
+	public Set<OrderDetailVO> getOrderByOrderDetail(Integer Order_Id) {
+
+		Set<OrderDetailVO> set = new LinkedHashSet<OrderDetailVO>();
+		OrderDetailVO orderDetailVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ORDER_ByORDERDETAIL_STMT);
+			pstmt.setInt(1, Order_Id);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				orderDetailVO = new OrderDetailVO();
+				orderDetailVO.setOrder_detail_id(rs.getInt("Order_Detail_Id"));
+				orderDetailVO.setOrder_detail_count(rs.getInt("Order_Detail_Count"));
+				orderDetailVO.setProduct_id(rs.getInt("Product_id"));
+				orderDetailVO.setOrder_detail_status(rs.getInt("order_detail_status"));
+				orderDetailVO.setOrder_id(rs.getInt("Order_id"));
+				set.add(orderDetailVO); // Store the row in the vector
+			}
+
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return set;
+	}
+	
+	
 	public void insert(OrderDetailVO orderDetailVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -46,7 +108,8 @@ public class OrderDetailJNDIDAO implements OrderDetailDAO_interface {
 
 			pstmt.setInt(1, orderDetailVO.getOrder_detail_count());
 			pstmt.setInt(2, orderDetailVO.getProduct_id());
-			pstmt.setInt(3, orderDetailVO.getOrder_id());
+			pstmt.setInt(3, orderDetailVO.getOrder_detail_status());
+			pstmt.setInt(4, orderDetailVO.getOrder_id());
 			System.out.println("成功");
 			pstmt.executeUpdate();
 			
@@ -83,12 +146,13 @@ public class OrderDetailJNDIDAO implements OrderDetailDAO_interface {
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setInt(1, orderDetailVO.getOrder_detail_count());
-			pstmt.setInt(2, orderDetailVO.getOrder_detail_id());
-			pstmt.setInt(3,orderDetailVO.getProduct_id());
+			pstmt.setInt(2,orderDetailVO.getProduct_id());
+			pstmt.setInt(3,orderDetailVO.getOrder_detail_status());
 			pstmt.setInt(4,orderDetailVO.getOrder_id());
-			System.out.println("成功");
-
+			pstmt.setInt(5, orderDetailVO.getOrder_detail_id());
+			
 			pstmt.executeUpdate();
+			System.out.println("成功");
 
 		
 		} catch (SQLException e) {
@@ -175,6 +239,7 @@ public class OrderDetailJNDIDAO implements OrderDetailDAO_interface {
 				orderDetailVO.setOrder_detail_id(rs.getInt("Order_Detail_Id"));
 				orderDetailVO.setOrder_detail_count(rs.getInt("Order_detail_count"));
 				orderDetailVO.setProduct_id(rs.getInt("product_id"));
+				orderDetailVO.setOrder_detail_status(rs.getInt("order_detail_status"));
 				orderDetailVO.setOrder_id(rs.getInt("order_id"));
 			}
 
@@ -227,6 +292,7 @@ public class OrderDetailJNDIDAO implements OrderDetailDAO_interface {
 				orderDetailVO.setOrder_detail_id(rs.getInt("Order_Detail_Id"));
 				orderDetailVO.setOrder_detail_count(rs.getInt("Order_detail_count"));
 				orderDetailVO.setProduct_id(rs.getInt("product_id"));
+				orderDetailVO.setOrder_detail_status(rs.getInt("order_detail_status"));
 				orderDetailVO.setOrder_id(rs.getInt("order_id"));
 				list.add(orderDetailVO);
 			}
@@ -259,7 +325,50 @@ public class OrderDetailJNDIDAO implements OrderDetailDAO_interface {
 		return list;
 
 	}
+	
+	public List insert2 (OrderDetailVO orderDetailVO , Connection con) {
+		List list = new ArrayList();
+		PreparedStatement pstmt = null;
 
+		try {
+
+     		pstmt = con.prepareStatement(INSERT_DetailSTMT);
+
+			pstmt.setInt(1, orderDetailVO.getOrder_detail_count());
+			pstmt.setInt(2, orderDetailVO.getProduct_id());
+			pstmt.setInt(3, orderDetailVO.getOrder_detail_status());
+			pstmt.setInt(4, orderDetailVO.getOrder_id());
+			list.add(pstmt);
+
+			pstmt.executeUpdate();
+
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			if (con != null) {
+				try {
+					// 3●設定於當有exception發生時之catch區塊內
+					System.err.print("Transaction is being ");
+					System.err.println("rolled back-by-detail");
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. "
+							+ excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
 	public static void main(String[] args) {
 		OrderDetailJNDIDAO od = new OrderDetailJNDIDAO();
 //		 新增

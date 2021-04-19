@@ -5,9 +5,17 @@ public class OrderVO implements java.io.Serializable{
 	private Integer order_id;
 	private Timestamp order_date;
 	private Integer order_status;
-	private Integer order_rate; // 售後評價分數
 	private String card_number;
-	private Integer user_id;
+	private Integer users_id;
+	private String order_address;
+
+	public String getOrder_address() {
+		return order_address;
+	}
+
+	public void setOrder_address(String order_address) {
+		this.order_address = order_address;
+	}
 
 	public Integer getOrder_id() {
 		return order_id;
@@ -33,13 +41,6 @@ public class OrderVO implements java.io.Serializable{
 		this.order_status = order_status;
 	}
 
-	public Integer getOrder_rate() {
-		return order_rate;
-	}
-
-	public void setOrder_rate(Integer order_rate) {
-		this.order_rate = order_rate;
-	}
 
 	public String getCard_number() {
 		return card_number;
@@ -49,11 +50,11 @@ public class OrderVO implements java.io.Serializable{
 		this.card_number = card_number;
 	}
 
-	public Integer getUser_id() {
-		return user_id;
+	public Integer getUsers_id() {
+		return users_id;
 	}
 
-	public void setUser_id(Integer user_id) {
-		this.user_id = user_id;
+	public void setUsers_id(Integer users_id) {
+		this.users_id = users_id;
 	}
 }

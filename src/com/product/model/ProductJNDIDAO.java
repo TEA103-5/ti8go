@@ -23,7 +23,7 @@ public class ProductJNDIDAO implements ProductDAO_Interface {
 		static {
 			try {
 				Context ctx = new InitialContext();
-				ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TEA05");
+				ds = (DataSource) ctx.lookup("java:comp/env/jdbc/David");
 			} catch (NamingException e) {
 				e.printStackTrace();
 			}

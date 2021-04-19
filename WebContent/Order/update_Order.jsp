@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.order.model.*"%>
+<%@ page import="com.users.model.*"%>
 
 <%
 OrderVO orderVO = (OrderVO) request.getAttribute("OrderVO"); //EmpServlet.java (Concroller) 存入req的empVO物件 (包括幫忙取出的empVO, 也包括輸入資料錯誤時的empVO物件)
@@ -9,7 +10,7 @@ OrderVO orderVO = (OrderVO) request.getAttribute("OrderVO"); //EmpServlet.java (
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>員工資料修改 - update_emp_input.jsp</title>
+<title>訂單資料修改 - update_order_input.jsp</title>
 
 <style>
   table#table-1 {
@@ -48,7 +49,7 @@ OrderVO orderVO = (OrderVO) request.getAttribute("OrderVO"); //EmpServlet.java (
 
 <table id="table-1">
 	<tr><td>
-		 <h3>員工資料修改 - update_emp_input.jsp</h3>
+		 <h3>訂單資料修改 - update_Order_input.jsp</h3>
 		 <h4><a href="<%=request.getContextPath()%>/selectOrder.jsp"><img src="images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
 	</td></tr>
 </table>
@@ -68,7 +69,7 @@ OrderVO orderVO = (OrderVO) request.getAttribute("OrderVO"); //EmpServlet.java (
 <FORM METHOD="post" ACTION="Order.do" name="form1">
 <table>
 	<tr>
-		<td>員工編號:<font color=red><b>*</b></font></td>
+		<td>訂單編號:<font color=red><b>*</b></font></td>
 		<td><%=orderVO.getOrder_id()%></td>
 	</tr>
 	
@@ -88,15 +89,16 @@ OrderVO orderVO = (OrderVO) request.getAttribute("OrderVO"); //EmpServlet.java (
 	</tr>
 <!-- 	<tr> -->
 <!-- 		<td>使用者編號:</td> -->
-<%-- 		<td><input type="TEXT" name="User_id" size="45" value="<%=orderVO.getUser_id()%>" /></td> --%>
+<%-- 		<td><input type="TEXT" name="Users_id" size="45" value="<%=orderVO.getUsers_id()%>" /></td> --%>
 <!-- 	</tr> -->
 
-	<jsp:useBean id="deptSvc" scope="page" class="com.orderDetail.model.OrderDetailService" />
+	<jsp:useBean id="depSvc" scope="page" class="com.users.model.UsersService" />
+	
 	<tr>
-		<td>明細:<font color=red><b>*</b></font></td>
-		<td><select size="1" name="deptno">
-			<c:forEach var="deptVO" items="${deptSvc.all}">
-				<option value="${deptVO.order_detail_id}" ${(orderVO.order_id==deptVO.order_id)? 'selected':'' } >${deptVO.order_detail_id}
+		<td>使用者ID:<font color=red><b>*</b></font></td>
+		<td><select size="1" name="users_id">
+			<c:forEach var="dptVO" items="${depSvc.all}">
+				<option value="${dptVO.users_id}"${(orderVO.users_id==deptVO.users_id)? 'selected':'' }>${dptVO.users_id}
 			</c:forEach>
 		</select></td>
 	</tr>

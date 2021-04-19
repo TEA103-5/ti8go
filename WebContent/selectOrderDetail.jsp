@@ -61,7 +61,7 @@
   </li>
 
   <jsp:useBean id="odrSvc" scope="page" class="com.orderDetail.model.OrderDetailService" />
-
+ <jsp:useBean id="orderSvc" scope="page" class="com.order.model.OrderService" />
    
   <li>
      <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderDetail/OrderDetail.do" >
@@ -80,13 +80,13 @@
      <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderDetail/OrderDetail.do" >
        <b>選擇訂單:</b>
        
-       <select size="1" name="ordtid">
-         <c:forEach var="odrVO" items="${odrSvc.all}" > 
-          <option value="${odrVO.order_detail_id}">${odrVO.product_id}
+       <select size="1" name="ord">
+         <c:forEach var="odrVO" items="${orderSvc.all}" > 
+          <option value="${odrVO.order_id}">${odrVO.order_id}
          
          </c:forEach>   
        </select>
-       <input type="hidden" name="action" value="getOne_For_Display">
+       <input type="hidden" name="action" value="listAllOrderDetail_A">
        <input type="submit" value="送出">
      </FORM>
   </li>

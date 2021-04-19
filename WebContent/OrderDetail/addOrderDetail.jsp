@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="BIG5"%>
+pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.orderDetail.model.*"%>
 <!DOCTYPE html>
@@ -9,7 +9,7 @@ OrderDetailVO orderDetailVO = (OrderDetailVO) request.getAttribute("OrderDetailV
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>©ú²Ó¸ê®Æ·s¼W</title>
+<title>æ˜ç´°è³‡æ–™æ–°å¢</title>
 
 <style>
   table#table-1 {
@@ -48,16 +48,16 @@ OrderDetailVO orderDetailVO = (OrderDetailVO) request.getAttribute("OrderDetailV
 
 <table id="table-1">
 	<tr><td>
-		 <h3>°Ó«~¸ê®Æ·s¼W </h3></td><td>
-		 <h4><a href="<%=request.getContextPath()%>/selectOrderDetail.jsp"><img src="images/tomcat.png" width="100" height="100" border="0">¦^­º­¶</a></h4>
+		 <h3>å•†å“è³‡æ–™æ–°å¢ </h3></td><td>
+		 <h4><a href="<%=request.getContextPath()%>/selectOrderDetail.jsp"><img src="images/tomcat.png" width="100" height="100" border="0">å›é¦–é </a></h4>
 	</td></tr>
 </table>
 
-<h3>¸ê®Æ·s¼W:</h3>
+<h3>è³‡æ–™æ–°å¢:</h3>
 
-<%-- ¿ù»~ªí¦C --%>
+<%-- éŒ¯èª¤è¡¨åˆ— --%>
 <c:if test="${not empty errorMsgs}">
-	<font style="color:red">½Ğ­×¥¿¥H¤U¿ù»~:</font>
+	<font style="color:red">è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:</font>
 	<ul>
 		<c:forEach var="message" items="${errorMsgs}">
 			<li style="color:red">${message}</li>
@@ -68,29 +68,29 @@ OrderDetailVO orderDetailVO = (OrderDetailVO) request.getAttribute("OrderDetailV
 <FORM METHOD="post" ACTION="OrderDetail.do" name="form1">
 <table>
 	<tr>
-		<td>©ú²Ó¼Æ¶q:</td>
+		<td>æ˜ç´°æ•¸é‡:</td>
 		<td><input type="TEXT" name="detail_count" size="45" 
 			 value="<%= (orderDetailVO==null)? "" : orderDetailVO.getOrder_detail_count()%>" /></td>
 	</tr>
 	<tr>
-		<td>©ú²ÓID:</td>
+		<td>æ˜ç´°ID:</td>
 		<td><input type="TEXT" name="detail_id" size="45"
 			 value="<%= (orderDetailVO==null)? "" : orderDetailVO.getOrder_detail_id()%>" /></td>
 	</tr>
 	<tr>
-		<td>­q³æID:</td>
+		<td>è¨‚å–®ID:</td>
 		<td><input type="TEXT" name="order_id" size="45"
 			 value="<%= (orderDetailVO==null)? "" : orderDetailVO.getOrder_id()%>" /></td>
 	</tr>
 	<tr>
-		<td>°Ó«~ID:</td>
+		<td>å•†å“ID:</td>
 		<td><input type="TEXT" name="product_id" size="45"
 			 value="<%= (orderDetailVO==null)? "" : orderDetailVO.getProduct_id()%>" /></td>
 	</tr>
 
 	<jsp:useBean id="deptSvc" scope="page" class="com.orderDetail.model.OrderDetailService" />
 	<tr>
-		<td>©ú²Ó:<font color=red><b>*</b></font></td>
+		<td>æ˜ç´°:<font color=red><b>*</b></font></td>
 		<td><select size="1" name="detail_id">
 			<c:forEach var="deptVO" items="${deptSvc.all}">
 				<option value="${deptVO.order_detail_id}" ${(orderVO.order_id==deptVO.order_id)? 'selected':'' } >${deptVO.order_detail_id}
@@ -101,6 +101,6 @@ OrderDetailVO orderDetailVO = (OrderDetailVO) request.getAttribute("OrderDetailV
 </table>
 <br>
 <input type="hidden" name="action" value="insert">
-<input type="submit" value="°e¥X·s¼W"></FORM>
+<input type="submit" value="é€å‡ºæ–°å¢"></FORM>
 </body>
 </html>
