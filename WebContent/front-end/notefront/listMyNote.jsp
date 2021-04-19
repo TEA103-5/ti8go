@@ -16,9 +16,9 @@ session.setAttribute("users_id" , (  ( (UsersVO)session.getAttribute("usersVO"))
 	pageContext.setAttribute("list", list);
 	
 	NoteCService noteCSvc = new NoteCService();
-		List<NoteCVO> list = noteCSvc.getAllNoteC();
-		pageContext.setAttribute("list", list);
-// 	pageContext.setAttribute("noteCSvc", noteCSvc);
+// 		List<NoteCVO> list = noteCSvc.getAllNoteC();
+// 		pageContext.setAttribute("list", list);
+	pageContext.setAttribute("noteCSvc", noteCSvc);
 %>
 
 <!DOCTYPE html>
