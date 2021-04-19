@@ -41,6 +41,12 @@ public class OrderServlet extends HttpServlet {
 		res.setContentType("application/json ; charset=UTF-8");
 		String action = req.getParameter("action");
 
+		
+		
+		if ("listOrderBySaleId".equals(action)) {
+			Integer sale_id = new Integer(req.getParameter("sale_id"));
+			System.out.println(sale_id);
+		} 
 		/*************************** 士翔開始 ****************************************/		
 		if ("insertajax".equals(action)) { // 來自addEmp.jsp的請求
 			
