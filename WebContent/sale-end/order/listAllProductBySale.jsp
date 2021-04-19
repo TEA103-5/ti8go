@@ -55,7 +55,7 @@ th, td {
 
 <body id="page-top">
     <div id="wrapper">
- <%@ include file="/sale-end/pages/nav.jsp" %> 
+ <%@ include file="/sale-end/pages/nav.html" %> 
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content">
   <%@ include file="/sale-end/pages/fnav.html" %>

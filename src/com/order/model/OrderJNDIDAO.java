@@ -53,10 +53,8 @@ public class OrderJNDIDAO implements OrderDAO_Interface{
 	
 	private static final String GOBU = "SELECT Order_Id ,Card_Number,Order_Status,Order_Date,users_id FROM order1 where users_id = ? order by order_id";
 	private static final String GOBT = "SELECT Order_Id ,Card_Number,Order_Status,Order_Date,users_id FROM order1 where users_id = ? and order_date=?";
-	private static final String GPBS = "Select * from (select sale_id, product_name,o1.order_id,o1.order_status,product_price,od.order_detail_count,o1.order_date,o1.users_id,p.product_id "
-			+ "from product p "
-			+ "join order_detail od on p.product_id = od.product_id"
-			+ "join order1 o1 on od.order_id = o1.order_id order by sale_id)ppp where sale_id = ?";
+	
+	private static final String GPBS = "Select * from (select sale_id, product_name,o1.order_id,o1.order_status,product_price,od.order_detail_count,o1.order_date,o1.users_id,p.product_id from product p join order_detail od on p.product_id = od.product_id join order1 o1 on od.order_id = o1.order_id order by sale_id)ppp where sale_id = ?";
 	
 	public List<OrderVO> getProBySaleId(Integer sale_id){
 		List<OrderVO> list = new ArrayList<OrderVO>();
@@ -74,13 +72,15 @@ public class OrderJNDIDAO implements OrderDAO_Interface{
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
+			
 				orderVO = new OrderVO();
-				orderVO.setOrder_id(rs.getInt("o1.order_id"));
+				orderVO.setOrder_id(rs.getInt("sale_id"));
 				orderVO.setCard_number(rs.getString("product_name"));
 				orderVO.setOrder_status(rs.getInt("product_price"));
-				orderVO.setOrder_date(rs.getTimestamp("o1.Order_Date"));
-				orderVO.setUsers_id(rs.getInt("od.order_detail_count"));
+				orderVO.setOrder_date(rs.getTimestamp("order_date"));
+				orderVO.setUsers_id(rs.getInt("order_detail_count"));
 				list.add(orderVO); // Store the row in the vector
+				
 			}
 			
 			// Handle any SQL errors
