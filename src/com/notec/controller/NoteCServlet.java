@@ -17,7 +17,7 @@ import com.notec.model.NoteCService;
 import com.notec.model.NoteCVO;
 
 
-@MultipartConfig (location = "c:/ImagesforT8go")
+@MultipartConfig
 public class NoteCServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -133,7 +133,7 @@ public class NoteCServlet extends HttpServlet {
 				Integer note_c_id = new Integer(req.getParameter("note_c_id").trim());
 
 				String note_c_title = req.getParameter("note_c_title");
-				String notectitleReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_.//!?~)]{2,10}$";
+				String notectitleReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_.//!?~)]{2,20}$";
 				if (note_c_title == null || note_c_title.trim().length() == 0) {
 					errorMsgs.add("遊記標題: 請勿空白");
 				} else if (!note_c_title.trim().matches(notectitleReg)) { // 以下練習正則(規)表示式(regular-expression)
