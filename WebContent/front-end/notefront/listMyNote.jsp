@@ -16,8 +16,8 @@ session.setAttribute("users_id" , (  ( (UsersVO)session.getAttribute("usersVO"))
 	pageContext.setAttribute("list", list);
 	
 	NoteCService noteCSvc = new NoteCService();
-	// 	List<NoteCVO> list = noteCSvc.getAll();
-	// 	pageContext.setAttribute("list", list);
+// 		List<NoteCVO> list = noteCSvc.getAllNoteC();
+// 		pageContext.setAttribute("list", list);
 	pageContext.setAttribute("noteCSvc", noteCSvc);
 %>
 
@@ -56,6 +56,18 @@ session.setAttribute("users_id" , (  ( (UsersVO)session.getAttribute("usersVO"))
     width:19rem;
     display: inline-block;
 }
+.card-title{
+overflow:hidden;
+white-space: nowrap;
+text-overflow: ellipsis;
+}
+
+.card-text{
+overflow:hidden;
+white-space: nowrap;
+text-overflow: ellipsis;
+}
+
 
 
 </style>
