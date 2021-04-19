@@ -34,6 +34,12 @@ public class OrderService {
 		
 		return dao.findByTime(orderVO);
 	}
+	
+	public List<OrderVO> getProBySaleId(Integer sale_id){
+		return dao.getProBySaleId(sale_id);
+	}
+	
+	
 	public OrderVO addOrder2(OrderVO orderVO,HashMap ovomap) {
 //		OrderVO ord = new OrderVO();
 //		ord.setOrder_status(orderVO.getOrder_status());

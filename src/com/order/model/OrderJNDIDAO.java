@@ -53,6 +53,67 @@ public class OrderJNDIDAO implements OrderDAO_Interface{
 	
 	private static final String GOBU = "SELECT Order_Id ,Card_Number,Order_Status,Order_Date,users_id FROM order1 where users_id = ? order by order_id";
 	private static final String GOBT = "SELECT Order_Id ,Card_Number,Order_Status,Order_Date,users_id FROM order1 where users_id = ? and order_date=?";
+	private static final String GPBS = "Select * from (select sale_id, product_name,o1.order_id,o1.order_status,product_price,od.order_detail_count,o1.order_date,o1.users_id,p.product_id "
+			+ "from product p "
+			+ "join order_detail od on p.product_id = od.product_id"
+			+ "join order1 o1 on od.order_id = o1.order_id order by sale_id)ppp where sale_id = ?";
+	
+	public List<OrderVO> getProBySaleId(Integer sale_id){
+		List<OrderVO> list = new ArrayList<OrderVO>();
+		OrderVO orderVO=null;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GPBS);
+			pstmt.setInt(1, sale_id);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				orderVO = new OrderVO();
+				orderVO.setOrder_id(rs.getInt("o1.order_id"));
+				orderVO.setCard_number(rs.getString("product_name"));
+				orderVO.setOrder_status(rs.getInt("product_price"));
+				orderVO.setOrder_date(rs.getTimestamp("o1.Order_Date"));
+				orderVO.setUsers_id(rs.getInt("od.order_detail_count"));
+				list.add(orderVO); // Store the row in the vector
+			}
+			
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+		return list;
+	}
+	
 	
 	public OrderVO findByTime(OrderVO ovo) {
 		OrderVO orderVO = null;
