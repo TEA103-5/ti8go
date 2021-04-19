@@ -1,3 +1,5 @@
+package com.place.controller;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
@@ -19,7 +21,7 @@ public class TokenProcessor {
     public static String makeToken() {
 
 
-        //这个随机生成出来的Token的长度是不确定的
+    	//這個隨機生成出來的Token的長度是不確定的
         String token = String.valueOf(System.currentTimeMillis() + new Random().nextInt(99999999));
 
         try {
@@ -27,10 +29,10 @@ public class TokenProcessor {
             MessageDigest messageDigest = MessageDigest.getInstance("md5");
             byte[] md5 = messageDigest.digest(token.getBytes());
 
-            //如果我们直接 return  new String(md5)出去，得到的随机数会乱码。
-            //因为随机数是任意的01010101010，在转换成字符串的时候，会查gb2312的码表，gb2312码表不一定支持该二进制数据，得到的就是乱码
+            //如果我們直接 return  new String(md5)出去，得到的隨機數會亂碼。
+            //因為隨機數是任意的01010101010，在轉換成字符串的時候，會查gb2312的碼表，gb2312碼表不一定支持該二進制數據，得到的就是亂碼
             
-            //于是乎经过base64编码成了明文的数据
+            //於是乎經過base64編碼成了明文的數據
             Base64.Encoder base64Encoder = Base64.getEncoder();
             return base64Encoder.encodeToString(md5);
 
@@ -43,16 +45,16 @@ public class TokenProcessor {
     }
 
     public static void main(String[] args) {
-        //生出随机数
+    	//生出隨機數
         TokenProcessor tokenProcessor = TokenProcessor.getInstance();
         String token = tokenProcessor.makeToken();
         
         System.out.println(token);
 
-//        //将随机数存进Session中
-//        request.getSession().setAttribute("token", token);
+//      //將隨機數存進Session中
+//      request.getSession().setAttribute("token", token);
 //
-//        //跳转到显示页面
-//        request.getRequestDispatcher("/login.jsp").forward(request, response);
+//      //跳轉到顯示頁面
+//      request.getRequestDispatcher("/login.jsp").forward(request, response);
     }
 }
