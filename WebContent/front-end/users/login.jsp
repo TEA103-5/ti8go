@@ -6,7 +6,7 @@
 
 <head>
 
-<%@ include file="/sale-end/pages/link.html"%>
+<%@ include file="/front-end/pages/links.html"%>
 
 </head>
 <body id="page-top">
@@ -17,7 +17,7 @@
 
 	<div class="container mx-auto mt-5" id="app">
 		<div class="row mt-5">
-        	<div class="col-md-5 col-xl-5 mb-5 mx-auto">
+        	<div class="col-md-5 col-xl-5 mt-5 mb-5 mx-auto">
 				<div class="block-heading">
 					<h2 class="text-info">登 入</h2>
 				</div>
@@ -51,7 +51,7 @@
 				</div>
 			</div>
 
-			<div class="col-md-5 col-xl-5 mb-5 mx-auto">
+			<div class="col-md-5 col-xl-5 mb-5  mt-5 mx-auto">
 				<div class="text-center block-heading">
 					<h4 class="text-dark mb-4">註冊新帳戶</h4>
 				</div>
