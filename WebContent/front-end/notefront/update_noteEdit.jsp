@@ -1,9 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.note.model.*"%>
+<%@page import="com.users.model.*"%>
 
 
 <%
+  session.setAttribute("users_id" , (  ( (UsersVO)session.getAttribute("usersVO")).getUsers_id() ));
+
   NoteVO noteVO = (NoteVO) request.getAttribute("noteVO");
 %>
 
@@ -103,8 +106,8 @@
             <input name="travel_start" class="form-control" id="f_date1" type="text" value="${noteVO.travel_start}">
           </div>
           
-          <div class="form-group">
-            <label for="exampleFormControlSelect1">行程</label>
+<!--           <div class="form-group"> -->
+<!--             <label for="exampleFormControlSelect1">行程</label> -->
 
 <!--             <select name="trip_id" class="form-control" id="exampleFormControlSelect1" > -->
 <!--               <option value="0">0</option> -->
@@ -128,10 +131,10 @@
 <!--           <div class="bd pt-5"> -->
 <!--           <button type="submit" class="btn btn-primary1" id="btn_submit">送出</button> -->
 
-				<select size="1" name="trip_id" readonly class="form-control">
-					<option value="${noteVO.trip_id}"}>${noteVO.trip_id}</option>
-				</select>
-          </div>
+<!-- 				<select size="1" name="trip_id" readonly class="form-control"> -->
+<%-- 					<option value="${noteVO.trip_id}"}>${noteVO.trip_id}</option> --%>
+<!-- 				</select> -->
+<!--           </div> -->
           <div class="form-group">
             <label for="exampleFormControlInput1">大綱</label>
             <textarea type="text" name="note_description" class="form-control" id="Input2">${noteVO.note_description}</textarea>
@@ -163,12 +166,14 @@
   <!-- /.container -->
   <br>
 
+
+<input type="hidden" name="trip_id" value="1">
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="note_id" value="${noteVO.note_id}">
 
 <input type="hidden" name="note_classid" value="1">
 <!-- classid預設1 -->
-<input type="hidden" name="users_id" value="1">
+<input type="hidden" name="users_id" value="${users_id}">
 <input type="hidden" name="note_like" value="0">
 
   </FORM>

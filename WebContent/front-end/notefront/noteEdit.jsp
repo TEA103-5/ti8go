@@ -140,7 +140,7 @@
 <input type="hidden" name="action" value="insert">
 <input type="hidden" name="note_classid" value="1">
 <!-- classid預設1 -->
-<input type="hidden" name="users_id" value="1">
+<input type="hidden" name="users_id" value="${users_id}">
 <input type="hidden" name="note_like" value="0">
 
   </FORM>

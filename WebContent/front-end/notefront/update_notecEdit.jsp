@@ -2,10 +2,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.notec.model.*"%>
 <%@ page import="com.note.model.*"%>
+<%@page import="java.util.*"%>
 
 
 <%
   NoteCVO noteCVO = (NoteCVO) request.getAttribute("noteCVO");
+
+// NoteCService noteCSvc = new NoteCService();
+// List<NoteCVO> list = noteCSvc.getAllNoteC(noteCVO.getNote_id());
+// pageContext.setAttribute("list", list);
 %>
 
 <html>

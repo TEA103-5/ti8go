@@ -8,7 +8,6 @@ import javax.servlet.http.*;
 import com.card.model.CardService;
 import com.card.model.CardVO;
 
-
 public class CardServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
@@ -141,6 +140,27 @@ public class CardServlet extends HttpServlet {
 					if (card_number == null || card_number.trim().length() == 0) {
 						errorMsgs.add("信用卡卡號: 請勿空白");
 					}
+					
+				/***	使用Luhn方法驗證	***/
+					int sum = 0;
+					boolean alternate = false;
+					for (int i = card_number.length() - 1; i >= 0; i--)
+					{
+						int n = Integer.parseInt(card_number.substring(i, i + 1));
+						if (alternate)
+						{
+							n *= 2;
+							if (n > 9)
+							{
+								n = (n % 10) + 1;
+							}
+						}
+						sum += n;
+						alternate = !alternate;
+					}
+					if (sum % 10 != 0) {
+						errorMsgs.add("信用卡卡號錯誤");
+					}
 				
 					String card_date = req.getParameter("card_date").trim();
 					if (card_date == null || card_date.trim().length() == 0) {				
@@ -244,6 +264,27 @@ public class CardServlet extends HttpServlet {
 						if (card_number == null || card_number.trim().length() == 0) {
 							errorMsgs.add("信用卡卡號: 請勿空白");
 						}
+						
+						/***	使用Luhn方法驗證	***/
+						int sum = 0;
+						boolean alternate = false;
+						for (int i = card_number.length() - 1; i >= 0; i--)
+						{
+							int n = Integer.parseInt(card_number.substring(i, i + 1));
+							if (alternate)
+							{
+								n *= 2;
+								if (n > 9)
+								{
+									n = (n % 10) + 1;
+								}
+							}
+							sum += n;
+							alternate = !alternate;
+						}
+						if (sum % 10 != 0) {
+							errorMsgs.add("信用卡卡號錯誤");
+						}
 					
 						String card_date = req.getParameter("card_date").trim();
 						if (card_date == null || card_date.trim().length() == 0) {				
@@ -279,7 +320,7 @@ public class CardServlet extends HttpServlet {
 					if (!errorMsgs.isEmpty()) {
 						req.setAttribute("cardVO", cardVO); // 含有輸入格式錯誤的empVO物件,也存入req
 						RequestDispatcher failureView = req
-								.getRequestDispatcher(requestUrl + "/update_emp_input.jsp");
+								.getRequestDispatcher(requestUrl + "/card_one_up.jsp");
 						failureView.forward(req, res);
 						return;
 					}
