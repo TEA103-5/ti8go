@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.notec.model.*"%>
+<%@ page import="com.note.model.*"%>
 
 
 <%
@@ -89,19 +90,19 @@
       <div class="col-lg-8 mt-3">
 
 		<tr>
-				<td>遊記序號:</td>
+				<td>選擇主標題 :</td>
 				<td>
-				<jsp:useBean id="noteCSvc" scope="page"
+				<jsp:useBean id="noteSvc" scope="page"
 						class="com.note.model.NoteService" />
 
 
-					<FORM METHOD="post" ACTION="notec.do">
+<!-- 					<FORM METHOD="post" ACTION="notec.do"> -->
 						<select class="form-control" size="1" name="note_id">
 <%-- 							<c:forEach var="noteCVO" items="${noteCSvc.all}"> --%>
-								<option value="${noteCVO.note_id}">${noteCVO.note_id}
+								<option value="${noteCVO.note_id}">${noteSvc.getOneNote(noteCVO.note_id).note_title}
 <%-- 							</c:forEach> --%>
 						</select>
-					</FORM>
+<!-- 					</FORM> -->
 					</td>
 			</tr>
 			
@@ -144,7 +145,7 @@
   <!-- /.container -->
   <br>
 <input type="hidden" name="action" value="update">
-<input type="hidden" name="note_id" value="${noteVO.note_id}">
+<input type="hidden" name="note_c_id" value="${noteCVO.note_c_id}">
 
   </FORM>
   <script>

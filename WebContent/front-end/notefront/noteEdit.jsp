@@ -36,9 +36,6 @@
   }
 </style>
 <body>
-
-<%@ include file="/front-end/pages/headNav.html" %>
-
 <!--     <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar" style="background: #85867F;color: var(--red); height: 60px;"> -->
 <!--         <div class="container"><a class="navbar-brand logo" href="#">font-end</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button> -->
 <!--             <div class="collapse navbar-collapse" id="navcol-1">  -->
@@ -231,6 +228,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
     <script src="<%=request.getContextPath()%>/front-end/notefront/assets/js/smoothproducts.min.js"></script>
     <script src="<%=request.getContextPath()%>/front-end/notefront/assets/js/theme.js"></script>
+
+    
 </body>
 
 </html>

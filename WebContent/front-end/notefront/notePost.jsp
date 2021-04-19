@@ -47,22 +47,21 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/front-end/notefront/assets/css/smoothproducts.css">
+
+<style type="text/css">
+ 	.like_btn{ 
+ 	font-size:50px;
+ 	width:fit-content;  
+ 	color:#ccc; 
+ 	cursor:pointer;
+ 	} 
+	.cs{color:#f00;}
+
+</style>
+
 </head>
 
 <body>
-
-<%--  <%@ include file="/front-end/pages/headNav.html" %> --%>
-<!--     <main class="page blog-post pd-3"> -->
-<!--         <section class="clean-block clean-post dark"> -->
-<!--             <div class="container"> -->
-<!--                 <div class="block-content"> -->
-<%--                     <div class="post-image" style="background-image:url(&quot;<%=request.getContextPath()%>/front-end/notefront/assets/img/scenery/image3.jpg&quot;);"></div> --%>
-<!--                     <div class="post-body"> -->
-<%--                         <h3>${noteVO.note_title}</h3> --%>
-<%--                         <div class="post-info"><span>By ${noteVO.users_id}</span><span><fmt:formatDate --%>
-<%--   												pattern="yyyy-MM-dd" value="${noteVO.note_date}" /></span></div> --%>
-<%--                         <p>${noteVO.note_description}</p> --%>
-
 	<nav
 		class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar"
 		style="background: #85867F; color: var(- -red);">
@@ -152,19 +151,14 @@
 					<div class="post-image"
 						style="background-image:url(&quot;<%=request.getContextPath()%>/front-end/notefront/assets/img/scenery/image1.jpg&quot;);"></div>
 					<div class="post-body">
+					
+					<p class="like_btn">&#10084;</p>
 						<form class="card-form"
 							action="<%=request.getContextPath()%>/note/note.do" method="post"
 							style="padding-bottom: 30px;">
-							<input class="note_id_value" type="hidden" name="note_id"
-								value="${noteVO.note_id}"> <input type="hidden"
-								name="requestURL" value="<%=request.getServletPath()%>">
+							<input class="note_id_value" type="hidden" name="note_id" value="${noteVO.note_id}"> 
+							<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
 							<input type="hidden" name="action" value="getOne_For_Display">
-							<c:if test="${noteVO.note_like += 1}">
-								<input class="like_btn btn btn-secondary" type="button" value="收回">
-							</c:if>
-							<c:if test="${noteVO.note_like += -1 }">
-								<input class="like_btn btn btn-secondary" type="button" value="讚">
-							</c:if>
 							<c:if
 								test="${note_collectSvc.getOneNote_collect(noteVO.note_id,users_id) == null}">
 								<button type="button" class="collect_btn btn btn-secondary">加入收藏</button>
@@ -174,15 +168,6 @@
 								<button type="button" class="collect_btn btn btn-secondary">取消收藏</button>
 							</c:if>
 						</form>
-<%-- 						<FORM class="card-form" METHOD="post" ACTION="<%=request.getContextPath()%>/note/note.do" style="margin-bottom: 0px;"> --%>
-<%-- 							<c:if test="${noteVO.note_like += 1}"> --%>
-<!-- 								<input class="like_btn btn btn-secondary" type="button" value="讚"> -->
-<%-- 							</c:if> --%>
-<%-- 							<c:if test="${noteVO.note_like == 0}"> --%>
-<!-- 								<input class="like_btn btn btn-secondary" type="button" value="收回"> -->
-<%-- 							</c:if> --%>
-<%-- 							<input class="note_like_value" type="hidden" name="note_id" value="${noteVO.note_id}"> --%>
-<!-- 						</FORM> -->
 						<h3>
 							<font size="7">${noteVO.note_title}</font>
 						</h3>
@@ -278,6 +263,7 @@
 		src="<%=request.getContextPath()%>/front-end/notefront/assets/js/smoothproducts.min.js"></script>
 	<script
 		src="<%=request.getContextPath()%>/front-end/notefront/assets/js/theme.js"></script>
+	<script src="https://unpkg.com/sweetalert@2.1.2/dist/sweetalert.min.js"></script>
 	<script>
 		
 	$(function () {
@@ -294,7 +280,8 @@
 
 				// 	login_users為null代表未登入, 不執行後續動作	
 				if(login_users == null){
-					alert("登入後才能加入收藏");
+// 					alert("登入後才能加入收藏");
+					swal("尚未登入會員!", "請前去登入會員", "error");
 					return ;
 				}
 				let that = $(this);
@@ -305,7 +292,7 @@
 			  			"action": "ajax_insert_or_delete_NoteCollect",
 			            "note_id": note_id,
 			            "users_id": login_users
-			  	}		
+			  	}
 				
 				$.ajax({
 			        url: "<%=request.getContextPath()%>/note_collect/Note_collectAjaxHandler.do",           // 資料請求的網址
@@ -315,10 +302,12 @@
 			        success: function (data) {      // request 成功取得回應後執行
 			          console.log(data);
 			          if(data.result == "insert_succss"){
-	// 		        	  // 新增成功則按鈕改成顯示取消收藏
-			        	  that.html("取消收藏")
+// 		        	  // 新增成功則按鈕改成顯示取消收藏
+			             that.html("取消收藏");
+			        	 swal("加入收藏", "成功加入收藏", "success")
 			          }else if(data.result == "delete_success"){
-			        	  that.html("加入收藏")
+			        	 that.html("加入收藏");
+			        	 swal("取消收藏", "成功取消收藏", "success")
 			          }
 			          
 			        }
@@ -328,121 +317,52 @@
 		
 	</script>
 
-
 	<script>
-	<c:if test="${not empty sessionScope.users_id}">
-	let login_users = ${sessionScope.users_id} ;
-	</c:if>
-	<c:if test="${empty sessionScope.users_id}">
-	let login_users = null ;
-	</c:if>
+// 	<c:if test="${not empty sessionScope.users_id}">
+// 	let login_users = ${sessionScope.users_id} ;
+// 	</c:if>
+// 	<c:if test="${empty sessionScope.users_id}">
+// 	let login_users = null ;
+// 	</c:if>
     
-    	$(".like_btn").on("click",function(e){
-    		let that = $(this);
+//     	$(".like_btn").on("click",function(e){
+//     		alert('like');
+//     		let that = $(this);
     		
-    		let note_id_value = that.closest(".post-body").find(".note_id_value").attr("value")
+//     		let note_id_value = that.closest(".post-body").find(".note_id_value").attr("value")
     		
-		  	let data = {
-		  			"action": "update_note_like",
-		            "note_id": note_id_value,
-		  	}		
+// 		  	let data = {
+// 		  			"action": "update_note_like",
+// 		            "note_id": note_id_value
+
+			
+            $(function () {            
+            $(".like_btn").on("click" , function(e) {
+                $(this).toggleClass('cs');                
+            })
+        })
+
+        
+
+		  			
     		
-			$.ajax({
-		        url: "<%=request.getContextPath()%>/note/NoteAjaxHandler.do",           // 資料請求的網址
-		        type: "POST",                  // GET | POST | PUT | DELETE | PATCH
-		        data: data,               // 傳送資料到指定的 url
-		        dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
-		        success: function (data) {      // request 成功取得回應後執行
-//console.log(data);
-		          if(data.result == "like_yet"){
-		        	  that.val("讚")
-		          }else if(data.result == "like_add"){
-		        	  that.val("收回")
-		          }
+// 			$.ajax({
+<%-- 		        url: "<%=request.getContextPath()%>/note/NoteAjaxHandler.do",           // 資料請求的網址 --%>
+// 		        type: "POST",                  // GET | POST | PUT | DELETE | PATCH
+// 		        data: data,               // 傳送資料到指定的 url
+// 		        dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
+// 		        success: function (data) {      // request 成功取得回應後執行
+// //console.log(data);
+// 		          if(data.result == "like_yet"){
+// 		        	  that.html("讚")
+// 		          }else if(data.result == "like_add"){
+// 		        	  that.html("收回")
+// 		          }
 		          
-		        }
-		    });
-    	})
+// 		        }
+// 		    });
+//     	})
     </script>
-
-
-<%--                         <c:forEach var="noteCVO" items="${Clist}" > --%>
-<!--                         <div class="row"> -->
-<!--                             <div class="col-md-6"> -->
-<%--                                 <figure class="figure"><img class="rounded img-fluid figure-img" src="<%=request.getContextPath()%>/DBGifReaderNoteC?note_c_id=${noteCVO.note_c_id}" --%>
-<!-- 										style="width: 300px; height: 200px;" alt="A generic square placeholder image with rounded corners in a figure."> -->
-<!--                                     <figcaption class="figure-caption"></figcaption> -->
-<!--                                 </figure> -->
-<!--                             </div> -->
-<!--                             <div class="col"> -->
-<%--                             	<h>${noteCVO.note_c_title}</h> --%>
-<%--                                 <p>${noteCVO.note_c_content}</p> --%>
-<!--                             </div> -->
-<!-- <!--                         </div> --> 
-<!-- <!--                         <h4>Lorem Ipsum dolor</h4> --> 
-<!-- <!--                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p> --> 
-<!-- <!--                         <div class="row"> --> 
-<!-- <!--                             <div class="col"> --> 
-<!-- <!--                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p> --> 
-<!-- <!--                             </div> --> 
-<!-- <!--                             <div class="col-md-6"> --> 
-<!-- <!--                                 <figure class="figure"><img class="rounded img-fluid figure-img" src="assets/img/scenery/image5.jpg" alt="A generic square placeholder image with rounded corners in a figure."> --> 
-<!-- <!--                                     <figcaption class="figure-caption">Lorem Ipsum dolor</figcaption> --> 
-<!-- <!--                                 </figure> --> 
-<!-- <!--                             </div> --> 
-<!-- <!--                         </div> --> 
-<!--                     </div> -->
-<%--                     </c:forEach> --%>
-<!--                 </div> -->
-<!--             </div> -->
-<!--         </section> -->
-<!--     </main> -->
-<!--     <footer class="page-footer dark" style="background: #575D59;"> -->
-<!--         <div class="container"> -->
-<!--             <div class="row"> -->
-<!--                 <div class="col-sm-3"> -->
-<!--                     <h5>Get started</h5> -->
-<!--                     <ul> -->
-<!--                         <li><a href="#">Home</a></li> -->
-<!--                         <li><a href="#">Sign up</a></li> -->
-<!--                         <li><a href="#">Downloads</a></li> -->
-<!--                     </ul> -->
-<!--                 </div> -->
-<!--                 <div class="col-sm-3"> -->
-<!--                     <h5>About us</h5> -->
-<!--                     <ul> -->
-<!--                         <li><a href="#">Company Information</a></li> -->
-<!--                         <li><a href="#">Contact us</a></li> -->
-<!--                         <li><a href="#">Reviews</a></li> -->
-<!--                     </ul> -->
-<!--                 </div> -->
-<!--                 <div class="col-sm-3"> -->
-<!--                     <h5>Support</h5> -->
-<!--                     <ul> -->
-<!--                         <li><a href="#">FAQ</a></li> -->
-<!--                         <li><a href="#">Help desk</a></li> -->
-<!--                         <li><a href="#">Forums</a></li> -->
-<!--                     </ul> -->
-<!--                 </div> -->
-<!--                 <div class="col-sm-3"> -->
-<!--                     <h5>Legal</h5> -->
-<!--                     <ul> -->
-<!--                         <li><a href="#">Terms of Service</a></li> -->
-<!--                         <li><a href="#">Terms of Use</a></li> -->
-<!--                         <li><a href="#">Privacy Policy</a></li> -->
-<!--                     </ul> -->
-<!--                 </div> -->
-<!--             </div> -->
-<!--         </div> -->
-<!--         <div class="footer-copyright"> -->
-<!--             <p>© 2021 Copyright Text</p> -->
-<!--         </div> -->
-<!--     </footer> -->
-<%--     <script src="<%=request.getContextPath()%>/front-end/notefront/assets/js/jquery.min.js"></script> --%>
-<%--     <script src="<%=request.getContextPath()%>/front-end/notefront/assets/bootstrap/js/bootstrap.min.js"></script> --%>
-<!--     <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script> -->
-<%--     <script src="<%=request.getContextPath()%>/front-end/notefront/assets/js/smoothproducts.min.js"></script> --%>
-<%--     <script src="<%=request.getContextPath()%>/front-end/notefront/assets/js/theme.js"></script> --%>
 
 </body>
 
