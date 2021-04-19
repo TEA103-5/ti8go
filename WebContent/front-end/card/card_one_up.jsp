@@ -63,7 +63,7 @@
 								<td><p class="para">${cardVO.card_id}</p>
 								</td>
 								<td>
-										<input type="text" name="card_number" size="16"
+										<input type="text" name="card_number" maxlength="16"
 											value="${cardVO.card_number}" class="card_up">
 								</td>
 								<td>
