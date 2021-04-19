@@ -148,13 +148,13 @@ public class NoteServlet extends HttpServlet {
 		}
 
 		if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
-
+System.out.println("有進來這邊");
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 //			Integer note_id = new Integer(req.getParameter("note_id").trim());;
-			try {
+//			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				Integer note_id = new Integer(req.getParameter("note_id").trim());
 
@@ -234,15 +234,15 @@ public class NoteServlet extends HttpServlet {
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
-			} catch (Exception e) {
-				errorMsgs.add("修改資料失敗:" + e.getMessage());
-//				NoteDAO dao = new NoteDAO();
-//				NoteVO noteVO = dao.findByPrimaryKey(note_id);
-//				req.setAttribute("noteVO", noteVO);
-//				RequestDispatcher failureView = req.getRequestDispatcher("/note/update_note_input.jsp");
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/notefront/update_noteEdit.jsp");
-				failureView.forward(req, res);
-			}
+//			} catch (Exception e) {
+//				errorMsgs.add("修改資料失敗:" + e.getMessage());
+////				NoteDAO dao = new NoteDAO();
+////				NoteVO noteVO = dao.findByPrimaryKey(note_id);
+////				req.setAttribute("noteVO", noteVO);
+////				RequestDispatcher failureView = req.getRequestDispatcher("/note/update_note_input.jsp");
+//				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/notefront/update_noteEdit.jsp");
+//				failureView.forward(req, res);
+//			}
 		}
 
 		if ("insert".equals(action)) {
