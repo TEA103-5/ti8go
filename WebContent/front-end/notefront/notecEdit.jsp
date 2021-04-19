@@ -89,16 +89,16 @@
       <div class="col-lg-8 mt-3">
 
 		<tr>
-				<td>遊記序號:</td>
+				<td>選擇主標題 :</td>
 				<td>
-				<jsp:useBean id="noteCSvc" scope="page"
+				<jsp:useBean id="noteSvc" scope="page"
 						class="com.note.model.NoteService" />
 
 
 					<FORM METHOD="post" ACTION="notec.do">
 						<select class="form-control" size="1" name="note_id">
-							<c:forEach var="noteCVO" items="${noteCSvc.all}">
-								<option value="${noteCVO.note_id}">${noteCVO.note_id}
+							<c:forEach var="noteVO" items="${noteSvc.all}">
+								<option value="${noteVO.note_id}">${noteVO.note_title}
 							</c:forEach>
 						</select> <input type="hidden" name="action" value="insert">
 					</FORM>
