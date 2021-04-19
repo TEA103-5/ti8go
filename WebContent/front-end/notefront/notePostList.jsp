@@ -167,7 +167,7 @@
 								<div class="col-lg-5">
 									<img
 										src="<%=request.getContextPath()%>/DBGifReaderNoteC?note_c_id=${noteCSvc.togetoneNote(noteVO.note_id).note_c_id}"
-										style="max-width: 100%; height: 200px;">
+										style="max-width: 300px; height: 200px;">
 								</div>
 								<div class="col-lg-7">
 									<h3>${noteVO.note_title}</h3>
