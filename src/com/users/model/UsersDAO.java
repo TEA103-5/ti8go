@@ -375,7 +375,7 @@ public class UsersDAO implements UsersDAO_interface {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		UsersJDBCDAO dao = new UsersJDBCDAO();
+		UsersDAO dao = new UsersDAO();
 		
 		//新增
 //		usersVO VO1 = new usersVO();

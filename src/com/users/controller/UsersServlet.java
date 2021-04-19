@@ -531,8 +531,7 @@ public class UsersServlet extends HttpServlet {
 					}
 					
 					List<UsersVO> list = usersSvc.getAll();	
-					for (UsersVO users : list) {
-		System.out.println("in= " + users_mail + " chk= " + users.getUsers_mail());				
+					for (UsersVO users : list) {	
 						if (users_mail.equals(users.getUsers_mail())) {
 						errorMsgs.add("Mail重複，請換一組Mail");
 						}
