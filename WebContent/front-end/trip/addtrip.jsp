@@ -879,22 +879,24 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 				let btime=new Date(this.addtrip.trip_start);
 				let tripday=new Date(endtime-btime);
 				let hour=Math.floor(tripday.getTime() / 3600000);
-
+//console.log(hour)
 				let tday=0;
 				if(hour!=0){
 					tday=hour/24;
+					
+					for(let n=0;n<=tday;n++){
+						let d=btime.getTime()+1000 * 60 * 60 * 24*n;
+						let ctime=new Date(d);
+					self.daylist.push({
+						day:ctime.getFullYear()+'-'+month[ctime.getMonth()]+'-'+ctime.getDate(),
+						tripDetail:[],
+					});
+
+					}
 				}
 
-			//	console.log(ctime);
-				for(let n=0;n<=tday;n++){
-					let d=btime.getTime()+1000 * 60 * 60 * 24*n;
-					let ctime=new Date(d);
-				self.daylist.push({
-					day:ctime.getFullYear()+'-'+month[ctime.getMonth()]+'-'+ctime.getDate(),
-					tripDetail:[],
-				});
+		
 
-				}
 				//console.log(self.daylist);
 				if(self.daylist.length==0){
 					self.daylist.push({
@@ -902,6 +904,8 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 						tripDetail:[],
 					});
 				}
+				
+				
 				$.ajax({
  			        url: "<%=request.getContextPath()%>/trip/trip.do",           // 資料請求的網址 
 			        type: "POST",                  // GET | POST | PUT | DELETE | PATCH
@@ -926,7 +930,8 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 			        
 			        //self.submitTripDetail();        
 			        }
-			    });
+			    });	
+
 
 			},
 			dayDate(index){
