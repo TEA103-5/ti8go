@@ -493,8 +493,7 @@ public class UsersServlet extends HttpServlet {
 					} else	{		
 						url = requestUrl + "/tables.jsp";
 					}
-		System.out.println("url= " + url);			
-					
+								
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 					successView.forward(req, res);				
 					
@@ -515,6 +514,7 @@ public class UsersServlet extends HttpServlet {
 				req.setAttribute("errorMsgs", errorMsgs);
 			
 				
+				UsersService usersSvc = new UsersService();
 				try {
 					/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 					String users_mail = req.getParameter("users_mail").trim();
@@ -525,13 +525,13 @@ public class UsersServlet extends HttpServlet {
 						errorMsgs.add("Mail請勿空白");
 					} 
 					
-//					String users_name = req.getParameter("users_name");
-//					String nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
-//					if (users_name == null || users_name.trim().length() == 0) {
-//						errorMsgs.add("會員姓名: 請勿空白");
-//					} else if(!users_name.trim().matches(nameReg)) { //以下練習正則(規)表示式(regular-expression)
-//						errorMsgs.add("會員姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
-//		            }
+					List<UsersVO> list = usersSvc.getAll();	
+					for (UsersVO users : list) {
+		System.out.println("in= " + users_mail + " chk= " + users.getUsers_mail());				
+						if (users_mail.equals(users.getUsers_mail())) {
+						errorMsgs.add("Mail重複，請換一組Mail");
+						}
+					}
 					
 					
 					String users_pwd = req.getParameter("users_pwd").trim();
@@ -561,6 +561,7 @@ public class UsersServlet extends HttpServlet {
 					// Send the use back to the form, if there were errors
 					if (!errorMsgs.isEmpty()) {
 						req.setAttribute("usersVO", usersVO); // 含有輸入格式錯誤的empVO物件,也存入req
+			System.out.println("err = " + errorMsgs + " url = " + requestUrl + "/login.jsp");
 						RequestDispatcher failureView = req
 								.getRequestDispatcher(requestUrl + "/login.jsp");
 						failureView.forward(req, res);
@@ -568,7 +569,6 @@ public class UsersServlet extends HttpServlet {
 					}
 
 					/***************************2.開始新增資料***************************************/
-					UsersService usersSvc = new UsersService();
 					usersVO = usersSvc.addusers_new(users_mail, users_pwd, users_status);	
 					usersVO = usersSvc.getOneusers(usersVO.getUsers_id());
 					/***************************3.新增完成,準備轉交(Send the Success view)***********/
