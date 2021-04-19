@@ -6,10 +6,21 @@
 <%@page import="com.place.model.*"%>
 <%@ page import="com.trip.model.*"%>
 <%@ page import="java.net.*" %>
+<%@ page import="com.users.model.*"%>
 <%@page import="com.place_collect.model.*"%>
 <%@page import="util.Google_key"%>
 <jsp:useBean id="pSvc" scope="page" class="com.place.model.PlaceService" />
-<%TripVO tripVO = (TripVO) request.getAttribute("tripVO");
+<%
+
+UsersVO usersVO = (UsersVO) session.getAttribute("usersVO");
+//	未登入過，連進此頁，轉去登入頁，避免錯誤	
+	if (usersVO == null) {
+		session.setAttribute("location", request.getRequestURI());
+		response.sendRedirect(request.getContextPath()+"/front-end/login.jsp");   //*工作2 : 請該user去登入網頁(login.html) , 進行登入
+	    return;
+	}
+
+TripVO tripVO = (TripVO) request.getAttribute("tripVO");
 
 pageContext.setAttribute("Google_key", Google_key.key);   // 將util.Google_key的金鑰字串放進pageContext
 pageContext.setAttribute("weather_key", Google_key.weather_key);
