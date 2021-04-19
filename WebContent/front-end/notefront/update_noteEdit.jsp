@@ -119,11 +119,11 @@
 <%--             <textarea type="text" name="note_description" class="form-control" id="Input2" value="${noteVO.note_description}"></textarea> --%>
 <!--           </div> -->
 <!-- 		<script type="text/javascript"> -->
-// 		  $(document).ready(function() {
-// 		  	  CKEDITOR.replace( 'Input2' );
-//               var $CKcontent = CKEDITOR.instances.Input2.getData();
-// 		  })
-<!--  		</script> -->
+<!-- 		  $(document).ready(function() { -->
+<!-- 		  	  CKEDITOR.replace( 'Input2' ); -->
+<!--               var $CKcontent = CKEDITOR.instances.Input2.getData(); -->
+<!-- 		  }) -->
+<!--         </script>  -->
 
 <!--           <div class="bd pt-5"> -->
 <!--           <button type="submit" class="btn btn-primary1" id="btn_submit">送出</button> -->
