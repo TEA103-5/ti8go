@@ -16,7 +16,7 @@ UsersVO usersVO = (UsersVO) session.getAttribute("usersVO");
 //	未登入過，連進此頁，轉去登入頁，避免錯誤	
 	if (usersVO == null) {
 		session.setAttribute("location", request.getRequestURI());
-		response.sendRedirect(request.getContextPath()+"/front-end/login.jsp");   //*工作2 : 請該user去登入網頁(login.html) , 進行登入
+		response.sendRedirect(request.getContextPath()+"/front-end/users/login.jsp");   //*工作2 : 請該user去登入網頁(login.html) , 進行登入
 	    return;
 	}
 
@@ -194,7 +194,7 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 									<td>	
 								
 									{{item.trip_content}}<br/>
-									{{item.trip_start_time}}~{{item.trip_end_time}}<br/>
+									{{item.trip_start_time.slice(0,5)}}~{{item.trip_end_time.slice(0,5)}}<br/>
 									{{item.trip_remarks}}
 						
 									</td>
@@ -335,7 +335,7 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 	    		trip_description:'行程描述',
 	    		trip_type:'未設定',
 	    		trip_tot_cost:'0',
-	    		place_weather:'正常',
+	    		place_weather:'1',
 	    		action:'insertajax',
 	    		place:'',
 	    	},
