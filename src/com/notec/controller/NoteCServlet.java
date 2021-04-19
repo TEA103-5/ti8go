@@ -100,29 +100,43 @@ public class NoteCServlet extends HttpServlet {
 
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
+			
+			String requestURL =  req.getParameter("requestURL");
+			System.out.println("kkkkk");
 
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
 				Integer note_c_id = new Integer(req.getParameter("note_c_id"));
-
+				System.out.println(note_c_id);
 				/*************************** 2.開始查詢資料 ****************************************/
 				NoteCService noteCSvc = new NoteCService();
 				NoteCVO noteCVO = noteCSvc.getOneNoteC(note_c_id);
 //				System.out.println(noteCVO);
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-				req.setAttribute("noteCVO", noteCVO); // 資料庫取出的noteVO物件,存入req
-
-				String url = "/front-end/notefront/update_notecEdit.jsp";
-			//	String url = "/notec/update_noteC_input.jsp";
-
-				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_note_input.jsp
-				successView.forward(req, res);
+				System.out.println("cccccccc");
+				if(requestURL.equals("/front-end/notefront/notePostUpdate.jsp") || requestURL.equals("/front-end/notefront/listMyNote.jsp") ) {
+					req.setAttribute("noteCVO", noteCVO);
+					String url = "/front-end/notefront/update_notecEdit.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交
+					successView.forward(req, res);
+					
+					return;
+					
+				} else {
+					req.setAttribute("noteCVO", noteCVO); // 資料庫取出的noteVO物件,存入req
+					String url = "/note/update_noteC_input.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_note_input.jsp
+					successView.forward(req, res);
+				
+				    return;
+				}
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/notefront/listMyNote.jsp");
 //				RequestDispatcher failureView = req.getRequestDispatcher("/notec/listAllNoteC.jsp");
 				failureView.forward(req, res);
+				System.out.println("dead");
 			}
 		}
 
