@@ -68,7 +68,8 @@ public class TripServlet extends HttpServlet {
 		}
 		
         if ("insertajax".equals(action)) { // 來自addEmp.jsp的請求  
-        	
+        	HashMap result = new HashMap();
+        	PrintWriter out = res.getWriter();
         	List<String> errorMsgs = new LinkedList<String>();
         	// Store this set in the request scope, in case we need to
         	// send the ErrorPage view.
@@ -175,18 +176,21 @@ public class TripServlet extends HttpServlet {
         		tripVO.setTrip_create_time(dates);
         		// Send the use back to the form, if there were errors
         		if (!errorMsgs.isEmpty()) {
-        			req.setAttribute("tripVO", tripVO); // 含有輸入格式錯誤的empVO物件,也存入req
-        			RequestDispatcher failureView = req
-        					.getRequestDispatcher("/trip/addEmp.jsp");
-        			failureView.forward(req, res);
+//        			req.setAttribute("tripVO", tripVO); // 含有輸入格式錯誤的empVO物件,也存入req
+//        			RequestDispatcher failureView = req
+//        					.getRequestDispatcher("/trip/addEmp.jsp");
+//        			failureView.forward(req, res);
+        	  		result.put("errorMsgs",errorMsgs);
+        			JSONObject resultJSON = new JSONObject(result);
+    				out.println(resultJSON);
         			return;
         		}
         		
         		/***************************2.開始新增資料***************************************/
         		TripService tripSvc = new TripService();
         		tripVO = tripSvc.addEmp2(tripVO);
-    			HashMap result = new HashMap();
-    			PrintWriter out = res.getWriter();
+    			
+    			
     			result.put("trip_id",tripVO.getTrip_id());
     			JSONObject resultJSON = new JSONObject(result);
 				out.println(resultJSON);
@@ -199,6 +203,9 @@ public class TripServlet extends HttpServlet {
         	} catch (Exception e) {
         		System.out.println(e);
         		errorMsgs.add(e.getMessage());
+        		result.put("errorMsgs",errorMsgs);
+        		JSONObject resultJSON = new JSONObject(result);
+				out.println(resultJSON);
 //        		RequestDispatcher failureView = req
 //        				.getRequestDispatcher("/trip/addEmp.jsp");
 //        		failureView.forward(req, res);

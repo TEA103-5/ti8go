@@ -33,8 +33,15 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 									       <input type="hidden" name="users_id" value="${usersVO.users_id}">
 									       <input type="hidden" name="action" value="listTrip_ByUsers_A">
 									     </FORM>
+									       	<div id="errormessage" class="white_content2 glass" style="display:block;">
+    							<ul v-for="(item, index) in errorMsgs" class="list-group list-group-flush" style="border-radius: 2rem;">
+					<li class="list-group-item" style="padding:0.1rem;">
+								{{item}}
+					</li>
+				</ul>
+    	</div>
     <div id="fade" class="black_overlay" style="display:block; min-height: 100%;">
-    
+  
 						<div id="tripadd" class="white_content glass" style="display:block;">
 				行程名稱:<br/>
 				<input
@@ -211,12 +218,12 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 					
 
 					
-					<div class="col-md-1 col-xl-1 mb-1 conn" style="height:530px;overflow-y: scroll;width:150px;">
+					<div class="col-md-1 col-xl-1 mb-1 conn" style="height:530px;overflow-y: scroll;">
 									<ul v-for="(item, index) in filterlist" class="list-group list-group-flush" style="border-radius: 2rem;">
-					<li class="list-group-item" draggable="true"
+					<li class="list-group-item" draggable="true" style="padding:0.1rem;"
 								 @dragstart="dragStart($event,-1,index,item)" @dragover="allowDrop" >
 								<img class="img" id="preimg" @click="change(item)" data-toggle="tooltip" data-placement="top" v-bind:title="item.place_name"
-									v-bind:src="item.place_pic" />
+									 v-bind:src="item.place_pic" />
 					</li>
 				</ul>
 					</div>
@@ -245,8 +252,8 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 	var vm = new Vue({
 	    el: '#app',
 	    data: {
+	    	errorMsgs:[],
 	    	placename:'https://www.google.com/maps/embed/v1/search?key=${Google_key}&q=緯育TibaMe附設台北職訓中心&zoom=15&center=25.052052,121.543220',
-	    	
 	    	show:0,
 	    	searchName:'',
 	    	startTime:'',
@@ -464,12 +471,14 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 					this.tripDetail.place_id=1;
 					this.tripDetail.indexOfList=inde;
 					this.DetailSplice=true;
+					 this.tripDetail.place_pic='<%=request.getContextPath()%>/place/DBGifReader4.do';
 				},
 			choiceOtherToDetail(index){//-------------------------------------------------------------------3
 				document.getElementById('setTripDetail').style.display='block';
 				document.getElementById('fade').style.display='block';
 				this.dayCount=index;
 				this.tripDetail.place_id=1;
+				 this.tripDetail.place_pic='<%=request.getContextPath()%>/place/DBGifReader4.do';
 			},
 			choicePlaceToDetailSplice(index,inde){
 				document.getElementById('choicePlace').style.display='block';
@@ -510,9 +519,24 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 	           
 			},
 			sendDetailSpliceToList(){
+				let self=this;
+		
 				this.tripDetail.trip_start_time=$('#time1').val()+':00';
 				this.tripDetail.trip_end_time=$('#time2').val()+':00';
 				
+				if(this.tripDetail.trip_content==''||
+						this.tripDetail.trip_start_time==''||
+						this.tripDetail.trip_end_time==''||
+						this.tripDetail.trip_remarks==''||
+						this.tripDetail.trip_cost==''||
+						$('#time1').val()==''||$('#time2').val()==''
+						){
+				        	  self.errorMsgs.splice(0);
+				        	  self.errorMsgs.push('資料輸入不完全');
+				        	  	$("#errormessage").show();
+					        	$("#errormessage").fadeOut(2000);
+						}else{
+							
 				this.daylist[this.dayCount].tripDetail.splice(this.tripDetail.indexOfList,0,{
 		    		trip_day:'1',
 		    		trip_id:'1',
@@ -550,11 +574,29 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 		    			this.DetailSplice=false;
 				document.getElementById('setTripDetail').style.display='none';
 				document.getElementById('fade').style.display='none';
+						}
+				
+				
 			},
 			sendDetailEditToList(){//-------4------小心潛層複製的問題---------------------------------------------------------------
+				let self=this;
 				this.tripDetail.trip_start_time=$('#time1').val()+':00';
 				this.tripDetail.trip_end_time=$('#time2').val()+':00';
-
+				
+				if(this.tripDetail.trip_content==''||
+				this.tripDetail.trip_start_time==''||
+				this.tripDetail.trip_end_time==''||
+				this.tripDetail.trip_remarks==''||
+				$('#time1').val()==''||$('#time2').val()==''||
+				this.tripDetail.trip_cost==''		
+				){
+		        	  self.errorMsgs.splice(0);
+		        	  self.errorMsgs.push('資料輸入不完全');
+		        	  	$("#errormessage").show();
+			        	$("#errormessage").fadeOut(2000);
+				}else{
+					
+					
 				this.daylist[this.dayCount].tripDetail.push({
 		    		trip_day:'1',
 		    		trip_id:'1',
@@ -591,11 +633,29 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 
 				document.getElementById('setTripDetail').style.display='none';
 				document.getElementById('fade').style.display='none';
+				}
 			},
 			sendDetailEditToList2(){//-------有遇到一個類似潛層複製的問題 但我也不確定...但這樣似乎沒問題就是了
-				
+				let self=this;
 				this.tripDetail.trip_start_time=$('#time1').val()+':00';//這個放到後端會比較好看
-				this.tripDetail.trip_end_time=$('#time2').val()+':00';			
+				this.tripDetail.trip_end_time=$('#time2').val()+':00';		
+				
+				if(this.tripDetail.trip_content==''||
+						this.tripDetail.trip_start_time==''||
+						this.tripDetail.trip_end_time==''||
+						this.tripDetail.trip_remarks==''||
+						$('#time1').val()==''||$('#time2').val()==''||
+						this.tripDetail.trip_cost==''		
+						){
+				        	  self.errorMsgs.splice(0);
+				        	  self.errorMsgs.push('資料輸入不完全');
+				        	  	$("#errormessage").show();
+					        	$("#errormessage").fadeOut(2000);
+						}else{
+							
+							
+				
+				
 					this.daylist[this.dayCount].tripDetail[this.tripDetail.indexOfList].trip_content=this.tripDetail.trip_content;
 					this.daylist[this.dayCount].tripDetail[this.tripDetail.indexOfList].place_name=this.tripDetail.place_name;
 					
@@ -633,6 +693,7 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 				document.getElementById('setTripDetail').style.display='none';
 				document.getElementById('fade').style.display='none';
 				this.editshow=false;
+						}
 			},
 			fadeCancel(){
 				$('#time1').val("");
@@ -813,9 +874,6 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 					tday=hour/24;
 				}
 
-				
-	
-				
 			//	console.log(ctime);
 				for(let n=0;n<=tday;n++){
 					let d=btime.getTime()+1000 * 60 * 60 * 24*n;
@@ -840,16 +898,25 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 			        data: this.addtrip,               // 傳送資料到指定的 url
 			        dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
 			        success: function (data) {      // 這裡必須得到trip_id
-			          
+			          if(data.trip_id==undefined){
+			        	  console.log(data.errorMsgs)
+			        	  self.errorMsgs=data.errorMsgs;
+			        	  	$("#errormessage").show();
+				        	$("#errormessage").fadeOut(2000);
+			          }else{
+			        	  
 			        self.detailUpdateCount=self.tripDetaillist.length;
 			        self.theTrip_id=data.trip_id;
-			        console.log('trip_id='+self.theTrip_id);
+//			        console.log('trip_id='+self.theTrip_id);
+				document.getElementById('tripadd').style.display='none';
+				document.getElementById('fade').style.display='none';
+			        	  
+			          }
+			        
 			        //self.submitTripDetail();        
 			        }
 			    });
 
-				document.getElementById('tripadd').style.display='none';
-				document.getElementById('fade').style.display='none';
 			},
 			dayDate(index){
 				let month = new Array(12);
@@ -977,7 +1044,7 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 	    		//console.log("e");
 	    		});
 	    		
-	   	 $('[data-toggle="tooltip"]').tooltip();
+// 	   	 $('[data-toggle="tooltip"]').tooltip();
 	    		});
 	    }
 	})
