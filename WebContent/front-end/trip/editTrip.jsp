@@ -22,6 +22,10 @@
 <!--  <button @click="setCookie('ABA','10',1)">set</button> -->
 <!--  <button @click="getCookie('peter')">get</button> -->
     <main id="app" class="page glass">
+            <FORM id="from1" METHOD="post" ACTION="<%=request.getContextPath()%>/users/users.do" > 							       
+									       <input type="hidden" name="users_id" value="${usersVO.users_id}">
+									       <input type="hidden" name="action" value="listTrip_ByUsers_A">
+									     </FORM>
     <div id="fade" class="black_overlay" style="display:none; min-height: 100%;">
     
 						<div id="tripadd" class="white_content glass" style="display:none;">
@@ -619,6 +623,7 @@
 	            this.tripDetail.trip_content=e.place_name;
 	            this.tripDetail.place_id=e.place_id;
 	            this.tripDetail.place_pic=e.place_pic;
+	            this.addtrip.read_authority=e.place_id;
 			},
 			
 			submitTripDetailini(){//---------------------------------------------在這邊更新天數
@@ -627,7 +632,8 @@
 				let data={
 						action:'updateDay',
 						day:self.daylist.length+1,
-						trip_id:self.theTrip_id,
+						trip_id:self.addtrip.trip_id,
+						read_authority:self.addtrip.read_authority,
 				}
 			
  				$.ajax({
@@ -681,6 +687,8 @@
 				if(this.dayCount>=1){
 				this.detailUpdateCount=this.daylist[this.dayCount-1].tripDetail.length;
 				this.submitTripDetail();
+				}else{
+					document.getElementById('from1').submit();
 				}
 			},
 			submitTripDetail(){  //行程細節送出 目前以submitTrip()觸發

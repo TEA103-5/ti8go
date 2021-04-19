@@ -34,11 +34,12 @@ public class TripDAO implements TripDAO_interface {
 					+ "edit_authority,trip_area,trip_start,trip_end,trip_name,trip_description,"
 					+ "trip_type,trip_tot_cost,place_weather) VALUES (?, ?, ?, ?, ?,?,?,?,?,?,?,?,?)";
 	
-	private static final String GET_ALL_STMT = "SELECT * FROM trip order by trip_id";
+	private static final String GET_ALL_STMT = "SELECT * FROM trip where trip_state=1 order by trip_id";
 	private static final String GET_ONE_STMT =  "SELECT * FROM trip where trip_id = ?";
 	private static final String DELETE =  "DELETE FROM trip where trip_id = ?";
+	private static final String UPDATElook="update trip set trip_look = ? where trip_id = ?";
 	private static final String UPDATEs="update trip set trip_state = 0 where trip_id = ?";
-	private static final String UPDATED="update trip set place_weather = ? where trip_id = ?";
+	private static final String UPDATED="update trip set place_weather = ?,read_authority=? where trip_id = ?";
 	private static final String UPDATE =  "UPDATE trip set users_id= ?,last_editor= ?,trip_state= ?,read_authority= ?,"
 	+ "edit_authority= ?,trip_area= ?,trip_start= ?,trip_end= ?,trip_name= ?,trip_description= ?,"
 	+ " trip_type= ?,trip_tot_cost= ?,place_weather= ? where trip_id = ?";
@@ -219,7 +220,46 @@ public class TripDAO implements TripDAO_interface {
 		
 	}
 	@Override
-	public void updateDay(String day,Integer trip_id) {
+	public void updateLook(Integer trip_id,Integer look) {
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATElook);
+			
+			pstmt.setInt(2, trip_id);
+			pstmt.setInt(1, look);
+			
+			pstmt.executeUpdate();
+			
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+	}
+	@Override
+	public void updateDay(String day,Integer trip_id,Integer read_authority) {
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -230,7 +270,8 @@ public class TripDAO implements TripDAO_interface {
 			pstmt = con.prepareStatement(UPDATED);
 			
 			pstmt.setString(1, day);
-			pstmt.setInt(2, trip_id);
+			pstmt.setInt(2, read_authority);
+			pstmt.setInt(3, trip_id);
 			
 			pstmt.executeUpdate();
 			
