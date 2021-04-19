@@ -521,9 +521,14 @@ public class UsersServlet extends HttpServlet {
 
 				//	String mailReg = "/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/";
 							//"/^[A-Za-z][12]\\d{8}$/";
+					String regex = "^\\w{1,63}@[a-zA-Z0-9]{2,63}\\.[a-zA-Z]{2,63}(\\.[a-zA-Z]{2,63})?$";
 					if (users_mail == null || users_mail.trim().length() == 0) {
 						errorMsgs.add("Mail請勿空白");
-					} 
+					} else { 
+						if(!users_mail.trim().matches(regex)) {
+							errorMsgs.add("Mail 格式錯誤");
+						}
+					}
 					
 					List<UsersVO> list = usersSvc.getAll();	
 					for (UsersVO users : list) {
@@ -560,7 +565,7 @@ public class UsersServlet extends HttpServlet {
 
 					// Send the use back to the form, if there were errors
 					if (!errorMsgs.isEmpty()) {
-						req.setAttribute("usersVO", usersVO); // 含有輸入格式錯誤的empVO物件,也存入req
+						//req.setAttribute("usersVO", usersVO); // 含有輸入格式錯誤的empVO物件,也存入req
 			System.out.println("err = " + errorMsgs + " url = " + requestUrl + "/login.jsp");
 						RequestDispatcher failureView = req
 								.getRequestDispatcher(requestUrl + "/login.jsp");

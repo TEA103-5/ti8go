@@ -46,7 +46,7 @@ public class ifLoginServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String url=req.getParameter("requestURL");
 		
-		req.getSession().	invalidate();
+		req.getSession().invalidate();
 		
 		RequestDispatcher failureView = req
 				.getRequestDispatcher(url);
