@@ -135,7 +135,11 @@
         </div>
           <div class="bd pt-5">
           <button type="submit" class="btn btn-primary1" id="btn_submit">送出</button>
-          <button type="text" class="btn btn-primary1" id="btn_submit" name="note_classid" value="0">刪除</button>
+          <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/notec/notec.do" style="margin-bottom: 0px;">
+			<input type="hidden" name="note_c_id"  value="${noteCVO.note_c_id}">
+			<input type="hidden" name="action" value="delete">
+          	<button type="submit" class="btn btn-primary1" id="btn_submit" name="note_classid" value="0">刪除</button>
+          	</FORM>
           </div>
         
         </div>

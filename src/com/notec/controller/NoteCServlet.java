@@ -314,7 +314,7 @@ public class NoteCServlet extends HttpServlet {
 				noteCSvc.deleteNoteC(note_c_id);
 
 				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
-				String url = "/notec/listAllNoteC.jsp";
+				String url = "/front-end/notefront/listMyNote.jsp";
 				
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 				successView.forward(req, res);
@@ -322,7 +322,7 @@ public class NoteCServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/notec/listAllNoteC.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/notefront/listMyNote.jsp");
 				failureView.forward(req, res);
 			}
 

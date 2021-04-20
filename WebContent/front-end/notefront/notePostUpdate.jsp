@@ -95,7 +95,7 @@
 							<span>By ${noteVO.users_id}</span><span><fmt:formatDate
 									pattern="yyyy-MM-dd" value="${noteVO.note_date}" /></span>
 						</div>
-						<p>${noteVO.note_description}</p>
+						<p><font size="5">${noteVO.note_description}</font></p>
 						<form class="card-form"	action="<%=request.getContextPath()%>/note/note.do" method="post">
 						<input class="note_id_value" type="hidden" name="note_id" value="${noteVO.note_id}">
 						<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
@@ -117,7 +117,7 @@
 
 								<div class="col">
 									<h> <font size="4"><b>${noteCVO.note_c_title}</b></font></h>
-									<p>${noteCVO.note_c_content}</p>
+									<p><font size="4">${noteCVO.note_c_content}</font></p>
 									<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/notec/notec.do" name="form1" enctype="multipart/form-data">
 									<button class="btn btn-outline-primary btn-sm" type="submit">編輯</button>
 									<input class="note_id_value" type="hidden" name="note_c_id" value=${noteCVO.note_c_id}>
