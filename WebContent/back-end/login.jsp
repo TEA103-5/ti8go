@@ -1,4 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<%
+
+if (session.getAttribute("adminsVO") != null) {
+	String url = request.getContextPath() + "/back-end/admins/listAllAdmins.jsp" ;
+	response.sendRedirect(url);
+}
+
+%>
+
 <!DOCTYPE html>
 <html>
 
