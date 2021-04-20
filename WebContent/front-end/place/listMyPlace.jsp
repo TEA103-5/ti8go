@@ -190,13 +190,19 @@
 <!-- 	以下是自己加入的js -->
 	<script src="https://unpkg.com/sweetalert@2.1.2/dist/sweetalert.min.js"></script>
 	
-<!-- 	此script是將成功訊息印出來 -->
+<!-- 	此script是將成功訊息跟錯誤訊息印出來 -->
 	<script>
 		<c:if test="${not empty successMsgs}">
 				<c:forEach var="message" items="${successMsgs}" >
 					swal("成功","${message}", "success")
 				</c:forEach>
 		</c:if>
+		
+		<c:if test="${not empty errorMsgs}">
+			<c:forEach var="message" items="${errorMsgs}" >
+				swal("失敗","${message}", "error")
+			</c:forEach>
+		</c:if>	
 	</script>
 	
 	

@@ -1,4 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<%
+
+if (session.getAttribute("adminsVO") != null) {
+	String url = request.getContextPath() + "/back-end/admins/listAllAdmins.jsp" ;
+	response.sendRedirect(url);
+}
+
+%>
+
 <!DOCTYPE html>
 <html>
 
@@ -156,7 +166,8 @@
                                     })
                                     .then( (isConfirm) => {
                                     	if(isConfirm){
-                                    		window.location.href = redirect_target;
+//                                     		window.location.href = redirect_target;
+                                    		window.location.replace(redirect_target);
                                     	}
                                     });
                                     isTimerStarted = true;
@@ -164,7 +175,8 @@
                                         timer--;
                                         setTimeout(customSwal, 1000);
                                     }else{
-                                    	window.location.href = redirect_target;
+//                                     	window.location.href = redirect_target;
+                                    	window.location.replace(redirect_target);
                                     }
                                 })();
 
