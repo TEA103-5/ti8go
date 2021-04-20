@@ -152,6 +152,9 @@
 					</div></div>	
 				</form>
 			</div>
+			<div class="card-footer">
+			<input type ="button" onclick="javascript:location.href='<%=request.getContextPath()%>/front-end/card/card.jsp'" value="信用卡列表"></input>
+			</div>
 		</div>
 	</div>
 	</main>
