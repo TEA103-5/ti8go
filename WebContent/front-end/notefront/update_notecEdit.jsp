@@ -117,7 +117,7 @@
           </div>
           <div class="form-group">
             <label for="exampleFormControlTextarea1">內容簡介</label>
-            <textarea type="text" name="note_c_content" class="form-control" id="Input2">${noteCVO.note_c_content}</textarea>
+            <textarea type="text" name="note_c_content" class="form-control" id="Input2" rows="10">${noteCVO.note_c_content}</textarea>
           </div>
           <script type="text/javascript">
 		  	$(document).ready(function() {
@@ -130,10 +130,8 @@
 
           <div class="form-group pt-3">
             <label for="exampleFormControlFile1">編輯相片</label>
-            <input type="file" name="note_c_img" accept="image/*" multiple="multiple" class="form-control-file" id="p_file">
-            <div id="preview">
-            <img src="<%=request.getContextPath()%>/DBGifReaderNoteC?note_c_id=${noteCVO.note_c_id}" style="width:120px; height:120px">
-            </div>
+            <input type="file" name="note_c_img" accept="image/*" multiple="multiple" class="form-control-file" id="exampleFormControlFile1">
+            <img src="<%=request.getContextPath()%>/DBGifReaderNoteC?note_c_id=${noteCVO.note_c_id}" style="width:300px; height:200px">
         </div>
           <div class="bd pt-5">
           <button type="submit" class="btn btn-primary1" id="btn_submit">送出</button>
@@ -154,27 +152,27 @@
 
   </FORM>
   <script>
-       var the_file_element = document.getElementById("p_file");
-                the_file_element.addEventListener("change", function (e) {
+	$(document).on('change','input.form-control-file',function(e) {
 
-                    var picture_list = document.getElementsByClassName("form-control-file")[0];
-                    picture_list.innerHTML = ""; //清空
-                    
-                    // 跑每個使用者的檔案
-                    for (var i = 0; i < this.files.length; i++) {
-                        let reader = new FileReader(); // 用來讀取檔案的物件
-                        reader.readAsDataURL(this.files[i]); // 讀取檔案
-                        // 檔案讀取完畢時觸發
-                        reader.addEventListener("load", function () {
+		var input_el = $(this);
+	    var img_el = input_el.parent().children().next('img');
 
-                            const img = document.createElement('img')
-                            img.setAttribute('id', 'preview_image')
-                            img.setAttribute('src', reader.result)
-                            preview.replaceWith(img)
+		var file = e.target.files[0];
+		var reader = new FileReader(); // 用來讀取檔案的物件
 
-                        })
-                    }
-                });
+	// 點選取消，也是有觸發change事件，但file是undefined
+		if (typeof (file) != 'undefined') {
+		   reader.readAsDataURL(file); // 讀取檔案
+		}
+
+	// 檔案讀取完成
+		reader.addEventListener("load",function() {
+			let img_el_change = '<img src="'+ reader.result + '" style="width:300px; height:200px">';
+			img_el.replaceWith(img_el_change);
+
+		})
+
+		})
 
         $("#btn_submit").on("click", function (e) {
             let task_text = ($('#exampleFormControlInput3').val()).trim();
