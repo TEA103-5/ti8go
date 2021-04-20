@@ -166,7 +166,8 @@ if (session.getAttribute("adminsVO") != null) {
                                     })
                                     .then( (isConfirm) => {
                                     	if(isConfirm){
-                                    		window.location.href = redirect_target;
+//                                     		window.location.href = redirect_target;
+                                    		window.location.replace(redirect_target);
                                     	}
                                     });
                                     isTimerStarted = true;
@@ -174,7 +175,8 @@ if (session.getAttribute("adminsVO") != null) {
                                         timer--;
                                         setTimeout(customSwal, 1000);
                                     }else{
-                                    	window.location.href = redirect_target;
+//                                     	window.location.href = redirect_target;
+                                    	window.location.replace(redirect_target);
                                     }
                                 })();
 
