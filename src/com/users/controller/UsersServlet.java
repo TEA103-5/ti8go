@@ -474,9 +474,17 @@ public class UsersServlet extends HttpServlet {
 					}
 					
 					String users_pwd = req.getParameter("users_pwd").trim();
+					//String pwdReg = "/^.*(?=.{5,16})(?=.*\\d)(?=.*[A-Z]{1,})(?=.*[a-z]{1,})(?=.*[!@#$%^&*?\\(\\)]).*$/" ;
+					String pwdReg = "^(?![A-Za-z0-9]+$)(?![a-z0-9\\W]+$)(?![A-Za-z\\W]+$)(?![A-Z0-9\\W]+$)[a-zA-Z0-9\\W]{6,}$";
 					if (users_pwd == null || users_pwd.trim().length() == 0) {
 						errorMsgs.add("密碼請勿空白");
-					}
+					} else if(!users_pwd.trim().matches(pwdReg)) { //以下練習正則(規)表示式(regular-expression)
+						errorMsgs.add("密碼 最短6位\r\n" + 
+									"必須包含1個數字\r\n" + 
+					  				"，1個小寫字母\r\n" + 
+									"，1個大寫字母\r\n" + 
+									"，1個特殊字符");
+			        }
 					
 					String users_nickname = req.getParameter("users_nickname").trim();
 					if (users_nickname == null || users_nickname.trim().length() == 0) {
@@ -622,8 +630,6 @@ public class UsersServlet extends HttpServlet {
 					/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 					String users_mail = req.getParameter("users_mail").trim();
 
-				//	String mailReg = "/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/";
-							//"/^[A-Za-z][12]\\d{8}$/";
 					String regex = "^\\w{1,63}@[a-zA-Z0-9]{2,63}\\.[a-zA-Z]{2,63}(\\.[a-zA-Z]{2,63})?$";
 					if (users_mail == null || users_mail.trim().length() == 0) {
 						errorMsgs.add("Mail請勿空白");
@@ -643,15 +649,16 @@ public class UsersServlet extends HttpServlet {
 														
 					String users_pwd = req.getParameter("users_pwd").trim();
 					//String pwdReg = "/^.*(?=.{5,16})(?=.*\\d)(?=.*[A-Z]{1,})(?=.*[a-z]{1,})(?=.*[!@#$%^&*?\\(\\)]).*$/" ;
+					String pwdReg = "^(?![A-Za-z0-9]+$)(?![a-z0-9\\W]+$)(?![A-Za-z\\W]+$)(?![A-Z0-9\\W]+$)[a-zA-Z0-9\\W]{6,}$";
 					if (users_pwd == null || users_pwd.trim().length() == 0) {
 						errorMsgs.add("密碼請勿空白");
-					}//else if(!users_pwd.trim().matches(pwdReg)) { //以下練習正則(規)表示式(regular-expression)
-					//	errorMsgs.add("密碼 最短5位，最長16位 {6,16}\r\n" + 
-					//					"必須包含1個數字\r\n" + 
-					//  				"必須包含2個小寫字母\r\n" + 
-					//					"必須包含2個大寫字母\r\n" + 
-					//					"必須包含1個特殊字符");
-			        //}
+					} else if(!users_pwd.trim().matches(pwdReg)) { //以下練習正則(規)表示式(regular-expression)
+						errorMsgs.add("密碼 最短6位\r\n" + 
+								"必須包含1個數字\r\n" + 
+				  				"，1個小寫字母\r\n" + 
+								"，1個大寫字母\r\n" + 
+								"，1個特殊字符");
+			        }
 
 						
 					Integer users_status = 1 ;
