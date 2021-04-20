@@ -13,9 +13,9 @@
          <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/assets/css/tripstyles2.css">
 </head>
  <body>
- 		
+ 			<%@ include file="/front-end/pages/headNav.html" %>
 <!--  		這行是header的nav區塊 -->
- 		<%@ include file="/front-end/pages/headNav.html" %>
+ 	
 
     <main class="page landing-page">
 
@@ -27,14 +27,7 @@
 		<b id="text">Tivago</b>
 </section>
 
-          </div>
-          <ol class="carousel-indicators">
-            <li data-target="#carousel-1" data-slide-to="0" class="active"></li>
-            <li data-target="#carousel-1" data-slide-to="1"></li>
-            <li data-target="#carousel-1" data-slide-to="2"></li>
-          </ol>
-        </div>
-      </div>
+
 
 
         <div class="container-fluid glass">
