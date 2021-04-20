@@ -53,7 +53,7 @@ section img{
 }
 .conn{
 	margin: 0rem 0.5rem;
-	background: linear-gradient(to right bottom,rgba(255,255,255,0.1),rgba(255,255,255,0.1));
+	background: linear-gradient(to right bottom,rgba(255,255,255,0.8),rgba(255,255,255,0.8));
 	border-radius: 2rem;
 	backdrop-filter:blur(1rem);
 	-webkit-box-shadow: 0px 2px 22px -8px rgba(0, 0, 0, 0.75);
@@ -63,7 +63,7 @@ section img{
 }
 .glass{
 	min-height:70vh;
-	background: linear-gradient(to right bottom,rgba(200,207,207,0.1),rgba(214,201,188,0.1));
+	background: linear-gradient(to right bottom,rgba(200,207,207,0.5),rgba(214,201,188,0.8));
 	padding:2rem 0rem;
 }
 #text{

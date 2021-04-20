@@ -33,17 +33,30 @@
 
         <div class="container-fluid glass">
         <div class="conn">
-          <div class="block-heading ">
-    
-          </div>
           <div class="row align-items-center  conn">
-            <div class="col-md-6">
-        
+          <div class="block-heading conn col-md-12"">
+    				        <h3>Lorem impsum dolor sit amet</h3>
+              <div class="getting-started-info">
+						地點~~~
+              </div>
+          </div>
+            <div class="col-md-12 conn">
+        		        <h3>Lorem impsum dolor sit amet</h3>
+              <div class="getting-started-info">
+						行程~~~
+              </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-12 conn">
               <h3>Lorem impsum dolor sit amet</h3>
               <div class="getting-started-info">
-						這裡放些什麼吧~~~
+						商品~~~
+              </div>
+      
+              </div>
+            <div class="col-md-12 conn">
+              <h3>Lorem impsum dolor sit amet</h3>
+              <div class="getting-started-info">
+						遊記~~~
               </div>
       
               </div>
@@ -75,8 +88,8 @@
 	  bg.style.top= value*0.5 + 'px';
 	  moon.style.left= -value*0.15 + 'px';
 	  mountain.style.top= -value*0.15 + 'px';
-	  road.style.top= value*0.15 + 'px';
-	  text.style.top= value*1 + 'px';
+	  road.style.top= value*0.17 + 'px';
+	  text.style.top= value*0.7 + 'px';
 	  text.style.left= -value*0.15 + 'px';
   })
   </script>
