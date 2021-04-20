@@ -789,7 +789,7 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 			
 				let data={
 						action:'updateDay',
-						day:self.daylist.length+1,
+						day:self.daylist.length,
 						trip_id:self.theTrip_id,
 						read_authority:self.addtrip.read_authority,
 				}
