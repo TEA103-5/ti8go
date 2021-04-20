@@ -199,14 +199,15 @@ public class ifLoginServlet extends HttpServlet {
 		
 		SaleVO uVO=null;
 
-		uVO=lgSrc.usersLogin(id, pwd);
+		uVO=lgSrc.checkIdType(id, pwd);
+
 		if(uVO!=null) {
 			
-//			if("users".equals(uVO.getSale_name())) {
+			if("users".equals(uVO.getSale_name())) {
 
 				UsersService uSrc=new UsersService();
-	
-				//req.getSession().setAttribute("usersVO", uSrc.getOneusers(uVO.getSale_id()));
+				url="/front-end/index.jsp";
+				req.getSession().setAttribute("usersVO", uSrc.getOneusers(uVO.getSale_id()));
 				
 				
 //			if("/front-end/order/addOrder.jsp".equals(url)) {
@@ -214,11 +215,11 @@ public class ifLoginServlet extends HttpServlet {
 //				}else {
 //					url="/front-end/index.jsp";
 //				}
-//			}else if("sale".equals(uVO.getSale_name())) {
-//				SaleService sSrc=new SaleService();
-//				req.getSession().setAttribute("saleVO",sSrc.getOneSale(uVO.getSale_id()));
+			}else if("sale".equals(uVO.getSale_name())) {
+				SaleService sSrc=new SaleService();
+				req.getSession().setAttribute("saleVO",sSrc.getOneSale(uVO.getSale_id()));
 //	
-//				url="/sale-end/saleEndIndex.jsp";
+				url="/sale-end/saleEndIndex.jsp";
 //			}else if("admins".equals(uVO.getSale_name())) {
 //				AdminsService adminsSrc = new AdminsService();
 //				req.getSession().setAttribute("adminsVO",adminsSrc.getOneadmins(uVO.getSale_id()));
@@ -228,9 +229,8 @@ public class ifLoginServlet extends HttpServlet {
 			//System.out.println(uVO);
 			errorMsgs.add("帳號或密碼有問題");
 		}
-		
 		RequestDispatcher failureView = req
-				.getRequestDispatcher("/front-end/index.jsp");
+				.getRequestDispatcher(url);
 		failureView.forward(req, res);	
 		}
 		
@@ -240,5 +240,5 @@ public class ifLoginServlet extends HttpServlet {
 	
 	
 	}
-
+	}
 }
