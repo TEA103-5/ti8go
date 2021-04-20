@@ -22,7 +22,10 @@ System.out.println(usersVO.getUsers_id());
 	}
 
 TripVO tripVO = (TripVO) request.getAttribute("tripVO");
+Place_collectService place_collectSvc = new Place_collectService();
+List<Place_collectVO> list = place_collectSvc.getAllByPrimaryKey(usersVO.getUsers_id());
 
+pageContext.setAttribute("list", list);
 pageContext.setAttribute("Google_key", Google_key.key);   // 將util.Google_key的金鑰字串放進pageContext
 pageContext.setAttribute("weather_key", Google_key.weather_key);
 
@@ -93,6 +96,12 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 													id="formCheck-1"><label
 													class="custom-control-label" for="formCheck-1"><strong>我的地點</strong></label>
 											</div>
+						<div class="custom-control custom-switch">
+												<input class="custom-control-input" type="checkbox"
+													id="formCheck-2" v-model="collect"><label
+													class="custom-control-label" for="formCheck-2"><strong>我的收藏</strong></label>
+											</div>
+					
 					
 					<table class=" table   table-place" style="height:470px;" >
 					<tr>
@@ -176,7 +185,7 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 				 </div>
 				 
 				 
-					<div class="col-md-4 col-xl-4 mb-4 conn" style="height:73vh;overflow-y: scroll;">
+					<div class="col-md-5 col-xl-5 mb-5 conn" style="height:73vh;overflow-y: scroll;">
 				
 					<ul v-for="(item,index) in daylist" class="list-group list-group-flush footers" style="border-radius: 2rem;">
 						 <li class="list-group-item footers">
@@ -211,9 +220,9 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 									</td>
 									
 									<td>
-									插入:
-									<button @click="choicePlaceToDetailSplice(index,inde)">地點</button>/
-									<button @click="choiceOtherToDetailSplice(index,inde)">其他</button>
+									插入:<br/>
+									<button @click="choicePlaceToDetailSplice(index,inde)">地點</button>
+									<button @click="choiceOtherToDetailSplice(index,inde)">其他</button><br/>
 									<button @click="tripDetailEdit(item,index,inde)">edit</button>	
 									<button @click="tripDetailDel(index,inde)">del</button>
 		
@@ -246,7 +255,7 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 					</li>
 				</ul>
 					</div>
-					<div class="col-md-5 col-xl-5 mb-5 conn">
+					<div class="col-md-4 col-xl-4 mb-4 conn">
 					           <div class="block-heading">
 					   <iframe id="map-iframe" allowfullscreen="" frameborder="0"
                        v-bind:src="placename"
@@ -271,6 +280,12 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 	var vm = new Vue({
 	    el: '#app',
 	    data: {
+	    	collect:false,
+	    	place_collect:new Set([
+	    	    <c:forEach var="place_collectVO" items="${list}"  varStatus="loop">
+	    	    '${place_collectVO.place_id}',
+	    	    </c:forEach>
+	    	]),
 	    	searchuid:false,
 	    	errorMsgs:[],
 	    	placename:'https://www.google.com/maps/embed/v1/search?key=${Google_key}&q=緯育TibaMe附設台北職訓中心&zoom=15&center=25.052052,121.543220',
@@ -777,6 +792,7 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 	            this.tripDetail.place_pic=e.place_pic;
 	            this.searchName='';
 	    		this.searchuid=false;
+	    		this.collect=false;
 	            document.getElementById('choicePlace').style.display='none';
 	            document.getElementById('setTripDetail').style.display='block';
 	            document.getElementById('fade').style.display='block';
@@ -784,6 +800,7 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 			cancelAddPlace(){
 				this.searchName='';
 				this.searchuid=false;
+				this.collect=false;
 				document.getElementById('choicePlace').style.display='none';
 				document.getElementById('fade').style.display='none';
 			},
@@ -967,7 +984,7 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 				return ctime.getFullYear()+'-'+month[ctime.getMonth()]+'-'+ctime.getDate();
 			},
 	    },
-	    computed:{
+	    computed:{//--------------------------------------------------------------------------------
 	    	filterlist () {
 	    		const {searchName,placelist} = this;
 // 	    		,orderType,x,n,pricemax,pricemin
@@ -985,6 +1002,12 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 	    		
 	    		if(self.searchuid==true){
 	    			flist = placelist.filter(p => (p.place_user==self.addtrip.users_id
+//	 	    				||p.productCategories.indexOf(searchName)!==-1
+		    				)
+		    				);
+	    		}
+	    		if(self.collect==true){
+	    			flist = placelist.filter(p => (self.place_collect.has(p.place_id)
 //	 	    				||p.productCategories.indexOf(searchName)!==-1
 		    				)
 		    				);
