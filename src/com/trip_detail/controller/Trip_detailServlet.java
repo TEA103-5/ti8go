@@ -67,14 +67,14 @@ public class Trip_detailServlet extends HttpServlet {
 					
 					java.sql.Time trip_start_time = null;
 					try {
-						trip_start_time = java.sql.Time.valueOf(req.getParameter("trip_start_time").trim()+":00");
+						trip_start_time = java.sql.Time.valueOf(req.getParameter("trip_start_time").trim());
 					} catch (IllegalArgumentException e) {
 						trip_start_time=java.sql.Time.valueOf("00:00:00");
 						errorMsgs.add("請輸入開始時間!");
 					}
 					java.sql.Time trip_end_time = null;
 					try {
-						trip_end_time = java.sql.Time.valueOf(req.getParameter("trip_end_time").trim()+":00");
+						trip_end_time = java.sql.Time.valueOf(req.getParameter("trip_end_time").trim());
 					} catch (IllegalArgumentException e) {
 						trip_end_time=java.sql.Time.valueOf("00:00:00");
 						errorMsgs.add("請輸入結束時間!");
