@@ -212,7 +212,7 @@ if (session.getAttribute("adminsVO") != null) {
            		.then((admins_email) => {
            			console.log(admins_email);
            			ajax_forgotPassword(admins_email);
-//            		  swal( "請至信箱確認," + admins_email );
+           		 	swal( "待會請至信箱確認," + admins_email );
            		});
             }
             
@@ -230,7 +230,7 @@ if (session.getAttribute("adminsVO") != null) {
 			        dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
 			        success: function (data) {      // request 成功取得回應後執行
 			        	console.log(data);
-			        	swal( "請至信箱確認," + admins_email );
+// 			        	swal( "請至信箱確認," + admins_email );
 			          
 			        }
 			    });
