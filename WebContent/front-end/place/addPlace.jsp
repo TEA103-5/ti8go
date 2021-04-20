@@ -2,11 +2,17 @@
 <%@page import="com.place.model.*"%>
 <%@page import="com.place_collect.model.*"%>
 <%@page import="util.Google_key"%>
+<%@page import="util.TokenProcessor"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
 <% 
+TokenProcessor tokenProcessor = TokenProcessor.getInstance();
+String token = tokenProcessor.makeToken();
+System.out.println("addPlace的token = " + token);
+session.setAttribute("token", token);
+
 	pageContext.setAttribute("Google_key", Google_key.key);   // 將util.Google_key的金鑰字串放進pageContext
 
 	PlaceVO placeVO = (PlaceVO)request.getAttribute("placeVO");
@@ -263,6 +269,7 @@
 <!--                     </div> -->
                     <input type="hidden" name="place_state" value="0">
                     <!-- 使用者新增的地點的place_state一律為0 -> 未審核 -->
+                    <input type="hidden" name="token" value="${sessionScope.token}">
                     <input type="hidden" name="users_id" value="${sessionScope.users_id}">
                     <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
                     <input type="hidden" name="action" value="insert">

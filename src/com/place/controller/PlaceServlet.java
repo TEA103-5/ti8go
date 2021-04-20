@@ -16,6 +16,7 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import com.place.model.PlaceDAO;
@@ -526,6 +527,23 @@ System.out.println("requestURL = " + requestURL);
 
 			List<String> successMsgs = new LinkedList<String>();
 			req.setAttribute("successMsgs", successMsgs);
+			
+			// 對表單重複送出做處理
+			HttpSession session = req.getSession();
+		    Object sessionToken =  session.getAttribute("token");
+		    String requestToken = req.getParameter("token");
+			if(requestToken.equals(sessionToken) && (sessionToken != null)) {
+				session.removeAttribute("token");
+			}else {
+System.out.println("表單重複送出");
+				errorMsgs.add("表單重複送出");
+				if(requestURL.equals("/front-end/place/addPlace.jsp")) {  // 來自前台正式頁面, 預計導向我的地點
+					String url = "/front-end/place/listMyPlace.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url);
+					successView.forward(req, res);
+					return;
+				}
+			}
 
 			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
