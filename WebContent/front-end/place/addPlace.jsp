@@ -274,7 +274,7 @@ session.setAttribute("token", token);
                     <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
                     <input type="hidden" name="action" value="insert">
                     <!-- <button id="getGeo_button" type="button" class="btn btn-secondary">取得經緯度及定位</button> -->
-                    <button type="submit" class="btn btn-secondary">submit</button>
+                    <button type="submit" id="submit_btn" class="btn btn-secondary">submit</button>
                 </form>
                 <!-- 表單結束 -->
 
@@ -476,12 +476,8 @@ session.setAttribute("token", token);
                     alert("尚有欄位未輸入正確");
                     return false;
                 } else {
-//                     let select_group = $('.city-selector').find(":selected");
-//                     let county = select_group.eq(0).text();
-//                     let district = select_group.eq(1).text();
-//                     let address = el_place_address.val();
-//                     el_place_address.val(county + district + address);
-
+					$("#submit_btn").attr("disabled", true);
+					return true;
 //                 	都驗證通過則submit
                 }
 
