@@ -5,6 +5,7 @@
 if (session.getAttribute("adminsVO") != null) {
 	String url = request.getContextPath() + "/back-end/admins/listAllAdmins.jsp" ;
 	response.sendRedirect(url);
+	return;
 }
 
 %>

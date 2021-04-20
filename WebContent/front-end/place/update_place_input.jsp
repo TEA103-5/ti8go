@@ -8,8 +8,16 @@
 
 <% 
 	pageContext.setAttribute("Google_key", Google_key.key);   // 將util.Google_key的金鑰字串放進pageContext
-
-	PlaceVO placeVO = (PlaceVO)request.getAttribute("placeVO");
+	
+	PlaceVO placeVO = null ;
+	if(request.getAttribute("placeVO") != null){
+		placeVO = (PlaceVO)request.getAttribute("placeVO");
+	}else{
+		String url = request.getContextPath() + "/front-end/place/listMyPlace.jsp" ;
+		response.sendRedirect(url) ;
+		return;
+	}
+// 	PlaceVO placeVO = (PlaceVO)request.getAttribute("placeVO");
 
 	// 以下將place_address字串做處理以便設定地址選單套件的選項
 	String address = placeVO.getPlace_address(); // 
