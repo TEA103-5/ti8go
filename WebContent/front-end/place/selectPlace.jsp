@@ -1,6 +1,7 @@
 <%@page import="java.util.*"%>
 <%@page import="com.place.model.*"%>
 <%@page import="com.place_collect.model.*"%>
+<%@page import="com.users.model.*"%>
 <%@page import="util.Google_key"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -11,8 +12,11 @@
 <%
 	pageContext.setAttribute("Google_key", Google_key.key);   // 將util.Google_key的金鑰字串放進pageContext
 	pageContext.setAttribute("weather_key", Google_key.weather_key);
-
-	session.setAttribute("users_id", 1);  //  測試用
+	
+	if(session.getAttribute("usersVO") != null){
+		session.setAttribute("users_id", ((UsersVO)session.getAttribute("usersVO")).getUsers_id() );  //  測試用
+	}
+// 	session.setAttribute("users_id", 1);  //  測試用
 	
 	if(session.getAttribute("users_id") != null){
 		// 先把目前登入的users_id放進變數, 並產生一個地點收藏service , 將service放在pageContext供下面EL使用
