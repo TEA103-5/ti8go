@@ -13,8 +13,13 @@
                 <ul class="navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/back-end/admins/listAllAdmins.jsp"><i
                                 class="fas fa-tachometer-alt"></i><span>管理者列表</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="profile.html"><i
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="document.getElementById('span_form').submit()"><i
                                 class="fas fa-user"></i><span>設定基本資料</span></a></li>
+                         <FORM id="span_form" METHOD="post" ACTION="<%=request.getContextPath()%>/admins/admins.do" >
+                       	   <input type="hidden" name="requestURL" value="/back-end/admins/listAllAdmins.jsp">
+					       <input type="hidden" name="admins_id" value="${sessionScope.adminsVO.admins_id}">
+					       <input type="hidden" name="action" value="getOne_For_Display">
+					    </FORM>
                     <li class="nav-item"><a class="nav-link active" href="#"><i
                                 class="fas fa-table"></i><span>業者管理</span></a></li>
                     <li class="nav-item"><a class="nav-link active" href="/back-end/users/tables.jsp">
