@@ -13,9 +13,9 @@
          <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/assets/css/tripstyles2.css">
 </head>
  <body>
- 		
+ 			<%@ include file="/front-end/pages/headNav.html" %>
 <!--  		這行是header的nav區塊 -->
- 		<%@ include file="/front-end/pages/headNav.html" %>
+ 	
 
     <main class="page landing-page">
 
@@ -24,40 +24,27 @@
 		<img src="<%=request.getContextPath()%>/front-end/assets/img/moon.png" id="moon">
 		<img src="<%=request.getContextPath()%>/front-end/assets/img/taipei.png" id="mountain">
 		<img src="<%=request.getContextPath()%>/front-end/assets/img/road.png" id="road">
-		<h2 id="text">Tivago</h2>
+		<b id="text">Tivago</b>
 </section>
 
-          </div>
-          <ol class="carousel-indicators">
-            <li data-target="#carousel-1" data-slide-to="0" class="active"></li>
-            <li data-target="#carousel-1" data-slide-to="1"></li>
-            <li data-target="#carousel-1" data-slide-to="2"></li>
-          </ol>
-        </div>
-      </div>
+
 
 
         <div class="container-fluid glass">
         <div class="conn">
           <div class="block-heading ">
-            <h2 class="text-info">&nbspInfo</h2>
+    
           </div>
           <div class="row align-items-center  conn">
             <div class="col-md-6">
-              <img class="img-thumbnail" src="<%=request.getContextPath()%>/front-end/assets/img/scenery/image5.jpg" />
+        
             </div>
             <div class="col-md-6">
               <h3>Lorem impsum dolor sit amet</h3>
               <div class="getting-started-info">
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                </p>
+						這裡放些什麼吧~~~
               </div>
-              <button class="btn btn-outline-primary btn-lg" type="button">
-                Join Now
-              </button>
+      
               </div>
             </div>
           </div>

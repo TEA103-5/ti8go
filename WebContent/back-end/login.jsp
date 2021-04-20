@@ -72,7 +72,7 @@ if (session.getAttribute("adminsVO") != null) {
                                             Facebook</a>
                                         <hr> -->
                                     </form>
-                                    <div class="text-center"><a class="small" href="forgot-password.html">Forgot
+                                    <div class="text-center"><a class="small" id="forgotPassword" href="#">Forgot
                                             Password?</a></div>
                                     <div class="text-center"><a class="small" href="register.html">Create an
                                             Account!</a></div>
@@ -195,6 +195,46 @@ if (session.getAttribute("adminsVO") != null) {
                 }
             })
 
+            
+//             -------------
+            $("#forgotPassword").on("click", function(e){
+//             	alert("777") ;
+				e.preventDefault();
+            	swal_forgotPassword();
+            	
+            })
+            
+            
+            function swal_forgotPassword(){
+            	swal("忘記密碼","請輸入電子信箱,如電子信箱無誤,則會寄出暫時密碼", {
+           		  content: "input",
+           		})
+           		.then((admins_email) => {
+           			console.log(admins_email);
+           			ajax_forgotPassword(admins_email);
+//            		  swal( "請至信箱確認," + admins_email );
+           		});
+            }
+            
+            function ajax_forgotPassword(admins_email){
+
+                let data = {
+                        "action": "forgotPassword",
+                        "admins_email": admins_email
+                }
+            	
+            	$.ajax({
+			        url: "<%=request.getContextPath()%>/admins/adminsAjaxHandler.do",           // 資料請求的網址
+			        type: "POST",                  // GET | POST | PUT | DELETE | PATCH
+			        data: data,               // 傳送資料到指定的 url
+			        dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
+			        success: function (data) {      // request 成功取得回應後執行
+			        	console.log(data);
+			        	swal( "請至信箱確認," + admins_email );
+			          
+			        }
+			    });
+            }
 
 
 
