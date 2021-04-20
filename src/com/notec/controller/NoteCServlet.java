@@ -201,7 +201,7 @@ public class NoteCServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("noteCVO", noteCVO); // 含有輸入格式錯誤的empVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/notec/update_noteC_input.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/notefront/update_notecEdit.jsp");
 					failureView.forward(req, res);
 					return; // 程式中斷
 				}
@@ -216,7 +216,7 @@ public class NoteCServlet extends HttpServlet {
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("noteCVO", noteCVO);
 
-				String url = "/front-end/notefront/listMyNote.jsp";
+				String url = "/front-end/notefront/notePost.jsp";
 //				String url = "/notec/listOneNoteC.jsp";
 
 				RequestDispatcher successView = req.getRequestDispatcher(url);
@@ -224,7 +224,7 @@ public class NoteCServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/notec/update_noteC_input.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/notefront/update_notecEdit.jsp");
 				failureView.forward(req, res);
 			}
 		}
