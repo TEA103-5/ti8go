@@ -34,6 +34,7 @@ public class NoteServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 			
 			String requestURL =  req.getParameter("requestURL");
+			String action2 = req.getParameter("action2");
 
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
@@ -75,7 +76,90 @@ public class NoteServlet extends HttpServlet {
 				}
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+				
+				if(action2.equals("UpdateAll")) {
+					req.setAttribute("noteVO", noteVO);
+					String url = "/front-end/notefront/notePostUpdate.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交
+					successView.forward(req, res);
+					return;
+				}
+				
+				if(requestURL.equals("/front-end/notefront/notePostList.jsp") || requestURL.equals("/front-end/notefront/listMyNote.jsp")
+						|| requestURL.equals("/front-end/notefront/listMyNote_collect.jsp")) {
 
+					req.setAttribute("noteVO", noteVO);
+					String url = "/front-end/notefront/notePost.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交
+					successView.forward(req, res);
+					
+					return;
+				} else {
+					req.setAttribute("noteVO", noteVO);
+					String url = "/note/listOneNote.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交
+					successView.forward(req, res);
+					
+					return;
+				}
+				/*************************** 其他可能的錯誤處理 *************************************/
+			} catch (Exception e) {
+				errorMsgs.add("無法取得資料:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/note/select_page.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		
+		if ("getOne_For_Display2".equals(action)) { // 來自select_page.jsp的請求
+
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			String requestURL =  req.getParameter("requestURL");
+
+			try {
+				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				String str = req.getParameter("note_id");
+				if (str == null || (str.trim()).length() == 0) {
+					errorMsgs.add("請輸入遊記序號");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/note/select_page.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+
+				Integer note_id = null;
+				try {
+					note_id = new Integer(str);
+				} catch (Exception e) {
+					errorMsgs.add("遊記序號格式不正確");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/note/select_page.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+
+				/*************************** 2.開始查詢資料 *****************************************/
+				NoteService noteSvc = new NoteService();
+				NoteVO noteVO = noteSvc.getOneNote(note_id);
+				if (noteVO == null) {
+					errorMsgs.add("查無資料");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/note/select_page.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+				
 				if(requestURL.equals("/front-end/notefront/notePostList.jsp") || requestURL.equals("/front-end/notefront/listMyNote.jsp")
 						|| requestURL.equals("/front-end/notefront/listMyNote_collect.jsp")) {
 
@@ -101,6 +185,7 @@ public class NoteServlet extends HttpServlet {
 			}
 		}
 
+
 		if ("getOne_For_Update".equals(action)) {
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -121,7 +206,7 @@ public class NoteServlet extends HttpServlet {
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 
-				if(requestURL.equals("/front-end/notefront/listMyNote.jsp")) {
+				if(requestURL.equals("/front-end/notefront/listMyNote.jsp") || requestURL.equals("/front-end/notefront/notePostUpdate.jsp")) {
 					req.setAttribute("noteVO", noteVO);
 					String url = "/front-end/notefront/update_noteEdit.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交

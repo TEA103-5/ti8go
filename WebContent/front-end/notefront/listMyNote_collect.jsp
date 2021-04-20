@@ -187,7 +187,7 @@
 		                            <form class="card-form" action="<%=request.getContextPath()%>/note/note.do" method="post">
 				                    	<input class="note_id_value" type="hidden" name="note_id" value="${(note_collectVO.note_id)}"> 
 				                    	<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>"> 
-				                    	<input type="hidden" name="action" value="getOne_For_Display">
+				                    	<input type="hidden" name="action" value="getOne_For_Display2">
 				                        <button class="btn btn-outline-primary btn-sm" type="submit">更多內容</button>
 		                           		 <c:if test="${note_collectSvc.getOneNote_collect(note_collectVO.note_id,sessionScope.users_id) == null}">
 				                       		<button class="collect_btn btn btn-outline-primary btn-sm" type="button">加入收藏</button>

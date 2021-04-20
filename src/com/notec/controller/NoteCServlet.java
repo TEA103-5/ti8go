@@ -216,7 +216,7 @@ public class NoteCServlet extends HttpServlet {
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("noteCVO", noteCVO);
 
-				String url = "/front-end/notefront/notePost.jsp";
+				String url = "/front-end/notefront/listMyNote.jsp";
 //				String url = "/notec/listOneNoteC.jsp";
 
 				RequestDispatcher successView = req.getRequestDispatcher(url);

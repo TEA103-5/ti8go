@@ -42,7 +42,7 @@
 										<div class="form-group">
 										<input
 												class="form-control" type="password" name="pwd"
-												id="password" placeholder="Password" v-model="password">{{password}}
+												id="password" placeholder="Password" v-model="password">
 										</div>
 										<div class="form-group">
 											<div class="form-check">

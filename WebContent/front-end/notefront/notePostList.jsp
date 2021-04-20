@@ -180,7 +180,7 @@
 									<form METHOD="post" ACTION="<%=request.getContextPath()%>/note/note.do" style="margin-bottom: 0px;">
 									<input type="hidden" name="note_id"  value="${noteVO.note_id}">
 									<input type="hidden" name="requestURL"  value="<%=request.getServletPath()%>">
-									<input type="hidden" name="action"  value="getOne_For_Display">
+									<input type="hidden" name="action"  value="getOne_For_Display2">
 									<button class="btn btn-outline-primary btn-sm" type="submit">Read More</button>
 									</form>
 								</div>
