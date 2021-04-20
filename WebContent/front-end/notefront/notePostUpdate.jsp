@@ -14,7 +14,7 @@
 	// 	NoteCService noteCSvc = new NoteCService();
 	// 	List<NoteCVO> list = noteCSvc.getAll();
 	// 	pageContext.setAttribute("list", list);
-	session.setAttribute("users_id", 1); //  測試用
+// 	session.setAttribute("users_id", 1); //  測試用
 
 	if (session.getAttribute("users_id") != null) {
 		// 先把目前登入的users_id放進變數, 並產生一個收藏service , 將service放在pageContext供下面EL使用
@@ -27,7 +27,7 @@
 	NoteVO noteVO = (NoteVO) request.getAttribute("noteVO");
 
 	NoteCService noteCSvc = new NoteCService();
-	List<NoteCVO> Clist = noteCSvc.getAllNoteC(1);
+	List<NoteCVO> Clist = noteCSvc.getAllNoteC(noteVO.getNote_id());
 	pageContext.setAttribute("Clist", Clist);
 %>
 <html>
@@ -96,6 +96,12 @@
 									pattern="yyyy-MM-dd" value="${noteVO.note_date}" /></span>
 						</div>
 						<p>${noteVO.note_description}</p>
+						<form class="card-form"	action="<%=request.getContextPath()%>/note/note.do" method="post">
+						<input class="note_id_value" type="hidden" name="note_id" value="${noteVO.note_id}">
+						<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
+						<input type="hidden" name="action" value="getOne_For_Update">
+						<button class="btn btn-outline-primary btn-sm" type="submit">編輯</button>
+						</form>
 
 
 						<c:forEach var="noteCVO" items="${Clist}">

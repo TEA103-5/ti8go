@@ -217,21 +217,28 @@ text-overflow: ellipsis;
 										<form class="card-form"	action="<%=request.getContextPath()%>/note/note.do"method="post">
 											<input class="note_id_value" type="hidden" name="note_id" value="${noteVO.note_id}"> 
 											<input type="hidden" name="requestURL"value="<%=request.getServletPath()%>"> 
-											<input type="hidden" name="action" value="getOne_For_Display">
+											<input type="hidden" name="action" value="getOne_For_Display2">
 											<button class="btn btn-outline-primary btn-sm" type="submit">更多內容</button>
 										</form>
-										<form class="card-form"	action="<%=request.getContextPath()%>/note/note.do" method="post">
-											<input class="note_id_value" type="hidden" name="note_id" value="${noteVO.note_id}">
-											<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
-											<input type="hidden" name="action" value="getOne_For_Update">
-											<button class="btn btn-outline-primary btn-sm" type="submit">編輯遊記</button>
-										</form>
-										<form class="card-form"	action="<%=request.getContextPath()%>/notec/notec.do" method="post">
-											<input class="note_id_value" type="hidden" name="note_c_id" value="${noteCSvc.togetoneNote(noteVO.note_id).note_c_id}">
-											<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
-											<input type="hidden" name="action" value="getOne_For_Update">
-											<input type="hidden" name="note_id" value="${noteVO.note_id}">
-											<button class="btn btn-outline-primary btn-sm" type="submit">編輯內容</button>
+<%-- 										<form class="card-form"	action="<%=request.getContextPath()%>/note/note.do" method="post"> --%>
+<%-- 											<input class="note_id_value" type="hidden" name="note_id" value="${noteVO.note_id}"> --%>
+<%-- 											<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>"> --%>
+<!-- 											<input type="hidden" name="action" value="getOne_For_Update"> -->
+<!-- 											<button class="btn btn-outline-primary btn-sm" type="submit">編輯遊記</button> -->
+<!-- 										</form> -->
+<%-- 										<form class="card-form"	action="<%=request.getContextPath()%>/notec/notec.do" method="post"> --%>
+<%-- 											<input class="note_id_value" type="hidden" name="note_c_id" value="${noteCSvc.togetoneNote(noteVO.note_id).note_c_id}"> --%>
+<%-- 											<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>"> --%>
+<!-- 											<input type="hidden" name="action" value="getOne_For_Update"> -->
+<%-- 											<input type="hidden" name="note_id" value="${noteVO.note_id}"> --%>
+<!-- 											<button class="btn btn-outline-primary btn-sm" type="submit">編輯內容</button> -->
+<!-- 										</form> -->
+										 <form class="card-form"	action="<%=request.getContextPath()%>/note/note.do"method="post">
+											<input class="note_id_value" type="hidden" name="note_id" value="${noteVO.note_id}"> 
+											<input type="hidden" name="requestURL"value="<%=request.getServletPath()%>"> 
+											<input type="hidden" name="action" value="getOne_For_Display">
+											<input type="hidden" name="action2" value="UpdateAll">
+											<button class="btn btn-outline-primary btn-sm" type="submit">編輯內文</button>
 										</form>
 									</div>
 								</div>

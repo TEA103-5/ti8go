@@ -14,7 +14,7 @@
 	// 	NoteCService noteCSvc = new NoteCService();
 	// 	List<NoteCVO> list = noteCSvc.getAll();
 	// 	pageContext.setAttribute("list", list);
-	session.setAttribute("users_id", 1); //  測試用
+// 	session.setAttribute("users_id", 1); //  測試用
 
 	if (session.getAttribute("users_id") != null) {
 		// 先把目前登入的users_id放進變數, 並產生一個收藏service , 將service放在pageContext供下面EL使用
@@ -337,22 +337,7 @@
 
 		  			
     		
-// 			$.ajax({
-<%-- 		        url: "<%=request.getContextPath()%>/note/NoteAjaxHandler.do",           // 資料請求的網址 --%>
-// 		        type: "POST",                  // GET | POST | PUT | DELETE | PATCH
-// 		        data: data,               // 傳送資料到指定的 url
-// 		        dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
-// 		        success: function (data) {      // request 成功取得回應後執行
-// //console.log(data);
-// 		          if(data.result == "like_yet"){
-// 		        	  that.html("讚")
-// 		          }else if(data.result == "like_add"){
-// 		        	  that.html("收回")
-// 		          }
-		          
-// 		        }
-// 		    });
-//     	})
+
     </script>
 
 </body>
