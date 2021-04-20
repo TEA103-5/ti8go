@@ -186,7 +186,7 @@
 							<span>By ${noteVO.users_id}</span><span><fmt:formatDate
 									pattern="yyyy-MM-dd" value="${noteVO.note_date}" /></span>
 						</div>
-						<p>${noteVO.note_description}</p>
+						<p><font size="5">${noteVO.note_description}</font></p>
 
 
 						<c:forEach var="noteCVO" items="${Clist}">
@@ -203,7 +203,7 @@
 								<!--                             </div> -->
 								<div class="col">
 									<h> <font size="4"><b>${noteCVO.note_c_title}</b></font></h>
-									<p>${noteCVO.note_c_content}</p>
+									<p><font size="4">${noteCVO.note_c_content}</font></p>
 								</div>
 								
 						
