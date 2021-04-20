@@ -8,7 +8,6 @@
 
 
 	Integer login_users = (Integer)session.getAttribute("users_id");
-
 	Place_collectService place_collectSvc = new Place_collectService();
 	List<Place_collectVO> list = place_collectSvc.getAllByPrimaryKey(login_users);
 	

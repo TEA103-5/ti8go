@@ -77,6 +77,14 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 						
 			<div id="choicePlace" class="white_content glass">
 					<input placeholder="搜尋" class=""  v-model="searchName" type="text">
+					
+					
+						<div class="custom-control custom-switch">
+												<input class="custom-control-input" type="checkbox"
+													id="formCheck-1" v-model="searchuid"><label
+													class="custom-control-label" for="formCheck-1"><strong>我的地點</strong></label>
+											</div>
+					
 					<table class=" table   table-place" style="height:470px;" >
 					<tr>
 							<th>
@@ -250,6 +258,7 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 	var vm = new Vue({
 	    el: '#app',
 	    data: {
+	    	searchuid:false,
 	       	errorMsgs:[],
 	    	placename:'https://www.google.com/maps/embed/v1/search?key=${Google_key}&q=緯育TibaMe附設台北職訓中心&zoom=15&center=25.052052,121.543220',
 	    
@@ -325,6 +334,7 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 	    			place_pic:'<%=request.getContextPath()%>/place/DBGifReader4.do?place_id=${placeVO.place_id}&place_pic=place_pic1',
 	    			place_lon:'${placeVO.place_longitude}',
 	    			place_lat:'${placeVO.place_latitude}',
+	    			place_user:'${placeVO.users_id}',
 	    		},
 	    		</c:forEach>
 	    	],
@@ -696,12 +706,14 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 	            this.tripDetail.place_pic=e.place_pic;
 	            this.addtrip.read_authority=e.place_id;
 	            this.searchName='';
+	    		this.searchuid=false;
 	            document.getElementById('choicePlace').style.display='none';
 	            document.getElementById('setTripDetail').style.display='block';
 	            document.getElementById('fade').style.display='block';
 			},
 			cancelAddPlace(){
 				this.searchName='';
+				this.searchuid=false;
 				document.getElementById('choicePlace').style.display='none';
 				document.getElementById('fade').style.display='none';
 			},
@@ -908,6 +920,13 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 // 	    				||p.productCategories.indexOf(searchName)!==-1
 	    				)
 	    				);
+	    				
+	    		if(self.searchuid==true){
+	    			flist = placelist.filter(p => (p.place_user==self.addtrip.users_id
+//	 	    				||p.productCategories.indexOf(searchName)!==-1
+		    				)
+		    				);
+	    		}
 // 	    		self.productcount=flist.length;
 	    		
 //	     		flis.forEach(max => (parseInt(max.age)>parseInt(this.priceupbound)){

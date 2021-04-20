@@ -13,6 +13,7 @@
 <%
 
 UsersVO usersVO = (UsersVO) session.getAttribute("usersVO");
+System.out.println(usersVO.getUsers_id());
 //	未登入過，連進此頁，轉去登入頁，避免錯誤	
 	if (usersVO == null) {
 		session.setAttribute("location", request.getRequestURI());
@@ -86,6 +87,13 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 						
 			<div id="choicePlace" class="white_content glass">
 					<input placeholder="搜尋" class=""  v-model="searchName" type="text">
+					
+						<div class="custom-control custom-switch">
+												<input class="custom-control-input" type="checkbox" v-model="searchuid"
+													id="formCheck-1"><label
+													class="custom-control-label" for="formCheck-1"><strong>我的地點</strong></label>
+											</div>
+					
 					<table class=" table   table-place" style="height:470px;" >
 					<tr>
 							<th>
@@ -263,6 +271,7 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 	var vm = new Vue({
 	    el: '#app',
 	    data: {
+	    	searchuid:false,
 	    	errorMsgs:[],
 	    	placename:'https://www.google.com/maps/embed/v1/search?key=${Google_key}&q=緯育TibaMe附設台北職訓中心&zoom=15&center=25.052052,121.543220',
 	    	show:0,
@@ -347,6 +356,8 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 	    			place_pic:'<%=request.getContextPath()%>/place/DBGifReader4.do?place_id=${placeVO.place_id}&place_pic=place_pic1',
 	    			place_lon:'${placeVO.place_longitude}',
 	    			place_lat:'${placeVO.place_latitude}',
+	    			place_user:'${placeVO.users_id}',
+
 	    		},
 	    		</c:forEach>
 	    	],
@@ -765,12 +776,14 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 	            this.addtrip.read_authority=e.place_id;
 	            this.tripDetail.place_pic=e.place_pic;
 	            this.searchName='';
+	    		this.searchuid=false;
 	            document.getElementById('choicePlace').style.display='none';
 	            document.getElementById('setTripDetail').style.display='block';
 	            document.getElementById('fade').style.display='block';
 			},
 			cancelAddPlace(){
 				this.searchName='';
+				this.searchuid=false;
 				document.getElementById('choicePlace').style.display='none';
 				document.getElementById('fade').style.display='none';
 			},
@@ -910,9 +923,6 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 						tripDetail:[],
 					});
 				}
-				
-				document.getElementById('tripadd').style.display='none';
-				document.getElementById('fade').style.display='none';
 				$.ajax({
  			        url: "<%=request.getContextPath()%>/trip/trip.do",
 			        type: "POST",  
@@ -971,6 +981,14 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 // 	    				||p.productCategories.indexOf(searchName)!==-1
 	    				)
 	    				);
+	    				
+	    		
+	    		if(self.searchuid==true){
+	    			flist = placelist.filter(p => (p.place_user==self.addtrip.users_id
+//	 	    				||p.productCategories.indexOf(searchName)!==-1
+		    				)
+		    				);
+	    		}
 // 	    		self.productcount=flist.length;
 	    		
 //	     		flis.forEach(max => (parseInt(max.age)>parseInt(this.priceupbound)){
