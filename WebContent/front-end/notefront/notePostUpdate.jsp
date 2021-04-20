@@ -72,22 +72,22 @@
 						style="background-image:url(&quot;<%=request.getContextPath()%>/front-end/notefront/assets/img/scenery/image1.jpg&quot;);"></div>
 					<div class="post-body">
 					
-					<p class="like_btn">&#10084;</p>
-						<form class="card-form"
-							action="<%=request.getContextPath()%>/note/note.do" method="post"
-							style="padding-bottom: 30px;">
-							<input class="note_id_value" type="hidden" name="note_id" value="${noteVO.note_id}"> 
-							<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
-							<input type="hidden" name="action" value="getOne_For_Display">
-							<c:if
-								test="${note_collectSvc.getOneNote_collect(noteVO.note_id,users_id) == null}">
-								<button type="button" class="collect_btn btn btn-secondary">加入收藏</button>
-							</c:if>
-							<c:if
-								test="${note_collectSvc.getOneNote_collect(noteVO.note_id,users_id) != null}">
-								<button type="button" class="collect_btn btn btn-secondary">取消收藏</button>
-							</c:if>
-						</form>
+<!-- 					<p class="like_btn">&#10084;</p> -->
+<!-- 						<form class="card-form" -->
+<%-- 							action="<%=request.getContextPath()%>/note/note.do" method="post" --%>
+<!-- 							style="padding-bottom: 30px;"> -->
+<%-- 							<input class="note_id_value" type="hidden" name="note_id" value="${noteVO.note_id}">  --%>
+<%-- 							<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>"> --%>
+<!-- 							<input type="hidden" name="action" value="getOne_For_Display"> -->
+<%-- 							<c:if --%>
+<%-- 								test="${note_collectSvc.getOneNote_collect(noteVO.note_id,users_id) == null}"> --%>
+<!-- 								<button type="button" class="collect_btn btn btn-secondary">加入收藏</button> -->
+<%-- 							</c:if> --%>
+<%-- 							<c:if --%>
+<%-- 								test="${note_collectSvc.getOneNote_collect(noteVO.note_id,users_id) != null}"> --%>
+<!-- 								<button type="button" class="collect_btn btn btn-secondary">取消收藏</button> -->
+<%-- 							</c:if> --%>
+<!-- 						</form> -->
 						<h3>
 							<font size="7">${noteVO.note_title}</font>
 						</h3>
