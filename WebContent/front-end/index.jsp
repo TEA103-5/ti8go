@@ -8,6 +8,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
     />
+    
     <title>Home - Tivago</title>
     <%@ include file="/front-end/pages/links.html" %>
          <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/assets/css/tripstyles2.css">
@@ -72,10 +73,11 @@
   window.addEventListener('scroll',function(){
 	  var value = window.scrollY;
 	  bg.style.top= value*0.5 + 'px';
-	  moon.style.left= -value*0.5 + 'px';
+	  moon.style.left= -value*0.15 + 'px';
 	  mountain.style.top= -value*0.15 + 'px';
 	  road.style.top= value*0.15 + 'px';
 	  text.style.top= value*1 + 'px';
+	  text.style.left= -value*0.15 + 'px';
   })
   </script>
   </body>
