@@ -1,6 +1,7 @@
 <%@page import="java.util.*"%>
 <%@page import="com.place.model.*"%>
 <%@page import="com.place_collect.model.*"%>
+<%@page import="com.users.model.*"%>
 <%@page import="util.Google_key"%>
 <%@page import="util.TokenProcessor"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -12,6 +13,10 @@ TokenProcessor tokenProcessor = TokenProcessor.getInstance();
 String token = tokenProcessor.makeToken();
 System.out.println("addPlace的token = " + token);
 session.setAttribute("token", token);
+
+if(session.getAttribute("usersVO") != null){
+	session.setAttribute("users_id", ((UsersVO)session.getAttribute("usersVO")).getUsers_id() );  //  測試用
+}
 
 	pageContext.setAttribute("Google_key", Google_key.key);   // 將util.Google_key的金鑰字串放進pageContext
 

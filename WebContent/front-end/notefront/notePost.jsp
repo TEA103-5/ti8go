@@ -24,7 +24,17 @@
 
 	}
 
-	NoteVO noteVO = (NoteVO) request.getAttribute("noteVO");
+// 	NoteVO noteVO = (NoteVO) request.getAttribute("noteVO");
+
+	NoteVO noteVO = null;
+	if(request.getAttribute("noteVO") != null){
+		noteVO = (NoteVO) request.getAttribute("noteVO");
+	}else{
+		NoteService noteSvc = new NoteService();
+		Integer note_id = ( (NoteCVO) request.getAttribute("noteCVO") ).getNote_id() ;
+		noteVO = noteSvc.getOneNote(note_id) ;
+		pageContext.setAttribute("noteVO", noteVO);
+	}
 
 	NoteCService noteCSvc = new NoteCService();
 	List<NoteCVO> Clist = noteCSvc.getAllNoteC(noteVO.getNote_id());

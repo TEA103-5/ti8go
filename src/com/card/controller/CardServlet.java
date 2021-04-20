@@ -158,10 +158,10 @@ public class CardServlet extends HttpServlet {
 						sum += n;
 						alternate = !alternate;
 					}
+			System.out.println("Sum= " + sum);
 					if (sum % 10 != 0) {
 						errorMsgs.add("信用卡卡號錯誤");
 					}
-				
 					String card_date = req.getParameter("card_date").trim();
 					if (card_date == null || card_date.trim().length() == 0) {				
 						errorMsgs.add("請輸入日期!");
@@ -282,6 +282,7 @@ public class CardServlet extends HttpServlet {
 							sum += n;
 							alternate = !alternate;
 						}
+			System.out.println("Sum= " + sum);
 						if (sum % 10 != 0) {
 							errorMsgs.add("信用卡卡號錯誤");
 						}
