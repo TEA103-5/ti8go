@@ -41,19 +41,22 @@
 										for="checkbox">Remember me</label>
 							</div>
 						</div>
-							<input class="btn btn-primary btn-block" @click="send"
+							<input class="btn btn-info btn-block text-white" @click="send"
 								type="button" value="Log In"> 
 							<input type="hidden" name="action" value="login"> 
 							<input type="hidden" name="requestUrl" 
 								value="/front-end/users">
+					<div class="text-center"><a class="text-center" id="forgotPassword" href="#">Forgot
+                                            Password?</a></div>
 					</form>
+					
 					
 				</div>
 			</div>
 
 			<div class="col-md-5 col-xl-5 mb-5  mt-5 mx-auto">
 				<div class="text-center block-heading">
-					<h4 class="text-dark mb-4">註冊新帳戶</h4>
+					<h4 class="text-success mb-4">註冊新帳戶</h4>
 				</div>
 				<c:if test="${not empty errorMsgs}">
 				
@@ -86,7 +89,7 @@
 							name="password_repeat" v-model="repassword1">
 					</div>
 				</div>
-					<input class="btn btn-primary btn-block" @click="send2" type="button" 
+					<input class="btn btn-info btn-block text-white" @click="send2" type="button" 
 						value="Register Account">
 					<input type="hidden" name="requestUrl" 
 						value="/front-end/users">
@@ -107,9 +110,9 @@
 <%-- 	<%@ include file="/front-end/pages/footer.html" %>  --%>
 
 	<script type="text/javascript"
-		src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js">
-	</script>
-
+		src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>
+ <!-- 以下是自己新增的js -->
+    <script src="https://unpkg.com/sweetalert@2.1.2/dist/sweetalert.min.js"></script>
 	<script>
 		var app = new Vue({
 			el : '#app',
@@ -177,6 +180,45 @@
 			},
 		  }
 		})
+// 	忘記密碼
+			$("#forgotPassword").on("click", function(e){
+//             	alert("777") ;
+				e.preventDefault();
+            	swal_forgotPassword();
+            	
+            })
+            
+            function swal_forgotPassword(){
+            	swal("忘記密碼","請輸入電子信箱,如電子信箱無誤,則會寄出暫時密碼", {
+           		  content: "input",
+           		})
+           		.then((users_email) => {
+           			console.log(users_email);
+           			ajax_forgotPassword(users_email);
+           		 	swal( "待會請至信箱確認," + users_email );
+           		});
+            }
+            
+            function ajax_forgotPassword(users_email){
+
+                let data = {
+                        "action": "forgotPasswordUsers",
+                        "users_email": users_email
+                }
+            	
+            	$.ajax({
+			        url: "<%=request.getContextPath()%>/admins/adminsAjaxHandler.do",           // 資料請求的網址
+			        type: "POST",                  // GET | POST | PUT | DELETE | PATCH
+			        data: data,               // 傳送資料到指定的 url
+			        dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
+			        success: function (data) {      // request 成功取得回應後執行
+			        	console.log(data);
+// 			        	swal( "請至信箱確認," + admins_email );
+			          
+			        }
+			    });
+            }
+		
 	</script>
 </body>
 </html>
