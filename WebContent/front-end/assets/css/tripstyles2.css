@@ -55,9 +55,9 @@ section img{
 	display:flex;
 	justify-content:center;
 	align-items:center;
-	max-width:1200px;
+	max-width:100%;
 	flex-warp:wrap;
-	padding:40px 0 0 280px;
+	padding:40px 0;
 }
 .containar .cerd{
 	position: relative;

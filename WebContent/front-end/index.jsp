@@ -31,8 +31,9 @@
 
 
         <div class="container-fluid glass">
-  <div class="containar">
-          <div class="cerd">
+        
+  <div class="containar row">
+          <div class="cerd col-md-1 col-xl-1 mb-1 ">
           <div class="box">
           <div class="content">
     						<h2>01</h2>
@@ -42,7 +43,7 @@
     				</div>	
     			</div>
           </div>
-          <div class="cerd">
+          <div class="cerd col-md-1 col-xl-1 mb-1 ">
           <div class="box">
           <div class="content">
     						<h2>02</h2>
@@ -52,7 +53,7 @@
     				</div>	
     			</div>
           </div>
-          <div class="cerd">
+          <div class="cerd col-md-1 col-xl-1 mb-1 ">
           <div class="box">
           <div class="content">
     						<h2>03</h2>
@@ -62,7 +63,7 @@
     				</div>	
     			</div>
           </div>
-          <div class="cerd">
+          <div class="cerd col-md-1 col-xl-1 mb-1 ">
           <div class="box">
           <div class="content">
     						<h2>04</h2>
@@ -72,7 +73,7 @@
     				</div>	
     			</div>
           </div>
-          <div class="cerd">
+          <div class="cerd col-md-1 col-xl-1 mb-1 ">
           <div class="box">
           <div class="content">
     						<h2>05</h2>
