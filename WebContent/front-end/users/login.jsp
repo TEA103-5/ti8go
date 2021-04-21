@@ -95,6 +95,7 @@
 					<input type="hidden" name="requestUrl" 
 						value="/front-end/users">
 					<input type="hidden" name="action" value="insertUsers">
+					<img src="<%=request.getContextPath()%>/VerifyPic" id="verify-pic" class="mg">
 				</form>									 
 			</div>
 		</div>

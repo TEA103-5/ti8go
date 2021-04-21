@@ -16,6 +16,7 @@
 <html>
 
 <head>
+ <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/assets/css/productstyles.css">
     <title>ListTripByUsersId - font-end</title>
      <%@ include file="/front-end/pages/links.html" %> 
 </head>
@@ -50,7 +51,7 @@
 			  								<input type="hidden" name="trip_id" v-model="item.trip_id">
 			    							<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
 			     							<input type="hidden" name="action" value="listDetail_ByTrip_A">
-			     							<button @click="chose(item)">查看</button>
+			     							<button class="btnl btn-edit" @click="chose(item)">查看</button>
 			     							</FORM>
                                             </div>
                                             

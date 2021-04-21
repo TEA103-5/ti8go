@@ -82,7 +82,7 @@
 								          <option value="${usersVO.users_id}">${usersVO.users_mail}
 								         </c:forEach>   
 								       </select>
-								       <input type="hidden" name="requestUrl" value="<%=request.getContextPath()%>/back-end/users/">
+								       <input type="hidden" name="requestUrl" value="/back-end/users">
 								       <input type="hidden" name="action" value="getOne_For_Update">
 								       <input type="submit" value="送出">
 								    </FORM>
@@ -96,7 +96,7 @@
 								          <option value="${usersVO.users_id}">${usersVO.users_name}
 								         </c:forEach>   
 								       </select>
-								       <input type="hidden" name="requestUrl" value="<%=request.getContextPath()%>/back-end/users/">
+								       <input type="hidden" name="requestUrl" value="/back-end/users">
 								       <input type="hidden" name="action" value="getOne_For_Update">
 								       <input type="submit" value="送出">
 								     </FORM>

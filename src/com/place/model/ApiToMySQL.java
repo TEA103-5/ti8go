@@ -220,7 +220,7 @@ public class ApiToMySQL {
 		
 	
 				
-				ApiToMySQL.crawler(15, 15, "台北市", "https://www.travel.taipei/open-api/zh-tw/Attractions/All?page=");
+				ApiToMySQL.crawler(11, 20, "台北市", "https://www.travel.taipei/open-api/zh-tw/Attractions/All?page=");
 
 		
 	}
