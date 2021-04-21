@@ -15,7 +15,7 @@
 <head>
     <title>selectOneTrip</title>
      <%@ include file="/front-end/pages/links.html" %> 
-<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/assets/css/tripstyles.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/assets/css/tripliststyles.css">
 </head>
 
 <body>

@@ -19,7 +19,7 @@
  <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/assets/css/productstyles.css">
     <title>ListTripByUsersId - font-end</title>
      <%@ include file="/front-end/pages/links.html" %> 
-     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/assets/css/tripstyles.css">
+     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/assets/css/tripliststyles.css">
 </head>
 
 <body>
@@ -42,7 +42,7 @@
                                 
                                     <div v-for="(item,index) in tripList" class="col-12 col-md-6 col-lg-4">
                                         <div class="clean-product-item">
-                                            <div class="image"><img class="img-fluid d-block mx-auto" 
+                                            <div class="image"><img class="img-fluid d-block mx-auto img" 
                                            v-bind:src="item.trip_pic"></div>
                                             
                                             <div class="product-name"><h5>{{item.trip_name}}</h5>

@@ -109,11 +109,11 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 						{{item.place_name}}
 						</td>
 						<td>
-						<button @click="tripDetailAdd(item)">add</button>
+						<button class="btnl btn-add" @click="tripDetailAdd(item)">add</button>
 						</td>
 					</tr>
 					</table>
-					<button @click="cancelAddPlace">取消</button>
+					<button class="btnl btn-cancel" @click="cancelAddPlace">取消</button>
 			</div>			
 			
 			<div id="setTripDetail" class="white_content glass">
@@ -137,11 +137,11 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 				
 				
 				 <br/>
-					<button v-if="!editshow&&!DetailSplice" @click="sendDetailEditToList()">確認</button>
-					<button v-if="editshow" @click="sendDetailEditToList2()">編輯</button>
-					<button v-if="DetailSplice" @click="sendDetailSpliceToList()">插入</button>
+					<button class="btnl btn-add"  v-if="!editshow&&!DetailSplice" @click="sendDetailEditToList()">確認</button>
+					<button class="btnl btn-edit" v-if="editshow" @click="sendDetailEditToList2()">編輯</button>
+					<button class="btnl btn-edit" v-if="DetailSplice" @click="sendDetailSpliceToList()">插入</button>
 
-					<button @click="fadeCancel">取消</button>
+					<button class="btnl btn-add" @click="fadeCancel">取消</button>
 			</div>			
 
     </div>
@@ -164,7 +164,7 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 				<ul v-for="(item,index) in daylist" class="list-group list-group-flush" style="border-radius: 2rem;">
 					<li class="list-group-item">
 							Day{{index+1}}
-							<button class="btnl"  
+							<button class="btnl btn-delete"  
 	@click="delOneDay(index)">刪除</button>
 					</li>
 				</ul>
@@ -209,10 +209,10 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 									
 									<td>
 									插入:<br/>
-									<button @click="choicePlaceToDetailSplice(index,inde)">地點</button>
-									<button @click="choiceOtherToDetailSplice(index,inde)">其他</button><br/>
-									<button @click="tripDetailEdit(item,index,inde)">edit</button>	
-									<button @click="tripDetailDel(index,inde)">del</button>
+									<button class="btnl btn-add" @click="choicePlaceToDetailSplice(index,inde)">地點</button>
+									<button class="btnl btn-edit" @click="choiceOtherToDetailSplice(index,inde)">其他</button><br/>
+									<button class="btnl btn-edit"  @click="tripDetailEdit(item,index,inde)">edit</button>	
+									<button class="btnl btn-delete" @click="tripDetailDel(index,inde)">del</button>
 		
 									</td>
 									
@@ -223,8 +223,8 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 								 @dragover="allowDrop"  @drop="drop2($event,index,daylist[index].tripDetail.length)">
 							
 						新增:
-						<button @click="choicePlaceToDetail(index)">地點</button>/
-						<button @click="choiceOtherToDetail(index)">其它</button>
+						<button class="btnl btn-add" @click="choicePlaceToDetail(index)">地點</button>/
+						<button  class="btnl btn-edit" @click="choiceOtherToDetail(index)">其它</button>
 						</li>
 								  
 					</ul>
@@ -493,12 +493,14 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 					this.tripDetail.place_id=1;
 					this.tripDetail.indexOfList=inde;
 					this.DetailSplice=true;
+					 this.tripDetail.place_pic='<%=request.getContextPath()%>/place/DBGifReader4.do';
 				},
 			choiceOtherToDetail(index){//-------------------------------------------------------------------3
 				document.getElementById('setTripDetail').style.display='block';
 				document.getElementById('fade').style.display='block';
 				this.dayCount=index;
 				this.tripDetail.place_id=1;
+				 this.tripDetail.place_pic='<%=request.getContextPath()%>/place/DBGifReader4.do';
 			},
 			choicePlaceToDetailSplice(index,inde){
 				document.getElementById('choicePlace').style.display='block';

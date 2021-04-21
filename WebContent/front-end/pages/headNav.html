@@ -36,7 +36,7 @@
 								<c:if test="${not empty usersVO}">								
 								<a class="dropdown-item" href="<%=request.getContextPath()%>/front-end/trip/addtrip.jsp">建立行程</a>
 								<a class="dropdown-item" href="#" onclick="document.getElementById('from1').submit()">我的行程</a>
-								     <FORM id="from1" METHOD="post" ACTION="<%=request.getContextPath()%>/users/users.do" > 							       
+								     <FORM id="from1" METHOD="post" ACTION="<%=request.getContextPath()%>/trip/trip.do" > 							       
 									       <input type="hidden" name="users_id" value="${usersVO.users_id}">
 									       <input type="hidden" name="action" value="listTrip_ByUsers_A">
 									     </FORM>
