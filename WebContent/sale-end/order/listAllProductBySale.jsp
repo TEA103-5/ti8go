@@ -79,6 +79,7 @@ th, td {
 			<th>商品金額</th>
 			<th>訂單時間</th>
 			<th>訂單數量</th>
+			<th>確認</th>
 			
 		
 		</tr>
@@ -89,7 +90,15 @@ th, td {
 				<td>${orderVO.order_status}</td>
 				<td>${orderVO.card_number}</td>
 				<td>${orderVO.users_id}</td>
+				<td>
+					     <FORM id="from2" METHOD="post" ACTION="<%=request.getContextPath()%>/OrderDetail/OrderDetail.do" > 							       
+				<button >check</button>
+									       <input type="hidden" name="detail_id" value="${orderVO.detail_id}">
+									       <input type="hidden" name="sale_id" value="${saleVO.sale_id}">
+									       <input type="hidden" name="action" value="updateS">
+									     </FORM>
 				
+				</td>
 			</tr>
 		</c:forEach>
 	</table>

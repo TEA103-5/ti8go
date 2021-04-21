@@ -28,7 +28,7 @@
 			<li class="nav-item"><a class="nav-link"  onclick="document.getElementById('from2').submit()"><i
 					class="fas fa-window-maximize"></i><span>我的訂單</span></a></li>
 								     <FORM id="from2" METHOD="post" ACTION="<%=request.getContextPath()%>/Order/Order.do" > 							       
-									       <input type="hidden" name="sale_id" value="1">
+									       <input type="hidden" name="sale_id" value="${saleVO.sale_id}">
 									       <input type="hidden" name="action" value="listOrderBySaleId">
 									     </FORM>
 									     

@@ -36,6 +36,7 @@ public class OrderDetailJNDIDAO implements OrderDetailDAO_interface {
 
 	
 	private static final String INSERT_STMT = "INSERT INTO ORDER_DETAIL (Order_Detail_Count,PRODUCT_Id ,order_detail_status,Order_Id) VALUES (?,?,?,?)";
+	private static final String UPDATEs = "UPDATE ORDER_DETAIL set order_detail_status=1 where Order_Detail_Id = ?";
 	private static final String UPDATE = "UPDATE ORDER_DETAIL set Order_Detail_Count=?,product_id=?,order_detail_status=?,order_id=? where Order_Detail_Id = ?";
 	private static final String DELETE_ODI = "DELETE FROM ORDER_DETAIL where Order_Detail_Id = ?";
 	private static final String GET_ONE_STMT = "SELECT Order_Detail_Id,Order_Detail_Count,Product_id,order_detail_status,order_id FROM ORDER_DETAIL where Order_Detail_Id = ? ";
@@ -139,6 +140,43 @@ public class OrderDetailJNDIDAO implements OrderDetailDAO_interface {
 
 	}
 
+	public void updates(Integer id) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATEs);
+			
+			pstmt.setInt(1,id);
+	
+			
+			pstmt.executeUpdate();
+			System.out.println("成功");
+			
+			
+			
+		} catch (SQLException e) {
+			throw new RuntimeException("A database error occured. " + e.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+	}
 	public void update(OrderDetailVO orderDetailVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
