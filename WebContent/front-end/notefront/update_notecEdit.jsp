@@ -83,7 +83,6 @@
 		</c:forEach>
 	</ul>
 </c:if>
-    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/notec/notec.do" name="form1" enctype="multipart/form-data">
   <div class="container">
 
     <div class="row mt-5 mb-5 ">
@@ -101,6 +100,7 @@
 						class="com.note.model.NoteService" />
 
 
+    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/notec/notec.do" name="form1" enctype="multipart/form-data">
 <!-- 					<FORM METHOD="post" ACTION="notec.do"> -->
 						<select class="form-control" size="1" name="note_id">
 <%-- 							<c:forEach var="noteCVO" items="${noteCSvc.all}"> --%>
@@ -133,9 +133,18 @@
             <input type="file" name="note_c_img" accept="image/*" multiple="multiple" class="form-control-file" id="exampleFormControlFile1">
             <img src="<%=request.getContextPath()%>/DBGifReaderNoteC?note_c_id=${noteCVO.note_c_id}" style="width:300px; height:200px">
         </div>
-          <div class="bd pt-5">
           <button type="submit" class="btn btn-primary1" id="btn_submit">送出</button>
+          <button type="button" class="btn btn-primary1" id="delete_submit" onclick="document.getElementById('delete_form').submit()">刪除</button>
+         <input type="hidden" name="action" value="update">
+         <input type="hidden" name="note_c_id" value="${noteCVO.note_c_id}">
+         </FORM>
           
+          <div class="bd pt-5">
+          <FORM id="delete_form" METHOD="post" ACTION="<%=request.getContextPath()%>/notec/notec.do" style="margin-bottom: 0px;">
+			<input type="hidden" name="note_c_id"  value="${noteCVO.note_c_id}">
+			<input type="hidden" name="action" value="delete">
+<!--           	<button type="submit" class="btn btn-primary1" id="btn_submit">刪除</button> -->
+          	</FORM>
           </div>
         
         </div>
@@ -147,15 +156,6 @@
     </div>
   <!-- /.container -->
   <br>
-<input type="hidden" name="action" value="update">
-<input type="hidden" name="note_c_id" value="${noteCVO.note_c_id}">
-
-  </FORM>
-          <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/notec/notec.do" style="margin-bottom: 0px;">
-			<input type="hidden" name="note_c_id"  value="${noteCVO.note_c_id}">
-			<input type="hidden" name="action" value="delete">
-          	<button type="submit" class="btn btn-primary1" id="btn_submit">刪除</button>
-          	</FORM>
   <script>
 	$(document).on('change','input.form-control-file',function(e) {
 
