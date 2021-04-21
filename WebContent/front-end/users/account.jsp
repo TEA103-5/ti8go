@@ -11,7 +11,7 @@
 // 	未登入過，連進此頁，轉去登入頁，避免錯誤	
 	if (usersVO == null) {
 		session.setAttribute("location", request.getRequestURI());
-		response.sendRedirect(request.getContextPath()+"/front-end/login.jsp");   //*工作2 : 請該user去登入網頁(login.html) , 進行登入
+		response.sendRedirect(request.getContextPath()+"/front-end/users/login.jsp");   //*工作2 : 請該user去登入網頁(login.html) , 進行登入
 	    return;
 	}
 %>
