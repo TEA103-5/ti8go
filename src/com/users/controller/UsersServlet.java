@@ -359,6 +359,7 @@ public class UsersServlet extends HttpServlet {
 					req.setAttribute("usersVO", usersVO);         // 資料庫取出的empVO物件,存入req
 					String url = requestUrl + "/account.jsp";
 				//	/GO/WebContent/back-end/users/account.jsp
+		System.out.println(url);			
 					RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
 					successView.forward(req, res);
 
