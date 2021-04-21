@@ -26,34 +26,35 @@
 						<div class="form-group">
 							<h10 id="errormessage" style="color:red">${message}</h10>								
 							<input class="form-control form-control-user" type="email" name="email"
-								id="email" placeholder="Email Address" v-model="account" required >
+								id="email" placeholder="請輸入 Email..." v-model="account" required >
 						</div>
 						
 						<div class="form-group">
 						<input class="form-control" type="password" name="pwd" id="password" 
-							placeholder="Password" v-model="password">
+							placeholder="請輸入密碼..." v-model="password">
 						</div>
 						
-						<div class="form-group">
-							<div class="form-check">
-								<input class="form-check-input" type="checkbox" id="checkbox">
-									<label class="form-check-label"
-										for="checkbox">Remember me</label>
-							</div>
-						</div>
+<!-- 						<div class="form-group"> -->
+<!-- 							<div class="form-check"> -->
+<!-- 								<input class="form-check-input" type="checkbox" id="checkbox"> -->
+<!-- 									<label class="form-check-label" -->
+<!-- 										for="checkbox">Remember me</label> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
 							<input class="btn btn-info btn-block text-white" @click="send"
-								type="button" value="Log In"> 
+								type="button" value="登入"> 
 							<input type="hidden" name="action" value="login"> 
 							<input type="hidden" name="requestUrl" 
 								value="/front-end/users">
-					<div class="text-center"><a class="text-center" id="forgotPassword" href="#">Forgot
-                                            Password?</a></div>
+					<div class="text-center">
+						<a class="text-center" id="forgotPassword" href="#">忘記密碼</a>
+					</div>
 					</form>
 					
 					
 				</div>
 			</div>
-
+				
 			<div class="col-md-5 col-xl-5 mb-5  mt-5 mx-auto">
 				<div class="text-center block-heading">
 					<h4 class="text-success mb-4">註冊新帳戶</h4>
@@ -73,24 +74,24 @@
 
 				<div class="form-group">
 					<input class="form-control-user form-control " type="email" id="exampleInputEmail"
-						aria-describedby="emailHelp" placeholder="Email Address" name="users_mail" 
-						v-model="account1" required placeholder="Email">
+						aria-describedby="emailHelp" placeholder="請輸入Email..." name="users_mail" 
+						v-model="account1" required >
 				</div>
 				
 				<div class="form-group row">
 					<div class="col-sm-6 mb-3 mb-sm-0">
 						<input class="form-control form-control-user" type="password" id="examplePasswordInput" 
-							placeholder="Password" name="users_pwd" v-model="password1">
+							placeholder="請輸入密碼..." name="users_pwd" v-model="password1">
 					</div>
 					
 					<div class="col-sm-6">
 						<input class="form-control form-control-user" type="password"
-							id="exampleRepeatPasswordInput" placeholder="Repeat Password" 
+							id="exampleRepeatPasswordInput" placeholder="請再輸入一次密碼..." 
 							name="password_repeat" v-model="repassword1">
 					</div>
 				</div>
 					<input class="btn btn-info btn-block text-white" @click="send2" type="button" 
-						value="Register Account">
+						value="註冊">
 					<input type="hidden" name="requestUrl" 
 						value="/front-end/users">
 					<input type="hidden" name="action" value="insertUsers">
