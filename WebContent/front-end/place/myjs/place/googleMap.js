@@ -67,8 +67,8 @@ if (navigator.geolocation) {
     // 使用者不提供權限，或是發生其它錯誤
     function error() {
         alert('無法取得你的位置');
-        self_lat = 25.033952;
-        self_lng = 121.564360;
+        self_lat = 25.052052;
+        self_lng = 121.543220;
     }
 
     // 使用者允許抓目前位置，回傳經緯度
@@ -85,8 +85,8 @@ if (navigator.geolocation) {
 
 } else {
     console.log("不支援取得位置");
-    self_lat = 25.033952;
-    self_lng = 121.564360;
+    self_lat = 25.052052;
+    self_lng = 121.543220;
 }
 // -----------------0415新增
 
@@ -108,8 +108,8 @@ function initMap() {
         center: {
             // lat: position[0].lat,
             // lng: position[0].lng
-            lat: self_lat,
-            lng: self_lng
+            lat: (self_lat ? self_lat : 25.052052),
+            lng: (self_lng ? self_lng : 121.543220)
         }
     });
 
