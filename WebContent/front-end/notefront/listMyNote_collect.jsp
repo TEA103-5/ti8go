@@ -118,7 +118,7 @@
 				                        </c:if>
 				                        
 				                    </form>
-				                  </div>
+				                 </div>
 	                        </div>
 	                    </div>
                     </c:forEach>
@@ -196,7 +196,7 @@
 				let that = $(this);
 				
 				// parents是會一直往上找,可能回傳一個陣列 , parent只會找到父元素且只找第一個
-				let note_id = that.parents(".card-body").find(".note_id_value").attr("value");
+				let note_id = that.parents(".card-form").find(".note_id_value").attr("value");
 				
 			  	let data = {
 			  			"action": "ajax_insert_or_delete_NoteCollect",
