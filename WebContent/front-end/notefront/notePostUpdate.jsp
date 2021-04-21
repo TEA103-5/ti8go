@@ -109,7 +109,7 @@
 							<figure class="figure">
 								<img class="rounded img-fluid figure-img"
 									src="<%=request.getContextPath()%>/DBGifReaderNoteC?note_c_id=${noteCVO.note_c_id}"
-									style="width: 400px; height: 300px;"
+									style="width: 600px; height: 500px;"
 									alt="A generic square placeholder image with rounded corners in a figure.">
 								<figcaption class="figure-caption"></figcaption>
 							</figure>
