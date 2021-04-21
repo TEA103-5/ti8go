@@ -14,7 +14,7 @@
 
 <% 
   AdminsVO adminsVO = (AdminsVO) session.getAttribute("adminsVO");
-  UsersVO usersVO = (UsersVO) session.getAttribute("usersVO");
+  UsersVO usersVO = (UsersVO) request.getAttribute("usersVO");
 
 // 	未登入過，連進此頁，轉去登入頁，避免錯誤	
 	if (adminsVO == null) {
@@ -68,10 +68,41 @@
 								</ul>
 							</c:if>
 							
-							<div class="card col-11 mt-5 mb-5" style="text-align:center;margin: 0 auto;">
-								<div class="card-header ">
-									<h2>所有使用者列表</h2>
-								</div>
+							<div class="card col-11 mt-5 mb-5" >
+								<div class="card-header col-12" >
+									<h2 style="text-align:center;margin: 0 auto;">所有使用者列表</h2>
+								</div><hr>
+								<ul >
+									   
+								  <li>
+								     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/users/users.do" >
+								       <b>選擇使用者信箱:</b>
+								       <select size="1" name="users_id">
+								         <c:forEach var="usersVO" items="${list}" > 
+								          <option value="${usersVO.users_id}">${usersVO.users_mail}
+								         </c:forEach>   
+								       </select>
+								       <input type="hidden" name="requestUrl" value="/back-end/users">
+								       <input type="hidden" name="action" value="getOne_For_Update">
+								       <input type="submit" value="送出">
+								    </FORM>
+								  </li>
+								  
+								  <li>
+								     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/users/users.do" >
+								       <b>選擇管理者姓名:</b>
+								       <select size="1" name="users_id">
+								         <c:forEach var="usersVO" items="${list}" > 
+								          <option value="${usersVO.users_id}">${usersVO.users_name}
+								         </c:forEach>   
+								       </select>
+								       <input type="hidden" name="requestUrl" value="/back-end/users">
+								       <input type="hidden" name="action" value="getOne_For_Update">
+								       <input type="submit" value="送出">
+								     </FORM>
+								  </li>
+                            </ul>
+								
 								<div class="card-body">
 							
 									

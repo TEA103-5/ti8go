@@ -22,7 +22,7 @@ public class TokenProcessor {
 
 
     	//這個隨機生成出來的Token的長度是不確定的
-        String token = String.valueOf(System.currentTimeMillis() + new Random().nextInt(99999999));
+        String token = String.valueOf(System.currentTimeMillis() + new Random().nextInt(999999999));
 
         try {
             //我们想要随机数的长度一致，就要获取到数据指纹

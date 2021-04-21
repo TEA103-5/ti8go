@@ -1,9 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*"%>
 <%@ page import="com.admins.model.*"%>
 
 
 <% 
+if( ((AdminsVO)session.getAttribute("adminsVO")).getAdmins_authority() != "root"){
+	List<String> errorMsgs = new LinkedList<String>();
+	request.setAttribute("errorMsgs", errorMsgs);
+	errorMsgs.add("新增管理員只有最高管理員可使用");
+	String url = "/back-end/place/listAllPlace.jsp";
+//		getServletContext().getRequestDispatcher(url).forward(request, response);
+	RequestDispatcher successView = request.getRequestDispatcher(url);
+	successView.forward(request, response);
+//System.out.println("有進來這邊");
+	return;
+}
+
+
 	AdminsVO adminsVO = (AdminsVO) request.getAttribute("adminsVO");
 	
 	pageContext.setAttribute("adminsVO" , adminsVO);
