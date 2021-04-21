@@ -26,7 +26,7 @@ public class VerifyPic extends HttpServlet {
         Map<String, Object> data = VerifyUtil.generateVerify();
         //獲取驗證碼
         String verifyCode = (String) data.get("verifyCode");
-      System.out.println(verifyCode);
+
         //將驗證碼存入session
         HttpSession session = request.getSession();
         session.setAttribute("verifyCode", verifyCode);
