@@ -33,50 +33,23 @@
     #preview_image {
     max-width: 100%;
   }
+   .swal2-html-container{
+ color: white;  /*讓undefined消失*/
+ }
+  .error-msg{
+ color: red;
+ }
 </style>
 <body>
-<!--     <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar" style="background: #85867F;color: var(--red); height: 60px;"> -->
-<!--         <div class="container"><a class="navbar-brand logo" href="#">font-end</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button> -->
-<!--             <div class="collapse navbar-collapse" id="navcol-1">  -->
-<!--                 <ul class="navbar-nav ml-auto"> -->
-<!--                     <li class="nav-item" style="height: 11.6667px;"> -->
-<!--                         <div class="nav-item dropdown" style="padding: 5px;width: 70.7083px;"><a class="dropdown-toggle" aria-expanded="false" data-toggle="dropdown" href="#" style="padding: -71px;width: 0px;height: -8px;margin: -5px;color: rgba(0,0,0,0.5);">place&nbsp;</a> -->
-<!--                             <div class="dropdown-menu" style="margin: -5px 0px 0px;padding: 3px 0px;height: 99px;width: 144px;"><a class="dropdown-item" href="#">First Item</a><a class="dropdown-item" href="#">Second Item</a><a class="dropdown-item" href="#">Third Item</a></div> -->
-<!--                         </div> -->
-<!--                     </li> -->
-<!--                     <li class="nav-item"> -->
-<!--                         <div class="nav-item dropdown" style="padding: 5px;width: 70.7083px;"><a class="dropdown-toggle" aria-expanded="false" data-toggle="dropdown" href="#" style="padding: -54px;width: 0px;height: -8px;margin: -1px;color: rgba(0,0,0,0.5);">trip&nbsp;</a> -->
-<!--                             <div class="dropdown-menu"><a class="dropdown-item" href="#">First Item</a><a class="dropdown-item" href="#">Second Item</a><a class="dropdown-item" href="#">Third Item</a></div> -->
-<!--                         </div> -->
-<!--                     </li> -->
-<!--                     <li class="nav-item"> -->
-<!--                         <div class="nav-item dropdown" style="padding: 5px;width: 70.7083px;"><a class="dropdown-toggle" aria-expanded="false" data-toggle="dropdown" href="#" style="padding: -64px;width: 0px;height: -8px;margin: -3px;color: rgba(0,0,0,0.5);">note</a> -->
-<!--                             <div class="dropdown-menu"><a class="dropdown-item" href="#">First Item</a><a class="dropdown-item" href="#">Second Item</a><a class="dropdown-item" href="#">Third Item</a></div> -->
-<!--                         </div> -->
-<!--                     </li> -->
-<!--                     <li class="nav-item"> -->
-<!--                         <div class="nav-item dropdown" style="padding: 5px;width: 70.7083px;"><a class="dropdown-toggle" aria-expanded="false" data-toggle="dropdown" href="#" style="padding: -64px;width: 0px;height: -8px;margin: -3px;color: rgba(0,0,0,0.5);">product</a> -->
-<!--                             <div class="dropdown-menu"><a class="dropdown-item" href="#">First Item</a><a class="dropdown-item" href="#">Second Item</a><a class="dropdown-item" href="#">Third Item</a></div> -->
-<!--                         </div> -->
-<!--                     </li> -->
-<!--                     <li class="nav-item" style="height: 38px;"> -->
-<!--                         <div class="nav-item dropdown" style="padding: 4px;width: 82.7083px;margin: 0px;height: 30px;"><a class="dropdown-toggle" aria-expanded="false" data-toggle="dropdown" href="#" style="padding: 20px;width: 0px;height: -8px;margin: -3px;color: rgba(0,0,0,0.5);">user</a> -->
-<!--                             <div class="dropdown-menu"><a class="dropdown-item" href="#">First Item</a><a class="dropdown-item" href="#">Second Item</a><a class="dropdown-item" href="#">Third Item</a></div> -->
-<!--                         </div> -->
-<!--                     </li> -->
-<!--                 </ul> -->
-<!--             </div> -->
-<!--         </div> -->
-<!--     </nav> -->
     <%-- 錯誤表列 --%>
-<c:if test="${not empty errorMsgs}">
-	<font class="error pt-5"style="color:red">請修正以下錯誤:</font>
-	<ul>
-		<c:forEach var="message" items="${errorMsgs}">
-			<li style="color:red">${message}</li>
-		</c:forEach>
-	</ul>
-</c:if>
+<%-- <c:if test="${not empty errorMsgs}"> --%>
+<!-- 	<font class="error pt-5"style="color:red">請修正以下錯誤:</font> -->
+<!-- 	<ul> -->
+<%-- 		<c:forEach var="message" items="${errorMsgs}"> --%>
+<%-- 			<li style="color:red">${message}</li> --%>
+<%-- 		</c:forEach> --%>
+<!-- 	</ul> -->
+<%-- </c:if> --%>
     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/notec/notec.do" name="form1" enctype="multipart/form-data">
   <div class="container">
 
@@ -112,7 +85,7 @@
             <input type="text" name="note_c_title" class="form-control" id="exampleFormControlInput3"><span id="title3" style="color:red" value="${noteCVO.note_c_title}"></span>
           </div>
           <div class="form-group">
-            <label for="exampleFormControlTextarea1">內容簡介</label>
+            <label for="exampleFormControlTextarea1">內容介紹</label>
             <textarea type="text" name="note_c_content" class="form-control" id="Input2">${noteCVO.note_c_content}</textarea>
           </div>
           <script type="text/javascript">
@@ -146,7 +119,44 @@
 <input type="hidden" name="action" value="insert">
 
   </FORM>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
   <script>
+  
+//錯誤驗證 sweet alert
+  var all_error;
+
+	<c:if test="${ not empty errorMsgs}">
+	
+	<c:forEach var="message" items="${errorMsgs}">
+		var one_error = 
+			`<div class="error">
+				<span class="error-msg">${message}</span>
+			</div>`
+	
+		all_error += one_error;
+	
+		console.log(one_error);
+
+ 	</c:forEach>
+ 	
+ 	
+	  Swal.fire({
+		  title: `<span class="alert-title">請修正以下錯誤</span>`,
+		  icon: 'info',
+		  html: all_error,
+		  width: "400px",
+		  margin: "0 auto",
+		  showCloseButton: true,
+		  showConfirmButton: true,
+		  focusConfirm: true,
+		})
+ 	
+		
+</c:if>
+  
+  
+  
+  
 	$(document).on('change','input.form-control-file',function(e) {
 
 		var input_el = $(this);
@@ -169,15 +179,7 @@
 
 		})
 
-        $("#btn_submit").on("click", function (e) {
-            let task_text = ($('#exampleFormControlInput3').val()).trim();
-            if (task_text == "") {
-                e.preventDefault();
-                $('#title3').text('*請勿空白');
-            } else {
-                $('#title3').text('')
-            }
-        });
+
 
   </script>
 
