@@ -13,6 +13,7 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import com.trip.model.TripVO;
@@ -40,7 +41,13 @@ public class UsersServlet extends HttpServlet {
 		
 		String requestUrl = req.getParameter("requestUrl");
 
-			System.out.println("action= " + action + " requestUrl= " + requestUrl);
+		String inKey = req.getParameter("VerifyPic").toUpperCase();
+		HttpSession session = req.getSession();
+		String chkCode = (String)session.getAttribute("verifyCode");
+		chkCode = chkCode.toUpperCase();
+ 
+        
+		System.out.println("action= " + action + " requestUrl= " + requestUrl);
 		
 		
 		
@@ -630,6 +637,12 @@ public class UsersServlet extends HttpServlet {
 				UsersService usersSvc = new UsersService();
 				try {
 					/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
+					if(inKey == null || inKey.trim().length() == 0) {
+						errorMsgs.add("驗證碼請勿空白");
+					} else if(!inKey.equalsIgnoreCase(chkCode)) {
+						errorMsgs.add("驗證碼錯誤");
+					}
+		System.out.println("in= " + inKey + " chk= " + chkCode);			
 					String users_mail = req.getParameter("users_mail").trim();
 
 					String regex = "^\\w{1,63}@[a-zA-Z0-9]{2,63}\\.[a-zA-Z]{2,63}(\\.[a-zA-Z]{2,63})?$";
