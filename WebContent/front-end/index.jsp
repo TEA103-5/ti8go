@@ -68,7 +68,7 @@
     						<h2>04</h2>
     						<h3>商品</h3>
     						<p>出發前覺得少了點什麼?來這看看吧</p>
-    						<a href="#">瀏覽商品</a>
+    						<a href="<%=request.getContextPath()%>/front-end/order/addOrder.jsp">瀏覽商品</a>
     				</div>	
     			</div>
           </div>
@@ -78,7 +78,7 @@
     						<h2>05</h2>
     						<h3>遊記</h3>
     						<p>別忘了記錄你美好的回憶</p>
-    						<a href="#">撰寫遊記</a>
+    						<a href="<%=request.getContextPath()%>/front-end/notefront/notePostList.jsp">瀏覽遊記</a>
     				</div>	
     			</div>
           </div>
