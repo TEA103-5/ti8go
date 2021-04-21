@@ -167,7 +167,7 @@
 									<td>	
 								
 									{{item.trip_content}}<br/>
-									{{item.trip_start_time}}~{{item.trip_end_time}}<br/>
+									{{item.trip_start_time.slice(0,5)}}~{{item.trip_end_time.slice(0,5)}}<br/>
 									{{item.trip_remarks}}
 						
 									</td>

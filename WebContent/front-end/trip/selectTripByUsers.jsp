@@ -13,6 +13,7 @@
 <head>
     <title>ListTripByUsersId - font-end</title>
      <%@ include file="/front-end/pages/links.html" %> 
+     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/assets/css/tripstyles.css">
 </head>
 
 <body>
@@ -45,7 +46,7 @@
 			     							<input type="hidden" name="action" value="listDetail_ByTrip_A">
 			     							
                                             <h5>{{item.trip_name}}</h5>
-                                            <button onclick="document.getElementById('from2').submit()">查看</button>
+                                            <button class="btnl btn-add" onclick="document.getElementById('from2').submit()">查看</button>
 			     							</FORM>
                                             
                                
@@ -55,12 +56,12 @@
                                             <div class="product-name"><h10>出發日期:{{item.trip_start}}/天數:{{item.trip_day}}</h10></div>
                                             <div class="product-name">
                                             			  <FORM id="from1" METHOD="post" ACTION="<%=request.getContextPath()%>/trip/trip.do" style="margin-bottom: 0px;">
-                                            <button onclick="document.getElementById('from1').submit()">編輯</button>
+                                            <button class="btnl btn-edit" onclick="document.getElementById('from1').submit()">編輯</button>
 			  								<input type="hidden" name="trip_id" v-model="item.trip_id">
 			    							<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
 			     							<input type="hidden" name="action" v-model="action"></FORM>
                                   
-                                            <button @click="delTrip(index,item.trip_id)">刪除</button>  
+                                            <button class="btnl btn-delete" @click="delTrip(index,item.trip_id)">刪除</button>  
                                             
 											</div>                                          
                                             <div class="about">

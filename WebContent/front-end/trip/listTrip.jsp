@@ -19,6 +19,7 @@
  <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/assets/css/productstyles.css">
     <title>ListTripByUsersId - font-end</title>
      <%@ include file="/front-end/pages/links.html" %> 
+     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/assets/css/tripstyles.css">
 </head>
 
 <body>
@@ -51,7 +52,7 @@
 			  								<input type="hidden" name="trip_id" v-model="item.trip_id">
 			    							<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
 			     							<input type="hidden" name="action" value="listDetail_ByTrip_A">
-			     							<button class="btnl btn-edit" @click="chose(item)">查看</button>
+			     							<button class="btnl btn-add" @click="chose(item)">查看</button>
 			     							</FORM>
                                             </div>
                                             
@@ -142,12 +143,12 @@
 						trip_id:trip_id,
 				}
 				$.ajax({
-  			        url: "<%=request.getContextPath()%>/trip/trip.do",           // 資料請求的網址 --%>
- 			        type: "POST",                  // GET | POST | PUT | DELETE | PATCH
+  			        url: "<%=request.getContextPath()%>/trip/trip.do",
+ 			        type: "POST",              
  			        async: false,
- 			        data:data,               // 傳送資料到指定的 url
- 			        dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
- 			        success: function (data) {      //這裡依照陣列長度(有幾個行程明細)呼叫自己      
+ 			        data:data,        
+ 			        dataType: "json",          
+ 			        success: function (data) {           
  			        }
  			    });
 	    		
