@@ -16,7 +16,7 @@
 <html>
 
 <head>
- <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/assets/css/productstyles.css">
+
     <title>ListTripByUsersId - font-end</title>
      <%@ include file="/front-end/pages/links.html" %> 
      <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/assets/css/tripliststyles.css">
@@ -33,15 +33,22 @@
                     <h2 class="text-info">行程資料庫</h2>
                     <p></p>
                 </div>
+                
+    
+                
 				<div class="content">
 					 <div class="row">
 					 <div class="col-md-12">
                             <div class="products">
-                                <div  class="row no-gutters">
+                                <div  class="row no-gutters containar">
                                 
                                 
-                                    <div v-for="(item,index) in tripList" class="col-12 col-md-6 col-lg-4">
-                                        <div class="clean-product-item">
+                                    <div v-for="(item,index) in tripList" class="col-12 col-md-6 col-lg-4 ">
+                                    
+                                        <div class="clean-product-item cerd" >
+                                        
+                                        <div class="box">
+                                        <div class="content">
                                             <div class="image"><img class="img-fluid d-block mx-auto img" 
                                            v-bind:src="item.trip_pic"></div>
                                             
@@ -75,10 +82,12 @@
                                                     <h10>{{item.trip_username}}</h10>
                                                 </div>
                                             </div>
+                                            </div>
                                         </div>
+                                        
                                     </div>
                                 
-                                
+                                </div>
                                 
                                 </div>
                                 </div>
@@ -110,7 +119,7 @@
 						trip_look:${tripVO.trip_look},						
 						trip_username:'${usersSvc.getOneusers(tripVO.users_id).users_name}',
 						trip_state:'${tripVO.trip_state}',
-						trip_pic:'<%=request.getContextPath()%>/place/DBGifReader4.do?place_id=${tripVO.read_authority}&place_pic=place_pic2',
+						trip_pic:'<%=request.getContextPath()%>/place/DBGifReader4.do?place_id=${tripVO.read_authority}&place_pic=place_pic1',
 						users_id:'${tripVO.users_id}',
 						last_editor:'${tripVO.last_editor}',
 						action:'updateLook',

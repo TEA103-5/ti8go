@@ -13,7 +13,7 @@
 <head>
     <title>ListTripByUsersId - font-end</title>
      <%@ include file="/front-end/pages/links.html" %> 
-     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/assets/css/tripstyles.css">
+     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/assets/css/tripliststyles.css">
 </head>
 
 <body>
@@ -36,7 +36,7 @@
                                 
                                     <div v-for="(item,index) in tripList" class="col-12 col-md-6 col-lg-4">
                                         <div class="clean-product-item">
-                                            <div class="image"><img class="img-fluid d-block mx-auto"
+                                            <div class="image"><img class="img-fluid d-block mx-auto img"
                                             v-bind:src="item.trip_pic"></div>
                                             
                                             <div class="product-name">
@@ -107,7 +107,7 @@
 						trip_look:${tripVO.trip_look},						
 						trip_username:'${usersSvc.getOneusers(tripVO.users_id).users_name}',
 						trip_state:${tripVO.trip_state},
-						trip_pic:'<%=request.getContextPath()%>/place/DBGifReader4.do?place_id=${tripVO.read_authority}&place_pic=place_pic2',
+						trip_pic:'<%=request.getContextPath()%>/place/DBGifReader4.do?place_id=${tripVO.read_authority}&place_pic=place_pic1',
 					},
 					</c:forEach>
 	    	],

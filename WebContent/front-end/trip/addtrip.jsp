@@ -115,7 +115,8 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 									v-bind:src="item.place_pic" />
 					</td>
 						<td>
-						{{item.place_name}}
+						{{item.place_name}}<br/>
+						{{item.place_index}}
 						</td>
 						<td>
 						<button class="btnl btn-add" @click="tripDetailAdd(item)">add</button>
@@ -372,6 +373,7 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 	    			place_lon:'${placeVO.place_longitude}',
 	    			place_lat:'${placeVO.place_latitude}',
 	    			place_user:'${placeVO.users_id}',
+	    			place_index:'${placeVO.place_index}',
 
 	    		},
 	    		</c:forEach>

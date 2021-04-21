@@ -46,7 +46,9 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 									       <input type="hidden" name="users_id" value="${usersVO.users_id}">
 									       <input type="hidden" name="action" value="listTrip_ByUsers_A">
 									     </FORM>
-    <div id="fade" class="black_overlay" style="display:none; min-height: 100%;">
+    <div id="fade1" v-if="loadshow" class="black_overlay" style="display:block; min-height: 100%;">
+    </div>
+    <div id="fade"  class="black_overlay" style="display:none; min-height: 100%;">
     
 						<div id="tripadd" class="white_content glass" style="display:none;">
 				行程名稱:<br/>
@@ -106,7 +108,8 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 									v-bind:src="item.place_pic" />
 					</td>
 						<td>
-						{{item.place_name}}
+						{{item.place_name}}<br/>
+						{{item.place_index}}
 						</td>
 						<td>
 						<button class="btnl btn-add" @click="tripDetailAdd(item)">add</button>
@@ -268,6 +271,7 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 	var vm = new Vue({
 	    el: '#app',
 	    data: {
+	    	loadshow:true,
 	    	collect:false,
 	    	place_collect:new Set([
 	    	    <c:forEach var="place_collectVO" items="${list}"  varStatus="loop">
@@ -351,6 +355,7 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 	    			place_lon:'${placeVO.place_longitude}',
 	    			place_lat:'${placeVO.place_latitude}',
 	    			place_user:'${placeVO.users_id}',
+	    			place_index:'${placeVO.place_index}',
 	    		},
 	    		</c:forEach>
 	    	],
@@ -1011,6 +1016,10 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 	    	}
 	    },
 	    mounted: function(){//類似ini或onload	
+	         setTimeout(() => {
+	        		document.getElementById('fade1').style.display='none';
+	         },1500)
+	     
 	    	let self=this;
 	    	$('#f_date3').val(this.addtrip.trip_start);
 	    for(let n=0;n<this.addtrip.place_weather;n++){

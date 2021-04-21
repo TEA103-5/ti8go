@@ -112,9 +112,9 @@
 
             <div class="container-fluid" style="margin:0px;">
                 <div class="block-heading">
-                    <h1 class="text-info">{{addtrip.trip_name}}</h1>
-                    <h10>{{addtrip.trip_username}}</h10><br/>
-                    {{addtrip.last_edit_time}}更新<br/>
+                    <h3 class="text-info">{{addtrip.trip_name}}</h3>
+                    <h8>{{addtrip.trip_username}}/   {{addtrip.last_edit_time}}更新</h8>
+                 
                    
 <!--                     		<input -->
 <!-- 							class="" type="text" name="trip_start" @click="clickdate" @blur="blurdate" -->
