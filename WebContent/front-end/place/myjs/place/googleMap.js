@@ -69,6 +69,8 @@ if (navigator.geolocation) {
         console.log('無法取得你的位置');
         self_lat = 25.052052;
         self_lng = 121.543220;
+        
+        initMap();
     }
 
     // 使用者允許抓目前位置，回傳經緯度
@@ -78,6 +80,8 @@ if (navigator.geolocation) {
         self_lng = position.coords.longitude
 
         route_origin = { lat: self_lat, lng: self_lng }; // 定義路線起點經緯度
+        
+        initMap();
     }
 
     // 跟使用者拿所在位置的權限
@@ -87,6 +91,8 @@ if (navigator.geolocation) {
     console.log("不支援取得位置");
     self_lat = 25.052052;
     self_lng = 121.543220;
+    
+    initMap();
 }
 // -----------------0415新增
 
