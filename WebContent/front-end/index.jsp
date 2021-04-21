@@ -30,38 +30,61 @@
 
 
 
-
         <div class="container-fluid glass">
-        <div class="conn">
-          <div class="row align-items-center  conn">
-          <div class="block-heading conn col-md-12"">
-    				        <h3>Lorem impsum dolor sit amet</h3>
-              <div class="getting-started-info">
-						地點~~~
-              </div>
+  <div class="containar">
+          <div class="cerd">
+          <div class="box">
+          <div class="content">
+    						<h2>01</h2>
+    						<h3>會員</h3>
+    						<p>成為會員,享受我們提供的專業服務</p>
+    						<a href="#">成為會員</a>
+    				</div>	
+    			</div>
           </div>
-            <div class="col-md-12 conn">
-        		        <h3>Lorem impsum dolor sit amet</h3>
-              <div class="getting-started-info">
-						行程~~~
-              </div>
-            </div>
-            <div class="col-md-12 conn">
-              <h3>Lorem impsum dolor sit amet</h3>
-              <div class="getting-started-info">
-						商品~~~
-              </div>
-      
-              </div>
-            <div class="col-md-12 conn">
-              <h3>Lorem impsum dolor sit amet</h3>
-              <div class="getting-started-info">
-						遊記~~~
-              </div>
-      
-              </div>
-            </div>
+          <div class="cerd">
+          <div class="box">
+          <div class="content">
+    						<h2>02</h2>
+    						<h3>地點</h3>
+    						<p>探索周圍人氣景點</p>
+    						<a href="#">搜索景點</a>
+    				</div>	
+    			</div>
           </div>
+          <div class="cerd">
+          <div class="box">
+          <div class="content">
+    						<h2>03</h2>
+    						<h3>行程</h3>
+    						<p>規劃你夢想中的行程</p>
+    						<a href="#">規劃行程</a>
+    				</div>	
+    			</div>
+          </div>
+          <div class="cerd">
+          <div class="box">
+          <div class="content">
+    						<h2>04</h2>
+    						<h3>商品</h3>
+    						<p>出發前覺得少了點什麼?來這看看吧</p>
+    						<a href="#">瀏覽商品</a>
+    				</div>	
+    			</div>
+          </div>
+          <div class="cerd">
+          <div class="box">
+          <div class="content">
+    						<h2>05</h2>
+    						<h3>遊記</h3>
+    						<p>別忘了記錄你美好的回憶</p>
+    						<a href="#">撰寫遊記</a>
+    				</div>	
+    			</div>
+          </div>
+          </div>
+
+
         </div>
    
 
