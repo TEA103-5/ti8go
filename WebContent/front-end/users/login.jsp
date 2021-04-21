@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.users.model.*"%>
+<%@ page import="com.users.controller.*"%>
+<%@ page import="java.util.*"%>
+
+
 <!DOCTYPE html>
 <html>
 
@@ -14,6 +19,7 @@
 <!-- 選單頭 -->
 <!-- include 不用選單 -->
 <%@ include file="/front-end/pages/headNav.html" %>
+
 
 	<div class="container mx-auto mt-5" id="app">
 		<div class="row mt-5">
@@ -90,12 +96,19 @@
 							name="password_repeat" v-model="repassword1">
 					</div>
 				</div>
+				
+					<img src="<%=request.getContextPath()%>/VerifyPic" id="verify-pic" 
+							class="float-left"/>
+				
+					<input type="text" maxlength="4" name="VerifyPic" 
+					class="form-control col-3" placeholder="驗證碼" > 
+					 
 					<input class="btn btn-info btn-block text-white" @click="send2" type="button" 
 						value="註冊">
 					<input type="hidden" name="requestUrl" 
 						value="/front-end/users">
+				
 					<input type="hidden" name="action" value="insertUsers">
-					<img src="<%=request.getContextPath()%>/VerifyPic" id="verify-pic" class="mg">
 				</form>									 
 			</div>
 		</div>
@@ -110,6 +123,7 @@
 
 <!-- 	腳腳 -->
 <%-- 	<%@ include file="/front-end/pages/footer.html" %>  --%>
+
 
 	<script type="text/javascript"
 		src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>

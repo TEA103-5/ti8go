@@ -47,7 +47,7 @@ public class VerifyUtil {
                     (int)(Math.random()*120), (int)(Math.random()*40));
         }
         //設定邊框顏色
-        g.setColor(Color.black);
+        g.setColor(Color.yellow);
         //給驗證碼一個外邊框
         g.drawRect(0, 0, 118, 38);
 
