@@ -44,9 +44,34 @@ public class OrderServlet extends HttpServlet {
 		
 		
 		if ("listOrderBySaleId".equals(action)) {
-			Integer sale_id = new Integer(req.getParameter("sale_id"));
-			System.out.println(sale_id);
-		} 
+
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			try {
+				/*************************** 1.接收請求參數 ****************************************/
+				Integer sale_id = new Integer(req.getParameter("sale_id"));
+				
+
+				/*************************** 2.開始查詢資料 ****************************************/
+				OrderService uSvc = new OrderService();
+				List<OrderVO> set = uSvc.getProBySaleId(sale_id);
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+				req.setAttribute("listProBySale_id", set);    // 資料庫取出的set物件,存入request
+
+				String url = null;
+//				if ("listEmps_ByDeptno_A".equals(action))
+					url =  "/sale-end/order/listAllProductBySale.jsp";        // 成功轉交 sale/listProds_BySaleid.jsp
+
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 ***********************************/
+			} catch (Exception e) {
+				throw new ServletException(e);
+			}
+		}
+		
+
 		/*************************** 士翔開始 ****************************************/		
 		if ("insertajax".equals(action)) { // 來自addEmp.jsp的請求
 			
