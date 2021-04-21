@@ -14,7 +14,7 @@
          <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/assets/css/tripstyles2.css">
 </head>
  <body>
- 			<%@ include file="/front-end/pages/headNav.html" %>
+<%--  			<%@ include file="/front-end/pages/headNav.html" %> --%>
 <!--  		這行是header的nav區塊 -->
  	
 
@@ -38,7 +38,7 @@
     						<h2>01</h2>
     						<h3>會員</h3>
     						<p>成為會員,享受我們提供的專業服務</p>
-    						<a href="#">成為會員</a>
+    						<a href="<%=request.getContextPath()%>/front-end/users/login.jsp">成為會員</a>
     				</div>	
     			</div>
           </div>
@@ -48,7 +48,7 @@
     						<h2>02</h2>
     						<h3>地點</h3>
     						<p>探索周圍人氣景點</p>
-    						<a href="#">搜索景點</a>
+    						<a href="<%=request.getContextPath()%>/front-end/place/selectPlace.jsp">搜索景點</a>
     				</div>	
     			</div>
           </div>
@@ -57,8 +57,8 @@
           <div class="content">
     						<h2>03</h2>
     						<h3>行程</h3>
-    						<p>規劃你夢想中的行程</p>
-    						<a href="#">規劃行程</a>
+    						<p>尋找夢想中的行程</p>
+    						<a href="<%=request.getContextPath()%>/front-end/trip/listTrip.jsp">瀏覽行程</a>
     				</div>	
     			</div>
           </div>
