@@ -100,14 +100,15 @@
 						<div class="col-sm-6">
 							<input type="password" class="form-control" id="users_pwd" name="users_pwd" 
 								size="30" placeholder="請輸入你的新密碼..." 
-								value="">
+								value="${usersVO.users_pwd}">
 						</div>
 					</div>
 					<div class="form-group form-row">
 						<label for="users_re_pwd" class="col-sm-2">確認密碼</label>
 						<div class="col-sm-6">
 							<input class="form-control" type="password" id="users_re_pwd"
-								placeholder="請再輸入一次你的密碼..." name="users_pwd_repeat" >
+								placeholder="請再輸入一次你的密碼..." name="users_pwd_repeat"
+								value="${usersVO.users_pwd}" >
 						</div>
 					</div>	
 					<div class="form-group form-row">

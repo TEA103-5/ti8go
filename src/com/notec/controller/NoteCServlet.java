@@ -241,14 +241,14 @@ public class NoteCServlet extends HttpServlet {
 				String note_c_title = req.getParameter("note_c_title");
 				String notectitleReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_.//!?~)]{2,20}$";
 				if (note_c_title == null || note_c_title.trim().length() == 0) {
-					errorMsgs.add("遊記標題: 請勿空白");
+					errorMsgs.add("標題: 請勿空白");
 				} else if (!note_c_title.trim().matches(notectitleReg)) { // 以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("遊記標題: 只能是中、英文字母、數字和_ , 且長度必需在2到20之間");
+					errorMsgs.add("標題: 只能是中、英文字母、數字和_ , 且長度必需在2到20之間");
 				}
 
 				String note_c_content = req.getParameter("note_c_content");
 				if (note_c_content == null || note_c_content.trim().length() == 0) {
-					errorMsgs.add("內容請勿空白");
+					errorMsgs.add("內容: 請勿空白");
 				} 
 
 

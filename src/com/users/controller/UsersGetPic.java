@@ -38,7 +38,7 @@ public class UsersGetPic extends HttpServlet {
 				in.close();
 			} else {
 //				res.sendError(HttpServletResponse.SC_NOT_FOUND);
-				InputStream in = getServletContext().getResourceAsStream("/NoData/none.jpg");
+				InputStream in = getServletContext().getResourceAsStream("/NoData/none.png");
 				byte[] b = new byte[in.available()];
 				in.read(b);
 				out.write(b);
@@ -47,7 +47,7 @@ public class UsersGetPic extends HttpServlet {
 			rs.close();
 			stmt.close();
 		} catch (Exception e) {
-			InputStream in = getServletContext().getResourceAsStream("/NoData/null.jpg");
+			InputStream in = getServletContext().getResourceAsStream("/NoData/null.png");
 			byte[] b = new byte[in.available()];
 			in.read(b);
 			out.write(b);
@@ -60,7 +60,7 @@ public class UsersGetPic extends HttpServlet {
 	
 			try {
 				Context ctx = new InitialContext();
-				ds = (DataSource) ctx.lookup("java:comp/env/jdbc/tea05");
+				ds = (DataSource) ctx.lookup("java:comp/env/jdbc/David");
 				con = ds.getConnection();
 			} catch (NamingException e) {
 				e.printStackTrace();

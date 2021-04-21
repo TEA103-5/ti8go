@@ -1,12 +1,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.admins.model.*"%>
+<%@ page import="java.util.*"%>
 
 
 <% 
+
+
 	AdminsVO adminsVO = (AdminsVO) request.getAttribute("adminsVO");
 	
 	pageContext.setAttribute("adminsVO" , adminsVO);
+	
+	
+// 	用來判斷權限
+if(adminsVO.getAdmins_authority() != "root"){
+	
+	if(   adminsVO.getAdmins_id() != ((AdminsVO)session.getAttribute("adminsVO")).getAdmins_id() ){
+			List<String> errorMsgs = new LinkedList<String>();
+			request.setAttribute("errorMsgs", errorMsgs);
+			errorMsgs.add("一般管理員只能修改自己的資料");
+			String url = "/back-end/place/listAllPlace.jsp";
+	//			getServletContext().getRequestDispatcher(url).forward(request, response);
+			RequestDispatcher successView = request.getRequestDispatcher(url);
+			successView.forward(request, response);
+		//System.out.println("有進來這邊");
+			return;
+	}	
+}
+	
 %>
 
 <!DOCTYPE html>

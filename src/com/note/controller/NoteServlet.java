@@ -264,14 +264,14 @@ public class NoteServlet extends HttpServlet {
 				String note_title = req.getParameter("note_title");
 				String notetitleReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_.//!?~)]{2,20}$";
 				if (note_title == null || note_title.trim().length() == 0) {
-					errorMsgs.add("遊記標題: 請勿空白");
+					errorMsgs.add("標題: 請勿空白");
 				} else if (!note_title.trim().matches(notetitleReg)) { // 以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("遊記標題: 只能是中、英文字母、數字和_ , 且長度必需在2到20之間");
+					errorMsgs.add("標題: 只能是中、英文字母、數字和_ , 且長度必需在2到20之間");
 				}
 
 				String note_description = req.getParameter("note_description").trim();
 				if (note_description == null || note_description.trim().length() == 0) {
-					errorMsgs.add("大綱請勿空白");
+					errorMsgs.add("大綱: 請勿空白");
 				}
 
 				Integer users_id = new Integer(req.getParameter("users_id").trim());
@@ -352,15 +352,15 @@ public class NoteServlet extends HttpServlet {
 				String note_title = req.getParameter("note_title");
 				String notetitleReg = "^[(\\u4e00-\\u9fa5)(a-zA-Z0-9_.//!?~)]{2,20}$";
 				if (note_title == null || note_title.trim().length() == 0) {
-					errorMsgs.add("遊記標題: 請勿空白");
+					errorMsgs.add("標題: 請勿空白");
 				} else if (!note_title.trim().matches(notetitleReg)) { // 以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("遊記標題: 只能是中、英文字母、數字和_ , 且長度必需在2到20之間");
+					errorMsgs.add("標題: 只能是中、英文字母、數字和_ , 且長度必需在2到20之間");
 				}
 
 				String note_description = req.getParameter("note_description");
 //				String notedesReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_./!?~)]{2,10}$";
 				if (note_description == null || note_description.trim().length() == 0) {
-					errorMsgs.add("大綱請勿空白");
+					errorMsgs.add("大綱: 請勿空白");
 				} 
 
 //				else if (!note_description.trim().matches(notedesReg)) { // 以下練習正則(規)表示式(regular-expression)

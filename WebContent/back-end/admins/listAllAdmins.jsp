@@ -5,6 +5,17 @@
 <%@ page import="com.admins.controller.*"%>
 
 <%
+if( ((AdminsVO)session.getAttribute("adminsVO")).getAdmins_authority() != "root"){
+	List<String> errorMsgs = new LinkedList<String>();
+	request.setAttribute("errorMsgs", errorMsgs);
+	errorMsgs.add("管理者列表只有最高管理員可瀏覽");
+	String url = "/back-end/place/listAllPlace.jsp";
+//		getServletContext().getRequestDispatcher(url).forward(request, response);
+	RequestDispatcher successView = request.getRequestDispatcher(url);
+	successView.forward(request, response);
+//System.out.println("有進來這邊");
+	return;
+}
 
 	AdminsService adminsSvc = new AdminsService();
     List<AdminsVO> list = adminsSvc.getAll();
