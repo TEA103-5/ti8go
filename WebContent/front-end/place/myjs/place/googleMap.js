@@ -66,7 +66,7 @@ if (navigator.geolocation) {
 
     // 使用者不提供權限，或是發生其它錯誤
     function error() {
-        alert('無法取得你的位置');
+        console.log('無法取得你的位置');
         self_lat = 25.052052;
         self_lng = 121.543220;
     }
