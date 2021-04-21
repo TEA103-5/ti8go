@@ -163,7 +163,7 @@
 		// console.log($(this).parent(".card-body").find(".users_id_value").attr("value"));
 					
 					$.ajax({
-				        url: "/TEA103G5/login.do",           // 資料請求的網址
+				        url: "<%=request.getContextPath()%>/login.do",           // 資料請求的網址
 				        type: "POST",                  // GET | POST | PUT | DELETE | PATCH
 				        data: data,               // 傳送資料到指定的 url
 				        dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
