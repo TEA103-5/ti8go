@@ -97,10 +97,12 @@
 					</div>
 				</div>
 				
-					<img src="<%=request.getContextPath()%>/VerifyPic" id="verify-pic" />
+					<img src="<%=request.getContextPath()%>/VerifyPic" id="verify-pic" 
+							class="float-left"/>
 				
 					<input type="text" maxlength="4" name="VerifyPic" 
-					class="form-control col-3" placeholder="驗證碼" >  
+					class="form-control col-3" placeholder="驗證碼" > 
+					 
 					<input class="btn btn-info btn-block text-white" @click="send2" type="button" 
 						value="註冊">
 					<input type="hidden" name="requestUrl" 
