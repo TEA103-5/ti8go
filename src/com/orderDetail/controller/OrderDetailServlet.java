@@ -30,7 +30,22 @@ public class OrderDetailServlet extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 
-
+		if("updateS".equals(action) ) {
+			Integer uid = new Integer(req.getParameter("detail_id"));
+			OrderDetailService uSvc = new OrderDetailService();
+			uSvc.updates(uid);
+			
+			
+//			Integer sale_id = new Integer(req.getParameter("sale_id"));
+//			req.setAttribute("sale_id",sale_id);
+//			req.setAttribute("action","listOrderBySaleId");
+			
+			
+			//System.out.println(req.getContextPath());
+			
+			RequestDispatcher successView = req.getRequestDispatcher("/sale-end/saleEndIndex.jsp");
+			successView.forward(req, res);
+		}
 		if ("listAllOrderDetail_A".equals(action) 
 //				|| "listEmps_ByDeptno_B".equals(action)
 				) {

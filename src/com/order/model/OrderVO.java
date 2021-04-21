@@ -7,6 +7,17 @@ public class OrderVO implements java.io.Serializable{
 	private Integer order_status;
 	private String card_number;
 	private Integer users_id;
+	private Integer detail_id;
+	
+	
+	public Integer getDetail_id() {
+		return detail_id;
+	}
+
+	public void setDetail_id(Integer detail_id) {
+		this.detail_id = detail_id;
+	}
+
 	private String order_address;
 	
 	

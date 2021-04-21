@@ -35,6 +35,7 @@ public class OrderServlet extends HttpServlet {
 
 	}
 
+
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 
@@ -42,26 +43,29 @@ public class OrderServlet extends HttpServlet {
 		String action = req.getParameter("action");
 
 		
-		
 		if ("listOrderBySaleId".equals(action)) {
-
+			String url = null;
+			url =  "/sale-end/order/listAllProductBySale.jsp";  
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
-				Integer sale_id = new Integer(req.getParameter("sale_id"));
-				
-
+				Integer sale_id=null;
+				if(req.getParameter("sale_id")!=null) {
+					
+					sale_id = new Integer(req.getParameter("sale_id"));
+				}
+	
 				/*************************** 2.開始查詢資料 ****************************************/
 				OrderService uSvc = new OrderService();
 				List<OrderVO> set = uSvc.getProBySaleId(sale_id);
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("listProBySale_id", set);    // 資料庫取出的set物件,存入request
 
-				String url = null;
+			
 //				if ("listEmps_ByDeptno_A".equals(action))
-					url =  "/sale-end/order/listAllProductBySale.jsp";        // 成功轉交 sale/listProds_BySaleid.jsp
-
+					      // 成功轉交 sale/listProds_BySaleid.jsp
+			
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 

@@ -28,6 +28,9 @@ public class OrderDetailService {
 		return ord;
 	}
 
+	public void updates(Integer id) {
+		dao.updates(id);
+	}
 	public OrderDetailVO updateDetail(OrderDetailVO orderDetailVO) {
 		OrderDetailVO ord = new OrderDetailVO();
 
