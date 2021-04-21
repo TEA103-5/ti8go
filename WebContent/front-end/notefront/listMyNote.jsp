@@ -76,88 +76,6 @@ text-overflow: ellipsis;
 
 <body>
 <%@ include file="/front-end/pages/headNav.html" %>
-<!-- 	<nav -->
-<!-- 		class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar" -->
-<!-- 		style="background: #85867F; color: var(- -red); height: 60px;"> -->
-<!-- 		<div class="container"> -->
-<!-- 			<a class="navbar-brand logo" href="#">font-end</a> -->
-<!-- 			<button data-toggle="collapse" class="navbar-toggler" -->
-<!-- 				data-target="#navcol-1"> -->
-<!-- 				<span class="sr-only">Toggle navigation</span><span -->
-<!-- 					class="navbar-toggler-icon"></span> -->
-<!-- 			</button> -->
-<!-- 			<div class="collapse navbar-collapse" id="navcol-1"> -->
-<!-- 				<ul class="navbar-nav ml-auto"> -->
-<!-- 					<li class="nav-item" style="height: 11.6667px;"> -->
-<!-- 						<div class="nav-item dropdown" -->
-<!-- 							style="padding: 5px; width: 70.7083px;"> -->
-<!-- 							<a class="dropdown-toggle" aria-expanded="false" -->
-<!-- 								data-toggle="dropdown" href="#" -->
-<!-- 								style="padding: -71px; width: 0px; height: -8px; margin: -5px; color: rgba(0, 0, 0, 0.5);">place&nbsp;</a> -->
-<!-- 							<div class="dropdown-menu" -->
-<!-- 								style="margin: -5px 0px 0px; padding: 3px 0px; height: 99px; width: 144px;"> -->
-<!-- 								<a class="dropdown-item" href="#">First Item</a><a -->
-<!-- 									class="dropdown-item" href="#">Second Item</a><a -->
-<!-- 									class="dropdown-item" href="#">Third Item</a> -->
-<!-- 							</div> -->
-<!-- 						</div> -->
-<!-- 					</li> -->
-<!-- 					<li class="nav-item"> -->
-<!-- 						<div class="nav-item dropdown" -->
-<!-- 							style="padding: 5px; width: 70.7083px;"> -->
-<!-- 							<a class="dropdown-toggle" aria-expanded="false" -->
-<!-- 								data-toggle="dropdown" href="#" -->
-<!-- 								style="padding: -54px; width: 0px; height: -8px; margin: -1px; color: rgba(0, 0, 0, 0.5);">trip&nbsp;</a> -->
-<!-- 							<div class="dropdown-menu"> -->
-<!-- 								<a class="dropdown-item" href="#">First Item</a><a -->
-<!-- 									class="dropdown-item" href="#">Second Item</a><a -->
-<!-- 									class="dropdown-item" href="#">Third Item</a> -->
-<!-- 							</div> -->
-<!-- 						</div> -->
-<!-- 					</li> -->
-<!-- 					<li class="nav-item"> -->
-<!-- 						<div class="nav-item dropdown" -->
-<!-- 							style="padding: 5px; width: 70.7083px;"> -->
-<!-- 							<a class="dropdown-toggle" aria-expanded="false" -->
-<!-- 								data-toggle="dropdown" href="#" -->
-<!-- 								style="padding: -64px; width: 0px; height: -8px; margin: -3px; color: rgba(0, 0, 0, 0.5);">note</a> -->
-<!-- 							<div class="dropdown-menu"> -->
-<!-- 								<a class="dropdown-item" href="#">First Item</a><a -->
-<!-- 									class="dropdown-item" href="#">Second Item</a><a -->
-<!-- 									class="dropdown-item" href="#">Third Item</a> -->
-<!-- 							</div> -->
-<!-- 						</div> -->
-<!-- 					</li> -->
-<!-- 					<li class="nav-item"> -->
-<!-- 						<div class="nav-item dropdown" -->
-<!-- 							style="padding: 5px; width: 70.7083px;"> -->
-<!-- 							<a class="dropdown-toggle" aria-expanded="false" -->
-<!-- 								data-toggle="dropdown" href="#" -->
-<!-- 								style="padding: -64px; width: 0px; height: -8px; margin: -3px; color: rgba(0, 0, 0, 0.5);">product</a> -->
-<!-- 							<div class="dropdown-menu"> -->
-<!-- 								<a class="dropdown-item" href="#">First Item</a><a -->
-<!-- 									class="dropdown-item" href="#">Second Item</a><a -->
-<!-- 									class="dropdown-item" href="#">Third Item</a> -->
-<!-- 							</div> -->
-<!-- 						</div> -->
-<!-- 					</li> -->
-<!-- 					<li class="nav-item" style="height: 38px;"> -->
-<!-- 						<div class="nav-item dropdown" -->
-<!-- 							style="padding: 4px; width: 82.7083px; margin: 0px; height: 30px;"> -->
-<!-- 							<a class="dropdown-toggle" aria-expanded="false" -->
-<!-- 								data-toggle="dropdown" href="#" -->
-<!-- 								style="padding: 20px; width: 0px; height: -8px; margin: -3px; color: rgba(0, 0, 0, 0.5);">user</a> -->
-<!-- 							<div class="dropdown-menu"> -->
-<!-- 								<a class="dropdown-item" href="#">First Item</a><a -->
-<!-- 									class="dropdown-item" href="#">Second Item</a><a -->
-<!-- 									class="dropdown-item" href="#">Third Item</a> -->
-<!-- 							</div> -->
-<!-- 						</div> -->
-<!-- 					</li> -->
-<!-- 				</ul> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</nav> -->
 	
 	<main class="page service-page">
 
@@ -212,13 +130,14 @@ text-overflow: ellipsis;
 										style="width: 200px; height: 200px;">
 									<div class="card-body">
 										<h5 class="card-title"><b>${noteVO.note_title}</b></h5>
-										<p class="card-text">${noteVO.note_description.substring(0,20)}</p>
-<!-- 										.substring(0,15) -->
+										<span class="card-text"><p>${noteVO.note_description.substring(0,20)}</p></span>
+									</div>
+									<div class="card-form" style="margin-top:20px">	
 										<form class="card-form"	action="<%=request.getContextPath()%>/note/note.do"method="post">
 											<input class="note_id_value" type="hidden" name="note_id" value="${noteVO.note_id}"> 
 											<input type="hidden" name="requestURL"value="<%=request.getServletPath()%>"> 
 											<input type="hidden" name="action" value="getOne_For_Display2">
-											<button class="btn btn-outline-primary btn-sm" type="submit" style="margin-top:20px">更多內容</button>
+											<button class="btn btn-outline-primary btn-sm" type="submit">更多內容</button>
 										</form>
 <%-- 										<form class="card-form"	action="<%=request.getContextPath()%>/note/note.do" method="post"> --%>
 <%-- 											<input class="note_id_value" type="hidden" name="note_id" value="${noteVO.note_id}"> --%>
@@ -238,9 +157,9 @@ text-overflow: ellipsis;
 											<input type="hidden" name="requestURL"value="<%=request.getServletPath()%>"> 
 											<input type="hidden" name="action" value="getOne_For_Display">
 											<input type="hidden" name="action2" value="UpdateAll">
-											<button class="btn btn-outline-primary btn-sm" type="submit" style="margin-top:20px">編輯內文</button>
+											<button class="btn btn-outline-primary btn-sm" type="submit">編輯內文</button>
 										</form>
-									</div>
+										</div>
 								</div>
 							</div>
 						</c:if>
