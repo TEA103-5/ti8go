@@ -384,7 +384,7 @@ public class UsersServlet extends HttpServlet {
 					Integer users_id = new Integer(req.getParameter("users_id"));
 					
 					/*除接收ID外，將狀態修改成停用，其他取回原參數*/
-					Integer users_status = 0 ;
+					Integer users_status = new Integer(req.getParameter("users_status"));
 
 					String users_name = usersSvc.getOneusers(users_id).getUsers_name();
 					
