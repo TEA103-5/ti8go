@@ -13,7 +13,7 @@
 	
 	
 // 	用來判斷權限
-if(adminsVO.getAdmins_authority() != "root"){
+if( !adminsVO.getAdmins_authority().equals("root")){
 	
 	if(   adminsVO.getAdmins_id() != ((AdminsVO)session.getAttribute("adminsVO")).getAdmins_id() ){
 			List<String> errorMsgs = new LinkedList<String>();
