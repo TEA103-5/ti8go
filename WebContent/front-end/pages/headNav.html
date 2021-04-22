@@ -68,7 +68,22 @@
 							<div class="dropdown-menu">
 								<a class="dropdown-item" href="<%=request.getContextPath()%>/front-end/order/addOrder.jsp">購物區</a>
 
-<!-- 								<a class="dropdown-item" href="#">俊偉PRO購物區</a> -->
+					
+								
+								
+												<c:if test="${not empty usersVO}">								
+								<a class="dropdown-item" href="#" onclick="document.getElementById('from2').submit()">查看訂單</a>
+								     <FORM id="from2" METHOD="post" ACTION="<%=request.getContextPath()%>/trip/trip.do" > 							       
+									       <input type="hidden" name="users_id" value="${usersVO.users_id}">
+									       <input type="hidden" name="action" value="listTrip_ByUsers_A">
+									     </FORM>
+								</c:if>
+								
+								
+								
+								
+								
+								
 							</div>
 						</div>
 					</li>

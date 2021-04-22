@@ -44,6 +44,8 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 <!--  <button @click="setCookie('ABA','10',1)">set</button> -->
 <!--  <button @click="getCookie('peter')">get</button> -->
     <main id="app" class="page glass">
+     <div id="fade1" v-if="loadshow" class="black_overlay" style="z-index:20000;display:block; min-height: 100%;min-weight: 100%;">
+    </div>
         <FORM id="from1" METHOD="post" ACTION="<%=request.getContextPath()%>/users/users.do" > 							       
 									       <input type="hidden" name="users_id" value="${usersVO.users_id}">
 									       <input type="hidden" name="action" value="listTrip_ByUsers_A">
@@ -206,7 +208,7 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 								 @dragstart="dragStart($event,index,inde)" @dragover="allowDrop"  @drop="drop2($event,index,inde)">
 							
 									<td>
-								<img class="img" id="preimg"
+								<img class="img" id="preimg" style="width: 4rem;height:4rem;"
 									v-bind:src="item.place_pic" />
 									</td>
 									<td>	
@@ -281,6 +283,7 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 	var vm = new Vue({
 	    el: '#app',
 	    data: {
+	      	loadshow:true,
 	    	collect:false,
 	    	place_collect:new Set([
 	    	    <c:forEach var="place_collectVO" items="${list}"  varStatus="loop">
@@ -1072,7 +1075,9 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 	    	}
 	    },
 	    mounted: function(){//類似ini或onload
-	    
+	         setTimeout(() => {
+	        		document.getElementById('fade1').style.display='none';
+	         },1)
 	    	let self=this;
 	    self.placelist=self.placelist.slice(10);
 	    	$(function(){
