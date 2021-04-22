@@ -294,7 +294,9 @@
 
     <script type="text/javascript" charset="utf8"
         src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
-
+	
+	<script src="https://unpkg.com/sweetalert@2.1.2/dist/sweetalert.min.js"></script>
+	
     <script>$(document).ready(function () {
             $('#table_id').DataTable();
         });</script>
@@ -336,7 +338,8 @@
 		window.addEventListener("load", function(event) {
 			<c:if test="${not empty errorMsgs}">
 					<c:forEach var="message" items="${errorMsgs}">
-						alert("${message}");
+// 						alert("${message}");
+						swal("操作失敗", "${message}", "error");
 					</c:forEach>
 			</c:if>
 		});
