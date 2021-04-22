@@ -216,14 +216,14 @@ var vm = new Vue({
         	 if(this.updatelist.action=='updateajax'){
 		if((this.updatelist.pSrc!=this.list[this.updatelist.index].productSrc)&&(this.dataU.get('upfile1')!='')){
 			this.list[this.updatelist.index].productSrc=this.updatelist.pSrc;
-		      axios.post("/TEA103G5/product/prod.do", self.dataU)
+		      axios.post("<%=request.getContextPath()%>/product/prod.do", self.dataU)
               .then( (response) => {
                  console.log(response);
                  self.dataU.set('upfile1','');
               })
 		}
 			$.ajax({
-		        url: "/TEA103G5/product/prod.do",           // 資料請求的網址
+		        url: "<%=request.getContextPath()%>/product/prod.do",           // 資料請求的網址
 		        type: "POST",                  // GET | POST | PUT | DELETE | PATCH
 		        data:this.updatelist,               // 傳送資料到指定的 url
 		        dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
@@ -254,7 +254,7 @@ var vm = new Vue({
               self.dataU.set('cate',this.updatelist.pCategories);
               self.dataU.set('pric',this.updatelist.pPrice);
               self.dataU.set('stoc',this.updatelist.pStock);
-   		      axios.post("/TEA103G5/product/prod.do", self.dataU)
+   		      axios.post("<%=request.getContextPath()%>/product/prod.do", self.dataU)
               .then( (response) => {
                  let p=response.data.product;
                  console.log(p);
@@ -320,7 +320,7 @@ var vm = new Vue({
         	    this.updatelist.action='deleteajax';
         	    this.updatelist.pId=this.list[index].productId;       	 
     			$.ajax({
-    		        url: "/TEA103G5/product/prod.do",           // 資料請求的網址
+    		        url: "<%=request.getContextPath()%>/product/prod.do",           // 資料請求的網址
     		        type: "POST",                  // GET | POST | PUT | DELETE | PATCH
     		        data:this.updatelist,               // 傳送資料到指定的 url
     		        dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html

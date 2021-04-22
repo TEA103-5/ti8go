@@ -37,11 +37,13 @@ public class ProductDAO implements ProductDAO_Interface{
 	private static final String GET_ONE_STMT = 
 			"SELECT product_id ,PRODUCT_Name,PRODUCT_Status,PRODUCT_Content,PRODUCT_Description,PRODUCT_Categories,PRODUCT_Price,PRODUCT_Stock,sale_id,product_update_time FROM PRODUCT where product_id = ? ";
 	private static final String GET_ALL_STMT = 
-			"SELECT product_id,PRODUCT_Name,PRODUCT_Status,PRODUCT_Content,PRODUCT_Description,PRODUCT_Categories,PRODUCT_Price,PRODUCT_Stock,sale_id,product_update_time FROM PRODUCT";
+			"SELECT product_id,PRODUCT_Name,PRODUCT_Status,PRODUCT_Content,PRODUCT_Description,PRODUCT_Categories,PRODUCT_Price,PRODUCT_Stock,sale_id,product_update_time FROM PRODUCT where PRODUCT_Status=1";
 	private static final String UPDATE = 
 			"UPDATE PRODUCT set PRODUCT_Name=?,PRODUCT_Status=?,PRODUCT_Content=?,PRODUCT_Description=?,PRODUCT_Categories=?,PRODUCT_Price=?,PRODUCT_Stock=?  where product_id = ?";
 	private static final String DELETE = 
-			"DELETE FROM PRODUCT where product_id = ?";
+			"UPDATE  PRODUCT set PRODUCT_Status=0 where product_id = ?";
+//	private static final String DELETE = 
+//			"DELETE FROM PRODUCT where product_id = ?";
 	private static final String GET_ONE_STMT_t = 
 			"SELECT product_id ,PRODUCT_Name,PRODUCT_Status,PRODUCT_Content,PRODUCT_Description,PRODUCT_Categories,PRODUCT_Price,PRODUCT_Stock,sale_id,product_update_time FROM PRODUCT where product_update_time = ? ";
 
@@ -167,7 +169,7 @@ public class ProductDAO implements ProductDAO_Interface{
      public void delete(Integer product_id) {
 		 Connection con = null;
 			PreparedStatement pstmt = null;
-			
+			System.out.println("13123123123123");
 			try {
 				con = ds.getConnection();
 				pstmt = con.prepareStatement(DELETE);
