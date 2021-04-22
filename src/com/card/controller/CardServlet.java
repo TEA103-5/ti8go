@@ -94,6 +94,9 @@ public class CardServlet extends HttpServlet {
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
+			List<String> successMsgs = new LinkedList<String>();
+			req.setAttribute("successMsgs", successMsgs);
+	
 	
 			try {
 				/***************************1.接收請求參數***************************************/
@@ -102,7 +105,7 @@ public class CardServlet extends HttpServlet {
 				/***************************2.開始刪除資料***************************************/
 				CardService cardSvc = new CardService();
 				cardSvc.deleteCard(card_id);
-				
+				successMsgs.add("刪除成功");
 				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
 				String url = requestUrl + "/card.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
@@ -123,6 +126,9 @@ public class CardServlet extends HttpServlet {
 				// Store this set in the request scope, in case we need to
 				// send the ErrorPage view.
 				req.setAttribute("errorMsgs", errorMsgs);
+				List<String> successMsgs = new LinkedList<String>();
+				req.setAttribute("successMsgs", successMsgs);
+		
 
 			try {
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
@@ -205,7 +211,7 @@ public class CardServlet extends HttpServlet {
 				
 				CardService cardSvc = new CardService();
 				cardVO = cardSvc.addCard(users_id, card_number, card_date, card_last, card_default);
-				
+				successMsgs.add("新增成功");
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				String url = requestUrl + "/card.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
@@ -226,6 +232,8 @@ public class CardServlet extends HttpServlet {
 					// Store this set in the request scope, in case we need to
 					// send the ErrorPage view.
 					req.setAttribute("errorMsgs", errorMsgs);
+			
+			
 				
 				try {
 					/***************************1.接收請求參數****************************************/
@@ -254,6 +262,9 @@ public class CardServlet extends HttpServlet {
 					// Store this set in the request scope, in case we need to
 					// send the ErrorPage view.
 					req.setAttribute("errorMsgs", errorMsgs);
+					List<String> successMsgs = new LinkedList<String>();
+					req.setAttribute("successMsgs", successMsgs);
+			
 				
 					try {
 						/***************************1.接收請求參數-輸入格式的錯誤處理**********************/
@@ -329,6 +340,7 @@ public class CardServlet extends HttpServlet {
 						CardService cardSvc = new CardService();
 						cardVO = cardSvc.updateCard(users_id, card_id, card_number, card_date, card_last,
 								card_default);
+						successMsgs.add("修改成功");
 						/***************************3.修改完成.準備轉交(Send the Success view)*************/
 						req.setAttribute("cardVO", cardVO); // 資料庫update成功後,正確的empVO物件,存入req
 						String url = requestUrl + "/card.jsp";

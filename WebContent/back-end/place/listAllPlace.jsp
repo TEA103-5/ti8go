@@ -294,7 +294,9 @@
 
     <script type="text/javascript" charset="utf8"
         src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
-
+	
+	<script src="https://unpkg.com/sweetalert@2.1.2/dist/sweetalert.min.js"></script>
+	
     <script>$(document).ready(function () {
             $('#table_id').DataTable();
         });</script>
@@ -320,9 +322,11 @@
 		          if(data.result == "state_off"){
 		        	  that.closest("tr").find(".place_state_text").text("審核中")
 		        	  that.val("上架")
+		        	  swal("地點下架成功", "已下架地點", "success")
 		          }else if(data.result == "state_on"){
 		        	  that.closest("tr").find(".place_state_text").text("上架中")
 		        	  that.val("下架")
+		        	  swal("地點上架成功", "已上架地點", "success")
 		          }
 		          
 		        }
@@ -336,7 +340,8 @@
 		window.addEventListener("load", function(event) {
 			<c:if test="${not empty errorMsgs}">
 					<c:forEach var="message" items="${errorMsgs}">
-						alert("${message}");
+// 						alert("${message}");
+						swal("操作失敗", "${message}", "error");
 					</c:forEach>
 			</c:if>
 		});

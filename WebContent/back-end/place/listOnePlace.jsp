@@ -233,7 +233,7 @@
 <!--                     </div> -->
 <!--                 </nav> -->
                 <div class="container-fluid">
-                    <h3 class="text-dark mb-1">Blank Page</h3>
+                    <h3 class="text-dark mb-1">修改地點</h3>
 	                     <!-- 使用Google Maps Embed API , q放的是搜尋目標 , 如有明確對象(地址或名稱)marker會標註在此位置 ,  -->
 	                <div class="block-heading"><iframe id="map-iframe" allowfullscreen="" frameborder="0"
 	                        src="https://www.google.com/maps/embed/v1/search?key=${Google_key}&q=<%= (placeVO==null)? "" : placeVO.getPlace_address()%>&zoom=20&center=${placeVO.getPlace_latitude()},${placeVO.getPlace_longitude()}"
@@ -496,6 +496,7 @@
 	    init();
 
     </script>
+    <script src="https://unpkg.com/sweetalert@2.1.2/dist/sweetalert.min.js"></script>
 	<script>
 	
 // 	這個script負責上傳圖片的預覽
@@ -533,7 +534,8 @@
 			var fileExt = this.value;
 			fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
 			if (validExts.indexOf(fileExt) < 0) {
-				alert("檔案類型錯誤，可接受的副檔名有：" + validExts.toString());
+// 				alert("檔案類型錯誤，可接受的副檔名有：" + validExts.toString());
+				swal("操作失敗", "檔案類型錯誤，可接受的副檔名有："+ validExts.toString() , "error");
 				this.value = null;
 				// 將修改前的圖片內容讀回去
 				pic1_el.setAttribute("src", pic1_origin);
@@ -554,7 +556,8 @@
 			var fileExt = this.value;
 			fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
 			if (validExts.indexOf(fileExt) < 0) {
-				alert("檔案類型錯誤，可接受的副檔名有：" + validExts.toString());
+// 				alert("檔案類型錯誤，可接受的副檔名有：" + validExts.toString());
+				swal("操作失敗", "檔案類型錯誤，可接受的副檔名有："+ validExts.toString() , "error");
 				this.value = null;
 				// 將修改前的圖片內容讀回去
 				pic2_el.setAttribute("src", pic2_origin);
@@ -575,7 +578,8 @@
 			var fileExt = this.value;
 			fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
 			if (validExts.indexOf(fileExt) < 0) {
-				alert("檔案類型錯誤，可接受的副檔名有：" + validExts.toString());
+// 				alert("檔案類型錯誤，可接受的副檔名有：" + validExts.toString());
+				swal("操作失敗", "檔案類型錯誤，可接受的副檔名有："+ validExts.toString() , "error");
 				this.value = null;
 				// 將修改前的圖片內容讀回去
 				pic3_el.setAttribute("src", pic3_origin);
