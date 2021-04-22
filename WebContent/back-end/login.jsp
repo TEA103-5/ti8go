@@ -64,7 +64,7 @@ if (session.getAttribute("adminsVO") != null) {
 <!--                                                         for="formCheck-1">Remember Me</label></div> -->
 <!--                                             </div> -->
                                         </div><button class="btn btn-primary btn-block text-white btn-user"
-                                            id="login_button" type="button">Login</button>
+                                            id="login_button" type="button">登入</button>
                                         <!-- <hr><a class="btn btn-primary btn-block text-white btn-google btn-user"
                                             role="button"><i class="fab fa-google"></i>&nbsp; Login with Google</a><a
                                             class="btn btn-primary btn-block text-white btn-facebook btn-user"
@@ -168,6 +168,7 @@ if (session.getAttribute("adminsVO") != null) {
                                     	if(isConfirm){
 //                                     		window.location.href = redirect_target;
                                     		window.location.replace(redirect_target);
+//                                     		return;
                                     	}
                                     });
                                     isTimerStarted = true;
