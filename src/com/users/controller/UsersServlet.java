@@ -41,10 +41,7 @@ public class UsersServlet extends HttpServlet {
 		
 		String requestUrl = req.getParameter("requestUrl");
 
-		String inKey = req.getParameter("VerifyPic").toUpperCase();
-		HttpSession session = req.getSession();
-		String chkCode = (String)session.getAttribute("verifyCode");
-		chkCode = chkCode.toUpperCase();
+		
  
         
 		System.out.println("action= " + action + " requestUrl= " + requestUrl);
@@ -633,6 +630,10 @@ public class UsersServlet extends HttpServlet {
 				// send the ErrorPage view.
 				req.setAttribute("errorMsgs", errorMsgs);
 			
+				String inKey = req.getParameter("VerifyPic").toUpperCase();
+				HttpSession session = req.getSession();
+				String chkCode = (String)session.getAttribute("verifyCode");
+				chkCode = chkCode.toUpperCase();
 				
 				UsersService usersSvc = new UsersService();
 				try {
