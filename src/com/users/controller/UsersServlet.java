@@ -350,6 +350,8 @@ public class UsersServlet extends HttpServlet {
 				// Store this set in the request scope, in case we need to
 				// send the ErrorPage view.
 				req.setAttribute("errorMsgs", errorMsgs);
+				List<String> successMsgs = new LinkedList<String>();
+				req.setAttribute("successMsgs", successMsgs);
 				
 				try {
 					/***************************1.接收請求參數****************************************/
@@ -382,6 +384,9 @@ public class UsersServlet extends HttpServlet {
 				// Store this set in the request scope, in case we need to
 				// send the ErrorPage view.
 				req.setAttribute("errorMsgs", errorMsgs);
+				
+				List<String> successMsgs = new LinkedList<String>();
+				req.setAttribute("successMsgs", successMsgs);
 				
 				UsersService usersSvc = new UsersService();
 				
@@ -435,7 +440,8 @@ public class UsersServlet extends HttpServlet {
 					/***************************2.開始新增資料***************************************/
 					usersVO = usersSvc.updateusers(users_id, users_mail, users_pwd, users_status,
 							users_nickname, users_name, users_sex, users_birthday, users_id_number, 
-							users_users_pic, users_phone);		
+							users_users_pic, users_phone);	
+					successMsgs.add("狀態修改成功");
 					/***************************3.新增完成,準備轉交(Send the Success view)***********/
 					usersVO = usersSvc.getOneusers(users_id);
 					req.getSession().setAttribute("usersVO", usersSvc.getOneusers(usersVO.getUsers_id()));
@@ -459,6 +465,9 @@ public class UsersServlet extends HttpServlet {
 				// Store this set in the request scope, in case we need to
 				// send the ErrorPage view.
 				req.setAttribute("errorMsgs", errorMsgs);
+				
+				List<String> successMsgs = new LinkedList<String>();
+				req.setAttribute("successMsgs", successMsgs);
 		
 				UsersService usersSvc = new UsersService();
 				try {
@@ -598,6 +607,7 @@ public class UsersServlet extends HttpServlet {
 					usersVO = usersSvc.updateusers(users_id, users_mail, users_pwd, users_status, 
 							users_nickname, users_name, users_sex, users_birthday, 
 							users_id_number, users_users_pic, users_phone);		
+					successMsgs.add("資料更新成功");
 					//					usersVO = usersSvc.updateusers(usersVO);		
 					/***************************3.新增完成,準備轉交(Send the Success view)***********/
 					usersVO = usersSvc.getOneusers(users_id);
@@ -629,6 +639,9 @@ public class UsersServlet extends HttpServlet {
 				// Store this set in the request scope, in case we need to
 				// send the ErrorPage view.
 				req.setAttribute("errorMsgs", errorMsgs);
+				
+				List<String> successMsgs = new LinkedList<String>();
+				req.setAttribute("successMsgs", successMsgs);
 			
 				String inKey = req.getParameter("VerifyPic").toUpperCase();
 				HttpSession session = req.getSession();
@@ -699,7 +712,8 @@ public class UsersServlet extends HttpServlet {
 					/***************************2.開始新增資料***************************************/
 					usersVO = usersSvc.addusers_new(users_mail, users_pwd, users_status);	
 					usersVO = usersSvc.getOneusers(usersVO.getUsers_id());
-
+					// 加入成功訊息
+					successMsgs.add("註冊成功");
 					/***************************3.新增完成,準備轉交(Send the Success view)***********/
 					req.getSession().invalidate();		
 					req.getSession().setAttribute("usersVO", usersVO);
