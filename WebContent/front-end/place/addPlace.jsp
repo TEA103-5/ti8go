@@ -279,7 +279,7 @@ if(session.getAttribute("usersVO") != null){
                     <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
                     <input type="hidden" name="action" value="insert">
                     <!-- <button id="getGeo_button" type="button" class="btn btn-secondary">取得經緯度及定位</button> -->
-                    <button type="submit" id="submit_btn" class="btn btn-secondary">submit</button>
+                    <button type="submit" id="submit_btn" class="btn btn-secondary">送出</button>
                 </form>
                 <!-- 表單結束 -->
 

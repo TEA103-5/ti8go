@@ -142,7 +142,7 @@
 										<label for="users_phone" class="col-sm-2">電話</label>
 										<div class="col-sm-6">
 											<input class="form-control" type="text" id="users_phone"
-												placeholder="請輸入你的電話號碼..." name="users_phone" size="10" 
+												placeholder="請輸入你的電話號碼..." name="users_phone" maxlength="10" 
 												value="${usersVO.users_phone}">
 										</div>
 									</div>	

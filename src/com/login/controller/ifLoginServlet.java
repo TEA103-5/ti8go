@@ -83,7 +83,8 @@ public class ifLoginServlet extends HttpServlet {
 		
 		
 		
-		
+		List<String> successMsgs = new LinkedList<String>();
+		req.setAttribute("successMsgs", successMsgs);
 		
 		
 		List<String> errorMsgs = new LinkedList<String>();
@@ -103,7 +104,7 @@ public class ifLoginServlet extends HttpServlet {
                res.addCookie(cookie);
 			String uid = req.getParameter("u_id").trim();
 			String pwd = req.getParameter("pwd").trim();
-		
+			
 			
 			SaleVO uVO=null;
 			uVO=lgSrc.usersLogin(uid, pwd);
@@ -206,6 +207,8 @@ public class ifLoginServlet extends HttpServlet {
 			if("users".equals(uVO.getSale_name())) {
 
 				UsersService uSrc=new UsersService();
+				successMsgs.add("登入成功");
+	System.out.println("Login");
 				url="/front-end/index.jsp";
 				req.getSession().setAttribute("usersVO", uSrc.getOneusers(uVO.getSale_id()));
 				
