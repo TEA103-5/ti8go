@@ -106,7 +106,7 @@
 					 
 					<input class="btn btn-info btn-block text-white" @click="send2" type="button" 
 						value="註冊">
-					<input type="hidden" name="requestUrl" 
+					<input type="hidden" name="requestUrl"
 						value="/front-end/users">
 				
 					<input type="hidden" name="action" value="insertUsers">
