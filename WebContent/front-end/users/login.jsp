@@ -100,13 +100,10 @@
 				
 					<img src="<%=request.getContextPath()%>/VerifyPic" id="verify-pic" 
 							class="float-left"/>
-<<<<<<< HEAD
-					
-					<input type="text" maxlength="4" name="VerifyPic" 
-=======
+
 			
 					<input type="text" maxlength="4" name="VerifyPic"  v-model="VerifyPic"
->>>>>>> bd8d480654d84497e8f8182f1e0e7ab1c914b69d
+
 					class="form-control col-3" placeholder="驗證碼" > 
 					 
 					<input class="btn btn-info btn-block text-white" @click="send2" type="button" 
