@@ -169,7 +169,7 @@ public class ProductDAO implements ProductDAO_Interface{
      public void delete(Integer product_id) {
 		 Connection con = null;
 			PreparedStatement pstmt = null;
-			System.out.println("13123123123123");
+
 			try {
 				con = ds.getConnection();
 				pstmt = con.prepareStatement(DELETE);

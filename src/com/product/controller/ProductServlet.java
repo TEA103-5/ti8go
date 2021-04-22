@@ -56,7 +56,7 @@ public class ProductServlet extends HttpServlet {
 //		PrintWriter out = res.getWriter();
 //		JSONObject resultJSON = new JSONObject(result);
 //		out.println(resultJSON);
-System.out.println("131351351535");
+
 		if ("deleteajax".equals(action)) { // 來自listAllEmp.jsp 或 /dept/listEmps_ByDeptno.jsp的請求
 			HashMap result = new HashMap();
 			PrintWriter out = res.getWriter();
@@ -66,7 +66,7 @@ System.out.println("131351351535");
 				/*************************** 2.開始刪除資料 ***************************************/
 				ProductService empSvc = new ProductService();
 				ProductVO empVO = empSvc.getOneProduct(empno);
-				System.out.println("1455fgdf5gdfg51fdg456");
+
 				empSvc.deleteProduct(empno);
 				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
 				result.put("res", "刪除成功");
