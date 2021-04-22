@@ -4,8 +4,14 @@
 <%@ page import="com.users.model.*"%>
 <%@ page import="com.users.controller.*"%>
 <%@ page import="java.util.*"%>
-
-
+<% 
+UsersVO usersVO = (UsersVO) session.getAttribute("usersVO");
+if (usersVO != null) {
+		session.setAttribute("location", request.getRequestURI());
+		response.sendRedirect(request.getContextPath()+"/front-end/users/account.jsp");   //*工作2 : 請該user去登入網頁(login.html) , 進行登入
+	    return;
+	}
+%>
 <!DOCTYPE html>
 <html>
 
