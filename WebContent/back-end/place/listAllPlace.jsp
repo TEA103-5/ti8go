@@ -322,9 +322,11 @@
 		          if(data.result == "state_off"){
 		        	  that.closest("tr").find(".place_state_text").text("審核中")
 		        	  that.val("上架")
+		        	  swal("地點下架成功", "已下架地點", "success")
 		          }else if(data.result == "state_on"){
 		        	  that.closest("tr").find(".place_state_text").text("上架中")
 		        	  that.val("下架")
+		        	  swal("地點上架成功", "已上架地點", "success")
 		          }
 		          
 		        }
