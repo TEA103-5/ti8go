@@ -37,9 +37,9 @@ public class ProductDAO implements ProductDAO_Interface{
 	private static final String GET_ONE_STMT = 
 			"SELECT product_id ,PRODUCT_Name,PRODUCT_Status,PRODUCT_Content,PRODUCT_Description,PRODUCT_Categories,PRODUCT_Price,PRODUCT_Stock,sale_id,product_update_time FROM PRODUCT where product_id = ? ";
 	private static final String GET_ALL_STMT = 
-			"SELECT product_id,PRODUCT_Name,PRODUCT_Status,PRODUCT_Content,PRODUCT_Description,PRODUCT_Categories,PRODUCT_Price,PRODUCT_Stock,sale_id,product_update_time FROM PRODUCT where PRODUCT_Status=1";
+			"SELECT product_id,PRODUCT_Name,PRODUCT_Status,PRODUCT_Content,PRODUCT_Description,PRODUCT_Categories,PRODUCT_Price,PRODUCT_Stock,sale_id,product_update_time FROM PRODUCT where PRODUCT_rate=0 and PRODUCT_Status=1";
 	private static final String UPDATE = 
-			"UPDATE PRODUCT set PRODUCT_Name=?,PRODUCT_Status=?,PRODUCT_Content=?,PRODUCT_Description=?,PRODUCT_Categories=?,PRODUCT_Price=?,PRODUCT_Stock=?  where product_id = ?";
+			"UPDATE PRODUCT set PRODUCT_Name=?,PRODUCT_Status=?,PRODUCT_Content=?,PRODUCT_Description=?,PRODUCT_Categories=?,PRODUCT_Price=?,PRODUCT_Stock=?,PRODUCT_rate=?   where product_id = ?";
 	private static final String DELETE = 
 			"UPDATE  PRODUCT set PRODUCT_Status=0 where product_id = ?";
 //	private static final String DELETE = 
@@ -140,8 +140,10 @@ public class ProductDAO implements ProductDAO_Interface{
 				pstmt.setString(5, productVO.getProduct_categories());
 				pstmt.setInt(6, productVO.getProduct_price());
 				pstmt.setInt(7, productVO.getProduct_stock());
+				System.out.println(productVO.getProduct_rate());
+				pstmt.setInt(8, productVO.getProduct_rate());
 				
-				pstmt.setInt(8, productVO.getProduct_id());
+				pstmt.setInt(9, productVO.getProduct_id());
 				
 				pstmt.executeUpdate();
 			}catch (SQLException se) {

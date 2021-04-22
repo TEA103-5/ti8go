@@ -195,6 +195,8 @@ public class ProductServlet extends HttpServlet {
 				Integer pric = new Integer(req.getParameter("pPrice").trim());
 				Integer stoc = new Integer(req.getParameter("pStock").trim());
 				Integer saleid = new Integer(req.getParameter("pSaleId").trim());
+				Integer product_rate = new Integer(req.getParameter("product_rate").trim());
+				//System.out.println(product_rate);
 				String name = req.getParameter("pName");
 				String cont = req.getParameter("pContent");
 				String desc = req.getParameter("pDescription");
@@ -209,6 +211,7 @@ public class ProductServlet extends HttpServlet {
 				prodVO.setProduct_content(cont);
 				prodVO.setProduct_description(desc);
 				prodVO.setProduct_categories(cate);
+				prodVO.setProduct_rate(product_rate);
 
 //				String picc = null;
 //				picc = req.getParameter("picc");
@@ -239,7 +242,7 @@ public class ProductServlet extends HttpServlet {
 
 				/*************************** 2.開始修改資料 *****************************************/
 
-				prodVO = prodSvc.updateProduct(name, stat, cont, desc, cate, pric, stoc, prodid);
+				prodVO = prodSvc.updateProduct(name, stat, cont, desc, cate, pric, stoc, prodid,product_rate);
 				result.put("res", "成功");
 				JSONObject resultJSON = new JSONObject(result);
 				out.println(resultJSON);
@@ -414,7 +417,7 @@ public class ProductServlet extends HttpServlet {
 
 				/*************************** 2.開始修改資料 *****************************************/
 				ProductService prodSvc = new ProductService();
-				prodVO = prodSvc.updateProduct(name, stat, cont, desc, cate, pric, stoc, prodid);
+				prodVO = prodSvc.updateProduct(name, stat, cont, desc, cate, pric, stoc, prodid,0);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				SaleService saleSvc = new SaleService();

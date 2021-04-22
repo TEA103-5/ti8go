@@ -119,7 +119,7 @@
 															<label for="first_name"><strong>連絡電話</strong></label> <input
 																class="form-control" type="text" id="phone"
 																placeholder="必填" name="phone"
-																value="${(saleVO==null)? '' : saleVO.sale_phone}">
+																value="updatelist.product_rate">
 														</div>
 													</div>
 													<div class="col">

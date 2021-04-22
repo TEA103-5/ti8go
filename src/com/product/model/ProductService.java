@@ -52,7 +52,7 @@ public class ProductService {
 	
 	public ProductVO updateProduct(String product_name,Integer product_status,String product_content,String product_description
 			,String product_categories,Integer product_price,Integer product_stock
-			,Integer product_id) {
+			,Integer product_id,Integer product_rate) {
 		ProductVO productVO=new ProductVO();
 		productVO.setProduct_name(product_name);
 		productVO.setProduct_status(product_status);
@@ -62,6 +62,7 @@ public class ProductService {
 		productVO.setProduct_price(product_price);
 		productVO.setProduct_stock(product_stock);
 		productVO.setProduct_id(product_id);
+		productVO.setProduct_rate(product_rate);
 		
 		dao.update(productVO);
 		return productVO;
