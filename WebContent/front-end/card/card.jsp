@@ -133,19 +133,22 @@
 	
 	</div>
 	</main>
-	<script type="text/javascript">
-// 	var btn_up = document.getElementById("btu_update");
-// 	btn_up.onclick = function() {
-// 		console.log("TEST");
-// // 		document.getElementsByClassName("card_td_2").setAttribute("type","text");
-// 		document.getElementsByClassName("card_up1").type = "text";
-// 	};
+	<!-- 	以下是自己加入的js -->
+	<script src="https://unpkg.com/sweetalert@2.1.2/dist/sweetalert.min.js"></script>
 	
-	$("#btu_update").on("click", function() {
-		$(".card_up_btn").attr("type", "submit");
-		$("#btu_update").hide();
-		$(".card_up").attr("type" , "text");
-	})
+<!-- 	此script是將成功訊息跟錯誤訊息印出來 -->
+	<script>
+		<c:if test="${not empty successMsgs}">
+				<c:forEach var="message" items="${successMsgs}" >
+					swal("成功","${message}", "success")
+				</c:forEach>
+		</c:if>
+		
+		<c:if test="${not empty errorMsgs}">
+			<c:forEach var="message" items="${errorMsgs}" >
+				swal("失敗","${message}", "error")
+			</c:forEach>
+		</c:if>	
 	</script>
 </body>
 </html>
