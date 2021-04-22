@@ -58,7 +58,7 @@
 						<div class="col-sm-6">
 
 							<input type="text" class="form-control" id="users_name" name="users_name" size="30"
-								placeholder="請輸入你的姓名..." 
+								placeholder="請輸入你的姓名..." maxlength="30"
 								value="${usersVO.users_name}">
 								
 						</div>
@@ -80,7 +80,7 @@
 						<label for="users_nickname" class="col-sm-2">會員暱稱</label>
 						<div class="col-sm-6">
 							<input type="text" class="form-control" id="users_nickname" name="users_nickname" 
-								size="10" placeholder="請輸入你的暱稱..." 
+								size="10" placeholder="請輸入你的暱稱..." maxlength="10"
 								value="${usersVO.users_nickname}">
 						</div>
 					</div>	
@@ -123,7 +123,7 @@
 						<div class="col-sm-6">
 							<input class="form-control" type="text" id="users_id_number"
 								placeholder="請輸入你的身分證號碼..." name="users_id_number" size="10"
-								value="${usersVO.users_id_number}">
+								value="${usersVO.users_id_number}" maxlength="10">
 						</div>
 					</div>	
 					<div class="form-group form-row">
@@ -178,6 +178,23 @@
 
 	    reader.readAsDataURL(file);
 	}
+	</script>
+	<!-- 	以下是自己加入的js -->
+	<script src="https://unpkg.com/sweetalert@2.1.2/dist/sweetalert.min.js"></script>
+	
+<!-- 	此script是將成功訊息跟錯誤訊息印出來 -->
+	<script>
+		<c:if test="${not empty successMsgs}">
+				<c:forEach var="message" items="${successMsgs}" >
+					swal("成功","${message}", "success")
+				</c:forEach>
+		</c:if>
+		
+		<c:if test="${not empty errorMsgs}">
+			<c:forEach var="message" items="${errorMsgs}" >
+				swal("失敗","${message}", "error")
+			</c:forEach>
+		</c:if>	
 	</script>
 </body>
 </html>
