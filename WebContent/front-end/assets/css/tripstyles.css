@@ -227,6 +227,10 @@ body {
 }
 
 
+@keyframes animate-background{
+	from{	background-position: -4000% 70px,0px 0px,0px 0px;}
+	to{	background-position: 10% 70px,-1000px 0px,-50px 0px;}
+}
 
 .white_content2 {
 	display: none;
@@ -363,6 +367,10 @@ border-radius: 1rem;
 	z-index:1;
 	transition: 0.5s;
 }
+
+
+
+
 .containar .cerd .box .content a{
     position:relative;
     display: inline-block;

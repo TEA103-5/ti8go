@@ -37,6 +37,31 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
     <title>addTrip</title>
      <%@ include file="/front-end/pages/links.html" %> 
 <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/assets/css/tripstyles.css">
+<style type="text/css">
+.fadee{
+
+	height: 100vh;
+	margin:0 auto;
+	background-color:#000;
+	background-image:url("../assets/img/moon.png"),url("../assets/img/star.png"),url("../assets/img/star2.png");
+	background-position: 120% 70px, 0px 0px, 0px 0px;
+	background-reprat:no-repeat, repeat, repeat;
+	animation:animate-background linear 50s infinite;
+	z-index:25000;
+	display:block;
+	
+	position: absolute;
+	top: 0%;
+	left: 0%;
+	width: 100%;
+
+
+
+	-moz-opacity: 1;
+	opacity: 1;
+	filter: alpha(opacity = 100);
+}
+</style>
 </head>
 
 <body>
@@ -44,7 +69,8 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 <!--  <button @click="setCookie('ABA','10',1)">set</button> -->
 <!--  <button @click="getCookie('peter')">get</button> -->
     <main id="app" class="page glass">
-     <div id="fade1" v-if="loadshow" class="black_overlay" style="z-index:20000;display:block; min-height: 100%;min-weight: 100%;">
+     <div id="fade1" class="fadee" v-if="loadshow" >
+     <img src="<%=request.getContextPath()%>/front-end/assets/img/fly.png" alt="rocket" style="height:4rem;margin:200px 0px 0px 40%;">
     </div>
         <FORM id="from1" METHOD="post" ACTION="<%=request.getContextPath()%>/users/users.do" > 							       
 									       <input type="hidden" name="users_id" value="${usersVO.users_id}">
