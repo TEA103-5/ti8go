@@ -84,4 +84,8 @@ public class OrderService {
 		return dao.getOrderByUsersId(users_id);
 	}
 
+	
+	public List<OrderVO> getOrderByUsers(Integer users_id){
+		return dao.getOrderByUsers(users_id);
+	}
 }

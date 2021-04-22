@@ -43,6 +43,35 @@ public class OrderServlet extends HttpServlet {
 		String action = req.getParameter("action");
 
 		
+		if ("listOrderByUsersId".equals(action)) {
+			
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			try {
+				/*************************** 1.接收請求參數 ****************************************/
+				Integer users_id=null;
+				if(req.getParameter("users_id")!=null) {
+					users_id = new Integer(req.getParameter("users_id"));
+				}
+				
+				/*************************** 2.開始查詢資料 ****************************************/
+				OrderService uSvc = new OrderService();
+				List<OrderVO> set = uSvc.getOrderByUsers(users_id);
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+				req.setAttribute("listOrdByUsers_id", set);    // 資料庫取出的set物件,存入request
+			
+				String url = null;
+				url =  "/front-end/order/listAllOrderByUsersId.jsp";  
+				
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+				
+				/*************************** 其他可能的錯誤處理 ***********************************/
+			} catch (Exception e) {
+				throw new ServletException(e);
+			}
+		}
+		
 		if ("listOrderBySaleId".equals(action)) {
 			String url = null;
 			url =  "/sale-end/order/listAllProductBySale.jsp";  

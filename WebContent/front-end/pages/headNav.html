@@ -73,9 +73,9 @@
 								
 												<c:if test="${not empty usersVO}">								
 								<a class="dropdown-item" href="#" onclick="document.getElementById('from2').submit()">查看訂單</a>
-								     <FORM id="from2" METHOD="post" ACTION="<%=request.getContextPath()%>/trip/trip.do" > 							       
+								     <FORM id="from2" METHOD="post" ACTION="<%=request.getContextPath()%>/Order/Order.do" > 							       
 									       <input type="hidden" name="users_id" value="${usersVO.users_id}">
-									       <input type="hidden" name="action" value="listTrip_ByUsers_A">
+									       <input type="hidden" name="action" value="listOrderByUsersId">
 									     </FORM>
 								</c:if>
 								

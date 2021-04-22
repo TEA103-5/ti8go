@@ -22,5 +22,7 @@ public interface OrderDAO_Interface {
 	public OrderVO findByTime(OrderVO ovo);
 	
 	 public Set<OrderVO>getOrderByUsersId(Integer u_id);
+	 
+	 public List<OrderVO> getOrderByUsers(Integer users_id);
 
 }
