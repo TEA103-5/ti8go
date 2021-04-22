@@ -99,7 +99,7 @@
 				
 					<img src="<%=request.getContextPath()%>/VerifyPic" id="verify-pic" 
 							class="float-left"/>
-				
+					
 					<input type="text" maxlength="4" name="VerifyPic" 
 					class="form-control col-3" placeholder="驗證碼" > 
 					 
