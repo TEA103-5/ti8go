@@ -43,6 +43,7 @@
     <url-pattern>/front-end/place/place_add.html</url-pattern>
     <url-pattern>/front-end/place/update_place_input.jsp</url-pattern>
     <url-pattern>/front-end/place_collect/listMyPlace_collect.jsp</url-pattern>
+    <url-pattern>/front-end/notefront/listMyNote.jsp</url-pattern>
     <dispatcher>REQUEST</dispatcher>
     <dispatcher>FORWARD</dispatcher>
     <dispatcher>INCLUDE</dispatcher>

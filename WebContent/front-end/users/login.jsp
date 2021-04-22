@@ -97,15 +97,21 @@
 					</div>
 				</div>
 				
+				
 					<img src="<%=request.getContextPath()%>/VerifyPic" id="verify-pic" 
 							class="float-left"/>
+<<<<<<< HEAD
 					
 					<input type="text" maxlength="4" name="VerifyPic" 
+=======
+			
+					<input type="text" maxlength="4" name="VerifyPic"  v-model="VerifyPic"
+>>>>>>> bd8d480654d84497e8f8182f1e0e7ab1c914b69d
 					class="form-control col-3" placeholder="驗證碼" > 
 					 
 					<input class="btn btn-info btn-block text-white" @click="send2" type="button" 
 						value="註冊">
-					<input type="hidden" name="requestUrl" 
+					<input type="hidden" name="requestUrl"
 						value="/front-end/users">
 				
 					<input type="hidden" name="action" value="insertUsers">
@@ -133,6 +139,7 @@
 		var app = new Vue({
 			el : '#app',
 			data : {
+				VerifyPic:'',
 				account : '',
 				password : '',
 				account1 : '',
@@ -186,7 +193,14 @@
 			send2 : function() {
 				if (this.account1 !== '' && this.password1 !== '') {
 					if (this.password1 == this.repassword1) {
+					
+// 						if(this.VerifyPic=='${VerifyPic}'){
 						$("#form2").submit();
+							
+// 						}else{
+// 							alert('驗證碼有問題')							
+// 						}
+						
 					} else {
 						alert('請確認密碼')
 					}

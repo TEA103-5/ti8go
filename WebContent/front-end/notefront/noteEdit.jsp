@@ -102,7 +102,7 @@
   <br>
 <input type="hidden" name="action" value="insert">
 <input type="hidden" name="note_classid" value="1">
-<input type="hidden" name="trip_id" value="1">
+<input type="hidden" name="trip_id" value="${(tripVO==null)?1:(tripVO.trip_id)}">
 <!-- classid預設1 -->
 <input type="hidden" name="users_id" value="${users_id}">
 <input type="hidden" name="note_like" value="0">
