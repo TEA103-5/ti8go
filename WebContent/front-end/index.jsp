@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
+<%@ page import="com.users.model.*"%>
+<%@ page import="com.users.controller.*"%>
+<% 
+UsersVO usersVO = (UsersVO) session.getAttribute("usersVO");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,7 +48,9 @@
     						<h2>01</h2>
     						<h3>會員</h3>
     						<p>成為會員,享受我們提供的專業服務</p>
-    						<a href="<%=request.getContextPath()%>/front-end/users/login.jsp">成為會員</a>
+    						<a href="<%=request.getContextPath()%>/front-end/users/login.jsp">
+    						<%= (usersVO==null)? "成為會員" : "會員資料"%>
+    						</a>
     				</div>	
     			</div>
           </div>
