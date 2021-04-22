@@ -196,7 +196,7 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 								 @dragstart="dragStart($event,index,inde)" @dragover="allowDrop"  @drop="drop2($event,index,inde)">
 							
 									<td>
-								<img class="img" id="preimg"
+								<img class="img" id="preimg" style="width: 4rem;height:4rem;"
 									v-bind:src="item.place_pic" />
 									</td>
 									<td>	
@@ -748,7 +748,7 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 			
 				let data={
 						action:'updateDay',
-						day:self.daylist.length+1,
+						day:self.daylist.length,
 						trip_id:self.addtrip.trip_id,
 						read_authority:self.addtrip.read_authority,
 				}
@@ -1018,7 +1018,7 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 	    mounted: function(){//類似ini或onload	
 	         setTimeout(() => {
 	        		document.getElementById('fade1').style.display='none';
-	         },1500)
+	         },1)
 	     
 	    	let self=this;
 	    	$('#f_date3').val(this.addtrip.trip_start);
