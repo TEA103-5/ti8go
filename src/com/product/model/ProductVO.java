@@ -14,7 +14,14 @@ public class ProductVO implements java.io.Serializable{
 	private Integer product_stock;//庫存
 	private byte[] product_pic;
 	private Integer sale_id;
+	private Integer product_rate;
 
+	public Integer getProduct_rate() {
+		return product_rate;
+	}
+	public void setProduct_rate(Integer product_rate) {
+		this.product_rate = product_rate;
+	}
 	public Integer getProduct_id() {
 		return product_id;
 	}

@@ -52,7 +52,7 @@
 								<td><img class="img" id="preimg"
 									v-bind:src="item.productSrc" /></td>
 								<td>{{item.productName}}</td>
-								<td>{{item.productStatus}}</td>
+								<td>{{item.product_sstatus}}</td>
 								
 								
 								
@@ -88,9 +88,21 @@
 						<img class="img" id="preimg" onclick="$('input[id=file1]').click();" v-bind:src="updatelist.pSrc" />
 						<input type="file" id="file1" style="display: none" ref="file" @change="uploadFile" name="file">
 						</div>
+						
+						</br>
+									<div class="custom-control custom-switch">
+												<input class="custom-control-input" type="checkbox" v-model="updatelist.product_rate"
+													id="formCheck-1"><label
+													class="custom-control-label" for="formCheck-1"><strong>商品狀態</strong></label>
+											</div>
+											
 						</br>
 						<input placeholder="商品名稱 :" type="text" name="pname" v-model="updatelist.pName" value="123"> <br /> 
-						<input placeholder="商品狀態 :" type="text" v-model="updatelist.pStatus"><br />
+<!-- 						<input placeholder="商品狀態 :" type="text" v-model="updatelist.product_rate"><br /> -->
+						
+						
+						
+						
 					    <input placeholder="商品內容 :" type="text" v-model="updatelist.pContent"><br /> 
 					    <input placeholder="商品描述 :" type="text" v-model="updatelist.pDescription"><br />
 						<input placeholder="商品分類 :" type="text" v-model="updatelist.pCategories"><br />
@@ -163,6 +175,7 @@ var vm = new Vue({
         	pContent:'',
         	pDescription:'',
         	pCategories:'',
+        	product_rate:true,
         	pPrice:'',
         	pStock:'',
         	pSaleId:'${saleVO.sale_id}'
@@ -174,11 +187,15 @@ var vm = new Vue({
         		productId:'${empVO.product_id}',
         		productSrc:'<%=request.getContextPath()%>/DBGifReader4_1?id=${empVO.product_id}&id2=p',
         		productStatus:'${empVO.product_status}',
+        		
         		productContent:'${empVO.product_content}',
 				productDescription:'${empVO.product_description}',
 				productCategories:'${empVO.product_categories}',
 				productPrice:'${empVO.product_price}',
 				productStock:'${empVO.product_stock}',
+				product_rate:${(empVO.product_rate==0)? true : false},
+				product_sstatus:"${(empVO.product_rate==0)? '上架中' : '下架'}",
+				
 				productCreateTime:'<fmt:formatDate value="${empVO.product_update_time}"
 					pattern="yyyy-MM-dd" />',
 				productSale:'<c:forEach var="deptVO" items="${deptSvc.all}"><c:if test="${empVO.sale_id==deptVO.sale_id}">${deptVO.sale_id}【${deptVO.sale_name} - ${deptVO.sale_phone}】</c:if></c:forEach>',
@@ -207,6 +224,7 @@ var vm = new Vue({
         	this.updatelist.pContent=this.list[index].productContent;
         	this.updatelist.pCategories=this.list[index].productCategories;
         	this.updatelist.pDescription=this.list[index].productDescription;
+        	this.updatelist.product_rate=this.list[index].product_rate;
         	this.updatelist.index=index;
         	this.isshow=true;
 
@@ -214,6 +232,13 @@ var vm = new Vue({
         update(){
         	 let self=this;
         	 if(this.updatelist.action=='updateajax'){
+        		 console.log(this.updatelist.product_rate);
+        		 if(this.updatelist.product_rate==true){
+        			 this.updatelist.product_rate=0;
+        		 }else{
+        			 this.updatelist.product_rate=1;
+        		 }
+           		 console.log(this.updatelist.product_rate);
 		if((this.updatelist.pSrc!=this.list[this.updatelist.index].productSrc)&&(this.dataU.get('upfile1')!='')){
 			this.list[this.updatelist.index].productSrc=this.updatelist.pSrc;
 		      axios.post("<%=request.getContextPath()%>/product/prod.do", self.dataU)
@@ -238,12 +263,21 @@ var vm = new Vue({
 		          
 		        }
 		    });
+			
+			if(this.updatelist.product_rate==1){
+				this.list[this.updatelist.index].product_sstatus='下架';
+				this.list[this.updatelist.index].product_rate=false;
+			}else{
+				this.list[this.updatelist.index].product_sstatus='上架中';
+				this.list[this.updatelist.index].product_rate=true;
+			}
         	this.list[this.updatelist.index].productPrice=this.updatelist.pPrice;
         	this.list[this.updatelist.index].productStock=this.updatelist.pStock;
         	this.list[this.updatelist.index].productName=this.updatelist.pName;
         	this.list[this.updatelist.index].productStatus=this.updatelist.pStatus;
         	this.list[this.updatelist.index].productContent=this.updatelist.pContent;
         	this.list[this.updatelist.index].productCategories=this.updatelist.pCategories;
+        	this.list[this.updatelist.index].productDescription=this.updatelist.pDescription;
         	this.list[this.updatelist.index].productDescription=this.updatelist.pDescription;
         	 }else{
               self.dataU.set('deptno',this.updatelist.pSaleId);

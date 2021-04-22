@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <nav
 	class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-secondary p-0">
 	<div class="container-fluid d-flex flex-column p-0">
@@ -23,8 +24,10 @@
 			<li class="nav-item"><a class="nav-link"
 				href="<%=request.getContextPath()%>/sale-end/sale/updateSale.jsp"><i
 					class="fas fa-user"></i><span>個人資料設定</span></a></li>
-			<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/sale-end/product/listProductsBySale.jsp"><i
-					class="fas fa-window-maximize"></i><span>我的商品</span></a></li>
+<!-- 			<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/sale-end/product/listProductsBySale.jsp"><i -->
+<!-- 					class="fas fa-window-maximize"></i><span>我的商品</span></a></li> -->
+			
+			<c:if test="${not empty saleVO}">	
 			<li class="nav-item"><a class="nav-link"  onclick="document.getElementById('from2').submit()"><i
 					class="fas fa-window-maximize"></i><span>我的訂單</span></a></li>
 								     <FORM id="from2" METHOD="post" ACTION="<%=request.getContextPath()%>/Order/Order.do" > 							       
@@ -32,7 +35,7 @@
 									       <input type="hidden" name="action" value="listOrderBySaleId">
 									     </FORM>
 									     
-									     
+									     	</c:if>
 		<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/front-end/order/addOrder.jsp"><i
 					class="fas fa-window-maximize"></i><span>前端商城</span></a></li>							     
 		</ul>
