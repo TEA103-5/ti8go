@@ -11,7 +11,7 @@
 <head>
 <title>販售者商品明細 - listProductsBySaleid.jsp</title>
 <%@ include file="/sale-end/pages/link.html"%>
-<link rel="stylesheet" href="/TEA103G5/sale-end/assets/css/styles.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/sale-end/assets/css/styles.css">
 </head>
 
 <body id="page-top">
