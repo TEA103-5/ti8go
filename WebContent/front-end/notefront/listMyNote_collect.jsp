@@ -1,14 +1,17 @@
 <%@page import="java.util.*"%>
 <%@page import="com.note.model.*"%>
 <%@page import="com.notec.model.*"%>
+<%@page import="com.users.model.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.note_collect.model.*"%>
 
 <%
 
+Integer login_users = ( (UsersVO)session.getAttribute("usersVO") ).getUsers_id();
+
 // session.setAttribute("users_id", 1);  //  測試用
-	Integer login_users = (Integer)session.getAttribute("users_id");
+// 	Integer login_users = (Integer)session.getAttribute("users_id");
 
 	Note_collectService note_collectSvc = new Note_collectService();
 	List<Note_collectVO> list = note_collectSvc.getAllByPrimaryKey(login_users);
