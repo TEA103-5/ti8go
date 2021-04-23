@@ -48,8 +48,8 @@ let map;
 let markers = [];
 
 // -----------------0415新增
-let self_lat;
-let self_lng;
+let self_lat = 25.052052;
+let self_lng = 121.543220;
 let self_marker;
 
 let directionsService; //用來儲存路線服務
@@ -61,43 +61,43 @@ let route_destination; // 用來擺放路線終點經緯度
 let route_markers = []
 let route_infowindows = []
 
-if (navigator.geolocation) {
-    // 執行要權限的function , 非https無法取得使用者位置, 如失敗先將地點定位在教室
-
-    // 使用者不提供權限，或是發生其它錯誤
-    function error() {
-//        console.log('無法取得你的位置');
-        self_lat = 25.052052;
-        self_lng = 121.543220;
-        
-        initMap();
-    }
-
-    // 使用者允許抓目前位置，回傳經緯度
-    function success(position) {
-        console.log(position.coords.latitude, position.coords.longitude);
-        self_lat = position.coords.latitude
-        self_lng = position.coords.longitude
-
-        route_origin = { lat: self_lat, lng: self_lng }; // 定義路線起點經緯度
-        
-//        有可能會不準確,先寫死
-        self_lat = 25.052052;
-        self_lng = 121.543220;
-        
-        initMap();
-    }
-
-    // 跟使用者拿所在位置的權限
-    navigator.geolocation.getCurrentPosition(success, error);
-
-} else {
-    console.log("不支援取得位置");
-    self_lat = 25.052052;
-    self_lng = 121.543220;
-    
-    initMap();
-}
+//if (navigator.geolocation) {
+//    // 執行要權限的function , 非https無法取得使用者位置, 如失敗先將地點定位在教室
+//
+//    // 使用者不提供權限，或是發生其它錯誤
+//    function error() {
+////        console.log('無法取得你的位置');
+//        self_lat = 25.052052;
+//        self_lng = 121.543220;
+//        
+//        initMap();
+//    }
+//
+//    // 使用者允許抓目前位置，回傳經緯度
+//    function success(position) {
+//        console.log(position.coords.latitude, position.coords.longitude);
+//        self_lat = position.coords.latitude
+//        self_lng = position.coords.longitude
+//
+//        route_origin = { lat: self_lat, lng: self_lng }; // 定義路線起點經緯度
+//        
+////        有可能會不準確,先寫死
+//        self_lat = 25.052052;
+//        self_lng = 121.543220;
+//        
+//        initMap();
+//    }
+//
+//    // 跟使用者拿所在位置的權限
+//    navigator.geolocation.getCurrentPosition(success, error);
+//
+//} else {
+//    console.log("不支援取得位置");
+//    self_lat = 25.052052;
+//    self_lng = 121.543220;
+//    
+//    initMap();
+//}
 // -----------------0415新增
 
 
