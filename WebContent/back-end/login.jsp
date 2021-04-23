@@ -33,12 +33,12 @@ if (session.getAttribute("adminsVO") != null) {
                         <div class="row">
                             <div class="col-lg-6 d-none d-lg-flex">
                                 <div class="flex-grow-1 bg-login-image"
-                                    style="background-image: url(&quot;assets/img/dogs/image3.jpeg&quot;);"></div>
+                                    style="background-image: url(<%=request.getContextPath()%>/place/DBGifReader4.do);"></div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h4 class="text-dark mb-4">歡迎回來!</h4>
+                                        <h4 class="text-dark mb-4">Tivago管理者登入</h4>
                                     </div>
                                     <form class="user" id="login_form">
                                         <div class="form-group"><input class="form-control form-control-user"
@@ -147,7 +147,7 @@ if (session.getAttribute("adminsVO") != null) {
                             if(data.location){
                             	redirect_target = data.location ;
                             }else{
-                        		redirect_target = "<%=request.getContextPath()%>/back-end/admins/listAllAdmins.jsp" ;
+                        		redirect_target = "<%=request.getContextPath()%>/back-end/place/listAllPlace.jsp" ;
                             }
                             if (data.result == "login_success") {
 

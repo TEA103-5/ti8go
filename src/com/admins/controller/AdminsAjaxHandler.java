@@ -123,7 +123,7 @@ public class AdminsAjaxHandler extends HttpServlet {
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 			String admins_email = req.getParameter("admins_email").trim();
 			
-System.out.println("輸入的信箱=" + admins_email);
+//System.out.println("輸入的信箱=" + admins_email);
 			
 			/*************************** 2.開始查詢資料 *****************************************/
 			AdminsService adminsSvc = new AdminsService();
@@ -144,16 +144,16 @@ System.out.println("輸入的信箱=" + admins_email);
 				return;
 			}
 			
-System.out.println( "符合的信箱=" + adminsVO.getAdmins_email());
+//System.out.println( "符合的信箱=" + adminsVO.getAdmins_email());
 			
 			Integer admins_id = adminsVO.getAdmins_id();
 			admins_email = adminsVO.getAdmins_email();
 			String admins_name = adminsVO.getAdmins_name();
 			
-System.out.println("舊密碼=" + adminsVO.getAdmins_password());
+//System.out.println("舊密碼=" + adminsVO.getAdmins_password());
 			TokenProcessor tokenProcessor = TokenProcessor.getInstance();
 			String admins_password = tokenProcessor.makeToken();
-System.out.println("新密碼=" + admins_password);
+//System.out.println("新密碼=" + admins_password);
 			
 			//String admins_password = adminsVO.getAdmins_password();
 			Integer admins_sex = adminsVO.getAdmins_sex();
@@ -190,7 +190,7 @@ System.out.println("新密碼=" + admins_password);
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				String users_email = req.getParameter("users_email").trim();
 				
-		System.out.println("輸入的信箱= " + users_email);
+//		System.out.println("輸入的信箱= " + users_email);
 				
 				/*************************** 2.開始查詢資料 *****************************************/
 				UsersService usersSvc = new UsersService();
@@ -211,16 +211,16 @@ System.out.println("新密碼=" + admins_password);
 					return;
 				}
 				
-		System.out.println( "符合的信箱= " + usersVO.getUsers_mail());
+//		System.out.println( "符合的信箱= " + usersVO.getUsers_mail());
 				
 				Integer users_id = usersVO.getUsers_id();
 				users_email = usersVO.getUsers_mail();
 				String users_name = usersVO.getUsers_name();
 				
-		System.out.println("舊密碼= " + usersVO.getUsers_pwd());
+//		System.out.println("舊密碼= " + usersVO.getUsers_pwd());
 				TokenProcessor tokenProcessor = TokenProcessor.getInstance();
 				String new_password = tokenProcessor.makeToken();
-		System.out.println("新密碼= " + new_password);
+//		System.out.println("新密碼= " + new_password);
 				
 				//String admins_password = adminsVO.getAdmins_password();
 				Integer users_status = 1;
