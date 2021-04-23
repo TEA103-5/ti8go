@@ -190,8 +190,9 @@ function addMarker(n) {
 
                 let card_container = $("#card-container");
                 let card_total_height = 0;
+             // height()沒有計算到card的上下各1px的border ,補上 
                 for (let k = 0; k < i; k++) {
-                    card_total_height += $("div.card").eq(k).height();
+                    card_total_height += $("div.card").eq(k).height() + 2;
                 };
 
                 card_container.animate({

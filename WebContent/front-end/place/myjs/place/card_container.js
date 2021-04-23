@@ -10,17 +10,18 @@ $(function () {
         // let id = $(this).attr("data-id");
         // console.log(id)
         let card_index = $(this).index("div.card");
-//   console.log($(this).offsetHeight)
-//   console.log("第" + card_index + "個card")
+  console.log($(this).offset().top)
+  console.log("第" + card_index + "個card")
 
         let card_container = $("#card-container");
         let card_total_height = 0;
-
+        
+        // height()沒有計算到card的上下各1px的border ,補上 
         for (let i = 0; i < card_index; i++) {
-            card_total_height += $("div.card").eq(i).height();
+            card_total_height += $("div.card").eq(i).height() + 2;
         };
 
-//     console.log("card距離頂端總長度為" + card_total_height);
+  console.log("card距離頂端總長度為" + card_total_height);
 
 
 
