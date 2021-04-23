@@ -49,7 +49,7 @@
 							<tbody>
 							<tr v-for="(item, index) in list">
 								<td>{{item.productId}}</td>
-								<td><img class="img" id="preimg"
+								<td><img class="img" id="preimg" 
 									v-bind:src="item.productSrc" /></td>
 								<td>{{item.productName}}</td>
 								<td>{{item.product_sstatus}}</td>
