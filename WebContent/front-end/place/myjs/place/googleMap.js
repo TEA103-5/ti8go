@@ -197,7 +197,7 @@ function addMarker(n) {
                 card_container.animate({
                     // scrollTop: ((id - 1) * 416.75)
                     scrollTop: card_total_height
-                }, 800);
+                }, 1500);
 
 
                 // 將地圖中心移動到點擊的該游標上
@@ -338,17 +338,17 @@ function call_weather_api(district) {
         // data: "資料",               // 傳送資料到指定的 url
         dataType: "json",             // 預期會接收到回傳資料的格式： json | xml | html
         success: function (data) {      // request 成功取得回應後執行
-            console.log(data);
-            console.log(data.records.locations[0].location);
+//            console.log(data);
+//            console.log(data.records.locations[0].location);
 
             let location_array = data.records.locations[0].location; // 裝的是含有天氣資料的各個區
 
             for (let i = 0; i < location_array.length; i++) {
                 if (location_array[i].locationName == target_place) {
-                    console.log(location_array[i].locationName);
-                    console.log(i)
+//                    console.log(location_array[i].locationName);
+//                    console.log(i)
 
-                    console.log(location_array[i].weatherElement[0].time) // 裝的是有接下來三天各時段天氣描述的陣列
+//                    console.log(location_array[i].weatherElement[0].time) // 裝的是有接下來三天各時段天氣描述的陣列
 
                     let first_interval_startTime = location_array[i].weatherElement[0].time[0].startTime;
                     let first_interval_endTime = location_array[i].weatherElement[0].time[0].endTime;
@@ -356,9 +356,9 @@ function call_weather_api(district) {
                     let second_interval_startTime = location_array[i].weatherElement[0].time[1].startTime;
                     let second_interval_endTime = location_array[i].weatherElement[0].time[1].endTime;
                     let second_interval_elementValue = location_array[i].weatherElement[0].time[1].elementValue[0].value;
-                    console.log(first_interval_startTime)
-                    console.log(first_interval_endTime)
-                    console.log(first_interval_elementValue)
+//                    console.log(first_interval_startTime)
+//                    console.log(first_interval_endTime)
+//                    console.log(first_interval_elementValue)
 
                     // alert(target_place + "\n" + "時間:" + first_interval_startTime + "到" + first_interval_endTime + "\n" + "天氣為" + first_interval_elementValue +
                     //     "\n" + "時間:" + second_interval_startTime + "到" + second_interval_endTime + "\n" + "天氣為" + second_interval_elementValue)
