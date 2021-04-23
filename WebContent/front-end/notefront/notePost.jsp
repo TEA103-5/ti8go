@@ -59,13 +59,13 @@
 	href="<%=request.getContextPath()%>/front-end/notefront/assets/css/smoothproducts.css">
 
 <style type="text/css">
- 	.like_btn{ 
- 	font-size:50px;
- 	width:fit-content;  
- 	color:#ccc; 
- 	cursor:pointer;
- 	} 
-	.cs{color:#f00;}
+/*  	.like_btn{  */
+/*  	font-size:50px; */
+/*  	width:fit-content;   */
+/*  	color:#ccc;  */
+/*  	cursor:pointer; */
+/*  	}  */
+/* 	.cs{color:#f00;} */
 
 </style>
 
@@ -82,7 +82,7 @@
 						style="background-image:url(&quot;<%=request.getContextPath()%>/front-end/notefront/assets/img/scenery/image1.jpg&quot;);"></div>
 					<div class="post-body">
 					
-					<p class="like_btn">&#10084;</p>
+<!-- 					<p class="like_btn">&#10084;</p> -->
 						<form class="card-form"
 							action="<%=request.getContextPath()%>/note/note.do" method="post"
 							style="padding-bottom: 30px;">
@@ -236,29 +236,14 @@
 	</script>
 
 	<script>
-// 	<c:if test="${not empty sessionScope.users_id}">
-// 	let login_users = ${sessionScope.users_id} ;
-// 	</c:if>
-// 	<c:if test="${empty sessionScope.users_id}">
-// 	let login_users = null ;
-// 	</c:if>
-    
-//     	$(".like_btn").on("click",function(e){
-//     		alert('like');
-//     		let that = $(this);
-    		
-//     		let note_id_value = that.closest(".post-body").find(".note_id_value").attr("value")
-    		
-// 		  	let data = {
-// 		  			"action": "update_note_like",
-// 		            "note_id": note_id_value
+
 
 			
-            $(function () {            
-            $(".like_btn").on("click" , function(e) {
-                $(this).toggleClass('cs');                
-            })
-        })
+//             $(function () {            
+//             $(".like_btn").on("click" , function(e) {
+//                 $(this).toggleClass('cs');                
+//             })
+//         })
 
         
 

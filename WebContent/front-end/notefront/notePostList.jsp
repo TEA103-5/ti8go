@@ -55,9 +55,9 @@
 					<button class="btn btn-outline-primary btn-sm" type="button">
 						<a class="a1" href="#togohere">Read More Note</a>
 					</button>
-					<button class="btn btn-outline-primary btn-sm" type="button">
-						<a class="a1" href="noteEdit.jsp">Create New Note</a>
-					</button>
+<!-- 					<button class="btn btn-outline-primary btn-sm" type="button"> -->
+<!-- 						<a class="a1" href="noteEdit.jsp">Create New Note</a> -->
+<!-- 					</button> -->
 					<!-- Search Widget -->
 					
                 <div class="city-selector" role="tw-city-selector" data-bootstrap-style data-standard-words></div>
