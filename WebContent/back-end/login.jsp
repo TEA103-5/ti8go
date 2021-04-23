@@ -168,7 +168,7 @@ if (session.getAttribute("adminsVO") != null) {
                                     	if(isConfirm){
 //                                     		window.location.href = redirect_target;
                                     		window.location.replace(redirect_target);
-//                                     		return;
+                                    		return;
                                     	}
                                     });
                                     isTimerStarted = true;

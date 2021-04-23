@@ -266,6 +266,18 @@
 		
 	</script>
 	
+	<!-- 	這個script用來放錯誤處理訊息 -->
+	<script>
+		window.addEventListener("load", function(event) {
+			<c:if test="${not empty errorMsgs}">
+					<c:forEach var="message" items="${errorMsgs}">
+// 						alert("${message}");
+						swal("操作失敗", "${message}", "error");
+					</c:forEach>
+			</c:if>
+		});
+	</script>
+	
 	
 </body>
 

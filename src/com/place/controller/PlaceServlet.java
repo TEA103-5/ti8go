@@ -878,12 +878,12 @@ System.out.println(requestURL);
 				}
 
 				String place_name = req.getParameter("place_name");
-				String place_nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z)]{1,10}$";
+				String place_nameReg = "^[(\\u4e00-\\u9fa5)(a-zA-Z0-9_)]{1,20}$";
 				if (place_name == null || place_name.trim().length() == 0) {
 					place_name = ""; // 如沒輸入則維持空白搜尋時會忽略這項
 //					errorMsgs.add("地點名稱: 請勿空白");
 				} else if (!place_name.trim().matches(place_nameReg)) { // 以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("地點名稱: 只能是中、英文字母 , 且長度必需在1到10之間");
+					errorMsgs.add("地點名稱: 只能是中、英文字母或數字 , 且長度必需在1到20之間");
 				}
 
 				//
@@ -907,8 +907,7 @@ System.out.println(requestURL);
 						failureView.forward(req, res);
 						return;// 程式中斷
 					}else {
-						
-						RequestDispatcher failureView = req.getRequestDispatcher("/place/select_page.jsp");
+						RequestDispatcher failureView = req.getRequestDispatcher("/front-end/place/selectPlace.jsp");
 						failureView.forward(req, res);
 						return;// 程式中斷
 					}
