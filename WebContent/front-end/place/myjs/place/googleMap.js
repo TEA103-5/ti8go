@@ -162,8 +162,8 @@ function addMarker(n) {
 
         // console.log(n)
         // alert(e)
-        console.log(markers[n].getPosition().lat())
-        console.log(markers[n].getPosition().lng())
+//        console.log(markers[n].getPosition().lat())
+//        console.log(markers[n].getPosition().lng())
 
         // 以下測試中----------------
 
@@ -171,7 +171,7 @@ function addMarker(n) {
         let target_lng = markers[n].getPosition().lng();
 
         let card = $(".card");
-        console.log(card.length);
+//        console.log(card.length);
 
         // for (let i = 0; i < card.length; i++) {
         //     let card_lng = card.eq(i).attr("data-longitude");
@@ -185,7 +185,7 @@ function addMarker(n) {
             let card_lng = card.eq(i).attr("data-longitude");
             let card_lat = card.eq(i).attr("data-latitude");
             if (card_lng == target_lng && card_lat == target_lat) {
-                console.log("點到的是對應第" + i + "個card的marker")
+//                console.log("點到的是對應第" + i + "個card的marker")
                 // console.log("target-data-id=" + card.eq(i).attr("data-id"));
 
                 let card_container = $("#card-container");
@@ -230,7 +230,7 @@ function addMarker(n) {
 // 當前有InfoWindow時將他關閉, 並在指定marker產生新的InfoWindow
 function DisplayInfoWindow(count) {
 
-    console.log("DisplayInfoWindow成功")
+//    console.log("DisplayInfoWindow成功")
 
     if (currentInfoWindow != null) {
 
