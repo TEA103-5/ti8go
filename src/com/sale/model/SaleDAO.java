@@ -39,7 +39,7 @@ public class SaleDAO implements SaleDAO_interface {
 	private static final String GET_ONE_STMT = "SELECT sale_id,sale_email,sale_pwd,sale_name,sale_audit_status,sale_audit_pic,sale_status,sale_phone,sale_nickname,sale_rate,sale_time_create FROM sale where sale_id = ?";
 	// 11個欄位
 	private static final String GET_ALL_STMT = "SELECT sale_id,sale_email,sale_pwd,sale_name,sale_audit_status,sale_audit_pic,sale_status,sale_phone,sale_nickname,sale_rate,sale_time_create FROM sale order by sale_id";
-	private static final String GET_Prods_BySaleid_STMT = "SELECT product_id,product_name,PRODUCT_Status,PRODUCT_Content,PRODUCT_Description,PRODUCT_Categories,PRODUCT_Price,PRODUCT_Stock,sale_id,product_update_time,product_rate FROM product where sale_id = ? and PRODUCT_Status=1 order by product_id";
+	private static final String GET_Prods_BySaleid_STMT = "SELECT product_id,product_name,PRODUCT_Status,PRODUCT_Content,PRODUCT_Description,PRODUCT_Categories,PRODUCT_Price,PRODUCT_Stock,sale_id,product_update_time,product_rate FROM product where sale_id = ? order by product_id";
 
 	public Set<ProductVO> getProdsBySaleid(Integer sale_id) {
 
