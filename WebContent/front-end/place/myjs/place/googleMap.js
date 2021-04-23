@@ -55,7 +55,7 @@ let self_marker;
 let directionsService; //用來儲存路線服務
 let directionsDisplay; //用來儲存路線顯示圖
 
-let route_origin; //　用來擺放路線起點經緯度
+let route_origin = { lat: self_lat, lng: self_lng }; //　用來擺放路線起點經緯度
 let route_destination; // 用來擺放路線終點經緯度
 
 let route_markers = []
@@ -299,7 +299,7 @@ function addDirectionsRoute(route_origin, route_destination) {
             // 回傳路線上每個步驟的細節
             let steps = result.routes[0].legs[0].steps;
             steps.forEach((e, i) => {
-                console.log(steps);
+//                console.log(steps);
                 // 加入地圖標記
                 route_markers[i] = new google.maps.Marker({
                     position: { lat: e.start_location.lat(), lng: e.start_location.lng() },
