@@ -4,9 +4,12 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.notec.model.*"%>
 <%@ page import="com.note.model.*"%>
+<%@page import="com.users.model.*"%>
 <jsp:useBean id="usersSvc" scope="page" class="com.users.model.UsersService" />
 
 <%
+session.setAttribute("users_id" , (  ( (UsersVO)session.getAttribute("usersVO")).getUsers_id() ));
+
     List<NoteVO> list = null;
 	if (request.getAttribute("list") != null) {
 		list = (List<NoteVO>)request.getAttribute("list");

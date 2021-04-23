@@ -4,9 +4,11 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.notec.model.*"%>
 <%@ page import="com.note.model.*"%>
+<%@page import="com.users.model.*"%>
 <%@page import="com.note_collect.model.*"%>
 <jsp:useBean id="usersSvc" scope="page" class="com.users.model.UsersService" />
 <%
+
 	// 	NoteService noteSvc = new NoteService();
 	//     NoteVO getOneNote = noteSvc.getOneNote(note_id)
 	// 	pageContext.setAttribute("getOneNote", getOneNote);
