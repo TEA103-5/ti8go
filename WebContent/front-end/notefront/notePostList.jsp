@@ -8,7 +8,10 @@
 <jsp:useBean id="usersSvc" scope="page" class="com.users.model.UsersService" />
 
 <%
-session.setAttribute("users_id" , (  ( (UsersVO)session.getAttribute("usersVO")).getUsers_id() ));
+
+if(session.getAttribute("usersVO") != null){
+	session.setAttribute("users_id" , (  ( (UsersVO)session.getAttribute("usersVO")).getUsers_id() ));
+}
 
     List<NoteVO> list = null;
 	if (request.getAttribute("list") != null) {
