@@ -66,7 +66,7 @@ if (navigator.geolocation) {
 
     // 使用者不提供權限，或是發生其它錯誤
     function error() {
-        console.log('無法取得你的位置');
+//        console.log('無法取得你的位置');
         self_lat = 25.052052;
         self_lng = 121.543220;
         
@@ -80,6 +80,10 @@ if (navigator.geolocation) {
         self_lng = position.coords.longitude
 
         route_origin = { lat: self_lat, lng: self_lng }; // 定義路線起點經緯度
+        
+//        有可能會不準確,先寫死
+        self_lat = 25.052052;
+        self_lng = 121.543220;
         
         initMap();
     }
@@ -114,8 +118,12 @@ function initMap() {
         center: {
             // lat: position[0].lat,
             // lng: position[0].lng
-            lat: (self_lat ? self_lat : 25.052052),
-            lng: (self_lng ? self_lng : 121.543220)
+//            lat: (self_lat ? self_lat : 25.052052),
+//            lng: (self_lng ? self_lng : 121.543220)
+        	
+//        	先寫死
+            lat: 25.052052,
+            lng: 121.543220
         }
     });
 
