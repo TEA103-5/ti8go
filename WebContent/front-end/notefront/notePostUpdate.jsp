@@ -92,7 +92,7 @@
 							<font size="7">${noteVO.note_title}</font>
 						</h3>
 						<div class="post-info">
-							<span>By ${noteVO.users_id}</span><span><fmt:formatDate
+							<span>By ${usersSvc.getOneusers(noteVO.users_id).users_name}</span><span><fmt:formatDate
 									pattern="yyyy-MM-dd" value="${noteVO.note_date}" /></span>
 						</div>
 						<p><font size="5">${noteVO.note_description}</font></p>
