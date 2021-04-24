@@ -5,6 +5,7 @@
 <%@ page import="com.notec.model.*"%>
 <%@ page import="com.note.model.*"%>
 <%@page import="com.note_collect.model.*"%>
+<jsp:useBean id="usersSvc" scope="page" class="com.users.model.UsersService" />
 
 <%
 	// 	NoteService noteSvc = new NoteService();
