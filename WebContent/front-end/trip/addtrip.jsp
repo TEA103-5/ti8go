@@ -72,7 +72,7 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
      <div id="fade1" class="fadee" v-if="loadshow" >
      <img src="<%=request.getContextPath()%>/front-end/assets/img/fly.png" alt="rocket" style="height:4rem;margin:200px 0px 0px 40%;">
     </div>
-        <FORM id="from1" METHOD="post" ACTION="<%=request.getContextPath()%>/users/users.do" > 							       
+        <FORM id="fro2m" METHOD="post" ACTION="<%=request.getContextPath()%>/users/users.do" > 							       
 									       <input type="hidden" name="users_id" value="${usersVO.users_id}">
 									       <input type="hidden" name="action" value="listTrip_ByUsers_A">
 									     </FORM>
@@ -163,7 +163,7 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 				v-model="tripDetail.trip_content">
 							 <br/>
 		
-				開始時間:<input type="time"  id="time1" />
+				開始時間:<input type="time"  id="time1" onchange="$('#time2').val($('#time1').val())"/>
 				結束時間:<input type="time" id="time2"  />
 				花費:<input type="text" v-model="tripDetail.trip_cost"/>臺幣
 				
@@ -194,7 +194,10 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 							id="f_date3">
 					總花費:{{total}}
 								<button class="btnl btn-cancel"  @click="submitTripDetailini">建立行程</button>
+
                     </header>
+
+									
 					</div>
 
             <div class="row" style="margin-right:0px; margin-left:0px; flex-wrap:wrap;">
@@ -285,6 +288,19 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 				</ul>
 					</div>
 					<div class="col-md-4 col-xl-4 mb-4 conn">
+					                
+					<input placeholder="搜尋" class=""  v-model="searchName" type="text">
+					
+						<div class="custom-control custom-switch">
+												<input class="custom-control-input" type="checkbox" v-model="searchuid"
+													id="formCheck-1"><label
+													class="custom-control-label" for="formCheck-1"><strong>我的地點</strong></label>
+											</div>
+						<div class="custom-control custom-switch">
+												<input class="custom-control-input" type="checkbox"
+													id="formCheck-2" v-model="collect"><label
+													class="custom-control-label" for="formCheck-2"><strong>我的收藏</strong></label>
+											</div>
 					           <div class="block-heading">
 					   <iframe id="map-iframe" allowfullscreen="" frameborder="0"
                        v-bind:src="placename"
@@ -885,7 +901,7 @@ pageContext.setAttribute("weather_key", Google_key.weather_key);
 				this.detailUpdateCount=this.daylist[this.dayCount-1].tripDetail.length;
 				this.submitTripDetail();
 				}else{
-					document.getElementById('from1').submit();
+					document.getElementById('fro2m').submit();
 				}
 			},
 			submitTripDetail(){  //行程細節送出 目前以submitTrip()觸發
