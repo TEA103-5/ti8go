@@ -160,6 +160,9 @@ public class AdminsServlet extends HttpServlet {
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
+			
+			List<String> successMsgs = new LinkedList<String>();
+			req.setAttribute("successMsgs", successMsgs);
 
 			try {
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
@@ -223,6 +226,9 @@ public class AdminsServlet extends HttpServlet {
 				AdminsService adminsSvc = new AdminsService();
 				adminsVO = adminsSvc.addadmins(admins_email, admins_name, admins_password, admins_sex, 
 						admins_authority, admins_position);		
+				
+				// 新增完成,放入成功訊息
+				successMsgs.add("新增管理者成功");
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				if(requestURL.equals("/back-end/admins/addAdmins.jsp")) {  // 來自back-end正式頁面
 					String url = "/back-end/admins/listAllAdmins.jsp";

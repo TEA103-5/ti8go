@@ -248,10 +248,27 @@ System.out.println( !((AdminsVO)session.getAttribute("adminsVO")).getAdmins_auth
 
     <script type="text/javascript" charset="utf8"
         src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+        
+   	<script src="https://unpkg.com/sweetalert@2.1.2/dist/sweetalert.min.js"></script>
 
     <script>$(document).ready(function () {
             $('#table_id').DataTable();
         });</script>
+        
+        <!-- 	此script是將成功訊息跟錯誤訊息印出來 -->
+	<script>
+		<c:if test="${not empty successMsgs}">
+				<c:forEach var="message" items="${successMsgs}" >
+					swal("成功","${message}", "success")
+				</c:forEach>
+		</c:if>
+		
+		<c:if test="${not empty errorMsgs}">
+			<c:forEach var="message" items="${errorMsgs}" >
+				swal("失敗","${message}", "error")
+			</c:forEach>
+		</c:if>	
+	</script>
 
 
 </body>
